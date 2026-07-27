@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onehill.ai/schema/model.schema.json",
+  "title": "OneHill Open Model Entry",
+  "description": "Machine-readable record for an open-source / open-weight model. The human dossier (README.md) is generated from and cross-checked against this file.",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "publisher", "openness", "provenance", "eu_ai_act", "score", "last_verified", "freshness_sla"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$", "description": "Stable slug, e.g. 'meta-llama-3.1'."},
+    "name": {"type": "string"},
+    "aliases": {"type": "array", "items": {"type": "string"}},
+    "publisher": {
+      "type": "object",
+      "required": ["name", "accountable_entity"],
+      "properties": {
+        "name": {"type": "string"},
+        "country": {"type": "string"},
+        "accountable_entity": {"type": "boolean", "description": "Is there a named, legally accountable publisher?"},
+        "url": {"type": "string"},
+        "security_contact": {"type": "string"}
+      }
+    },
+    "summary": {"type": "string", "description": "One-paragraph independent summary."},
+    "variants": {
+      "type": "array",
+      "description": "Checkpoints / sizes / tunings under this family.",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {"type": "string"},
+          "params_total": {"type": "string"},
+          "params_active": {"type": "string"},
+          "context_window": {"type": "string"},
+          "kind": {"type": "string", "enum": ["base", "instruct", "reasoning", "guard", "code", "multimodal", "quantized", "other"]},
+          "safety_tuned": {"type": "boolean"}
+        }
+      }
+    },
+    "openness": {
+      "type": "object",
+      "required": ["tier", "components", "license"],
+      "properties": {
+        "tier": {"type": "string", "enum": ["fully_open", "open_weights_recipe", "open_weights", "gated_open", "open_washed", "closed"]},
+        "components": {
+          "type": "object",
+          "required": ["weights", "training_data", "training_code", "evaluation", "documentation", "license"],
+          "properties": {
+            "weights": {"$ref": "#/$defs/openness_component"},
+            "training_data": {"$ref": "#/$defs/openness_component"},
+            "training_code": {"$ref": "#/$defs/openness_component"},
+            "evaluation": {"$ref": "#/$defs/openness_component"},
+            "documentation": {"$ref": "#/$defs/openness_component"},
+            "license": {"$ref": "#/$defs/openness_component"}
+          }
+        },
+        "license": {
+          "type": "object",
+          "required": ["classification", "commercial_use"],
+          "properties": {
+            "spdx": {"type": "string"},
+            "name": {"type": "string"},
+            "classification": {"type": "string", "enum": ["osi", "permissive_open", "open_weight", "research_only", "custom"]},
+            "commercial_use": {"type": "string", "enum": ["allowed", "allowed_with_conditions", "prohibited"]},
+            "notable_restrictions": {"type": "array", "items": {"type": "string"}},
+            "url": {"type": "string"}
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["canonical_source", "formats", "integrity"],
+      "properties": {
+        "canonical_source": {"type": "string"},
+        "verified_org_on_primary_host": {"type": "boolean"},
+        "formats": {"type": "array", "items": {"type": "string", "enum": ["safetensors", "gguf", "onnx", "pickle", "mlx", "other"]}},
+        "integrity": {
+          "type": "object",
+          "properties": {
+            "checksums": {"type": "boolean"},
+            "signed": {"type": "boolean"},
+            "signing_tech": {"type": "string"},
+            "provenance_attestation": {"type": "boolean"}
+          }
+        },
+        "mirrors_and_quants": {
+          "type": "object",
+          "properties": {
+            "acknowledged": {"type": "boolean"},
+            "notable": {"type": "array", "items": {"type": "object"}}
+          }
+        },
+        "checkpoint_checklist_score": {"type": "integer", "minimum": 0, "maximum": 8},
+        "scanner_result": {"type": "object"},
+        "incidents": {"type": "array", "items": {"$ref": "#/$defs/incident"}}
+      }
+    },
+    "eu_ai_act": {
+      "type": "object",
+      "required": ["is_gpai", "last_assessed"],
+      "properties": {
+        "is_gpai": {"type": "boolean"},
+        "systemic_risk": {
+          "type": "object",
+          "properties": {
+            "designated": {"type": "boolean"},
+            "training_flops_estimate": {"type": "string"},
+            "over_1e25_threshold": {"type": ["boolean", "null"]},
+            "article_55_docs_available": {"type": "string", "enum": ["yes", "partial", "no", "n/a"]}
+          }
+        },
+        "open_source_exemption": {
+          "type": "object",
+          "properties": {
+            "license_qualifies": {"type": "string", "enum": ["yes", "no", "uncertain"]},
+            "rationale": {"type": "string"}
+          }
+        },
+        "provider_package": {
+          "type": "object",
+          "properties": {
+            "technical_documentation": {"$ref": "#/$defs/availability"},
+            "downstream_information": {"$ref": "#/$defs/availability"},
+            "copyright_policy": {"$ref": "#/$defs/availability"},
+            "training_content_summary": {"$ref": "#/$defs/availability"},
+            "code_of_practice_signatory": {"type": "boolean"}
+          }
+        },
+        "deployer_notes": {"type": "string"},
+        "last_assessed": {"type": "string", "format": "date"}
+      }
+    },
+    "performance": {"type": "object", "description": "See benchmark-methodology.md."},
+    "behaviour": {"type": "object"},
+    "safety": {"type": "object"},
+    "deployment": {
+      "type": "object",
+      "properties": {
+        "ceiling_tier": {"type": "string", "enum": ["T0", "T1", "T2", "T3", "T4"]},
+        "ceiling_conditional": {"type": "boolean"},
+        "hardware_notes": {"type": "string"},
+        "serving_support": {"type": "array", "items": {"type": "string"}},
+        "controls_required": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "score": {
+      "type": "object",
+      "required": ["dimensions", "rubric_version"],
+      "properties": {
+        "rubric_version": {"type": "string"},
+        "headline": {"type": ["number", "null"], "minimum": 0, "maximum": 100, "description": "Computed by score.py; may be null before computation."},
+        "grade": {"type": ["string", "null"], "enum": ["A", "B", "C", "D", "F", null]},
+        "hard_flags": {"type": "array", "items": {"type": "string"}},
+        "dimensions": {
+          "type": "object",
+          "required": ["openness", "provenance", "legal", "safety", "performance", "operational", "governance"],
+          "properties": {
+            "openness": {"$ref": "#/$defs/dimension"},
+            "provenance": {"$ref": "#/$defs/dimension"},
+            "legal": {"$ref": "#/$defs/dimension"},
+            "safety": {"$ref": "#/$defs/dimension"},
+            "performance": {"$ref": "#/$defs/dimension"},
+            "operational": {"$ref": "#/$defs/dimension"},
+            "governance": {"$ref": "#/$defs/dimension"}
+          }
+        }
+      }
+    },
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "changelog": {"type": "array", "items": {"$ref": "#/$defs/changelog_entry"}},
+    "last_verified": {"type": "string", "format": "date"},
+    "freshness_sla": {"type": "object", "properties": {"fast_days": {"type": "integer"}, "score_days": {"type": "integer"}, "slow_days": {"type": "integer"}}}
+  },
+  "$defs": {
+    "openness_component": {"type": "string", "enum": ["open", "partial", "closed"]},
+    "availability": {"type": "string", "enum": ["yes", "partial", "no", "unknown"]},
+    "dimension": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 0, "maximum": 5},
+        "rationale": {"type": "string"},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["claim", "source_type"],
+      "properties": {
+        "id": {"type": "string"},
+        "claim": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["onehill_verified", "third_party", "publisher"]},
+        "url": {"type": "string"},
+        "date": {"type": "string"}
+      }
+    },
+    "incident": {
+      "type": "object",
+      "required": ["date", "summary"],
+      "properties": {
+        "date": {"type": "string"},
+        "summary": {"type": "string"},
+        "severity": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+        "url": {"type": "string"}
+      }
+    },
+    "changelog_entry": {
+      "type": "object",
+      "required": ["date", "change"],
+      "properties": {"date": {"type": "string"}, "change": {"type": "string"}}
+    }
+  }
+}

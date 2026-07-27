@@ -1,0 +1,41 @@
+# Expected-items checklist for HOSTING / DISTRIBUTION PROVIDER library entries.
+#
+# A hosting provider is a place where weights live and are pulled from (hub, local runner,
+# serving engine, cloud registry). The four domains are shaped around getting bytes onto
+# your machine safely and keeping them trustworthy. scripts/completeness.py selects this
+# checklist for hosting-provider entries (`format_safety`/`distribution_mechanism` markers).
+#
+# Each expected item: key (matches a documentation item `key` + a <!-- item: KEY --> marker),
+# weight (contribution to the domain's completeness), required (missing → validate.py warn).
+
+checklist_version: "1.0"
+
+domains:
+  assess:            # "Can we trust weights obtained here?"
+    expected:
+      - {key: provenance-integrity, weight: 1.0, required: true}   # verified orgs, checksums, signing
+      - {key: format-safety,        weight: 1.0, required: true}   # safetensors default, pickle/remote-code surface
+      - {key: license-governance,   weight: 1.0, required: true}   # license surfacing & gating enforcement
+      - {key: security-record,      weight: 1.0, required: true}   # incident history & response
+      - {key: transparency,         weight: 0.5, required: false}  # which trust signals are exposed (and gameable)
+
+  implement:         # "How do we obtain and verify weights?"
+    expected:
+      - {key: obtain-weights,   weight: 1.0, required: true}   # git-LFS / CLI / SDK / OCI pull mechanism
+      - {key: verify-integrity, weight: 1.0, required: true}   # checksum / scan / signature verification steps
+      - {key: pin-revision,     weight: 1.0, required: true}   # pinning a revision / digest for reproducibility
+      - {key: run-serve,        weight: 0.5, required: false}  # running / serving locally (runners & engines)
+      - {key: resource-needs,   weight: 0.5, required: false}  # disk / VRAM / hardware for local use
+
+  use:               # "What is available and in what formats?"
+    expected:
+      - {key: catalog-scope,      weight: 1.0, required: true}   # what models / who publishes here
+      - {key: formats-supported,  weight: 1.0, required: true}   # safetensors / GGUF / other formats
+      - {key: integration,        weight: 0.5, required: false}  # how it plugs into downstream stacks
+
+  support:           # "How do we keep it working and report problems?"
+    expected:
+      - {key: security-disclosure,  weight: 1.0, required: true}   # how to report a malicious model / vuln
+      - {key: release-versioning,   weight: 1.0, required: true}   # tool / hub versioning & changelog
+      - {key: channels,             weight: 1.0, required: true}   # community & support channels
+      - {key: known-issues,         weight: 0.5, required: false}  # tracked known issues / caveats

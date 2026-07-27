@@ -1,0 +1,734 @@
+# OneHill v2 MODEL library entry for Mistral AI's open-weight family.
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade - computed, not hand-set)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: "2.0"
+id: mistral
+name: Mistral AI (open-weight family)
+aliases:
+- Mistral
+- Mistral 7B
+- Mixtral
+- Mixtral 8x7B
+- Mixtral 8x22B
+- Mistral Nemo
+- Mistral Small
+- Ministral
+- Codestral
+- mistralai
+publisher:
+  name: Mistral AI
+  country: FR
+  accountable_entity: true
+  url: https://mistral.ai/
+  security_contact: https://huggingface.co/mistralai
+summary: 'Mistral AI is the Paris-based EU lab whose open-weight releases are the leading
+  European alternative to the US open-model families. The line spans the dense Mistral
+  7B, the Mixtral 8x7B / 8x22B sparse mixture-of-experts models, Mistral Nemo (12B, a
+  128K-context collaboration with NVIDIA) and the 24B Mistral Small 3.x, plus specialist
+  variants (Codestral for code, Mathstral, Pixtral for vision, Devstral). The licence
+  split is what an adopter must get right: the general-purpose
+  flagship models (Mistral 7B, Mixtral, Nemo, Mistral Small 3.x, Magistral/Devstral Small)
+  are genuine OSI-approved Apache-2.0, but a meaningful subset - Ministral 8B, Mistral
+  Large, Pixtral Large - ships under the research-only Mistral Research Licence (MRL),
+  and Codestral originally under the non-production MNPL, so commercial use must be
+  checked per model. Offsetting that, Mistral''s EU domicile and its status as an early
+  signatory of the EU GPAI Code of Practice give it the strongest regulatory posture of
+  any non-US family here.
+
+  '
+variants:
+- name: Mistral 7B
+  params_total: 7B
+  context_window: 8k-32k (by version)
+  kind: instruct
+  safety_tuned: true
+- name: Mixtral 8x7B
+  params_total: 46.7B
+  params_active: 12.9B
+  context_window: 32k
+  kind: instruct
+  safety_tuned: true
+- name: Mixtral 8x22B
+  params_total: 141B
+  params_active: 39B
+  context_window: 64k
+  kind: instruct
+  safety_tuned: true
+- name: Mistral Nemo (12B)
+  params_total: 12B
+  context_window: 128k
+  kind: instruct
+  safety_tuned: true
+- name: Mistral Small 3.x (24B)
+  params_total: 24B
+  context_window: 128k
+  kind: instruct
+  safety_tuned: true
+- name: Codestral / Mathstral / Devstral
+  kind: code
+  safety_tuned: false
+- name: Pixtral 12B
+  params_total: 12B
+  kind: multimodal
+  safety_tuned: true
+- name: Ministral 8B (MRL)
+  params_total: 8B
+  kind: instruct
+  safety_tuned: true
+- name: Mistral Large 2 (123B, MRL)
+  params_total: 123B
+  context_window: 128k
+  kind: instruct
+  safety_tuned: true
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: partial
+  license:
+    spdx: Apache-2.0
+    name: Apache 2.0 (flagship open-weight models); Mistral Research License / MNPL for some models
+    classification: osi
+    commercial_use: allowed_with_conditions
+    notable_restrictions:
+    - Flagship general-purpose models (Mistral 7B, Mixtral, Nemo, Mistral Small 3.x) are Apache-2.0 with unconditional commercial use
+    - Ministral 8B, Mistral Large, Pixtral Large ship under the research-only Mistral Research Licence (MRL) - a commercial licence must be negotiated separately
+    - Codestral was released under the non-production MNPL; check the licence per model and per version
+    url: https://docs.mistral.ai/getting-started/models/weights
+provenance:
+  canonical_source: https://huggingface.co/mistralai
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: bartowski / unsloth / lmstudio-community (GGUF, AWQ, FP8 quantizations)
+      trust: community
+      note: popular local-inference quants rather than the canonical weight source
+    - name: Hosted on Bedrock / Azure AI / Vertex / Together / OpenRouter
+      trust: provider
+      note: served endpoints rather than the weight source
+  checkpoint_checklist_score: 6
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: The Apache open-weight family (<=24B dense, Mixtral MoE) sits well under 1e25 FLOPs; only the largest models (e.g. Mistral Large 2, 123B) approach the threshold, and those are research-only MRL, not Apache open-weight releases.
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: partial
+    rationale: 'The flagship general-purpose models (Mistral 7B, Mixtral, Nemo, Mistral
+      Small 3.x) are released under genuine OSI-approved Apache-2.0 with public parameters,
+      architecture and usage information - so those models plausibly qualify for the
+      Article 53 open-source exemption from the Annex XI/XII technical-documentation duties.
+      The exemption does NOT extend to the research-only MRL models (Ministral 8B, Mistral
+      Large, Pixtral Large), whose field-of-use restriction fails the Act''s "free and
+      open-source" test. None of the open-weight releases is a designated systemic-risk
+      model, so where the exemption applies it is not voided; the surviving copyright-policy
+      and training-content-summary obligations still apply and are only partially met because
+      Mistral does not publish its training corpus.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: 'yes'
+    copyright_policy: partial
+    training_content_summary: partial
+    code_of_practice_signatory: true
+  deployer_notes: 'Mistral is EU-domiciled (Paris) and was among the first signatories of
+    the EU GPAI Code of Practice in 2025 - the clearest regulatory posture of any non-US
+    family in the registry, with no EU field-of-use ban of the kind that affects some
+    competitors. A downstream EU deployer still inherits only a partial documentation set
+    (training data and a full training-content summary are not published), and a fine-tuner
+    placing a derivative on the EU market under its own name may become a provider for that
+    derivative. Confirm the specific model''s licence: an MRL model may not be
+    deployed commercially without a negotiated licence.
+
+    '
+  last_assessed: '2026-07-25'
+performance:
+  note: Third-party framing only.
+  class_position: Competitive-to-strong within each size class on public leaderboards; the leading European open-weight family.
+behaviour:
+  refusals: Instruct variants refuse clearly-harmful requests but are historically tuned for lower over-refusal than the largest US labs.
+  prompt_injection: Residual susceptibility like all current LLMs; treat retrieved/tool content as untrusted.
+  failure_modes: Standard hallucination profile for its class; documented in model cards.
+safety:
+  variant_assessed: Instruct + Mistral Moderation API
+  jailbreak_resistance: Withstands casual jailbreaks; deploy the instruct variant with the moderation classifier, never the base.
+  guard_model: Mistral Moderation API (a fine-tuned Ministral 8B, offered as a hosted classifier) - not a broadly-shipped open guard-weight comparable to Llama Guard.
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: '7B/12B run on a single modern GPU; the 24B Mistral Small fits a 24 GB
+    card with modest quantization; Mixtral 8x22B and Mistral Large 2 (123B) need multi-GPU
+    or heavy quantization for latency-sensitive serving.
+
+    '
+  serving_support:
+  - vllm
+  - mistral-inference
+  - llama.cpp
+  - ollama
+  - tgi
+  - hf-transformers
+  controls_required:
+  - Deploy the instruct (safety-tuned) variant, not the base checkpoint
+  - Add input/output guardrails; the Mistral Moderation API can serve as the companion classifier
+  - Add prompt-injection defences and treat retrieved/tool content as untrusted
+  - Confirm the per-model licence (Apache vs research-only MRL) before commercial deployment
+  - Pin the exact mistralai revision and verify checksums
+score:
+  rubric_version: '1.1'
+  headline: 73.2
+  grade: B
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Open-weights tier: the flagship general-purpose models are downloadable
+        under permissive OSI-approved Apache-2.0 - a genuinely open licence, unlike a
+        click-through community gate - and documentation is good. The open-weights tier
+        caps Dimension 1 at 3 per the openness framework, because training data and training
+        code are closed (no reproduction path, unlike a fully-open family), evaluation is
+        only partial, and a meaningful subset of the family ships under the research-only
+        MRL, so the licence component is split rather than uniformly open. It sits at the
+        top of the score-3 band, short of the recipe (4) and fully-open (5) tiers.
+
+        '
+      evidence_refs:
+      - ev-small3
+      - ev-weights
+      - ev-mrl
+      - ev-hf
+    provenance:
+      score: 4
+      rationale: 'Verified mistralai org on Hugging Face, safetensors-only distribution
+        with per-file checksums, a clear canonical source and no malicious-checkpoint
+        incident on record (checklist ~6/8). Short of 5 only because weights are not
+        cryptographically signed and there is no SLSA-style provenance attestation.
+
+        '
+      evidence_refs:
+      - ev-hf
+      - ev-weights
+    legal:
+      score: 4
+      rationale: 'A strong legal posture for the Apache-2.0 flagship models: OSI-approved,
+        unconditional commercial use, EU-domiciled and accountable publisher, and an early
+        signatory of the EU GPAI Code of Practice with no EU field-of-use ban. Held to 4
+        rather than 5 because the family carries a genuine licence split (research-only MRL
+        models require a negotiated commercial licence) and, unlike a fully-open family, the
+        training corpus is not published so the EU training-content-summary obligation is
+        only partially satisfiable from released artifacts.
+
+        '
+      evidence_refs:
+      - ev-small3
+      - ev-cop
+      - ev-mrl
+    safety:
+      score: 3
+      rationale: 'Instruct variants are safety-tuned and Mistral ships a hosted Moderation
+        API (a fine-tuned Ministral 8B) plus system-level guardrailing guidance - above a
+        bare release. Held at 3 because safety tuning is historically lighter than the largest
+        US labs, there is no broadly-distributed open guard-weight comparable to Llama Guard,
+        and no broad independent third-party red-team across CBRN/cyber/prompt-injection
+        domains has been published; base checkpoints are untuned.
+
+        '
+      evidence_refs:
+      - ev-moderation
+      - ev-wiki
+    performance:
+      score: 4
+      rationale: 'Consistently competitive-to-strong within each size class on public
+        leaderboards - Mistral 7B and Mixtral were class-leading at release and Mistral
+        Small 3.x remains strong for a 24B - and the leading European open-weight family.
+        Capped at 4 on third-party leaderboard evidence without independent reproduction.
+
+        '
+      evidence_refs:
+      - ev-leaderboard
+      - ev-wiki
+    operational:
+      score: 4
+      rationale: 'Broad ecosystem support: an official inference library (mistral-inference)
+        plus day-0/near-day-0 loading on vLLM, llama.cpp, Ollama, TGI and transformers,
+        safetensors distribution, community quants and hosted endpoints on the major clouds.
+        Short of 5 because the
+        official first-party quantization program is narrower than the largest ecosystems.
+
+        '
+      evidence_refs:
+      - ev-inference
+      - ev-hf
+      - ev-weights
+    governance:
+      score: 4
+      rationale: 'Reputable, legally accountable EU publisher with a predictable, dated
+        release cadence, published model cards, a moderation offering and - distinctively -
+        an EU GPAI Code of Practice signature. Short of 5 because there is no formal
+        cryptographic vulnerability-disclosure/signing process and no published deprecation
+        policy for the open-weight checkpoints.
+
+        '
+      evidence_refs:
+      - ev-cop
+      - ev-hf
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry
+#     (like the EU AI Act flag). Not a scoring input - each ties back to one of the seven
+#     AOI dimensions and summarises documentation that lives in the four domains.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tunable but not reproducible: Apache-2.0 open weights support full SFT/LoRA and redistribution, but training data and code are closed and a subset of the family is research-only MRL, so trainability depends on the specific model's licence."
+    refs: [ev-small3, ev-mrl, ev-hf]
+  knowledge_structure:
+    level: strong
+    dimension: performance
+    summary: "Strong grounding backbone: 128K context on Nemo and Mistral Small 3.x, documented tool-calling and improved structured output, and solid multilingual (esp. European) coverage support RAG and structured workflows."
+    refs: [ev-small3, ev-leaderboard]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "Strong for specialisation: permissive Apache weights plus a large adapter/fine-tuning ecosystem, and the family already ships domain variants (Codestral, Mathstral, Devstral, Pixtral) as templates; continued pre-training is limited by closed data and code."
+    refs: [ev-weights, ev-hf]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Highly exchangeable: safetensors on every major runtime plus an official mistral-inference library and OpenAI-compatible serving; the main gotcha when swapping is Mistral's own chat template and mistral-common/Tekken tokenization."
+    refs: [ev-inference, ev-hf]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Not independently benchmarked for misuse: Mistral offers a hosted Moderation API and guardrailing guidance, but there is no broad third-party CBRN/cyber/prompt-injection red-team battery to aggregate."
+    refs: [ev-moderation]
+
+# --- Four documentation domains. Item keys match checklists/model.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     No onehill_generated items this session: OneHill has run nothing, so every item
+#     is `aggregated` (public source, >=1 ref) or an honest `gap`. Originality = 0.
+documentation:
+  assess:
+    completeness: 93.3
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-weights, ev-small3]
+        summary: "General-purpose assistant, coding and multilingual use; deploy instruct rather than base; confirm the per-model licence before commercial use."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-wiki, ev-moderation]
+        summary: "Class-standard hallucination, residual prompt-injection susceptibility, historically lighter safety tuning, and a licence split that constrains commercial use of MRL models."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-small3, ev-weights, ev-mrl]
+        summary: "open_weights - Apache-2.0 flagship weights + good docs, but training data and code closed and the licence component split by research-only MRL models."
+      - key: license
+        title: "License terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-small3, ev-mrl, ev-mnpl]
+        summary: "Apache-2.0 (OSI, unconditional commercial use) for the flagship models; research-only MRL for Ministral 8B / Mistral Large / Pixtral Large; MNPL originally for Codestral."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf, ev-weights]
+        summary: "Verified mistralai org on Hugging Face, safetensors + checksums, no signing or SLSA attestation; community GGUF/AWQ/FP8 quants are separate artifacts."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-cop, ev-small3]
+        summary: "GPAI; open-weight family well under 1e25 FLOPs (not systemic-risk); EU-domiciled and an early GPAI Code of Practice signatory; Article 53 exemption applies to the Apache models rather than the MRL ones."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-leaderboard, ev-wiki]
+        summary: "Competitive-to-strong in each size class on public leaderboards; the leading European open-weight family."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No broad independent adversarial evaluation across CBRN/cyber/prompt-injection domains has been published for the Mistral open-weight family. Mistral documents a Moderation API and guardrailing guidance but there is no third-party red-team battery to aggregate."
+  implement:
+    completeness: 95.5
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf, ev-inference]
+        summary: "HF from_pretrained (safetensors), the official mistral-inference library, Ollama pull, vLLM serve or llama.cpp GGUF; pin the exact mistralai revision."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-weights, ev-hf]
+        summary: "7B/12B on a single modern GPU; 24B Mistral Small on a 24 GB card with modest quantization; Mixtral 8x22B and Mistral Large 2 (123B) need multi-GPU or heavy quantization."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-inference, ev-weights]
+        summary: "Official mistral-inference plus vLLM, TGI, llama.cpp, Ollama and transformers load the standard safetensors checkpoints."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-moderation, ev-small3]
+        summary: "Deployment Ceiling T2 (conditional): instruct variant + input/output guardrails (the Moderation API as companion classifier) + prompt-injection defences + pinned revision + per-model licence check."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf]
+        summary: "A broad community GGUF/AWQ/GPTQ/FP8 quant ecosystem and some official low-bit releases; coverage marked partial as the first-party program is narrower than the largest ecosystems - verify the source before production use."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-inference, ev-hf]
+        summary: "Standard SFT/LoRA via transformers/PEFT/TRL/Axolotl/Unsloth on the safetensors checkpoints; no open pre-training data or code, so continued pre-training from scratch is not reproducible."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-inference, ev-weights, ev-privacy, ev-training, ev-retention, ev-zdr]
+        summary: "Serve behind vLLM's OpenAI-compatible /v1 server (or TGI/Ollama), or use Mistral's own La Plateforme API. If you use the hosted API rather than self-hosting, its terms differ: inputs train Mistral's models by default unless you opt out (not on Team/Enterprise), API data is kept ~30 rolling days, EU hosting is the default (US endpoint option), and Zero Data Retention can be activated - documented in Mistral's Privacy Policy/help centre, pending verbatim verification."
+  use:
+    completeness: 94.4
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-small3, ev-leaderboard]
+        summary: "Strong generalist, coding and multilingual text; Pixtral adds vision; Mistral Small 3.x is competitive for a 24B with tool use and structured output."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-small3, ev-nemo]
+        summary: "Mistral Nemo and Mistral Small 3.x offer 128K context; older models are shorter (Mistral 7B 8k-32k, Mixtral 32k-64k) - confirm per model card."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-chat, ev-weights]
+        summary: "Use the model's chat template (mistral-common is the ground truth; newer models use the Tekken tokenizer) via apply_chat_template rather than hand-rolling role markers."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-small3, ev-moderation]
+        summary: "Genuinely multilingual with strong European-language coverage (English, French, German, Italian, Spanish and more); the Moderation API alone spans 11 languages."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-small3, ev-weights]
+        summary: "Documented native function/tool calling on the instruct models; Mistral Small 3.2 specifically improved tool-use accuracy over 3.1."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-small3]
+        summary: "Instruct models support JSON/structured output (Mistral Small 3.2 improved it); hard schema-constrained decoding is still a serving-layer feature (grammars/guided decoding), hence partial."
+  support:
+    completeness: 55.6
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-chat, ev-hf]
+        summary: "Aggregated common pitfalls (chat-template/tokenizer mismatch, OOM on Mixtral/Large, revision drift, wrong licence assumption); not an exhaustive catalogue."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: full
+        refs: [ev-weights, ev-hf]
+        summary: "Dated snapshot versioning (e.g. -2407, -2410, -2506) tracked as immutable Hugging Face revisions on the mistralai org; pin the revision as your changelog anchor."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No formal, published vulnerability-disclosure or security policy (e.g. SECURITY.md / advisory process) for the open-weight checkpoints was found; contact is the general Mistral / Hugging Face org presence, so there is no documented process to aggregate."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf, ev-inference, ev-wiki]
+        summary: "Hugging Face model discussions on the mistralai org, GitHub issues on mistral-inference and the cookbook, the Mistral Discord and platform docs, plus paid support via La Plateforme."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-weights, ev-hf]
+        summary: "Mistral operates dated model versioning and deprecates legacy models on its API platform, but the open-weight HF checkpoints carry no formal sunset commitment - older revisions remain downloadable. Marked partial."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-wiki, ev-moderation]
+        summary: "From model-card and release caveats: lighter safety coverage than the largest US labs, residual prompt-injection susceptibility, and a licence split that catches teams expecting all models to be Apache."
+
+# --- Ownership: the single closing verdict (methodology/ownership.md). One level built from
+#     four factors; each factor grounded in the entry's documented evidence.
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: "The Apache-2.0 flagship models (Mistral 7B, Mixtral, Nemo, Small 3.x) can be run, modified, redistributed and used commercially with no gate - but Ministral 8B, Mistral Large and Pixtral Large are research-only MRL, and Codestral is non-production MNPL. Because the family is licence-split, you cannot treat the whole line as freely usable without checking each model, so use-and-modify is moderate rather than strong."
+      # grounded in: ev-weights (docs, retrieved - per-model licence list verbatim), ev-mrl + ev-mnpl (license, retrieved - restriction clauses verbatim)
+    transparency:
+      level: moderate
+      rationale: "You can download and inspect the safetensors weights and read good model cards, but training data and training code are closed - you can see the model but not how it was made."
+      # grounded in: ev-weights, ev-hf (openness components: weights open, data/code closed)
+    reliability:
+      level: moderate
+      rationale: "Runs dependably across every major runtime, but safety tuning is lighter than the largest US labs, so pair the instruct variant with the Moderation API and your own guardrails."
+      # grounded in: ev-leaderboard (third_party), ev-moderation
+    data_control:
+      level: strong
+      rationale: "Self-hosted, the open weights run on your own infrastructure and nothing leaves - your data and derived knowledge stay yours. Mistral's HOSTED API is different: per its Privacy Policy and help centre it trains on inputs by default unless you opt out (Team/Enterprise excepted), and offers Zero Data Retention; the DPA applies SCCs Module 4 under French law and makes data inaccessible 30 days after termination."
+      # grounded in: self-hosting (structural); ev-privacy, ev-training, ev-retention, ev-zdr, ev-dpa (all retrieved)
+  verdict: "You own the Apache-licensed flagship models outright: self-host them and the model and your data are yours to run, modify and keep. Overall ownership is partial rather than substantial, for one concrete reason: the family is licence-split, so a meaningful subset (Ministral 8B, Mistral Large and Pixtral Large are research-only MRL; Codestral is non-production MNPL) needs a separately negotiated commercial licence, and you cannot treat the line as uniformly free without checking each model. Training is also not transparent (data and code are closed). If you use Mistral's hosted API instead of self-hosting, turn off training and consider Zero Data Retention."
+
+# --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
+#     (true = the document's substantive content was obtained via this session's web tools;
+#     false = documented/known but NOT read this session - pending verbatim verification, which
+#     the Cowork hand-off (docs/primary-doc-handover.md) will supply). Mistral's own site
+#     (mistral.ai / docs.mistral.ai) blocked direct fetch this session; the legal/help pages
+#     were reached via search extraction and are marked retrieved:true accordingly.
+evidence:
+- id: ev-weights
+  claim: 'Mistral''s model-weights documentation page, read verbatim, assigns licences
+    per model: "Mistral 7B, Mixtral 8x7B/8x22B, Codestral Mamba, Mathstral, Mistral Nemo,
+    Pixtral 12B, Mistral Small, Magistral Small and Devstral Small are under Apache 2 License";
+    "Codestral is under Mistral AI Non-Production (MNPL) License"; "Ministral 8B, Mistral
+    Large, and Pixtral Large are under Mistral Research License."'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.mistral.ai/getting-started/models/weights
+  date: '2026-07-25'
+- id: ev-hf
+  claim: Mistral open-weight checkpoints are hosted on the verified mistralai organisation
+    on Hugging Face in safetensors with per-file checksums.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: false
+  url: https://huggingface.co/mistralai
+  date: '2026-07-25'
+- id: ev-small3
+  claim: 'Mistral Small 3 (24B) is released under Apache-2.0 as Mistral recommits to Apache
+    for general-purpose models and moves away from MRL; it offers a 128K context window,
+    tool use and structured output.'
+  source_type: publisher
+  doc_type: marketing
+  retrieved: false
+  url: https://mistral.ai/news/mistral-small-3/
+  date: '2026-07-25'
+- id: ev-mrl
+  claim: 'The Mistral Research Licence (MRL-0.1), read verbatim, permits use "solely for
+    (a) personal, scientific or academic research, and (b) for non-profit and non-commercial
+    purposes" - excluding revenue activity and SaaS distribution, under France/Paris
+    jurisdiction; it applies to Ministral 8B, Mistral Large and Pixtral Large.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://mistral.ai/licenses/MRL-0.1.md
+  date: '2026-07-25'
+- id: ev-mnpl
+  claim: 'The Mistral AI Non-Production Licence (MNPL-0.1), read verbatim, restricts use:
+    "You shall only use the Mistral Models and Derivatives for testing, research, Personal,
+    or evaluation purposes in Non-Production Environments" - no commercial supply "including...
+    SaaS, cloud instances"; outputs are not owned by Mistral; France/Paris. Applies to Codestral.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://mistral.ai/licenses/MNPL-0.1.md
+  date: '2026-07-25'
+- id: ev-nemo
+  claim: Mistral Nemo (12B) is a 128K-context model released under Apache-2.0 in collaboration
+    with NVIDIA, using the Tekken tokenizer.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: false
+  url: https://mistral.ai/news/mistral-nemo/
+  date: '2026-07-25'
+- id: ev-cop
+  claim: Mistral AI is a Paris-based EU company and was among the first signatories of the
+    EU General-Purpose AI Code of Practice in 2025.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai
+  date: '2026-07-25'
+- id: ev-moderation
+  claim: Mistral offers a hosted Moderation API - a fine-tuned Ministral 8B classifier
+    spanning multiple harm categories and 11 languages - plus system-level guardrailing
+    guidance for downstream deployments.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: false
+  url: https://mistral.ai/news/mistral-moderation/
+  date: '2026-07-25'
+- id: ev-chat
+  claim: 'Mistral documents its instruct tokenization and chat templates: mistral-common
+    is the ground truth, newer models use the Tekken tokenizer, and the Hugging Face chat
+    template matches mistral-common output.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://docs.mistral.ai/resources/cookbooks/concept-deep-dive-tokenization-chat_templates
+  date: '2026-07-25'
+- id: ev-inference
+  claim: mistral-inference is Mistral's official inference library; the models also load on
+    vLLM, llama.cpp, Ollama, TGI and transformers.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://github.com/mistralai/mistral-inference
+  date: '2026-07-25'
+- id: ev-leaderboard
+  claim: Mistral models are competitive-to-strong within their size classes on independent
+    public leaderboards.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://lmarena.ai/leaderboard
+  date: '2026-07-25'
+- id: ev-wiki
+  claim: Mistral AI is a France-based lab whose open-weight lineage (Mistral 7B, Mixtral,
+    Nemo, Mistral Small, specialist variants) is broadly adopted, with mixed Apache-2.0 and
+    research-only licensing and wide ecosystem/cloud availability.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://en.wikipedia.org/wiki/Mistral_AI
+  date: '2026-07-25'
+# Hosted-API (La Plateforme / Le Chat) data terms - relevant only if you use Mistral's own
+# API rather than self-hosting the weights. Substantive content reached via search this session
+# (mistral.ai blocked direct fetch); the DPA PDF was not read → retrieved:false for that one.
+- id: ev-privacy
+  claim: "Mistral's Privacy Policy: by default data is hosted in the EU (servers in the EU),
+    with a US API endpoint option that hosts data in the US; non-EU processors are covered by
+    GDPR Article 46 Standard Contractual Clauses."
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://legal.mistral.ai/terms/privacy-policy
+  date: '2026-07-25'
+- id: ev-training
+  claim: "Mistral help centre: input and output data are used by default to train Mistral's
+    models unless you opt out (via the data-sharing / 'allow your interactions to be used to
+    train our models' control); training does not apply to Team and Enterprise plans."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://help.mistral.ai/en/articles/347617-do-you-use-my-user-data-to-train-your-artificial-intelligence-models
+  date: '2026-07-25'
+- id: ev-retention
+  claim: "Mistral help centre: for the API, input and output are kept for the period needed to
+    generate the output and then for thirty (30) rolling days; for Le Chat, kept until you
+    delete the conversation or your account."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://help.mistral.ai/en/articles/347629-where-do-you-store-my-data-or-my-organisation-s-data
+  date: '2026-07-25'
+- id: ev-zdr
+  claim: "Mistral help centre: Zero Data Retention (ZDR) can be activated for eligible
+    accounts."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://help.mistral.ai/en/articles/347612-can-i-activate-zero-data-retention-zdr
+  date: '2026-07-25'
+- id: ev-dpa
+  claim: "Mistral's Data Processing Addendum (DPA), read verbatim, uses SCCs Module 4
+    (Processor-to-Controller) for transfers under French governing law (Sec 8), lists
+    sub-processors on the Trust Centre with a 10-day objection window (Sec 7), and provides
+    that data \"will no longer be accessible upon the expiry of a thirty (30) days period
+    following the termination\" (Sec 10)."
+  source_type: publisher
+  doc_type: dpa
+  retrieved: true
+  url: https://legal.mistral.ai/terms/data-processing-addendum
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial v2 library entry for the Mistral AI open-weight family.
+- date: '2026-07-25'
+  change: 'P6: reframed the closing verdict to a single ownership block (four factors);
+    added evidence doc_type/retrieved and the hosted-API data terms (Privacy Policy, training
+    opt-out, 30-day API retention, ZDR); first-party pages not verbatim-read this session are
+    marked retrieved:false pending the Cowork hand-off.'
+- date: '2026-07-25'
+  change: Flipped licence/DPA evidence to retrieved:true from primary sources (docs/primary-sources/mistral) - weights-page per-model licences, MRL-0.1, MNPL-0.1 and DPA clauses read verbatim.
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

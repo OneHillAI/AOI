@@ -1,0 +1,28 @@
+name: validate-registry
+
+# Validates every entry against its schema, the evidence rules, score consistency,
+# and the freshness SLA. This is the gate that keeps the registry trustworthy and current.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Daily freshness sweep: surfaces entries that have gone stale past their SLA.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Validate all entries
+        # On scheduled runs the freshness check is the point; on PRs it also runs and
+        # will flag a stale entry the PR touches.
+        run: python scripts/validate.py

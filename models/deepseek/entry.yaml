@@ -1,0 +1,671 @@
+schema_version: '2.0'
+id: deepseek
+name: DeepSeek (V3 / R1)
+aliases:
+- DeepSeek-V3
+- DeepSeek-R1
+publisher:
+  name: DeepSeek
+  country: CN
+  accountable_entity: true
+  url: https://huggingface.co/deepseek-ai
+  security_contact: ''
+summary: 'DeepSeek''s V3 and R1 are large mixture-of-experts models (V3 is ~671B total
+  / ~37B active) whose open weights are released under the OSI-approved MIT license
+  - an unusually permissive posture that allows commercial use and even distillation,
+  and which has produced a large family of R1 distills into Llama and Qwen bases.
+  Adopters must separate the open weights (safetensors,
+  run locally, no data leaves your infrastructure) from DeepSeek''s hosted app/API
+  service, which has faced data-privacy scrutiny and government bans in several jurisdictions;
+  those hosted-service concerns do not apply to locally-run weights; they apply if you
+  call DeepSeek''s own API. On top of that, V3/R1 very likely cross the EU
+  AI Act''s 1e25-FLOP systemic-risk threshold - which voids the MIT license''s open-source
+  exemption and leaves a real Article 53/55 documentation gap - and the models show
+  lighter safety tuning plus topic censorship aligned with Chinese content rules.
+
+  '
+variants:
+- name: DeepSeek-V3
+  params_total: ~671B
+  params_active: ~37B
+  context_window: long
+  kind: instruct
+  safety_tuned: true
+- name: DeepSeek-R1
+  params_total: ~671B
+  params_active: ~37B
+  context_window: long
+  kind: reasoning
+  safety_tuned: true
+- name: DeepSeek-R1-Distill (Llama / Qwen bases)
+  kind: reasoning
+  safety_tuned: false
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: partial
+    evaluation: partial
+    documentation: open
+    license: open
+  license:
+    spdx: MIT
+    name: MIT License
+    classification: osi
+    commercial_use: allowed
+    notable_restrictions:
+    - Per-checkpoint licence split - R1 code+weights are MIT, but V3 weights are under
+      the separate "DeepSeek License Agreement, Version 1.0" (V3 code MIT) with use
+      restrictions; R1 distills carry their base-model licence. Verify each checkpoint.
+    url: https://huggingface.co/deepseek-ai/DeepSeek-R1
+provenance:
+  canonical_source: https://huggingface.co/deepseek-ai
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: DeepSeek-R1-Distill-Llama-70B and other distills/quants
+      trust: mixed
+      note: separate artifacts; trust equals the uploader rather than DeepSeek
+  checkpoint_checklist_score: 5
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: very likely >1e25 for V3/R1
+    over_1e25_threshold: true
+    article_55_docs_available: 'no'
+  open_source_exemption:
+    license_qualifies: 'yes'
+    rationale: 'On the license alone MIT is a genuine free-and-open-source license,
+      so V3/R1 would qualify for the Article 53 open-source exemption. However the
+      exemption is VOID because V3/R1 are systemic-risk models (training compute very
+      likely exceeds the 1e25-FLOP threshold), and systemic-risk models receive no
+      open-source exemption - so the full Article 53 + 55 obligations apply and are
+      not met.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: 'no'
+    code_of_practice_signatory: false
+  deployer_notes: 'DeepSeek publishes strong technical reports but not an EU Annex-XI
+    package, no copyright policy and no training-content summary. For a downstream
+    EU deployer this is a real compliance GAP: a systemic-risk GPAI model with no
+    Article 55 documentation, so obligations cannot be assembled from what the provider
+    supplies. Some organisations also restrict China-origin models by policy - noted
+    here factually as a governance consideration.
+
+    '
+  last_assessed: '2026-07-25'
+performance:
+  note: Third-party framing only.
+  class_position: R1 is a strong reasoning model; V3 competitive among large open-weight
+    models.
+behaviour:
+  refusals: 'Exhibits topic censorship/refusals aligned with Chinese content rules
+    on certain political topics - a documented behavioural characteristic that affects
+    neutrality and factuality for some use cases.
+
+    '
+  prompt_injection: Residual susceptibility; lighter safety tuning makes known jailbreaks
+    easier to elicit.
+  failure_modes: Standard hallucination profile; censorship behaviour is the distinctive
+    one.
+safety:
+  variant_assessed: V3/R1 instruct/reasoning weights, self-hosted
+  jailbreak_resistance: Lighter safety tuning than Western frontier labs; known jailbreaks
+    are easier - deploy behind your own guardrails.
+  guard_model: No first-party guard model shipped; bring your own input/output classifiers.
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: V3/R1 full weights need a multi-GPU serving cluster; distills run
+    on far smaller hardware but are separate artifacts.
+  serving_support:
+  - vllm
+  - sglang
+  - llama.cpp
+  - ollama
+  controls_required:
+  - Strong input/output guardrails (bring your own guard model)
+  - Prompt-injection defences
+  - Content/neutrality review given censorship behaviour
+  - Self-host the safetensors weights; do not send sensitive data to the hosted API
+score:
+  rubric_version: '1.1'
+  headline: 64.4
+  grade: C
+  hard_flags:
+  - 🚩 EU AI Act systemic-risk model with no Article 55 documentation
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Open-weights tier: MIT-licensed weights and open documentation via
+        detailed technical reports, but training data is closed and training code
+        only partial, with evaluation partial. Meets the open-weights anchor (3),
+        not the fully-open top anchor.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev3
+    provenance:
+      score: 3
+      rationale: 'Verified deepseek-ai org on Hugging Face, safetensors distribution
+        with checksums, clear canonical source and no malicious-checkpoint incident
+        on the canonical org (checklist ~5/8). The many third-party distills/quants
+        are separate artifacts whose trust equals their uploader. Meets the score-3
+        anchor (verified org + safetensors + checksums, ~4-5 of 8 boxes); short of 4,
+        which needs a scanned checkpoint or a documented mirror/quantization policy
+        (~6-7 boxes), and of 5''s cryptographic signing / provenance attestation.
+
+        '
+      evidence_refs:
+      - ev3
+    legal:
+      score: 2
+      rationale: 'The permissive MIT license is a genuine plus, but it is outweighed
+        for compliance purposes by the systemic-risk exemption being void, no Article
+        55 documentation, no copyright policy and no training-content summary - a
+        concrete EU compliance gap for a downstream deployer.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev1b
+      - ev2
+    safety:
+      score: 3
+      rationale: 'Released as instruct/reasoning variants with documented behaviour,
+        meeting the score-3 anchor, but lighter safety tuning than Western frontier
+        labs makes jailbreaks easier and the model exhibits topic censorship - no
+        first-party guard model ships, so deployers must add their own guardrails.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev4
+    performance:
+      score: 4
+      rationale: 'R1 is a strong reasoning model and V3 is competitive among large
+        open-weight models on public leaderboards. Capped at 4 on third-party
+        leaderboard evidence without independent reproduction.
+
+        '
+      evidence_refs:
+      - ev4
+    operational:
+      score: 5
+      rationale: 'First-class ecosystem support: broad serving across vLLM, SGLang,
+        llama.cpp and Ollama, an extensive family of community quantizations and distills,
+        and wide third-party hosting availability shortly after release.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev4
+    governance:
+      score: 3
+      rationale: 'Active, named publisher with a verified org and a track record of
+        technical reports and releases, meeting the score-3 anchor. Held down by the
+        absence of a published security-contact/vulnerability-disclosure process,
+        the hosted-service privacy scrutiny, and China-origin policy restrictions
+        some organisations apply.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev3
+      - ev5
+      - ev6
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry
+#     (like the EU AI Act flag). Not a scoring input - each ties back to one of the seven
+#     AOI dimensions and summarises documentation that lives in the four domains.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tune and distil freely under MIT - distillation is expressly permitted - but training data and code are unreleased, so full reproduction from scratch is not possible."
+    refs: [ev1]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "Strong reasoning (R1) makes it a capable knowledge/analysis backbone, but built-in topic censorship aligned with Chinese content rules distorts coverage on sensitive subjects."
+    refs: [ev4, ev2]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "Excellent for specialisation: MIT weights permit fine-tuning and - explicitly - distillation into smaller task-specific models, a stated DeepSeek use case."
+    refs: [ev1]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Highly exchangeable: safetensors with first-class serving (vLLM, SGLang and more); R1's reasoning / think-tag output format is the main behaviour to account for when swapping."
+    refs: [ev3]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Not independently benchmarked for misuse; the hosted service has drawn data-privacy scrutiny and government bans, and no broad third-party red-team of the open weights exists."
+    refs: [ev2]
+documentation:
+  assess:
+    completeness: 93.3
+    originality: 0.0
+    items:
+    - key: intended-use
+      title: Intended & out-of-scope use
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      - ev4
+      summary: General assistant / reasoning / coding engine (R1 reasoning, V3 instruct);
+        out of scope for topic-neutral factuality and unguarded high-stakes use.
+    - key: limitations
+      title: Known limitations, bias & failure modes
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev2
+      - ev1
+      summary: Lighter safety tuning, easier jailbreaks, and topic censorship aligned
+        with Chinese content rules; China-origin governance consideration.
+    - key: openness
+      title: Openness tier & components
+      doc_type: explanation
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      - ev3
+      summary: open_weights tier - MIT weights + open technical reports, but closed
+        training data and only partial training code/evaluation.
+    - key: license
+      title: License terms & what you may do
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      summary: OSI-approved MIT - permissive, commercial use and distillation allowed;
+        verify the license per checkpoint (some earlier releases were custom).
+    - key: provenance
+      title: Supply-chain provenance
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev2
+      summary: Verified deepseek-ai org, safetensors + checksums; many R1 distills
+        are separate-trust artifacts; hosted app/API is a distinct, privacy-scrutinised
+        service.
+    - key: eu-ai-act
+      title: EU AI Act posture
+      doc_type: explanation
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      - ev2
+      summary: GPAI; V3/R1 very likely systemic-risk (>1e25 FLOP) so the open-source
+        exemption is VOID and no Article 55 package is supplied - a real compliance gap.
+    - key: evaluation
+      title: Benchmarks & evaluation
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev4
+      summary: Strong reasoning (R1) and competitive V3 on public leaderboards; third-party
+        framing only, with no figures asserted.
+    - key: safety-eval
+      title: Independent safety evaluation
+      doc_type: reference
+      source_type: gap
+      gap_reason: No independent, methodologically-documented red-team or safety benchmark
+        for the self-hosted V3/R1 weights is available to aggregate; the publisher ships no first-party
+        safety-eval card. The behavioural caveats (lighter tuning, easier jailbreaks,
+        topic censorship) are recorded under limitations but do not constitute a citable
+        independent safety evaluation.
+  implement:
+    completeness: 100.0
+    originality: 0.0
+    items:
+    - key: install
+      title: Install & run
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      - ev3
+      summary: Hugging Face from_pretrained on the canonical org, plus Ollama, vLLM
+        and llama.cpp; pin the revision and prefer the canonical safetensors.
+    - key: hardware
+      title: Hardware requirements
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      summary: Full V3/R1 (~671B total / ~37B active MoE) needs a multi-GPU cluster;
+        R1-Distill-Qwen/Llama variants run on modest single GPUs.
+    - key: serving
+      title: Serving stacks
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev1
+      summary: Served via vLLM, SGLang, llama.cpp, Ollama and Transformers; broad
+        first-class ecosystem support.
+    - key: safe-deployment
+      title: Safe-deployment controls & Deployment Ceiling
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev2
+      - ev3
+      summary: Self-hosted safetensors are supply-chain-safe; bring your own guardrails
+        given lighter safety tuning. Deployment Ceiling T2, conditional.
+    - key: quantization
+      title: Available quantizations
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      summary: Extensive community GGUF/AWQ quantizations plus the R1-Distill family;
+        these are separate-trust artifacts whose trust equals their uploader.
+    - key: fine-tuning
+      title: Fine-tuning & adaptation
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      summary: MIT permits distillation and derivative training; standard SFT / LoRA
+        adaptation applies to the open weights.
+    - key: integration
+      title: API / OpenAI-compatible integration
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      summary: Expose an OpenAI-compatible endpoint by self-hosting via vLLM or SGLang
+        rather than calling DeepSeek's hosted API for sensitive data.
+  use:
+    completeness: 61.1
+    originality: 0.0
+    items:
+    - key: capabilities
+      title: Capabilities & modalities
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev4
+      - ev1
+      summary: Strong reasoning and coding; R1 exposes an explicit reasoning mode,
+        V3 is a competitive general instruct model. Text-only.
+    - key: context-window
+      title: Context window & long-context behaviour
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev1
+      summary: Long context documented on the model card; confirm the exact window
+        in each checkpoint's config as it varies by release.
+    - key: chat-template
+      title: Prompt format / chat template
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      summary: DeepSeek chat template shipped with the model card; R1 emits <think>
+        reasoning tags that must be parsed/stripped downstream.
+    - key: languages
+      title: Multilingual coverage
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev1
+      - ev2
+      summary: Strong English and Chinese; other languages are supported but less
+        thoroughly evaluated.
+    - key: tool-use
+      title: Function / tool calling
+      doc_type: reference
+      source_type: gap
+      gap_reason: Function/tool-calling support for the self-hosted open weights is
+        not cleanly documented in the canonical model card (it differs between V3 and
+        R1 and is described mainly for DeepSeek's hosted API), so it cannot be aggregated
+        for the open weights.
+    - key: structured-output
+      title: Structured / JSON output
+      doc_type: reference
+      source_type: gap
+      gap_reason: No model-native JSON or structured-output mode is documented for
+        the open weights; schema-constrained decoding is a serving-layer feature (vLLM
+        / SGLang / outlines) rather than a property of the weights, so there is nothing
+        model-specific to aggregate without independent testing.
+  support:
+    completeness: 66.7
+    originality: 0.0
+    items:
+    - key: troubleshooting
+      title: Common problems & fixes
+      doc_type: troubleshooting
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      summary: Handle R1 reasoning tokens / chat template correctly and plan for the
+        large-model serving footprint (sharding, KV-cache, quantized distills).
+    - key: release-versioning
+      title: Versions & changelog
+      doc_type: release_notes
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev1
+      summary: Versioned families (V3 -> V3.1 -> V4, plus R1) tracked as Hugging Face
+        repos/revisions on the deepseek-ai org; pin a revision to stay reproducible.
+    - key: security-disclosure
+      title: Security-disclosure process
+      doc_type: reference
+      source_type: gap
+      gap_reason: DeepSeek publishes no formal vulnerability-disclosure policy or security
+        contact for the model weights (publisher.security_contact is empty); there
+        is no documented process, SLA, or advisory channel to aggregate. The hosted
+        app/API is a separate service and any disclosure path it may have does not
+        cover the open weights.
+    - key: channels
+      title: Support & community channels
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      summary: Hugging Face model-repo discussions, DeepSeek's GitHub, and community
+        forums; no first-party enterprise support channel for the open weights.
+    - key: deprecation
+      title: Deprecation / end-of-life policy
+      doc_type: reference
+      source_type: gap
+      gap_reason: No published deprecation, end-of-life, or checkpoint-retirement policy
+        exists for the DeepSeek open-weight releases; superseded checkpoints simply
+        remain on Hugging Face, so there is no lifecycle commitment to document.
+    - key: known-issues
+      title: Tracked known issues
+      doc_type: troubleshooting
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev2
+      - ev1
+      summary: Topic censorship on certain political topics and lighter-safety-tuning
+        caveats are the distinctive known issues, per the model card and third-party
+        reporting.
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: strong
+      rationale: "R1 weights are MIT - own, redistribute and (explicitly) distil them into smaller task-specific models with no field-of-use limit - but the family is not uniformly MIT: V3's WEIGHTS fall under the separate DeepSeek License Agreement v1.0 (V3 code stays MIT) with real use restrictions (no illegal/military use, no harm to minors, no false-info-to-harm, no PII misuse, no defamation/harassment/discrimination, no automated legal-rights decisions) - not a clean grant. Verify the per-checkpoint licence; R1 distills carry their base-model licence (Qwen = Apache-2.0; Llama = Llama 3.x)."
+      # grounded in: ev1 (license, retrieved) - R1 model-card + MIT LICENSE read verbatim; ev1b (license, retrieved) - V3 code-vs-weights split and DeepSeek License Agreement use-restrictions read verbatim
+    transparency:
+      level: weak
+      rationale: "You hold the weights but cannot see into them - China-aligned topic censorship is baked into behaviour, the training data is unreleased and code only partial, and misuse is unbenchmarked with no third-party red-team."
+      # grounded in: ev7, ev8 (technical_report, retrieved) - V3/R1 reports document architecture + training compute but release no training data; training code only partial (structural); ev2 (third_party) - censorship / red-team gap
+    reliability:
+      level: moderate
+      rationale: "Runs dependably, but baked-in censorship distorts sensitive-topic coverage and the safety tuning is light with no companion guard model, so you manage that layer yourself."
+      # grounded in: ev4 (third_party leaderboard); ev8 (technical_report, retrieved) - R1 pure-RL reasoning
+    data_control:
+      level: strong
+      rationale: "Self-hosted, the open weights run entirely on your own infrastructure with no clawback; the China-storage and PRC-governing-law clauses attach to DeepSeek's hosted service and do not touch the local weights."
+      # grounded in: self-hosting (structural); ev5 (privacy_policy, retrieved) - "servers located in the People's Republic of China" and ev6 (terms, retrieved) - PRC governing law bind the hosted service only
+  verdict: "You can own the R1 weights outright under MIT - run, redistribute and distil them self-hosted, and your data stays on your infrastructure - but the family is not uniformly MIT: V3's weights fall under the separate DeepSeek License Agreement with real use restrictions (military, minors, PII, discrimination, legal-rights automation), so check the per-checkpoint licence before assuming a clean grant. Transparency is the deeper cap that holds ownership at partial: China-aligned censorship is baked in and the training is opaque, so you cannot fully know what you are running. Adopt with eyes open for reasoning and distillation where that is acceptable, keep sensitive data off it, and avoid the hosted service - its Privacy Policy stores data on servers in the People's Republic of China and its Terms put disputes under PRC law."
+
+# --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
+#     (true = the document's substantive text was read; false = known to exist but not read).
+#     Grounded 2026-07-25 against the primary-source clauses in
+#     docs/primary-sources/deepseek/_sources.md. The R1 model card + MIT LICENSE and the V3
+#     code-vs-weights split (code MIT; weights under the "DeepSeek License Agreement, Version 1.0")
+#     were read verbatim; the hosted-service Privacy Policy and Terms of Use were read from the
+#     chat.deepseek.com downloads mirror (the deepseek.com/privacy-policy and HF-root LICENSE URLs
+#     404'd); the V3 and R1 technical reports were read on arXiv.
+evidence:
+- id: ev1
+  claim: 'DeepSeek-R1, read verbatim: "This code repository and the model weights
+    are licensed under the MIT License. DeepSeek-R1 series support commercial use,
+    allow for any modifications and derivative works, including ... distillation for
+    training other LLMs." The LICENSE file is standard MIT ("Copyright (c) 2023 DeepSeek",
+    AS IS). R1 distilled variants instead carry their base-model licence (Qwen distills
+    = Apache-2.0; Llama-8B = Llama 3.1; Llama-70B = Llama 3.3) - verify each distill card.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/deepseek-ai/DeepSeek-R1
+  date: '2026-07-25'
+- id: ev1b
+  claim: 'DeepSeek-V3 licensing splits code from weights (differs from R1): the code
+    repository is MIT ("Copyright (c) 2023 DeepSeek"), but "The use of DeepSeek-V3
+    Base/Chat models is subject to the Model License" - the separate "DeepSeek License
+    Agreement, Version 1.0", which is NOT MIT. It grants "a perpetual, worldwide, non-exclusive,
+    no-charge, royalty-free, irrevocable copyright license" (patent licence terminating
+    on patent litigation against DeepSeek) but imposes use restrictions (Section 5
+    / Attachment A) prohibiting: use violating "any applicable national or international
+    law"; military applications; harm to minors; generating "verifiably false information
+    and/or content with the purpose of harming others"; unauthorized distribution of
+    PII; defamation/harassment; discrimination; and automated decisions affecting legal
+    rights. Output ownership: "DeepSeek claims no rights in the Output You generate."
+    Provided AS IS.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://github.com/deepseek-ai/DeepSeek-V3
+  date: '2026-07-25'
+- id: ev2
+  claim: DeepSeek variants, MIT weights, hosted-service data-privacy scrutiny and
+    bans, topic censorship aligned with Chinese content rules, and China-origin context.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://en.wikipedia.org/wiki/DeepSeek_(chatbot)
+  date: '2026-07-25'
+- id: ev3
+  claim: Canonical, verified deepseek-ai organisation on Hugging Face distributing
+    safetensors with checksums.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/deepseek-ai
+  date: '2026-07-25'
+- id: ev4
+  claim: DeepSeek-R1 is a strong reasoning model and V3 competitive among large open-weight
+    models on public leaderboards.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://lmarena.ai/leaderboard
+  date: '2026-07-25'
+- id: ev5
+  claim: 'DeepSeek hosted-service Privacy Policy, read verbatim: "We store the information
+    we collect in secure servers located in the People''s Republic of China." Information
+    is retained "as long as necessary to provide our Services". Applies to the hosted
+    app/API, not to self-hosted open weights.'
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://chat.deepseek.com/downloads/DeepSeek%20Privacy%20Policy.html
+  date: '2026-07-25'
+- id: ev6
+  claim: 'DeepSeek hosted-service Terms of Use, read verbatim (Section 9.1 Governing
+    Law): the terms are "governed by the laws of the People''s Republic of China in
+    the mainland," with negotiation followed by PRC-court litigation and no arbitration.
+    Applies to the hosted service, not to self-hosted weights.'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://chat.deepseek.com/downloads/DeepSeek%20Terms%20of%20Use.html
+  date: '2026-07-25'
+- id: ev7
+  claim: 'DeepSeek-V3 Technical Report (arXiv 2412.19437): MoE 671B total / 37B active,
+    MLA + DeepSeekMoE, auxiliary-loss-free load balancing, trained on 14.8T tokens
+    using 2.788M H800 GPU-hours.'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2412.19437
+  date: '2026-07-25'
+- id: ev8
+  claim: 'DeepSeek-R1 Technical Report (arXiv 2501.12948), "Incentivizing Reasoning
+    Capability in LLMs via Reinforcement Learning": reasoning incentivized via pure
+    RL with no human-labelled reasoning trajectories, then distilled into smaller models.'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2501.12948
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry.
+- date: '2026-07-25'
+  change: Migrated to v2 four-domain library format (added documentation block; score
+    unchanged).
+- date: '2026-07-25'
+  change: Grounded licence + hosted-service evidence against primary sources (docs/primary-sources/deepseek)
+    - corrected V3 weights to the DeepSeek License Agreement (not MIT); China-storage
+    + PRC-law clauses read verbatim; V3/R1 technical reports added; evidence doc_type/retrieved
+    added.
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

@@ -1,0 +1,336 @@
+# OneHill v2 HOSTING-PROVIDER library entry for Ollama. Replaces data.yaml.
+# Validated against schema/hosting-provider.v2.schema.json.
+#   scores  -> scripts/score.py --check         (provider score - carried over unchanged)
+#   meters  -> scripts/completeness.py --write   (per-domain completeness/originality)
+#   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: ollama
+name: Ollama
+kind: local_runner
+operator: Ollama
+summary: 'Ollama is a local model runner with a content-addressable, OCI-like registry:
+  `ollama pull` resolves a Modelfile (a recipe of base weights + chat template + parameters
+  + an optional system prompt), downloads the GGUF blob addressed by SHA256, caches
+  it, and `ollama run` serves it locally; custom models are built with a Modelfile
+  and `ollama create`. Its great strength is convenience and a genuinely safer artifact
+  format - GGUF is data-only and cannot execute code on load the way pickle can, and
+  Ollama is NOT exposed to the llama-cpp-python GGUF RCE (CVE-2026-5760) because
+  it does not use that Python binding. Its weakness is provenance: there is no verified-publisher
+  identity comparable to a Hugging Face blue badge, no documented GGUF-level malware
+  scanning, and no documented cryptographic signing. SHA256 addressing gives you integrity
+  (the blob you got is the blob that was published) but NOT authenticity (no proof
+  of who published it). The residual risk is a malicious GGUF chat template (Jinja2
+  server-side template injection / inference-time backdoors) or a malformed header
+  hitting a loader memory bug, so you must bring your own provenance discipline: prefer
+  the official library or known publishers and cross-check checksums against a canonical
+  source.
+
+  '
+distribution_mechanism: 'Content-addressable, OCI-like registry (manifests + SHA256-addressed
+  blobs). `ollama pull` resolves a Modelfile recipe and downloads the GGUF blob into
+  a local cache; `ollama run` serves it. Custom models via Modelfile + `ollama create`.
+
+  '
+provenance:
+  verified_orgs: 'no'
+  malware_scanning: 'None documented. No GGUF-level malware scanning of registry content
+    is confirmed; this is recorded as not documented, not proven-absent.
+
+    '
+  signing: 'None documented. No cryptographic signing or publisher-identity verification
+    is confirmed; treat as NOT DOCUMENTED rather than proven-absent.
+
+    '
+  checksums: 'yes'
+  revision_pinning: unknown
+  gating_enforcement: none (CLI flow) - no click-through license gating
+format_safety:
+  safetensors_default: n/a
+  pickle_handling: n/a
+  trust_remote_code_surface: 'GGUF is data-only, so there is no pickle-style code-execution
+    on load (safer than pickle by design). It is not risk-free: a malicious GGUF Jinja2
+    chat template can cause server-side template injection / inference-time backdoors,
+    and malformed GGUF headers can trigger loader memory bugs. IMPORTANT: Ollama is
+    NOT vulnerable to the llama-cpp-python GGUF RCE (CVE-2026-5760) because it does
+    not use that Python binding.
+
+    '
+  known_loader_cves: []
+license_surfacing: 'License text ships inside the model and is viewable with `ollama
+  show --license`. Enforcement is minimal - there is no click-through gating or access-request
+  flow, so license acceptance is on the operator''s honour, not enforced by the tool.
+
+  '
+security_track_record:
+  incidents: []
+  response_notes: 'Fewer documented malicious-upload incidents than the large public
+    hubs, but that reflects weaker provenance tooling overall rather than a stronger
+    security posture: with no verified-org identity, no documented scanning and no
+    signing, malicious content would be harder to detect and attribute in the first
+    place.
+
+    '
+trust_signals_exposed:
+- Registry namespace - weak; namespace ownership is not an identity badge
+- Official Ollama library curation - weak; curation is not per-publisher identity
+  verification or scanning
+self_hosting_notes: 'GGUF is safer than pickle, but inspect the chat template before
+  serving untrusted GGUFs (template injection runs at inference time). Prefer the
+  official Ollama library or known publishers. Where possible, verify a pulled model
+  against the canonical source (e.g. the publisher''s Hugging Face repo) SHA256 -
+  remember SHA256 addressing gives integrity, not authenticity.
+
+  '
+ecosystem_lockin: 'Low format lock-in - GGUF is portable and usable by other runners
+  (llama.cpp, LM Studio) - but the Modelfile recipe format and the local registry
+  layout are Ollama-specific conveniences. Large, fast-growing local ecosystem.
+
+  '
+score:
+  rubric_version: '1.0'
+  headline: 55.2
+  grade: C
+  hard_flags: []
+  dimensions:
+    provenance_integrity:
+      score: 2
+      rationale: 'No verified-publisher identity, no documented malware scanning and
+        no documented signing; the only integrity guarantee is SHA256 content-addressing,
+        which proves the blob is intact but not who authored it (integrity, not authenticity).
+        That is below the score-3 anchor, which requires verified orgs plus scanning
+        on top of checksums.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev2
+    format_loader_safety:
+      score: 4
+      rationale: 'GGUF is data-only and cannot execute code on load - a real safety
+        advantage over pickle - and Ollama specifically avoided the main llama-cpp-python
+        GGUF RCE (CVE-2026-5760) by not using that binding. Held to 4, not 5, because
+        the chat-template SSTI / inference-time-backdoor surface exists and is not
+        automatically inspected or blocked for pulled models.
+
+        '
+      evidence_refs:
+      - ev3
+      - ev4
+      - ev5
+    license_governance:
+      score: 2
+      rationale: 'License text is surfaced (`ollama show --license`) but there is
+        no gating, no click-through acceptance and no access-request enforcement -
+        acceptance is entirely on the operator. That is minimal governance, below
+        the anchor for enforced gating.
+
+        '
+      evidence_refs:
+      - ev1
+    security_track_record:
+      score: 3
+      rationale: 'Few documented malicious-upload incidents, but weak provenance tooling
+        means the absence of reports is partly an absence of detection rather than
+        evidence of a clean surface - placing it at the middle anchor rather than
+        higher.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev4
+    transparency:
+      score: 2
+      rationale: 'The only trust signals exposed to a puller are the registry namespace
+        and official-library curation, neither of which is a verified-publisher identity
+        or a published scan result; there is little for a downloader to independently
+        assess.
+
+        '
+      evidence_refs:
+      - ev1
+    ecosystem_portability:
+      score: 4
+      rationale: 'Very large and growing local ecosystem built on the portable GGUF
+        format, which other runners can consume. Short of 5 because the Modelfile
+        recipe and local registry layout are Ollama-specific conveniences rather than
+        an open cross-tool standard.
+
+        '
+      evidence_refs:
+      - ev1
+
+# --- Four documentation domains. Item keys match checklists/hosting-provider.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     Every credited item is `aggregated` (public source, >=1 ref); OneHill has run nothing,
+#     so there are no onehill_generated items and originality = 0.
+documentation:
+  assess:
+    completeness: 83.3
+    originality: 0.0
+    items:
+      - key: provenance-integrity
+        title: "Provenance & integrity signals"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2]
+        summary: "No verified-publisher identity, no documented GGUF-level scanning and no documented signing; SHA256 content-addressing gives integrity (the blob is intact) but not authenticity (no proof of who published it), so provenance discipline is on the operator."
+      - key: format-safety
+        title: "Format & loader safety"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev3, ev4, ev5]
+        summary: "GGUF is data-only and cannot execute code on load (safer than pickle), and Ollama avoids the llama-cpp-python GGUF RCE (CVE-2026-5760) by not using that binding; residual risk is a malicious Jinja2 chat template (SSTI / inference-time backdoor) or a malformed-header loader bug."
+      - key: license-governance
+        title: "License surfacing & gating"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev1]
+        summary: "License text ships inside the model and is viewable with `ollama show --license`, but there is no click-through gating or access-request flow - acceptance is entirely on the operator's honour."
+      - key: security-record
+        title: "Security incident history & response"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev2]
+        summary: "Few documented malicious-upload incidents, but with no verified-org identity, no documented scanning and no signing, that reflects weak detection tooling rather than a proven-clean surface."
+      - key: transparency
+        title: "Exposed trust signals & their gameability"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev2]
+        summary: "The only signals a puller sees are the registry namespace and official-library curation - neither a verified-publisher identity nor a published scan result - so there is little to independently assess."
+  implement:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - key: obtain-weights
+        title: "Obtaining weights (ollama pull / Modelfile)"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev1]
+        summary: "`ollama pull` resolves a Modelfile recipe (base weights + chat template + parameters + optional system prompt) and downloads the SHA256-addressed GGUF blob into a local cache; custom models are built with a Modelfile and `ollama create`."
+      - key: verify-integrity
+        title: "Verifying integrity (SHA256 addressing)"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev2]
+        summary: "Blobs are SHA256 content-addressed, so a pull is integrity-checked (the blob is intact), but there is no scanning or signing - cross-check the checksum against a canonical source (e.g. the publisher's Hugging Face repo) since addressing proves integrity, not authenticity."
+      - key: pin-revision
+        title: "Pinning a revision"
+        doc_type: howto
+        source_type: gap
+        gap_reason: "Blobs are SHA256-addressed, but tag/digest revision pinning and reproducibility guarantees are not documented (revision_pinning recorded as unknown) in the sources reviewed."
+      - key: run-serve
+        title: "Running / serving locally"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev1]
+        summary: "`ollama run` serves a pulled model locally over Ollama's CLI/API - the core of the tool; inspect the chat template before serving untrusted GGUFs, since template injection runs at inference time."
+      - key: resource-needs
+        title: "Resource requirements"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Disk and VRAM requirements depend on the specific GGUF quantization pulled and were not captured in the sources reviewed."
+  use:
+    completeness: 90.0
+    originality: 0.0
+    items:
+      - key: catalog-scope
+        title: "Catalog scope & publishers"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2]
+        summary: "A curated official Ollama library plus user-supplied/community GGUFs pulled by namespace; there is no per-publisher identity verification, so community models rely on user-supplied provenance."
+      - key: formats-supported
+        title: "Formats supported"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev3, ev1]
+        summary: "GGUF blobs (data-only, portable) packaged via Modelfile recipes; the same GGUF is consumable by other runners such as llama.cpp and LM Studio."
+      - key: integration
+        title: "Downstream integration"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1]
+        summary: "Local CLI/API plus Modelfile recipes and an Ollama-specific local registry layout; portable at the GGUF layer but the recipe format and registry layout are Ollama-specific conveniences."
+  support:
+    completeness: 14.3
+    originality: 0.0
+    items:
+      - key: security-disclosure
+        title: "Reporting malicious models & vulnerabilities"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No documented vulnerability-disclosure or malicious-model reporting process for the Ollama registry was surfaced in the sources reviewed."
+      - key: release-versioning
+        title: "Tooling versioning & changelog"
+        doc_type: release_notes
+        source_type: gap
+        gap_reason: "Ollama's tool release cadence and changelog were not captured in the sources reviewed."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Community and support channel details were not captured in the sources reviewed, though the local ecosystem is large and fast-growing."
+      - key: known-issues
+        title: "Known issues & caveats"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: full
+        refs: [ev2, ev4]
+        summary: "Provenance is the weak spot - no verified-org identity, no documented scanning or signing (integrity, not authenticity) - and a malicious GGUF Jinja2 chat template can inject server-side / inference-time backdoors, so inspect templates and cross-check checksums."
+
+evidence:
+- id: ev1
+  claim: 'Ollama distribution mechanism: OCI-like registry, Modelfile recipes, SHA256-addressed
+    GGUF blobs, `ollama show --license`, CLI pull/run flow.'
+  source_type: third_party
+  url: https://deepwiki.com/ollama/ollama/4-model-management
+  date: '2026-07-25'
+- id: ev2
+  claim: Running custom/community GGUF models on Ollama relies on user-supplied provenance;
+    no verified-org or scanning layer is described.
+  source_type: third_party
+  url: https://zohaib.me/run-custom-gguf-model-on-ollama/
+  date: '2026-07-25'
+- id: ev3
+  claim: GGUF is data-only (no pickle-style code execution); deserialization threat
+    model for GGUF.
+  source_type: third_party
+  url: https://protectai.com/insights/knowledge-base/deserialization-threats/PAIT-GGUF-101
+  date: '2026-07-25'
+- id: ev4
+  claim: Malicious GGUF Jinja2 chat templates enable server-side template injection
+    / inference-time backdoors.
+  source_type: third_party
+  url: https://research.jfrog.com/model-threats/gguf-ssti/
+  date: '2026-07-25'
+- id: ev5
+  claim: GGUF chat-template injection at inference time is a distinct risk from load-time
+    code execution.
+  source_type: third_party
+  url: https://neuraltrust.ai/blog/inference-gguf-templates
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry.
+- date: '2026-07-25'
+  change: Migrated to v2 four-domain library format (added documentation block; score
+    carried over unchanged).
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

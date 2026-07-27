@@ -1,0 +1,167 @@
+# OneHill v2 MODEL library entry - machine-readable registry + documentation index.
+# Validated against schema/model.v2.schema.json. Copy this folder to models/<id>/.
+#
+#   scores      -> scripts/score.py --write        (AOI headline/grade)
+#   meters      -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   long prose  -> the four sibling files assess.md / implement.md / use.md / support.md,
+#                  each section marked `<!-- item: KEY -->` where KEY matches an item below.
+#
+# Provenance vocabularies (both required):
+#   evidence[].source_type : onehill_verified | third_party | publisher   (provenance of a FACT)
+#   documentation item source_type : aggregated | onehill_generated | gap (provenance of a SECTION)
+#   an onehill_generated item must cite an onehill_verified evidence ref.
+
+schema_version: "2.0"
+id: "publisher-model"
+name: "Publisher Model Family"
+aliases: []
+
+publisher:
+  name: ""
+  country: ""
+  accountable_entity: true
+  url: ""
+  security_contact: ""
+
+summary: >
+  One independent paragraph: what it is, who made it, and the single most important thing
+  an adopter needs to know.
+
+variants:
+  - {name: "", params_total: "", context_window: "", kind: instruct, safety_tuned: true}
+
+openness:
+  tier: open_weights
+  components:
+    weights: open                         # open | partial | closed
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: partial                      # open | partial | closed (how open the LICENSE is; classification below)
+  license:
+    spdx: ""
+    name: ""
+    classification: open_weight           # osi | permissive_open | open_weight | research_only | custom
+    commercial_use: allowed_with_conditions
+    notable_restrictions: []
+    url: ""
+
+provenance:
+  canonical_source: ""
+  verified_org_on_primary_host: true
+  formats: [safetensors]
+  integrity: {checksums: true, signed: false, signing_tech: "", provenance_attestation: false}
+  mirrors_and_quants: {acknowledged: true, notable: []}
+  checkpoint_checklist_score: 0
+  scanner_result: {}
+  incidents: []
+
+eu_ai_act:
+  is_gpai: true
+  systemic_risk: {designated: false, training_flops_estimate: "", over_1e25_threshold: null, article_55_docs_available: "n/a"}
+  open_source_exemption: {license_qualifies: "uncertain", rationale: ""}
+  provider_package:
+    technical_documentation: "unknown"    # quote yes/no values (YAML coerces bare yes/no to booleans)
+    downstream_information: "unknown"
+    copyright_policy: "unknown"
+    training_content_summary: "unknown"
+    code_of_practice_signatory: false
+  deployer_notes: ""
+  last_assessed: "2026-07-25"
+
+performance: {}
+behaviour: {}
+safety: {}
+
+deployment:
+  ceiling_tier: T1
+  ceiling_conditional: true
+  hardware_notes: ""
+  serving_support: []
+  controls_required: []
+
+score:
+  rubric_version: "1.0"
+  headline: null                          # scripts/score.py --write
+  grade: null
+  hard_flags: []
+  dimensions:
+    openness:     {score: 0, rationale: "", evidence_refs: []}
+    provenance:   {score: 0, rationale: "", evidence_refs: []}
+    legal:        {score: 0, rationale: "", evidence_refs: []}
+    safety:       {score: 0, rationale: "", evidence_refs: []}
+    performance:  {score: 0, rationale: "", evidence_refs: []}
+    operational:  {score: 0, rationale: "", evidence_refs: []}
+    governance:   {score: 0, rationale: "", evidence_refs: []}
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry
+#     (like the EU AI Act flag). Not a scoring input - each ties back to one of the seven
+#     AOI dimensions. `level` vocabularies (best -> worst) are enforced in validate.py:
+#       trainability:        full | partial | limited | none            (dimension: openness)
+#       knowledge_structure: strong | moderate | weak                   (dimension: performance)
+#       specialisation:      strong | moderate | weak                   (dimension: openness)
+#       exchangeability:     high | medium | low                        (dimension: operational)
+#       misuse_exposure:     benchmarked | partial | unbenchmarked      (dimension: safety)
+#     Use the honest lowest level where the attribute is unknown/unevaluated. refs[] cite evidence.
+signals:
+  trainability:        {level: partial, dimension: openness,    summary: "", refs: []}
+  knowledge_structure: {level: moderate, dimension: performance, summary: "", refs: []}
+  specialization:      {level: moderate, dimension: openness,    summary: "", refs: []}
+  exchangeability:     {level: medium, dimension: operational,  summary: "", refs: []}
+  misuse_exposure:     {level: unbenchmarked, dimension: safety, summary: "", refs: []}
+
+# --- The four documentation domains. Item `key`s must match checklists/model.yaml and a
+#     `<!-- item: KEY -->` section in the domain's .md file. completeness/originality are
+#     computed by scripts/completeness.py --write (leave null here).
+documentation:
+  assess:
+    completeness: null
+    originality: null
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated             # aggregated | onehill_generated | gap
+        coverage: full                      # full | partial (omit for gap)
+        refs: []                            # >=1 evidence id for aggregated
+        summary: "One-line abstract shown in tables/meters/tooltips (not the full prose)."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: onehill_generated
+        coverage: full
+        method: "What OneHill actually ran (harness, version, checkpoint, date)."
+        refs: []                            # must include an onehill_verified evidence id
+        summary: ""
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Why this cannot be gathered nor provided (be specific)."
+  implement:
+    completeness: null
+    originality: null
+    items:
+      - {key: install, title: "Install & run", doc_type: howto, source_type: aggregated, coverage: full, refs: [], summary: ""}
+  use:
+    completeness: null
+    originality: null
+    items:
+      - {key: capabilities, title: "Capabilities & modalities", doc_type: reference, source_type: aggregated, coverage: full, refs: [], summary: ""}
+  support:
+    completeness: null
+    originality: null
+    items:
+      - {key: release-versioning, title: "Versions & changelog", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [], summary: ""}
+
+evidence:
+  - {id: ev1, claim: "", source_type: publisher, url: "", date: "2026-07-25"}
+  # onehill_verified evidence must carry a `method`:
+  # - {id: ev-eval, claim: "", source_type: onehill_verified, method: "ran lm-eval-harness ...", url: "", date: "2026-07-25"}
+
+changelog:
+  - {date: "2026-07-25", change: "Initial entry."}
+
+last_verified: "2026-07-25"
+freshness_sla: {fast_days: 30, score_days: 90, slow_days: 180}

@@ -1,0 +1,497 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* AI Ownership Index - site styles.
+   Locked palette per the design handover: cool ground + teal chrome, gold reserved for
+   the ownership verdict. One font, Inter, for every heading and all UI (no serif). Theme-aware: Starlight
+   sets data-theme="dark|light" on <html>; we map its accent + gray token scales onto the
+   AOI tokens for both, so the Starlight prose pages read as one app with the custom
+   library pages (which use src/styles/aoi-shell.css). */
+
+/* Dark theme (Starlight default) - cool graphite ground, teal accent. */
+:root {
+  --sl-font: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --sl-color-accent-low: #33271A;
+  --sl-color-accent: #C4A986;      /* warm brown/tan on dark */
+  --sl-color-accent-high: #E3C9AE;
+  --gold: #d6a94e;                 /* verdict-signature gold, for the footer wordmark */
+  --display: var(--sl-font); /* single font: no serif, display titles use the sans too */
+  --sl-color-white: #eaedf1;
+  --sl-color-gray-1: #dfe3e9;
+  --sl-color-gray-2: #b8c0ca;
+  --sl-color-gray-3: #98a2af;
+  --sl-color-gray-4: #69727e;
+  --sl-color-gray-5: #2a303a;
+  --sl-color-gray-6: #1a1f27;
+  --sl-color-gray-7: #141920;
+  --sl-color-black: #0f1216;
+  --sl-color-bg: #0f1216;
+  --sl-color-bg-nav: #12171d;
+  --sl-color-bg-sidebar: #12171d;
+}
+
+/* Light theme (default per handover) - cool paper ground, teal accent. */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #EDE4D6;
+  --sl-color-accent: #6E5D49;      /* warm brown */
+  --sl-color-accent-high: #3A2E22;
+  --gold: #9a7b1e;                 /* verdict-signature gold, for the footer wordmark */
+  --sl-color-white: #1b1e23;       /* high-contrast ink (headings) */
+  --sl-color-gray-1: #1b1e23;
+  --sl-color-gray-2: #3a4149;
+  --sl-color-gray-3: #57606b;
+  --sl-color-gray-4: #8a929c;
+  --sl-color-gray-5: #d6dbe1;
+  --sl-color-gray-6: #eceff2;
+  --sl-color-gray-7: #f4f6f9;
+  --sl-color-black: #ffffff;
+  --sl-color-bg: #f4f6f9;
+  --sl-color-bg-nav: #ffffff;
+  --sl-color-bg-sidebar: #ffffff;
+}
+
+/* Refined serif on display titles only (page H1 + masthead + hero); every other
+   heading is the sans, matching the app shell. */
+:where(h2, h3, h4, h5, h6) {
+  font-family: var(--sl-font);
+  letter-spacing: -0.011em;
+}
+:where(h1),
+.site-title,
+.hero h1 {
+  font-family: var(--sl-font);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+}
+/* Wordmark in the gold verdict colour, matching the app-shell brand. */
+.site-title { color: #b8962f; }
+:root[data-theme='light'] .site-title { color: #9a7b1e; }
+
+/* Data-provenance tokens (source badges, grades, meters) - functional, kept as-is. */
+:root {
+  --oh-aggregated: #2563eb;   /* blue - from an existing source */
+  --oh-onehill: #7c3aed;      /* violet - OneHill generated/verified */
+  --oh-gap: #b45309;          /* amber - explicit gap */
+  --oh-grade-a: #15803d;
+  --oh-grade-b: #4d7c0f;
+  --oh-grade-c: #b45309;
+  --oh-grade-d: #c2410c;
+  --oh-grade-f: #b91c1c;
+}
+
+/* --- source badges --- */
+.oh-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.22em 0.5em;
+  border-radius: 999px;
+  color: #fff;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.oh-badge--aggregated { background: var(--oh-aggregated); }
+.oh-badge--onehill_generated { background: var(--oh-onehill); }
+.oh-badge--gap { background: var(--oh-gap); }
+
+/* --- meters --- */
+.oh-meters { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0 1.5rem; }
+.oh-meter { flex: 1 1 220px; }
+.oh-meter__label {
+  display: flex; justify-content: space-between;
+  font-size: 0.8rem; font-weight: 600; margin-bottom: 0.3rem;
+  color: var(--sl-color-gray-2);
+}
+.oh-meter__track {
+  height: 0.6rem; border-radius: 999px;
+  background: var(--sl-color-gray-6); overflow: hidden;
+}
+.oh-meter__fill { height: 100%; border-radius: 999px; }
+.oh-meter__fill--completeness { background: var(--oh-aggregated); }
+.oh-meter__fill--originality { background: var(--oh-onehill); }
+
+/* --- item index panel ---
+   Each item is a block: a header line (title + source badge) with the summary on its own
+   line beneath. Block layout (not flex on the whole row) stops the title from being squeezed
+   into a one-word-per-line column. */
+.oh-items { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+.oh-items li.oh-item {
+  display: block;
+  padding: 0.65rem 0; border-bottom: 1px solid var(--sl-color-gray-6);
+}
+.oh-items .oh-item__head {
+  display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap;
+}
+.oh-items .oh-item__title { font-weight: 700; font-size: 0.98rem; }
+.oh-items .oh-item__summary {
+  display: block; margin-top: 0.28rem;
+  color: var(--sl-color-gray-2); font-size: 0.92rem; line-height: 1.55;
+}
+
+/* --- gap callout --- */
+.oh-gap {
+  border-left: 4px solid var(--oh-gap);
+  background: color-mix(in srgb, var(--oh-gap) 10%, transparent);
+  padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 6px 6px 0;
+}
+.oh-gap__title { font-weight: 700; color: var(--oh-gap); }
+
+/* --- AOI score card --- */
+.oh-card {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0 1.5rem;
+  background: var(--sl-color-gray-7);
+}
+.oh-card__head { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.oh-card__grade {
+  font-size: 1.6rem; font-weight: 800; color: #fff;
+  width: 2.4rem; height: 2.4rem; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.oh-grade--A { background: var(--oh-grade-a); }
+.oh-grade--B { background: var(--oh-grade-b); }
+.oh-grade--C { background: var(--oh-grade-c); }
+.oh-grade--D { background: var(--oh-grade-d); }
+.oh-grade--F { background: var(--oh-grade-f); }
+.oh-card__score { font-size: 1.2rem; font-weight: 700; }
+.oh-dims { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.5rem; margin-top: 0.9rem; }
+.oh-dim { font-size: 0.8rem; }
+.oh-dim__bar { height: 0.35rem; border-radius: 999px; background: var(--sl-color-gray-6); margin-top: 0.2rem; }
+.oh-dim__fill { height: 100%; border-radius: 999px; background: var(--oh-aggregated); }
+.oh-flag { color: var(--oh-grade-f); font-weight: 600; }
+
+/* --- assessed signals (five cross-cutting attributes, EU-AI-Act-style highlight) --- */
+:root {
+  --oh-sig-pos: #15803d;   /* strong / full / high / benchmarked */
+  --oh-sig-mid: #b45309;   /* moderate / partial / medium */
+  --oh-sig-neg: #b91c1c;   /* weak / limited / none / low / unbenchmarked */
+}
+.oh-signals { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem; margin: 0.5rem 0 1.5rem; }
+.oh-signal {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  border: 1px solid var(--sl-color-gray-5); border-left-width: 4px;
+  border-radius: 0 8px 8px 0; padding: 0.7rem 0.85rem;
+  background: var(--sl-color-gray-7); text-decoration: none; color: inherit;
+}
+.oh-signal:hover { background: var(--sl-color-gray-6); }
+.oh-signal--pos { border-left-color: var(--oh-sig-pos); }
+.oh-signal--mid { border-left-color: var(--oh-sig-mid); }
+.oh-signal--neg { border-left-color: var(--oh-sig-neg); }
+.oh-signal__head { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
+.oh-signal__name { font-weight: 700; font-size: 0.85rem; }
+.oh-signal__level {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;
+  color: #fff; padding: 0.18em 0.5em; border-radius: 999px; white-space: nowrap;
+}
+.oh-signal--pos .oh-signal__level { background: var(--oh-sig-pos); }
+.oh-signal--mid .oh-signal__level { background: var(--oh-sig-mid); }
+.oh-signal--neg .oh-signal__level { background: var(--oh-sig-neg); }
+.oh-signal__summary { font-size: 0.82rem; color: var(--sl-color-gray-2); line-height: 1.35; }
+.oh-signal__dim { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--sl-color-gray-3); margin-top: auto; }
+
+/* compact signal dots for the leaderboard */
+.oh-sigdots { display: inline-flex; gap: 0.2rem; }
+.oh-sigdot {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.2rem; height: 1.2rem; border-radius: 4px;
+  font-size: 0.62rem; font-weight: 800; color: #fff;
+}
+.oh-sigdot--pos { background: var(--oh-sig-pos); }
+.oh-sigdot--mid { background: var(--oh-sig-mid); }
+.oh-sigdot--neg { background: var(--oh-sig-neg); }
+
+/* --- closing recommendation panel --- */
+.oh-reco {
+  border: 1px solid var(--sl-color-gray-5); border-left-width: 6px;
+  border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin: 0.5rem 0 1.5rem;
+  background: var(--sl-color-gray-7);
+}
+.oh-reco--pos { border-left-color: var(--oh-sig-pos); }
+.oh-reco--mid { border-left-color: var(--oh-sig-mid); }
+.oh-reco--neg { border-left-color: var(--oh-sig-neg); }
+.oh-reco__stance {
+  display: inline-block; font-size: 0.9rem; font-weight: 800; letter-spacing: 0.02em;
+  text-transform: uppercase; color: #fff; padding: 0.3em 0.8em; border-radius: 6px; margin-bottom: 0.8rem;
+}
+.oh-reco--pos .oh-reco__stance { background: var(--oh-sig-pos); }
+.oh-reco--mid .oh-reco__stance { background: var(--oh-sig-mid); }
+.oh-reco--neg .oh-reco__stance { background: var(--oh-sig-neg); }
+.oh-reco__axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.6rem; margin-bottom: 0.9rem; }
+.oh-reco__axis {
+  display: flex; flex-direction: column; gap: 0.3rem;
+  border: 1px solid var(--sl-color-gray-6); border-left-width: 3px; border-radius: 0 6px 6px 0; padding: 0.55rem 0.75rem;
+}
+.oh-reco__axis--pos { border-left-color: var(--oh-sig-pos); }
+.oh-reco__axis--mid { border-left-color: var(--oh-sig-mid); }
+.oh-reco__axis--neg { border-left-color: var(--oh-sig-neg); }
+.oh-reco__axis-head { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; }
+.oh-reco__axis-name { font-weight: 700; font-size: 0.82rem; }
+.oh-reco__axis-level {
+  font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em;
+  color: #fff; padding: 0.16em 0.5em; border-radius: 999px; white-space: nowrap;
+}
+.oh-reco__axis--pos .oh-reco__axis-level { background: var(--oh-sig-pos); }
+.oh-reco__axis--mid .oh-reco__axis-level { background: var(--oh-sig-mid); }
+.oh-reco__axis--neg .oh-reco__axis-level { background: var(--oh-sig-neg); }
+.oh-reco__axis-why { font-size: 0.8rem; color: var(--sl-color-gray-2); line-height: 1.35; }
+.oh-reco__verdict { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+
+/* --- leaderboard table wrapper (horizontal scroll on narrow screens) --- */
+.oh-table-wrap { overflow-x: auto; }
+/* Let the table grow past the reading column and scroll, instead of clipping the last
+   columns. Keep the Entry name wrapping; hold the compact columns on one line so the
+   Posture/Ownership badge groups never break or get cut off. */
+.oh-table-wrap table { width: max-content; min-width: 100%; }
+.oh-table-wrap :is(th, td):first-child { min-width: 12rem; white-space: normal; }
+.oh-table-wrap :is(th, td):not(:first-child) { white-space: nowrap; }
+/* Tabular figures so grades, scores and percentages line up column to column. */
+.oh-table-wrap :is(th, td):nth-child(2),
+.oh-table-wrap :is(th, td):nth-child(3),
+.oh-table-wrap :is(th, td):nth-child(4) { font-variant-numeric: tabular-nums; }
+.oh-card__score, .oh-meter__label, .oh-dim { font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   Editorial restyle (2026-07-26)
+   Remove dashboard-style scaffolding: no coloured left-border
+   stripes on boxes, no filled pill badges, no filled dot grids,
+   no filled grade block. The same information is carried by
+   restrained semantic-coloured text and hairline rules, so the
+   pages read as an editorial index, not a metrics dashboard.
+   ============================================================ */
+
+/* Source markers: small uppercase text, no filled lozenge. */
+.oh-badge {
+  background: none;
+  color: var(--sl-color-gray-3);
+  padding: 0 0 0 0.15em;
+  border-radius: 0;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.oh-badge--aggregated { background: none; color: var(--sl-color-gray-3); }
+.oh-badge--onehill_generated { background: none; color: var(--oh-sig-pos); }
+.oh-badge--gap { background: none; color: var(--oh-sig-neg); }
+
+/* Score card: flat surface, grade as a serif letter (no filled block).
+   Dimension bars in one calm accent tone rather than a single loud blue. */
+.oh-card { background: none; border: 1px solid var(--sl-color-gray-5); }
+.oh-card__grade {
+  background: none;
+  width: auto; height: auto;
+  font-family: var(--display);
+  font-size: 2.1rem; font-weight: 500; line-height: 1;
+  color: var(--sl-color-white);
+}
+.oh-grade--A, .oh-grade--B, .oh-grade--C, .oh-grade--D, .oh-grade--F { background: none; }
+.oh-grade--A { color: var(--oh-grade-a); }
+.oh-grade--B { color: var(--oh-grade-b); }
+.oh-grade--C { color: var(--oh-grade-c); }
+.oh-grade--D { color: var(--oh-grade-d); }
+.oh-grade--F { color: var(--oh-grade-f); }
+.oh-dim__fill { background: var(--sl-color-accent); }
+.oh-meter__fill--completeness { background: var(--sl-color-accent); }
+.oh-meter__fill--originality { background: var(--sl-color-gray-3); }
+
+/* Assessed signals: uniform hairline card, level as coloured text. */
+.oh-signal {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 8px;
+  background: none;
+}
+.oh-signal:hover { background: var(--sl-color-gray-7); }
+.oh-signal__level {
+  background: none;
+  color: var(--sl-color-gray-2);
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+}
+.oh-signal--pos .oh-signal__level { background: none; color: var(--oh-sig-pos); }
+.oh-signal--mid .oh-signal__level { background: none; color: var(--oh-sig-mid); }
+.oh-signal--neg .oh-signal__level { background: none; color: var(--oh-sig-neg); }
+
+/* Leaderboard posture/ownership: letters as coloured text, not filled squares. */
+.oh-sigdots { gap: 0.4em; }
+.oh-sigdot {
+  background: none;
+  width: auto; height: auto;
+  border-radius: 0;
+  font-family: 'SF Mono', ui-monospace, Menlo, monospace;
+  font-size: 0.74rem; font-weight: 700;
+  color: var(--sl-color-gray-3);
+}
+.oh-sigdot--pos { background: none; color: var(--oh-sig-pos); }
+.oh-sigdot--mid { background: none; color: var(--oh-sig-mid); }
+.oh-sigdot--neg { background: none; color: var(--oh-sig-neg); }
+
+/* Gap callout: no left stripe, no tinted fill. A bold red label carries it. */
+.oh-gap {
+  border-left: 0;
+  background: none;
+  padding: 0.25rem 0 0.25rem 0;
+  border-radius: 0;
+}
+.oh-gap__title { color: var(--oh-sig-neg); }
+
+/* Ownership panel: uniform hairline border, stance as a heading, factors as
+   plain bordered cards with coloured-text levels. No left stripes, no pills. */
+.oh-reco {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 10px;
+  background: none;
+}
+.oh-reco__stance {
+  background: none;
+  color: var(--sl-color-white);
+  padding: 0;
+  margin-bottom: 0.9rem;
+  font-size: 1.05rem;
+}
+.oh-reco--pos .oh-reco__stance { background: none; color: var(--oh-sig-pos); }
+.oh-reco--mid .oh-reco__stance { background: none; color: var(--oh-sig-mid); }
+.oh-reco--neg .oh-reco__stance { background: none; color: var(--oh-sig-neg); }
+.oh-reco__axis {
+  border: 1px solid var(--sl-color-gray-6);
+  border-radius: 6px;
+}
+.oh-reco__axis-level {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: var(--sl-color-gray-2);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+}
+.oh-reco__axis--pos .oh-reco__axis-level { background: none; color: var(--oh-sig-pos); }
+.oh-reco__axis--mid .oh-reco__axis-level { background: none; color: var(--oh-sig-mid); }
+.oh-reco__axis--neg .oh-reco__axis-level { background: none; color: var(--oh-sig-neg); }
+
+/* --- wider content so the leaderboard fits without sideways scroll --- */
+/* Starlight caps the content column at --sl-content-width (45rem by default). Widen it so
+   the leaderboard tables show every column, but keep prose at a readable measure by capping
+   the text blocks; wide things (tables, cards, panels) still use the full column. */
+:root { --sl-content-width: 56rem; }
+.sl-markdown-content :where(p, ul, ol, blockquote, h1, h2, h3, h4) { max-width: 46rem; }
+.sl-markdown-content :where(.oh-table-wrap, .oh-card, .oh-signals, .oh-rows, .oh-lede, .oh-facts, .oh-sources, .oh-reco, .oh-meters, table) { max-width: none; }
+
+/* Ownership verdict as a single readable word (leaderboard column). */
+.oh-own { font-weight: 600; text-transform: capitalize; }
+.oh-own--pos { color: var(--oh-sig-pos); }
+.oh-own--mid { color: var(--oh-sig-mid); }
+.oh-own--neg { color: var(--oh-sig-neg); }
+
+/* Bottom line callout (Starlight note aside): warm OneHill accent instead of the default blue. */
+.starlight-aside--note {
+  --sl-color-asides-text-accent: var(--sl-color-accent);
+  --sl-color-asides-border: var(--sl-color-accent);
+  background-color: color-mix(in srgb, var(--sl-color-accent) 8%, transparent);
+}
+
+/* ============================================================
+   Redesign 2026-07-26 (v0.2): flat, scannable rows in the style
+   of artificialanalysis.ai. Posture and Ownership read as a list
+   of horizontal boxes (not cards); the lede sets the summary
+   beside a compact key-facts panel; Sources is a real two-column
+   table. No coloured left stripes and no filled pills - severity
+   is carried by coloured text only.
+   ============================================================ */
+
+/* --- lede: summary text beside a compact key-facts panel --- */
+.oh-lede {
+  display: grid; grid-template-columns: minmax(0, 1fr) 19rem;
+  gap: 1.4rem 2.2rem; align-items: start; margin: 0.25rem 0 1.75rem;
+}
+.oh-lede__intro { font-size: 1.02rem; line-height: 1.62; color: var(--sl-color-gray-1); }
+@media (max-width: 720px) { .oh-lede { grid-template-columns: 1fr; } }
+
+.oh-facts {
+  border: 1px solid var(--sl-color-gray-5); border-radius: 10px;
+  padding: 0.85rem 1.05rem; background: none;
+}
+.oh-facts__title {
+  font-family: var(--sl-font);
+  font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--sl-color-gray-3); margin-bottom: 0.55rem;
+}
+.oh-facts__list { margin: 0; padding: 0; }
+.oh-fact {
+  padding: 0.5rem 0; border-top: 1px solid var(--sl-color-gray-6);
+}
+.oh-fact:first-child { border-top: 0; padding-top: 0; }
+.oh-fact dt {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--sl-color-gray-3); font-weight: 600; margin-bottom: 0.1rem;
+}
+.oh-fact dd {
+  margin: 0; font-size: 0.94rem; font-weight: 600; line-height: 1.4;
+  color: var(--sl-color-white);
+}
+.oh-fact dd code { font-size: 0.85em; }
+
+/* --- horizontal posture / ownership rows --- */
+.oh-rows {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--sl-color-gray-5); border-radius: 10px; overflow: hidden;
+  margin: 0.4rem 0 1.6rem;
+}
+.oh-row {
+  display: grid; grid-template-columns: 15rem minmax(0, 1fr);
+  grid-template-areas: "name desc" "level desc";
+  column-gap: 1.8rem; row-gap: 0.15rem; align-items: baseline;
+  padding: 0.9rem 1.15rem; text-decoration: none; color: inherit;
+  border-top: 1px solid var(--sl-color-gray-6);
+}
+.oh-rows > .oh-row:first-child { border-top: 0; }
+a.oh-row:hover { background: var(--sl-color-gray-7); }
+.oh-row__name { grid-area: name; font-weight: 700; font-size: 0.95rem; color: var(--sl-color-white); }
+.oh-row__level {
+  grid-area: level; font-size: 0.88rem; font-weight: 700; line-height: 1.3;
+}
+.oh-row--pos .oh-row__level { color: var(--oh-sig-pos); }
+.oh-row--mid .oh-row__level { color: var(--oh-sig-mid); }
+.oh-row--neg .oh-row__level { color: var(--oh-sig-neg); }
+.oh-row__desc { grid-area: desc; align-self: center; font-size: 0.9rem; line-height: 1.5; color: var(--sl-color-gray-2); }
+@media (max-width: 640px) {
+  .oh-row { grid-template-columns: 1fr; grid-template-areas: "name" "level" "desc"; row-gap: 0.25rem; }
+}
+
+/* Ownership panel wrapper: flat, no left stripe. Stance as a heading, rows inside, verdict below. */
+.oh-reco { border: 1px solid var(--sl-color-gray-5); border-radius: 10px; background: none; padding: 1rem 1.15rem; }
+.oh-reco .oh-rows { border: 0; border-top: 1px solid var(--sl-color-gray-5); border-bottom: 1px solid var(--sl-color-gray-5); border-radius: 0; margin: 0.6rem 0 0.9rem; }
+.oh-reco__stance {
+  font-family: var(--sl-font);
+  font-weight: 700; font-size: 1.05rem;
+}
+.oh-reco--pos .oh-reco__stance { color: var(--oh-sig-pos); }
+.oh-reco--mid .oh-reco__stance { color: var(--oh-sig-mid); }
+.oh-reco--neg .oh-reco__stance { color: var(--oh-sig-neg); }
+.oh-reco__verdict { margin: 0; font-size: 0.96rem; line-height: 1.55; color: var(--sl-color-gray-1); }
+
+/* --- Sources as a two-column table: linked document + status on the left, claim on the right --- */
+.oh-sources__note { font-size: 0.9rem; line-height: 1.5; color: var(--sl-color-gray-2); margin: 0 0 0.7rem; }
+.oh-sources {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--sl-color-gray-5); border-radius: 10px; overflow: hidden;
+  margin: 0 0 1.5rem;
+}
+.oh-source {
+  display: grid; grid-template-columns: 14rem minmax(0, 1fr);
+  gap: 0.3rem 1.5rem; padding: 0.8rem 1.15rem;
+  border-top: 1px solid var(--sl-color-gray-6);
+}
+.oh-sources > .oh-source:first-child { border-top: 0; }
+.oh-source__meta { display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+.oh-source__doc { font-weight: 700; font-size: 0.9rem; line-height: 1.3; }
+a.oh-source__doc { color: var(--sl-color-accent); text-decoration: none; }
+a.oh-source__doc:hover { text-decoration: underline; }
+.oh-source__tag {
+  font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.oh-source__tag--read { color: var(--oh-sig-pos); }
+.oh-source__tag--unverified { color: var(--oh-sig-mid); }
+.oh-source__date { font-size: 0.72rem; color: var(--sl-color-gray-3); font-variant-numeric: tabular-nums; }
+.oh-source__claim { font-size: 0.9rem; line-height: 1.5; color: var(--sl-color-gray-2); }
+@media (max-width: 640px) { .oh-source { grid-template-columns: 1fr; } }

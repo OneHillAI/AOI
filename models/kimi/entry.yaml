@@ -1,0 +1,609 @@
+# OneHill v2 MODEL library entry for Kimi (Moonshot AI - Kimi K2). New entry.
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: kimi
+name: Kimi (Moonshot AI - Kimi K2)
+aliases:
+- Kimi K2
+- Kimi-K2-Base
+- Kimi-K2-Instruct
+- moonshotai/Kimi-K2
+- Moonshot Kimi
+publisher:
+  name: Moonshot AI
+  country: China
+  accountable_entity: true
+  url: https://huggingface.co/moonshotai
+  security_contact: https://huggingface.co/moonshotai
+summary: 'Kimi is Moonshot AI''s (Beijing) model/product line; its confirmed open
+  release is Kimi K2 - a very large Mixture-of-Experts model with 1T total / 32B active
+  parameters (384 experts, 8+1 selected), a 128K context window, and an explicit agentic/coding
+  focus (trained with the MuonClip optimiser). Base and Instruct variants ship on the
+  verified moonshotai org as block-FP8 safetensors and serve on vLLM, SGLang, KTransformers
+  and TensorRT-LLM. The two things an adopter must weigh: the trillion-parameter scale
+  makes self-hosting a multi-node exercise even quantized (no small variants exist),
+  and as a China-based release it carries a modified (non-OSI) MIT license, China-aligned
+  topic censorship, and no EU AI Act documentation package - so deploy behind your own
+  guards.
+
+  '
+variants:
+- name: Kimi-K2-Base
+  params_total: 1T
+  params_active: 32B
+  context_window: 128k
+  kind: base
+  safety_tuned: false
+- name: Kimi-K2-Instruct
+  params_total: 1T
+  params_active: 32B
+  context_window: 128k
+  kind: instruct
+  safety_tuned: true
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: open
+  license:
+    spdx: ''
+    name: Modified MIT License (MIT plus a large-scale attribution clause)
+    classification: permissive_open
+    commercial_use: allowed_with_conditions
+    notable_restrictions:
+    - Products/services with more than 100M monthly active users OR more than $20M USD
+      monthly revenue must prominently display "Kimi K2" on the product user interface
+      (Modified MIT attribution clause)
+    - Modified MIT is not OSI-certified - verify the LICENSE file per checkpoint
+    url: https://github.com/moonshotai/Kimi-K2/blob/main/LICENSE
+provenance:
+  canonical_source: https://huggingface.co/moonshotai
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: Block-FP8 native weights (moonshotai)
+      trust: publisher
+      note: Weights are distributed in block-FP8; verify checksums and pin the revision
+    - name: Community GGUF / lower-bit quants
+      trust: community
+      note: Community quants circulate to make the 1T model tractable; not canonical
+  checkpoint_checklist_score: 5
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: '~3e24 FLOPs (32B active params x 15.5T training tokens,
+      MoE active-parameter compute); under the 1e25 threshold, though a total-parameter
+      framing of a 1T model is contested'
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: partial
+    rationale: 'Kimi K2 publishes its parameters, architecture and usage information
+      under a broadly permissive (if modified, non-OSI) MIT license, and on the active-parameter
+      compute estimate it sits under the 1e25 systemic-risk threshold - so unlike the
+      largest systemic-risk peers it plausibly reaches the Article 53 open-source exemption
+      from the Annex XI/XII technical-documentation duties. Two things introduce uncertainty:
+      the modified MIT attribution-at-scale clause is not an OSI-certified free/open-source
+      license, and the surviving obligations (a copyright policy and a public training-content
+      summary) are not published - the 15.5T-token corpus is not released. Recorded
+      as ''partial'' to reflect the genuine gap.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: 'no'
+    code_of_practice_signatory: false
+  deployer_notes: 'A China-based provider is unlikely to furnish an EU AI Office documentation
+    package. An EU deployer inherits a detailed technical report and a permissive-ish
+    license but must self-assemble the copyright policy and training-content material,
+    which cannot be reconstructed from released artifacts because the training corpus
+    is closed. A fine-tuner placing a derivative on the EU market may become a provider
+    for that derivative and inherits these gaps.
+
+    '
+  last_assessed: '2026-07-25'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: 'A 1T-parameter MoE: even in block-FP8 the weights are on the order
+    of ~1 TB, so serving requires a multi-GPU / multi-node cluster (or heavy CPU-offload
+    via KTransformers). There are no small variants - single-GPU or laptop deployment
+    is not possible.
+
+    '
+  serving_support:
+  - vllm
+  - sglang
+  - ktransformers
+  - tensorrt-llm
+  controls_required:
+  - Deploy the Instruct (safety-tuned) variant, not the Base checkpoint
+  - Add your own input/output guardrails and a guard/classifier model; do not rely on
+    built-in alignment
+  - Account for China-aligned topic censorship on politically sensitive prompts
+  - Add prompt-injection defences and treat retrieved/tool content as untrusted for
+    agentic/tool-use deployments
+  - Verify checksums, pin the exact moonshotai revision, and budget multi-node serving
+    infrastructure
+score:
+  rubric_version: '1.1'
+  headline: 62.8
+  grade: C
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Open-weights tier: Base and Instruct weights are downloadable under
+        a permissive (modified) MIT license with a solid model card and technical report,
+        but the 15.5T-token training data and training code are undisclosed and evaluation
+        is only partially reproducible. Solidly open-weight rather than open-science.
+
+        '
+      evidence_refs:
+      - ev-kimi-hf
+      - ev-license
+    provenance:
+      score: 3
+      rationale: 'Distributed from the verified moonshotai org on Hugging Face as block-FP8
+        safetensors with checksums and no canonical-org malicious incident on record
+        (checklist 5/8). Meets the score-3 anchor (verified org + safetensors + checksums);
+        short of 4, which needs a scanned checkpoint or a documented mirror/quantization
+        policy (~6-7 boxes), and of 5''s cryptographic weight signing / SLSA attestation.
+
+        '
+      evidence_refs:
+      - ev-kimi-hf
+      - ev-github
+    legal:
+      score: 3
+      rationale: 'The broadly permissive modified MIT license is a real plus over a
+        restrictive community license, but it is not OSI-certified and carries a large-scale
+        attribution clause; there is no training-content summary or copyright policy;
+        and a China-based provider is unlikely to furnish EU documentation. Not a systemic-risk
+        model, so no Article 55 hard flag - but competent-with-caveats at best.
+
+        '
+      evidence_refs:
+      - ev-license
+      - ev-eu-gap
+    safety:
+      score: 3
+      rationale: 'The Instruct variant is safety-tuned and withstands casual jailbreaks,
+        but tuning is lighter than Western frontier labs, there is no companion guard
+        model, and the model exhibits China-aligned topic censorship on politically
+        sensitive prompts. Deploy behind your own guards.
+
+        '
+      evidence_refs:
+      - ev-safety
+      - ev-behaviour
+    performance:
+      score: 4
+      rationale: 'Frontier-adjacent open capability, especially in agentic tool use
+        and coding: on independent evaluation Kimi K2 (e.g. SWE-bench Verified ~65.8)
+        is among the strongest open-weight models. Short of 5 because leadership is
+        concentrated in agentic/coding and the results are third-party without independent reproduction.
+
+        '
+      evidence_refs:
+      - ev-perf
+    operational:
+      score: 3
+      rationale: 'Good serving support (vLLM, SGLang, KTransformers, TensorRT-LLM) with
+        an OpenAI/Anthropic-compatible API, but the trillion-parameter scale is a heavy
+        operational burden: minimum viable deployment is a multi-GPU / multi-node cluster
+        even in block-FP8, and there are no small variants - so it is far less portable
+        than a laptop-to-datacentre size ladder.
+
+        '
+      evidence_refs:
+      - ev-github
+      - ev-ecosystem
+    governance:
+      score: 3
+      rationale: 'Active, accountable publisher (Moonshot AI) with a detailed technical
+        report and a verified hub presence, but no documented vulnerability-disclosure
+        or deprecation policy and no EU Code of Practice signature.
+
+        '
+      evidence_refs:
+      - ev-kimi-hf
+      - ev-eu-gap
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry
+#     (like the EU AI Act flag). Not a scoring input - each ties back to one of the seven
+#     AOI dimensions and summarises documentation that lives in the four domains.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tune/adapt freely under the modified MIT license and a released Base variant, but the 15.5T-token training data and training code are closed - you can adapt but not reproduce - and full fine-tuning of a 1T MoE is very heavy."
+    refs: [ev-license, ev-kimi-hf]
+  knowledge_structure:
+    level: strong
+    dimension: performance
+    summary: "Frontier-adjacent knowledge/reasoning backbone with a 128K context and top agentic/coding scores, but China-aligned topic censorship distorts coverage on politically sensitive subjects."
+    refs: [ev-perf, ev-behaviour]
+  specialization:
+    level: moderate
+    dimension: openness
+    summary: "A Base checkpoint and permissive license invite specialisation, but the trillion-parameter scale gates it behind serious compute - LoRA is feasible, full domain adaptation or distillation is costly."
+    refs: [ev-kimi-hf, ev-license]
+  exchangeability:
+    level: medium
+    dimension: operational
+    summary: "Portable safetensors behind OpenAI/Anthropic-compatible serving, but with ~1 TB of block-FP8 weights and no small variants, swapping Kimi K2 in or out requires multi-node infrastructure rather than a drop-in single-GPU model."
+    refs: [ev-github, ev-ecosystem]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Not independently benchmarked for misuse: Instruct safety tuning is lighter than Western frontier labs with no companion guard model, China-aligned censorship is present, and no broad third-party red-team exists."
+    refs: [ev-safety, ev-behaviour]
+
+# --- Four documentation domains. Item keys match checklists/model.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     Every credited item is `aggregated` (public source, >=1 ref); OneHill has run nothing,
+#     so there are no onehill_generated items and originality = 0.
+documentation:
+  assess:
+    completeness: 86.7
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-kimi-hf, ev-perf]
+        summary: "Agentic, tool-use and coding-heavy assistant workloads at frontier-adjacent quality; deploy the Instruct variant behind your own guards rather than the Base checkpoint, and treat EU high-stakes use as out of scope without a self-assembled compliance package."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-behaviour, ev-safety]
+        summary: "China-aligned topic censorship; lighter safety tuning than Western frontier labs with no guard model; trillion-parameter scale makes self-hosting a multi-node exercise with no small fallback."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-kimi-hf, ev-license]
+        summary: "open_weights - permissive (modified MIT) weights and a technical report, but the training data and code are closed and evaluation is only partially reproducible."
+      - key: license
+        title: "License terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-license]
+        summary: "Modified MIT: effectively permissive commercial use for nearly all adopters, but products over 100M MAU OR over $20M USD monthly revenue must display 'Kimi K2' in the UI, and the modification means it is not OSI-certified."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-kimi-hf, ev-github]
+        summary: "Verified moonshotai org on Hugging Face; block-FP8 safetensors with checksums but no cryptographic signing - pin the exact revision and verify checksums."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-eu-gap, ev-license]
+        summary: "GPAI; on active-parameter compute (~3e24 FLOPs) it sits under the 1e25 systemic-risk threshold, so unlike the largest peers it plausibly reaches the open-source exemption - but no training-content summary or copyright policy is published and the corpus is closed."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-perf, ev-tech-report]
+        summary: "Aggregated from Moonshot's technical report and independent evaluation: among the strongest open-weight models on agentic/coding benchmarks (e.g. SWE-bench Verified ~65.8)."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No broad independent red-team / safety battery (CBRN, cyber, prompt-injection) has been published for Kimi K2. Vendor safety tuning is documented and China-aligned censorship is observed, but there is no third-party adversarial suite to aggregate for this model."
+  implement:
+    completeness: 90.9
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-kimi-hf, ev-github]
+        summary: "Download block-FP8 safetensors from the moonshotai org and serve with vLLM, SGLang, KTransformers or TensorRT-LLM; pin the exact revision and verify checksums."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-github, ev-kimi-hf]
+        summary: "A 1T-parameter MoE (~1 TB of block-FP8 weights) needs a multi-GPU / multi-node cluster or heavy CPU-offload (KTransformers); there is no single-GPU or laptop path."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-github, ev-ecosystem]
+        summary: "Documented support for vLLM, SGLang, KTransformers and TensorRT-LLM with an OpenAI/Anthropic-compatible API surface."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-safety, ev-behaviour]
+        summary: "Deployment Ceiling T2 (conditional): deploy Instruct not Base, supply your own input/output guardrails and a guard model, add prompt-injection defences for agentic use, and account for China-aligned censorship."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-kimi-hf]
+        summary: "Weights are natively distributed in block-FP8; community lower-bit / GGUF quants circulate to make the 1T model tractable but are community artifacts rather than a broad official quantization program."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-kimi-hf, ev-license]
+        summary: "A released Base checkpoint plus the modified MIT license support SFT/LoRA adaptation, but the training data and code are closed (no from-scratch reproduction) and full fine-tuning at 1T scale is very resource-intensive."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-github, ev-ecosystem]
+        summary: "Serve behind vLLM/SGLang's OpenAI/Anthropic-compatible endpoint for drop-in client integration; native tool-calling maps onto the function-calling API."
+  use:
+    completeness: 72.2
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-perf, ev-tech-report]
+        summary: "Text-focused, frontier-adjacent general model with standout agentic tool use, coding and reasoning; among the strongest open-weight models on agentic/coding benchmarks."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-kimi-hf, ev-tech-report]
+        summary: "128K-token context window per the model card; effective long-context recall is not independently established, so treat the maximum as the architectural ceiling."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-kimi-hf]
+        summary: "Kimi-K2-Instruct ships a chat template in its tokenizer config - use apply_chat_template rather than hand-rolling roles; the Base checkpoint has no chat template."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-kimi-hf, ev-tech-report]
+        summary: "Multilingual with particularly strong English and Chinese; per-language depth varies and is not exhaustively documented."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-github, ev-perf]
+        summary: "Native tool-calling and agentic behaviour are a core design goal of Kimi K2 (trained and benchmarked for agentic tasks), exposed through the OpenAI/Anthropic-compatible function-calling API."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No model-documented native JSON/schema-constrained output guarantee for Kimi K2; constrained decoding is available at the serving layer (e.g. vLLM grammars) but is a runtime feature rather than a model behaviour."
+  support:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-github, ev-ecosystem]
+        summary: "Aggregated common pitfalls (multi-node OOM / sharding for the 1T model, block-FP8 kernel/engine version mismatches, chat-template errors, checksum/revision drift); not an exhaustive catalogue."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: full
+        refs: [ev-kimi-hf, ev-github]
+        summary: "Kimi K2 ships as Base and Instruct checkpoints tracked as immutable Hugging Face revisions on the verified moonshotai org; the revision hash is the changelog anchor."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No formal, published vulnerability-disclosure or security policy (SECURITY.md / advisory process) was found for Kimi K2; contact is only the general moonshotai Hugging Face / GitHub org presence, so there is no documented process to aggregate."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-kimi-hf, ev-github]
+        summary: "Moonshot's moonshotai Hugging Face org discussions and the Kimi-K2 GitHub repository (issues) for usage, deployment and reproduction questions."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published deprecation or end-of-life policy for Kimi K2 checkpoints; older Hugging Face revisions remain downloadable but no formal support-window or sunset commitment is documented."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-behaviour, ev-safety]
+        summary: "From model-card and third-party caveats: China-aligned topic censorship, lighter safety coverage than frontier labs with no guard model, and the operational burden of a 1T-parameter model."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: strong
+      rationale: "Near-MIT weights: standard MIT permission to fine-tune, redistribute and commercialise the Base and Instruct checkpoints, gated by a single verbatim attribution trigger - only a commercial product or service over 100M monthly active users OR over $20M USD monthly revenue must prominently display 'Kimi K2' on its UI. Not OSI-certified, so verify the LICENSE per checkpoint, but for nearly every adopter it is an effectively clean grant."
+      # grounded in: ev-license (license, retrieved) - the "Our only modification part…" 100M-MAU/$20M-revenue clause read verbatim from the raw mirror; ev-kimi-hf (model_card, retrieved) - "Both the code repository and model weights are released under the Modified MIT License"
+    transparency:
+      level: weak
+      rationale: "You cannot see what the model is: the technical report documents a 1T/32B MoE trained on 15.5T tokens with MuonClip, but the training corpus and training code are closed, and the weights carry China-aligned topic censorship you cannot inspect."
+      # grounded in: ev-tech-report (technical_report, retrieved) - 15.5T-token MoE architecture; training data/code closed (structural); ev-behaviour (third_party) - China-aligned filtering
+    reliability:
+      level: moderate
+      rationale: "Runnable but heavy: dependable self-hosting of the trillion-parameter model is a multi-node exercise, and the safety tuning is light with no guard model."
+      # grounded in: ev-perf (third_party) - SWE-bench Verified ~65.8; ev-safety (third_party) - lighter tuning, no guard model
+    data_control:
+      level: strong
+      rationale: "Self-hosted, the weights run entirely on your own infrastructure with no telemetry or data clawback - your data stays yours. The hosted platform.kimi.ai service is the opposite: its terms and privacy policy train on user prompts, audio, images, videos and files BY DEFAULT (opt-out only via an enterprise/separate written agreement, Singapore law / SIAC arbitration), so keep to the weights if data control is the point. The practical constraint on self-hosting is the ~1 TB block-FP8 footprint that forces multi-node serving."
+      # grounded in: self-hosting (structural) - no clawback/telemetry on the weights; ev-terms (terms, retrieved) - train-to-improve, enterprise opt-out, Singapore/SIAC; ev-privacy (privacy_policy, retrieved) - trains on user content by default, Singapore servers
+  verdict: "You substantially use, modify and commercialise the self-hosted Kimi K2 weights under a near-MIT grant - the sole condition is the verbatim 100M-MAU / $20M-revenue trigger to display 'Kimi K2' in your UI - and run entirely on your own infrastructure, so your data stays yours. What holds ownership at partial is transparency: the 15.5T-token corpus and training code are closed and the model carries China-aligned censorship you cannot inspect. Mind the weights-vs-hosted split - the platform.kimi.ai API trains on your content by default (opt-out only by enterprise agreement, Singapore law), so self-host if data control matters. Confirm the attribution trigger and the per-checkpoint LICENSE before shipping, and budget multi-node infrastructure to run it at all."
+
+# --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
+#     (true = the document's substantive text was read; false = known to exist but not read).
+#     Grounded 2026-07-25 against the primary-source clauses in
+#     docs/primary-sources/kimi/_sources.md. The LICENSE text was read verbatim from the
+#     canonical raw.githubusercontent.com mirror (the GitHub blob path 404s, raw resolves);
+#     the HF model card, arXiv technical report and the hosted platform.kimi.ai terms and
+#     privacy policy were read directly. The separate consumer policy at kimi.com was not fetched.
+evidence:
+- id: ev-kimi-hf
+  claim: 'Kimi-K2-Instruct model card on the verified moonshotai Hugging Face org: block-FP8
+    safetensors, 1T total / 32B active parameters, 128K context, Muon optimiser, and the
+    statement that "Both the code repository and model weights are released under the Modified
+    MIT License."'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/moonshotai/Kimi-K2-Instruct
+  date: '2026-07-25'
+- id: ev-license
+  claim: 'Kimi K2 LICENSE, read verbatim: standard MIT with one added clause - "Our only
+    modification part is that, if the Software (or any derivative works thereof) is used for
+    any of your commercial products or services that have more than 100 million monthly active
+    users, or more than 20 million US dollars (or equivalent in other currencies) in monthly
+    revenue, you shall prominently display ''Kimi K2'' on the user interface of such product or
+    service." Otherwise standard MIT.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://raw.githubusercontent.com/moonshotai/Kimi-K2/main/LICENSE
+  date: '2026-07-25'
+- id: ev-github
+  claim: The moonshotai/Kimi-K2 repository documents the MoE architecture (384 experts,
+    8+1 selected), the MuonClip optimiser, block-FP8 weights and deployment on vLLM,
+    SGLang, KTransformers and TensorRT-LLM with an OpenAI/Anthropic-compatible API.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://github.com/moonshotai/Kimi-K2
+  date: '2026-07-25'
+- id: ev-tech-report
+  claim: 'Moonshot''s arXiv technical report "Kimi K2: Open Agentic Intelligence" (2507.20534),
+    read: a 1T-total / 32B-active MoE trained on 15.5T tokens with the MuonClip optimiser
+    (Muon + QK-clip), reporting agentic/coding results (e.g. 66.1 Tau2-Bench, 65.8 SWE-Bench
+    Verified).'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2507.20534
+  date: '2026-07-25'
+- id: ev-terms
+  claim: 'platform.kimi.ai model-use agreement, read: user content is used to improve the
+    services, with opt-out available only via an enterprise or separate written agreement;
+    governed by Singapore law with disputes resolved by SIAC arbitration in English.
+    platform.moonshot.ai 302-redirects here.'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://platform.kimi.ai/docs/agreement/modeluse.md
+  date: '2026-07-25'
+- id: ev-privacy
+  claim: 'platform.kimi.ai privacy policy, read: the hosted service trains on user prompts,
+    audio, images, videos and files by default; the controller is MOONSHOT AI PTE. LTD with
+    Singapore servers. (A separate consumer policy at kimi.com was not fetched.)'
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://platform.kimi.ai/docs/agreement/userprivacy
+  date: '2026-07-25'
+- id: ev-perf
+  claim: On independent evaluation Kimi K2 is among the strongest open-weight models
+    on agentic and coding benchmarks (e.g. SWE-bench Verified ~65.8).
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://leanware.co/insights/kimi-k2
+  date: '2026-07-25'
+- id: ev-behaviour
+  claim: Independent analysis notes Kimi K2, like other China-based open-weight models,
+    applies China-aligned content filtering on politically sensitive topics.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://intuitionlabs.ai/articles/kimi-k2-open-weight-llm-analysis
+  date: '2026-07-25'
+- id: ev-safety
+  claim: Kimi K2 Instruct is safety-tuned but with lighter alignment coverage than Western
+    frontier labs and no companion guard model.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://intuitionlabs.ai/articles/kimi-k2-open-weight-llm-analysis
+  date: '2026-07-25'
+- id: ev-eu-gap
+  claim: No public EU AI Act training-content summary, copyright policy, or provider
+    documentation package is published for Kimi K2, and the training corpus is not released.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/moonshotai/Kimi-K2-Instruct
+  date: '2026-07-25'
+- id: ev-ecosystem
+  claim: Kimi K2 is served across vLLM, SGLang, KTransformers and TensorRT-LLM, but its
+    1T-parameter scale requires multi-GPU / multi-node infrastructure even in block-FP8.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://intuitionlabs.ai/articles/kimi-k2-open-weight-llm-analysis
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry (Kimi K2 - Moonshot AI).
+- date: '2026-07-25'
+  change: Grounded evidence against primary sources (docs/primary-sources/kimi) - Modified-MIT 100M-MAU/$20M-revenue clause read verbatim; arXiv technical report and HF model card retrieved; added hosted platform.kimi.ai terms + privacy_policy evidence (trains-by-default, Singapore/SIAC); doc_type/retrieved added to every evidence item; ownership factors + verdict tightened around the attribution trigger and the weights-vs-hosted split.
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

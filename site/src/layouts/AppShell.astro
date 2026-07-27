@@ -1,0 +1,187 @@
+---
+/**
+ * AppShell - the shared frame for the AI Ownership Index app pages (index, entry
+ * sheet, sub-pages). Left sidebar (Browse + a page-contextual group) plus a sticky
+ * top bar (breadcrumb + search + theme toggle), matching the design handover.
+ * Starlight still owns the /methodology, /glossary and other prose pages; this shell
+ * is for the custom Astro pages only, sharing the same locked tokens.
+ */
+import '../styles/aoi-shell.css';
+import { getAllEntries } from '../lib/entries';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Lightweight client-side search index over every entry (the top-bar search).
+const searchIndex = getAllEntries().map((r) => ({
+  t: r.title,
+  ty: r.type === 'model' ? 'Model' : 'Provider',
+  u: `${base}/library/${r.dir}/${r.id}/`,
+  lv: r.ownership.level,
+  g: r.grade,
+  s: (r.summary || '').slice(0, 100),
+}));
+const {
+  title,
+  crumbs = [],          // [{ label, href? }]
+  browseActive = '',    // Library | Compare | Methodology | About
+  reviewed = '',        // footer line, e.g. "Reviewed 2026-07-25"
+  canvas = 'entry',     // entry | read
+} = Astro.props;
+
+const browse = [
+  { label: 'Library', href: `${base}/library/` },
+  { label: 'Compare', href: `${base}/compare/` },
+  { label: 'Methodology', href: `${base}/methodology/` },
+  { label: 'About', href: `${base}/trust/` },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <script is:inline>
+      // Apply a stored theme before paint to avoid a flash.
+      try {
+        var t = localStorage.getItem('aoi-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="app">
+      <aside class="side">
+        <a class="brand" href={`${base}/library/`}>AI Ownership Index<small>OneHill</small></a>
+        <nav class="navgroup" aria-label="Browse">
+          <div class="lbl">Browse</div>
+          {browse.map((b) => (
+            <a class={b.label === browseActive ? 'on' : ''} href={b.href}><span class="dot"></span>{b.label}</a>
+          ))}
+        </nav>
+        <slot name="sidebar" />
+        <div class="spacer"></div>
+        {reviewed && <div class="foot">{reviewed}</div>}
+      </aside>
+
+      <div class={`mainwrap canvas--${canvas}`}>
+        <div class="topbar">
+          <div class="topbar__in">
+          <nav class="crumbs" aria-label="Breadcrumb">
+            {crumbs.map((c, i) => (
+              <>
+                {i > 0 && <i>&rsaquo;</i>}
+                {c.href ? <a href={c.href}>{c.label}</a> : <span>{c.label}</span>}
+              </>
+            ))}
+          </nav>
+          <span class="alpha">Alpha</span>
+          <div class="spacer"></div>
+          <div class="search-wrap">
+            <div class="search">
+              <span aria-hidden="true" style="color:var(--faint)">&#9906;</span>
+              <input id="aoiSearch" type="text" placeholder="Search models and providers" aria-label="Search"
+                     autocomplete="off" role="combobox" aria-expanded="false" aria-controls="aoiResults" aria-autocomplete="list" />
+              <span class="kbd">Ctrl K</span>
+            </div>
+            <div class="search-results" id="aoiResults" role="listbox" hidden></div>
+          </div>
+          <slot name="actions" />
+          <a class="btn" href="mailto:contact@ownershipindex.ai">Contact</a>
+          <button class="btn" id="themeBtn" type="button" aria-label="Toggle theme">Theme</button>
+          </div>
+        </div>
+
+        <main id="main" class={`canvas canvas--${canvas}`}>
+          <slot />
+        </main>
+        <SiteFooter />
+      </div>
+    </div>
+
+    <script type="application/json" id="aoiSearchData" set:html={JSON.stringify(searchIndex)}></script>
+
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var btn = document.getElementById('themeBtn');
+        if (btn) btn.addEventListener('click', function () {
+          var now = root.getAttribute('data-theme');
+          if (!now) now = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          var next = now === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try { localStorage.setItem('aoi-theme', next); } catch (e) {}
+        });
+
+        // Top-bar search over the entry index.
+        var input = document.getElementById('aoiSearch');
+        var panel = document.getElementById('aoiResults');
+        var dataEl = document.getElementById('aoiSearchData');
+        if (!input || !panel || !dataEl) return;
+        var items = [];
+        try { items = JSON.parse(dataEl.textContent || '[]'); } catch (e) {}
+        var active = -1, shown = [];
+
+        function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]; }); }
+        function close() { panel.hidden = true; panel.innerHTML = ''; active = -1; shown = []; input.setAttribute('aria-expanded', 'false'); }
+        function render(q) {
+          var needle = q.trim().toLowerCase();
+          if (!needle) { close(); return; }
+          shown = items.filter(function (it) {
+            return (it.t + ' ' + it.s + ' ' + it.ty).toLowerCase().indexOf(needle) > -1;
+          }).sort(function (a, b) {
+            // Title matches rank above summary-only matches; ties keep AOI order.
+            var ai = a.t.toLowerCase().indexOf(needle), bi = b.t.toLowerCase().indexOf(needle);
+            var ar = ai > -1 ? ai : 999, br = bi > -1 ? bi : 999;
+            return ar - br;
+          }).slice(0, 8);
+          if (!shown.length) {
+            panel.innerHTML = '<div class="sr-empty">No match. Try a model, provider or licence name.</div>';
+          } else {
+            panel.innerHTML = shown.map(function (it, i) {
+              return '<a class="sr-item" role="option" id="sr' + i + '" href="' + it.u + '">' +
+                '<span class="sr-g">' + esc(it.g) + '</span>' +
+                '<span class="sr-main"><span class="sr-t">' + esc(it.t) + '</span>' +
+                '<span class="sr-s">' + esc(it.s) + '</span></span>' +
+                '<span class="sr-tags"><span class="sr-ty">' + esc(it.ty) + '</span>' +
+                '<span class="sr-lv own-' + esc(it.lv) + '">' + esc(it.lv) + '</span></span></a>';
+            }).join('');
+          }
+          active = -1;
+          panel.hidden = false;
+          input.setAttribute('aria-expanded', 'true');
+        }
+        function move(d) {
+          var els = panel.querySelectorAll('.sr-item');
+          if (!els.length) return;
+          active = (active + d + els.length) % els.length;
+          els.forEach(function (el, i) { el.classList.toggle('on', i === active); });
+          input.setAttribute('aria-activedescendant', 'sr' + active);
+        }
+
+        input.addEventListener('input', function () { render(input.value); });
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+          else if (e.key === 'Enter') {
+            var els = panel.querySelectorAll('.sr-item');
+            if (active > -1 && els[active]) { window.location.href = els[active].getAttribute('href'); }
+            else if (shown[0]) { window.location.href = shown[0].u; }
+          } else if (e.key === 'Escape') { input.value = ''; close(); input.blur(); }
+        });
+        input.addEventListener('blur', function () { setTimeout(close, 150); });
+        document.addEventListener('keydown', function (e) {
+          if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); input.focus(); input.select(); }
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+---
+/** Entry sheet body - the four-factor ownership spine. Rendered from a record
+ * produced by src/lib/entries.ts, inside AppShell. Layout follows the design
+ * handover mockup: full-width verdict band, a four-across factor roll, then the
+ * factor panels two-across. */
+const NOTCH = { strong: 3, moderate: 2, weak: 1 };
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const { record } = Astro.props;
+const o = record.ownership;
+const capd = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const lede = o.verdict_sentence || record.summary;
+---
+<div class="kicker">{record.kicker}</div>
+<h1 class="title">{record.title}</h1>
+<div class="idstrip">
+  {record.identity.map((f) => (
+    <div class="idf"><div class="k">{f.k}</div><div class="v">{f.v}</div></div>
+  ))}
+</div>
+{lede && <p class="entrylede">{lede}</p>}
+
+<div class="verdict" id="verdict">
+  <div class="verdict__eyebrow">Do you really own it?</div>
+  <div class="verdict__row">
+    <div class="verdict__level">{capd(o.level)}</div>
+    <div class="verdict__scale">
+      {o.scale.map((s, i) => (
+        <>
+          {i > 0 && <span>&middot;</span>}
+          <span class={s === o.level ? 'on' : ''}>{s}</span>
+        </>
+      ))}
+    </div>
+    <div class="verdict__aoi">Analytical input: <b>{o.aoi}</b></div>
+  </div>
+</div>
+
+<div class="rolllabel">The four ownership factors</div>
+<div class="roll">
+  {record.factors.map((f) => (
+    <a class="rollcell" href={`#${f.id}`}>
+      <div class="fname">{f.short}</div>
+      <div class="fq">{f.gloss}</div>
+      <div class={`frow s-${f.rating}`}>
+        <span class="notch">{[0, 1, 2].map((i) => <i class={i < NOTCH[f.rating] ? 'on' : ''}></i>)}</span>
+        <span class="frate">{capd(f.rating)}</span>
+      </div>
+    </a>
+  ))}
+</div>
+
+<p class="floor"><b>Floor-weighted, not averaged.</b> {o.floor}</p>
+
+<div class="factors">
+  {record.factors.map((f) => (
+    <section class="factor" id={f.id}>
+      <div class="factor__h">
+        <span class="factor__n">{f.n}</span>
+        <h2>{f.name}<span class="q">{f.question}</span></h2>
+        <span class={`rchip r-${f.rating}`}>{capd(f.rating)}</span>
+      </div>
+      <p class="factor__lede">{f.lede}</p>
+      <div class="scores">
+        <div class="scores__title">{f.subscores.length ? 'How this scores (AOI sub-dimensions)' : 'How this scores'}</div>
+        {f.subscores.length
+          ? f.subscores.map((s) => (
+              <div class="sub">
+                <span class="sub__bar"><i style={`width:${(s.score / s.max) * 100}%`}></i></span>
+                <span class="sub__name">{s.name}<b>{s.score}/{s.max}</b></span>
+                <span class="sub__exp">{s.exp}{s.detail && <small>{s.detail}</small>}</span>
+              </div>
+            ))
+          : <div class="scores__struct">{f.struct}</div>}
+      </div>
+    </section>
+  ))}
+</div>
+
+<section class="calc" id="calc">
+  <h2 class="srch">How the AOI score is computed</h2>
+  <p class="src-note">The seven dimensions above, each scored 0 to 5, weighted and summed to the 0 to 100 headline. The score is the analytical input behind the ownership verdict, not the verdict itself.</p>
+  <div class="calc-tbl">
+    <div class="calc-row calc-head"><span>Dimension</span><span>Score</span><span>Weight</span><span>Points</span></div>
+    {record.calc.map((c) => (
+      <div class="calc-row">
+        <span class="calc-dim">{c.name}</span>
+        <span class="calc-n">{c.score}/5</span>
+        <span class="calc-n">{c.weight.toFixed(2)}</span>
+        <span class="calc-n"><span class="calc-bar"><i style={`width:${(c.score / 5) * 100}%`}></i></span>{c.points.toFixed(1)}</span>
+      </div>
+    ))}
+    <div class="calc-row calc-total">
+      <span>Headline</span><span></span><span></span>
+      <span class="calc-n"><b>{o.aoi.replace('AOI ', '').replace(/\s*·\s*/, ' · ')}</b></span>
+    </div>
+  </div>
+  {record.hardFlags.length > 0 && (
+    <p class="calc-flag">Grade ceiling: a hard flag ({record.hardFlags.join('; ')}) caps the grade below the raw band. See <a href={`${base}/classification-matrices/`}>the classification matrices</a>.</p>
+  )}
+</section>
+
+<div class="dossier">
+  <span class="k">Dossier coverage</span>
+  {record.dossier.map((d) => (
+    <a class="item" href={`${base}/library/${record.dir}/${record.id}/${d.k.toLowerCase()}/`}>{d.k} <b>{d.v}</b></a>
+  ))}
+  <span class="note">How complete our four-domain documentation is, a measure of our coverage, not of the model. Each domain links to its page.</span>
+</div>
+
+<h2 class="srch" id="sources">Sources</h2>
+<p class="src-note">Every rating traces to a primary document. <b>Read</b> means the text was verified; <b>unverified</b> means it is known to exist but has not yet been read.</p>
+<div class="apparatus">
+  <div class="apparatus__head"><span>Document</span><span>What it grounds</span></div>
+  {record.sources.map((s) => (
+    <div class="source">
+      <div class="source__meta">
+        <span class="source__doc">{s.doc}</span>
+        <span class={`source__tag source__tag--${s.status === 'read' ? 'read' : 'unv'}`}>{s.status}</span>
+        <span class="source__date">{s.date}</span>
+      </div>
+      <div class="source__claim">{s.claim}</div>
+    </div>
+  ))}
+</div>

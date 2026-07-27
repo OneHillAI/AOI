@@ -1,0 +1,51 @@
+# Expected-items checklist for INFERENCE-PROVIDER library entries.
+#
+# Same four adopter-journey domains as models, but the questions are provider-shaped:
+# your data leaves your network to reach an inference API. The Assess domain is built around
+# the five CUSTOMER-DATA questions an adopter must answer before routing data to a provider:
+#   1. Data treatment       - is my data retained? (data-governance: retention / ZDR)
+#   2. Trainability         - is my data used to train their models? (data-governance)
+#   3. Data & IP ownership  - do my data and the knowledge derived from it stay proprietary,
+#                             un-shared and un-sold? (data-ownership)
+#   4. Sovereignty / switch-off - whose jurisdiction, and can they cut me off? (residency:
+#                             EU-only / CLOUD Act / provider-can-restrict-access)
+#   5. Portability / exit   - can I leave and switch the provider off? (implement: portability)
+# scripts/completeness.py selects this checklist for entries with `profile: inference`.
+#
+# Each expected item: key (matches a documentation item `key` + a <!-- item: KEY --> marker),
+# weight (contribution to the domain's completeness), required (missing → validate.py warn).
+
+checklist_version: "1.1"
+
+domains:
+  assess:            # "Should we route our data through this provider?"
+    expected:
+      - {key: data-governance,  weight: 1.0, required: true}   # retention, ZDR, training-on-inputs
+      - {key: data-ownership,   weight: 1.0, required: true}   # does my data + derived knowledge stay proprietary (no training/sharing/selling)
+      - {key: residency,        weight: 1.0, required: true}   # sovereignty: EU region, jurisdiction, CLOUD Act, can they cut me off
+      - {key: compliance,       weight: 1.0, required: true}   # SOC2 / ISO / GDPR-DPA / HIPAA-BAA
+      - {key: security,         weight: 1.0, required: true}   # encryption, audit logging, attestations
+      - {key: pricing,          weight: 1.0, required: true}   # cost model & rate transparency
+      - {key: reliability,      weight: 0.5, required: false}  # SLA, uptime, incident posture
+
+  implement:         # "How do we integrate it?"
+    expected:
+      - {key: integration,      weight: 1.0, required: true}   # OpenAI-compatible API / SDK / endpoints
+      - {key: authentication,   weight: 1.0, required: true}   # API keys, org/project setup
+      - {key: region-config,    weight: 1.0, required: true}   # pinning a region / enabling ZDR
+      - {key: rate-limits,      weight: 0.5, required: false}  # tiers, quotas, throughput
+      - {key: portability,      weight: 0.5, required: false}  # drop-in swap to another provider / self-host
+
+  use:               # "What can it do and how do we use it?"
+    expected:
+      - {key: models-served,    weight: 1.0, required: true}   # catalogue of open models offered
+      - {key: features,         weight: 1.0, required: true}   # streaming, tool-calling, structured output, embeddings
+      - {key: context-limits,   weight: 1.0, required: true}   # max context / token limits per model
+      - {key: fine-tuning,      weight: 0.5, required: false}  # fine-tuning / custom-model hosting
+
+  support:           # "How do we keep it running and get help?"
+    expected:
+      - {key: status-uptime,        weight: 1.0, required: true}   # status page, uptime history
+      - {key: security-disclosure,  weight: 1.0, required: true}   # trust centre, how to report
+      - {key: channels,             weight: 1.0, required: true}   # docs, support tiers, community
+      - {key: deprecation,          weight: 0.5, required: false}  # model deprecation / EoL policy

@@ -1,0 +1,33 @@
+name: docs-lint
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  no-dashes-no-slop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail on em dashes or en dashes
+        run: |
+          # U+2014 em dash, U+2013 en dash, in tracked text files
+          if grep -rPn "[\x{2014}\x{2013}]" \
+            --include="*.md" --include="*.mdx" --include="*.yaml" --include="*.yml" --exclude-dir=primary-sources \
+            README.md docs methodology models inference-providers CONTRIBUTING.md STYLE.md 2>/dev/null; then
+            echo "::error::Em dash or en dash found. House style is plain hyphens only."
+            exit 1
+          fi
+
+      - name: Fail on banned slop words
+        run: |
+          # Editable banned-words list (word-boundary, case-insensitive).
+          BANNED='delve|tapestry|seamless|seamlessly|leverage|robust|realm|boasts|unleash|elevate|testament|furthermore|moreover|underscore|underscores'
+          if grep -rEin "\b(${BANNED})\b" \
+            --include="*.md" --include="*.mdx" --exclude-dir=primary-sources \
+            README.md docs methodology CONTRIBUTING.md 2>/dev/null; then
+            echo "::error::Banned slop word found. See STYLE.md for the de-slop list."
+            exit 1
+          fi

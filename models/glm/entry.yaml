@@ -1,0 +1,703 @@
+# OneHill v2 MODEL library entry for GLM (Zhipu AI / Z.ai).
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: glm
+name: GLM (Zhipu AI / Z.ai)
+aliases:
+- GLM-4.6
+- GLM-4.5
+- GLM-4.5-Air
+- GLM-4-0414
+- ChatGLM
+- zai-org/GLM
+- THUDM/GLM
+publisher:
+  name: Zhipu AI (Z.ai)
+  country: China
+  accountable_entity: true
+  url: https://huggingface.co/zai-org
+  security_contact: https://huggingface.co/zai-org
+summary: 'GLM is Zhipu AI''s open-weight family - Zhipu AI is the Beijing company (spun
+  out of Tsinghua''s THUDM lab) that ships internationally under the "Z.ai" brand.
+  The current flagship GLM-4.6 is a 355B-total / 32B-active Mixture-of-Experts model
+  with a 200K context window, tuned for coding and agentic use, alongside the earlier
+  GLM-4.5 (355B/32B) and the lighter GLM-4.5-Air (106B/12B) plus dense GLM-4-32B-0414
+  and GLM-4-9B-0414. The headline advantage over some China peers is a genuine, OSI-approved
+  MIT license on the GLM-4.5/4.6 and 0414 series. The two things an adopter must weigh:
+  the 355B MoE may approach the EU AI Act 1e25 systemic-risk compute threshold (unconfirmed,
+  with no Article 55 documentation published), and the hosted API applies Chinese content
+  moderation while the models carry China-aligned alignment - so deploy behind your
+  own guards and verify the LICENSE per checkpoint (the original glm-4-9b used a custom
+  non-OSI license rather than MIT).
+
+  '
+variants:
+- name: GLM-4.6
+  params_total: 355B
+  params_active: 32B (MoE)
+  context_window: 200K
+  kind: instruct
+  safety_tuned: true
+- name: GLM-4.5
+  params_total: 355B
+  params_active: 32B (MoE)
+  context_window: up to 128k (per checkpoint)
+  kind: instruct
+  safety_tuned: true
+- name: GLM-4.5-Air
+  params_total: 106B
+  params_active: 12B (MoE)
+  context_window: up to 128k (per checkpoint)
+  kind: instruct
+  safety_tuned: true
+- name: GLM-4-32B-0414 (dense)
+  params_total: 32B
+  context_window: 32K native, up to 128K extended
+  kind: instruct
+  safety_tuned: true
+- name: GLM-4-9B-0414 (dense)
+  params_total: 9B
+  context_window: up to 128k (per checkpoint)
+  kind: instruct
+  safety_tuned: true
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: open
+  license:
+    spdx: MIT
+    name: MIT License (GLM-4.5 / GLM-4.6 / GLM-4-0414 series; verify per checkpoint)
+    classification: osi
+    commercial_use: allowed
+    notable_restrictions:
+    - Per-variant licensing - the GLM-4.5/4.6 and GLM-4-0414 series are MIT, but the
+      original glm-4-9b used a custom non-OSI "glm-4" license; verify the LICENSE file
+      per checkpoint
+    url: https://huggingface.co/zai-org/GLM-4.6
+provenance:
+  canonical_source: https://huggingface.co/zai-org
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: ModelScope (Zhipu official)
+      trust: publisher
+      note: Zhipu's own hub - dual-published; verify checksums match across hubs
+    - name: Legacy THUDM org on Hugging Face
+      trust: publisher
+      note: Older GLM/ChatGLM checkpoints live under the legacy THUDM org; the current
+        org is zai-org
+    - name: Community GGUF quants (Ollama, bartowski, etc.)
+      trust: community
+      note: many quants for the dense 0414 sizes; not canonical
+  checkpoint_checklist_score: 5
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: the 355B GLM-4.5/4.6 MoE may approach the 1e25 threshold;
+      not publicly confirmed either way. Smaller dense 9B/32B are well under
+    over_1e25_threshold: false
+    article_55_docs_available: 'no'
+  open_source_exemption:
+    license_qualifies: partial
+    rationale: 'On license grounds the MIT-licensed GLM-4.5/4.6 and 0414 series are
+      genuine OSI-approved free/open-source releases with public parameters and usage
+      information, so they plausibly qualify for the Article 53 open-source exemption
+      from the Annex XI/XII technical-documentation duties. Two caveats. First, the
+      exemption is void for any systemic-risk model, and it cannot be confirmed whether
+      the 355B MoE crosses the 1e25 FLOPs threshold - if it does, the full Article 55
+      package (not published) would be owed. Second, the surviving obligations (a copyright
+      policy and a public training-content summary) are not published, and because the
+      training corpus is not released a downstream provider cannot assemble the training-content
+      summary from upstream artifacts. Recorded as ''partial'' to reflect the clean license
+      offset against the unresolved systemic-risk and missing training-content package.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: 'no'
+    code_of_practice_signatory: false
+  deployer_notes: 'A China-based provider is unlikely to furnish an EU AI Office documentation
+    package. An EU deployer inherits a clean MIT license and a usable model card / technical
+    report for the mainstream sizes, but must self-assemble the copyright policy and
+    training-content material (the corpus is not released). For the 355B MoE there is
+    an unresolved systemic-risk question and no Article 55 documentation the deployer
+    can rely on - factor this into siting and high-stakes use, and note the hosted-API
+    content moderation and China-aligned alignment when assessing behaviour.
+
+    '
+  last_assessed: '2026-07-25'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T3
+  ceiling_conditional: true
+  hardware_notes: 'The dense 9B runs on a single modern GPU and the 32B on a single
+    high-memory or dual GPU (heavier at long context); the 106B/12B Air MoE needs a
+    multi-GPU node or aggressive quantization, and the 355B/32B GLM-4.5/4.6 MoE needs
+    serious multi-GPU infrastructure (or heavy quantization) to serve.
+
+    '
+  serving_support:
+  - vllm
+  - sglang
+  - llama.cpp
+  - ollama
+  - hf-transformers
+  controls_required:
+  - Deploy behind your own input/output guardrails; do not rely on built-in alignment
+  - Add a guard/classifier model and prompt-injection defences for agentic/coding use
+  - Account for China-aligned alignment and hosted-API content moderation in behaviour
+    testing
+  - Verify checksums match across Hugging Face (zai-org) and ModelScope; pin the exact
+    revision and confirm the per-checkpoint LICENSE
+  - For the 355B MoE, resolve or avoid the EU systemic-risk / Article 55 question yourself
+    before EU high-stakes use
+score:
+  rubric_version: '1.1'
+  headline: 65.2
+  grade: C
+  hard_flags:
+  - '🚩 EU AI Act - the 355B GLM-4.5/4.6 MoE may approach the 1e25-FLOPs systemic-risk
+    threshold (unconfirmed) and no Article 55 / training-content documentation is published'
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Open-weights tier: weights are downloadable under a genuine MIT license
+        with model cards and technical reports, but the training data and training code
+        are not released (only inference code) and evaluation is only partially reproducible.
+        Solidly open-weight rather than open-science.
+
+        '
+      evidence_refs:
+      - ev-hf-zai
+      - ev-license-mit
+      - ev-github
+    provenance:
+      score: 3
+      rationale: 'Verified zai-org on Hugging Face plus official ModelScope publication,
+        safetensors with checksums, and no canonical-org malicious incident (checklist
+        5/8). The dual-hub distribution and the legacy THUDM org are supply-chain surfaces
+        - verify checksums match across hubs. Meets the score-3 anchor (verified org +
+        safetensors + checksums); short of 4, which needs a scanned checkpoint or a
+        documented mirror/quantization policy (~6-7 boxes), and of 5''s cryptographic
+        signing.
+
+        '
+      evidence_refs:
+      - ev-hf-zai
+      - ev-modelscope
+    legal:
+      score: 3
+      rationale: 'The OSI-approved MIT license on the GLM-4.5/4.6 and 0414 series is
+        a real plus - cleaner than a restricted community license. But licensing is
+        per-variant (the original glm-4-9b used a custom non-OSI license), there is no
+        training-content summary or copyright policy, and the 355B MoE carries an unresolved
+        systemic-risk question with no Article 55 documentation - capping legal readiness
+        at competent-with-caveats.
+
+        '
+      evidence_refs:
+      - ev-license-mit
+      - ev-license-split
+      - ev-eu-gap
+    safety:
+      score: 3
+      rationale: 'Instruct variants are safety-tuned and withstand casual jailbreaks,
+        but tuning is lighter than Western frontier labs, there is no companion guard
+        model, the hosted API applies Chinese content moderation, and the models carry
+        China-aligned alignment - behavioural factors to account for. Deploy behind your
+        own guards.
+
+        '
+      evidence_refs:
+      - ev-safety
+      - ev-behaviour
+    performance:
+      score: 4
+      rationale: 'Strong general capability and especially strong coding/agentic performance:
+        third-party evaluation places GLM-4.6 among the more capable open models for
+        real-world coding and tool use. Not marked 5 because leadership is domain-concentrated
+        (coding/agentic) rather than uniform, and the coding/agentic results come from
+        third-party evaluation.
+
+        '
+      evidence_refs:
+      - ev-perf-coding
+    operational:
+      score: 4
+      rationale: 'Strong ecosystem support: dual distribution on Hugging Face and ModelScope,
+        first-class vLLM and SGLang serving, community GGUF quants, and a size range
+        from a 9B dense model to the 355B MoE. Short of 5 because the largest MoE needs
+        serious infrastructure and day-0 llama.cpp/edge support for the big MoE lags
+        the dense sizes.
+
+        '
+      evidence_refs:
+      - ev-ecosystem
+      - ev-hf-zai
+    governance:
+      score: 3
+      rationale: 'Active, accountable publisher (Zhipu AI / Z.ai) with a rapid release
+        cadence and a verified presence on Hugging Face and ModelScope, but no documented
+        vulnerability-disclosure or deprecation policy and no EU Code of Practice signature.
+
+        '
+      evidence_refs:
+      - ev-hf-zai
+      - ev-eu-gap
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry
+#     (like the EU AI Act flag). Not a scoring input - each ties back to one of the seven
+#     AOI dimensions and summarises documentation that lives in the four domains.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tune freely under MIT on the GLM-4.5/4.6 and 0414 series, but training data and code are closed - you can adapt these weights but cannot reproduce them from scratch; verify each checkpoint's LICENSE (original glm-4-9b was custom-licensed)."
+    refs: [ev-license-mit, ev-hf-zai]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "Capable long-context (up to 200K on GLM-4.6) coding and knowledge backbone, but China-aligned alignment and hosted-API moderation distort coverage on politically sensitive subjects."
+    refs: [ev-perf-coding, ev-behaviour]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "Excellent for specialisation: an MIT-licensed ladder from a 9B dense model to a 355B/32B MoE for fine-tuning and distillation, with released inference code and technical reports."
+    refs: [ev-hf-zai, ev-0414]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Highly portable: safetensors served on vLLM and SGLang behind OpenAI-compatible endpoints; mind the GLM chat template and thinking/agentic output format when swapping."
+    refs: [ev-ecosystem, ev-hf-zai]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Not independently benchmarked for misuse: safety tuning is lighter than Western frontier labs with no companion guard model, the hosted API applies Chinese moderation, and no broad third-party red-team exists."
+    refs: [ev-safety, ev-behaviour]
+
+# --- Four documentation domains. Item keys match checklists/model.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     Every credited item is `aggregated` (public source, >=1 ref); OneHill has run nothing,
+#     so there are no onehill_generated items and originality = 0.
+documentation:
+  assess:
+    completeness: 86.7
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-glm46, ev-perf-coding]
+        summary: "General-purpose assistant and especially coding/agentic workloads across a 9B-to-355B range; deploy behind your own guards, verify the per-checkpoint LICENSE, and treat the 355B MoE as out of scope for EU high-stakes use until the systemic-risk question is resolved."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-behaviour, ev-safety]
+        summary: "China-aligned alignment and hosted-API content moderation; lighter safety tuning than Western frontier labs with no guard model; capability leadership is concentrated in coding/agentic rather than uniform."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-zai, ev-license-mit, ev-github]
+        summary: "open_weights - MIT weights, model cards, released inference code and technical reports, but training data and training code are closed and evaluation is only partially reproducible."
+      - key: license
+        title: "License terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-license-mit, ev-license-split]
+        summary: "GLM-4.5/4.6 and GLM-4-0414 series are OSI-approved MIT with unconditional commercial use; verify LICENSE per checkpoint - the original glm-4-9b used a custom non-OSI 'glm-4' license."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-zai, ev-modelscope]
+        summary: "Verified zai-org on Hugging Face plus official ModelScope dual-publication (and a legacy THUDM org); safetensors with checksums but no cryptographic signing - verify checksums match across hubs."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-eu-gap, ev-license-mit]
+        summary: "GPAI; MIT license plausibly supports the Article 53 open-source exemption, but the 355B MoE may approach the 1e25 systemic-risk threshold (unconfirmed) with NO Article 55 documentation, and no copyright policy or training-content summary is published."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-perf-coding]
+        summary: "Aggregated from third-party evaluation: strong general capability and strong coding/agentic performance (GLM-4.6); evaluation is only partially open."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No broad independent red-team / safety battery (CBRN, cyber, prompt-injection) has been published for the GLM family. Vendor safety tuning is documented but there is no third-party adversarial suite to aggregate; hosted-API moderation is not a substitute for a model-level safety evaluation."
+  implement:
+    completeness: 90.9
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-zai, ev-ecosystem]
+        summary: "HF from_pretrained (safetensors), vLLM or SGLang serve for the MoE, Ollama/llama.cpp GGUF for the dense sizes; also on Zhipu's ModelScope - pin the exact revision and verify checksums."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-zai, ev-ecosystem]
+        summary: "Dense 9B on a single GPU and 32B on one high-memory/dual GPU; the 106B/12B Air MoE needs a multi-GPU node or heavy quantization, and the 355B/32B GLM-4.5/4.6 MoE needs serious multi-GPU infrastructure."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-ecosystem]
+        summary: "First-class vLLM and SGLang support for the MoE flagships, plus llama.cpp/Ollama and transformers for the dense sizes - no custom runtime needed for standard use."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-safety, ev-behaviour]
+        summary: "Deployment Ceiling T3 (conditional): supply your own input/output guardrails and a guard model, add prompt-injection defences for agentic/coding use, account for China-aligned alignment, and resolve the EU systemic-risk question yourself for the 355B MoE."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-ecosystem]
+        summary: "Community GGUF/AWQ/EXL quants (Ollama, bartowski, turboderp) are available, best-covered for the dense 0414 sizes; these are community artifacts rather than a single official quantization program."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-zai, ev-license-mit]
+        summary: "MIT-licensed safetensors checkpoints support standard SFT/LoRA via transformers/TRL; training data and code are not released, so continued pre-training from scratch is not possible."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-ecosystem]
+        summary: "Serve behind vLLM's or SGLang's OpenAI-compatible /v1 server for drop-in client integration; account for GLM's chat template and agentic/thinking output format."
+  use:
+    completeness: 66.7
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-perf-coding, ev-glm46]
+        summary: "Strong general text plus strong coding/agentic and tool-use performance (GLM-4.6); text-focused, with a size ladder from a 9B dense model to a 355B MoE."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-glm46]
+        summary: "GLM-4.6 supports a 200K context window; GLM-4.5 and the dense 0414 sizes are shorter (up to 128K extended). Confirm the exact window on each model card."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-zai, ev-glm46]
+        summary: "GLM ships a chat template (with a thinking / agentic mode) in its tokenizer config - use apply_chat_template rather than hand-rolling roles."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-zai]
+        summary: "Bilingual-strong in Chinese and English with broader multilingual coverage; per-language depth varies and is not exhaustively documented."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-perf-coding]
+        summary: "GLM-4.6 is positioned for agentic tool use and function calling (including MCP-style workflows); exact schema support is per-checkpoint and best confirmed on the model card."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No model-documented native JSON/schema-constrained output guarantee for GLM; constrained decoding is available at the serving layer (e.g. vLLM/SGLang grammars), which is a runtime feature rather than a model behaviour."
+  support:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-zai, ev-ecosystem]
+        summary: "Aggregated common pitfalls (OOM on the 355B/106B MoE, chat-template/thinking-mode mismatch, checksum drift across HF zai-org vs ModelScope, wrong-LICENSE assumptions per checkpoint); not an exhaustive catalogue."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-zai, ev-github]
+        summary: "Rapid cadence (GLM-4-0414 -> GLM-4.5 / Air -> GLM-4.6) tracked as immutable HF/ModelScope revisions on the verified zai-org org, with GitHub repos and technical reports per release."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No formal, published vulnerability-disclosure or security policy (SECURITY.md / advisory process) exists for GLM; contact is only the general zai-org Hugging Face / ModelScope / GitHub presence, so there is no documented process to aggregate."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-zai, ev-modelscope, ev-github]
+        summary: "zai-org Hugging Face and ModelScope org discussions plus GitHub issues on the zai-org/GLM repositories, with broad community presence across serving-stack ecosystems."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published deprecation or end-of-life policy for GLM checkpoints; older HF/ModelScope revisions (including the legacy THUDM org) remain downloadable but no formal support-window or sunset commitment is documented."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-behaviour, ev-safety]
+        summary: "From model-card and third-party caveats: China-aligned alignment and hosted-API content moderation, lighter safety coverage than frontier labs, and an unresolved EU systemic-risk/Article 55 question on the 355B MoE."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: strong
+      rationale: "Per-variant, but clean on the current line: GLM-4.6 ships a real checked-in MIT LICENSE ('Copyright (c) 2026 Zhipu AI', no custom clauses) and the GLM-4.5 and GLM-4-0414 siblings declare the same MIT via HF metadata/README, so you can run, fine-tune, distill, redistribute and commercialise the 9B-to-355B ladder with no gate. The exception is the legacy glm-4-9b, which is NOT plain MIT - a custom 'glm-4' licence with commercial-use registration, 'Built with glm-4' attribution and a name-prefix requirement under PRC law - so verify the LICENSE per checkpoint."
+      # grounded in: ev-license-glm52 (license, retrieved) - real in-repo MIT LICENSE on GLM-5.2, confirming the family MIT is genuine; ev-license-mit (license, retrieved) - 4.5/4.6/0414 MIT declared via metadata/README only, no checked-in LICENSE file; ev-license-split (license, retrieved) - glm-4-9b custom glm-4 licence read verbatim (registration, 'Built with glm-4', name-prefix, PRC law/Haidian court)
+    transparency:
+      level: weak
+      rationale: "You hold the weights but cannot see what they are: training data and training code are closed, the models carry China-aligned alignment you cannot inspect, and the hosted Z.ai API applies Chinese content moderation."
+      # grounded in: training data/code closed (structural); ev-behaviour (third_party) - China-aligned alignment and hosted-API content moderation
+    reliability:
+      level: moderate
+      rationale: "Runs dependably, but safety tuning is lighter than Western frontier labs, there is no companion guard model, and the 355B MoE carries an unresolved EU systemic-risk question."
+      # grounded in: ev-perf-coding (third_party) - coding/agentic capability; ev-safety (third_party) - lighter safety tuning, no companion guard model
+    data_control:
+      level: strong
+      rationale: "Self-hosted, the MIT-licensed weights run on your own infrastructure and nothing phones home - your data and derived knowledge stay yours. The hosted Z.ai API is the only path that exposes inputs, and it is a Singapore regime distinct from the PRC: API content is 'not saved on our servers' and not used to train unless you agree, though consumer chat content is used to improve the models."
+      # grounded in: self-hosting (structural, no clawback/telemetry in MIT); ev-zai-terms (terms, retrieved) - Singapore law/SIAC, API carve-out 'We will not use End User Content ... unless you explicitly agree'; ev-zai-privacy (privacy_policy, retrieved) - Singapore processing, API content 'not saved on our servers', consumer content used 'when we train and improve our models'
+  verdict: "You substantially but not uniformly own the GLM line, and the split is per-variant. The current line is genuine MIT: GLM-4.6 ships a real checked-in MIT LICENSE ('Copyright (c) 2026 Zhipu AI') and the GLM-4.5 and GLM-4-0414 siblings declare the same MIT via HF metadata/README, so you can run, fine-tune, distill, redistribute and commercialise them with no gate. The caveat is the legacy glm-4-9b: NOT plain MIT, a custom 'glm-4' licence requiring commercial-use registration, 'Built with glm-4' attribution and a name prefix, governed by PRC law with disputes to Beijing's Haidian District court, so verify the LICENSE per checkpoint. Two things hold it at partial: training is opaque (closed data/code, China-aligned alignment you cannot inspect) and no safety battery is benchmarked, so supply your own guards. The weights you self-host are yours, but the hosted Z.ai service is Singapore-governed (SIAC arbitration), a different legal regime from the PRC glm-4-9b weights licence; do not conflate the two."
+
+# --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
+#     (true = the document's substantive text was read; false = known to exist but not read).
+#     Grounded 2026-07-25 against the primary-source clauses in
+#     docs/primary-sources/glm/_sources.md. The per-variant licence picture is the crux:
+#     GLM-5.2 ships a REAL checked-in MIT LICENSE file; GLM-4.5/4.6/0414 declare MIT only via HF
+#     metadata/README (no in-repo LICENSE file - raw/blob 404); the legacy glm-4-9b is a custom
+#     PRC-law "glm-4" licence, NOT plain MIT. The hosted Z.ai terms/privacy were read verbatim and
+#     are a Singapore regime - distinct from the PRC glm-4-9b weights licence. Third-party framing
+#     articles were not re-read this session, so they carry retrieved:false.
+evidence:
+- id: ev-glm46
+  claim: GLM-4.6 is a 355B-total / 32B-active MoE with a 200K context window, released
+    by Zhipu AI / Z.ai and hosted on the zai-org Hugging Face org; the model card/metadata
+    declares MIT.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/zai-org/GLM-4.6
+  date: '2026-07-25'
+- id: ev-glm45
+  claim: GLM-4.5 (355B/32B) and GLM-4.5-Air (106B/12B) are MoE models on the zai-org
+    Hugging Face org; the GLM-4.5 README states "They are released under the MIT open-source
+    license and can be used commercially and for secondary development."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/zai-org/GLM-4.5
+  date: '2026-07-25'
+- id: ev-hf-zai
+  claim: GLM checkpoints are hosted on the verified zai-org org on Hugging Face in
+    safetensors with checksums (the current org; legacy checkpoints are under THUDM).
+    The org listing render conflicted with the verified per-model pages, so per-model
+    findings are treated as authoritative.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/zai-org
+  date: '2026-07-25'
+- id: ev-license-mit
+  claim: 'The GLM-4.5, GLM-4.6 and GLM-4-32B-0414 checkpoints declare the OSI-approved
+    MIT license permitting commercial use - but via HF metadata ("License: mit") and
+    README only; there is NO in-repo LICENSE file (raw/blob LICENSE returns 404). The
+    metadata/README statement was read; the checked-in LICENSE text was not (none exists
+    on these repos). A sibling (GLM-5.2) does ship a real MIT LICENSE file, confirming
+    the family MIT is genuine.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/zai-org/GLM-4.6
+  date: '2026-07-25'
+- id: ev-license-glm52
+  claim: 'GLM-5.2 ships a REAL in-repo MIT LICENSE file, read verbatim: standard MIT
+    text with no custom clauses, "Copyright (c) 2026 Zhipu AI." This resolves the
+    metadata-only gap on the 4.5/4.6/0414 line by confirming the family MIT is a genuine,
+    checked-in MIT licence on at least one current sibling.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/zai-org/GLM-5.2/resolve/main/LICENSE
+  date: '2026-07-25'
+- id: ev-license-split
+  claim: 'Licensing is per-variant and the legacy glm-4-9b is NOT plain MIT. The THUDM/glm-4-9b
+    LICENSE, read verbatim, is a custom "glm-4" licence: a revocable, royalty-free
+    copyright licence free for academic research but where "Commercial users must complete
+    registration ... to use the model for business purposes"; it requires displaying
+    "Built with glm-4" prominently and prefixing derived model names with "glm-4",
+    forbids military/illegal use and endangering national security, and is "governed
+    ... in accordance with the laws of People''s Republic of China" with disputes to
+    "Beijing''s Haidian District People''s Court." (Verify LICENSE per checkpoint.)'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/THUDM/glm-4-9b/raw/main/LICENSE
+  date: '2026-07-25'
+- id: ev-0414
+  claim: The GLM-4-0414 family (dense GLM-4-32B-0414 and GLM-4-9B-0414, up to 128K
+    extended context) was open-sourced under the MIT license.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://github.com/zai-org/GLM-4
+  date: '2026-07-25'
+- id: ev-github
+  claim: Zhipu / Z.ai publishes GLM inference code and technical reports on GitHub
+    (zai-org/GLM-4, zai-org/GLM-4.5), but not the training data or training pipeline.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://github.com/zai-org
+  date: '2026-07-25'
+- id: ev-modelscope
+  claim: GLM models are also officially published on Alibaba's ModelScope hub (dual
+    distribution) by Zhipu.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: false
+  url: https://modelscope.cn/organisation/ZhipuAI
+  date: '2026-07-25'
+- id: ev-zai-terms
+  claim: 'Hosted Z.ai Terms of Service, read verbatim: governed by Singapore law with
+    SIAC arbitration (seat Singapore). Individual/consumer users grant a broad perpetual
+    licence to use User Content to improve the services, but the API/enterprise carve-out
+    states "We will not use End User Content for developing or improving Services, unless
+    you explicitly agree." Singapore jurisdiction - distinct from the PRC-law glm-4-9b
+    weights licence; do not conflate them.'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://chat.z.ai/legal-agreement/terms-of-service
+  date: '2026-07-25'
+- id: ev-zai-privacy
+  claim: 'Hosted Z.ai Privacy Policy, read verbatim: data is processed in Singapore;
+    API content is "not saved on our servers"; consumer content is used "when we train
+    and improve our models." The Singapore processing location is distinct from the
+    PRC jurisdiction of the glm-4-9b weights licence.'
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://chat.z.ai/legal-agreement/privacy-policy
+  date: '2026-07-25'
+- id: ev-perf-coding
+  claim: Third-party evaluation places GLM-4.6 among the stronger open models for real-world
+    coding, tool use and agentic tasks.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://www.marktechpost.com/2025/09/30/zhipu-ai-releases-glm-4-6-achieving-enhancements-in-real-world-coding-long-context-processing-reasoning-searching-and-agentic-ai/
+  date: '2026-07-25'
+- id: ev-behaviour
+  claim: GLM models carry China-aligned alignment and the hosted Z.ai API applies Chinese
+    content moderation on politically sensitive topics.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://intuitionlabs.ai/articles/glm-4-6-open-source-coding-model
+  date: '2026-07-25'
+- id: ev-ecosystem
+  claim: GLM is supported for local serving on vLLM and SGLang (with community GGUF
+    quants for the dense sizes) and distributed across Hugging Face and ModelScope.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://cirra.ai/articles/glm-4-6-tool-calling-mcp-analysis
+  date: '2026-07-25'
+- id: ev-safety
+  claim: GLM instruct variants are safety-tuned but with lighter alignment coverage
+    than Western frontier labs and no companion guard model.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://intuitionlabs.ai/articles/glm-4-6-open-source-coding-model
+  date: '2026-07-25'
+- id: ev-eu-gap
+  claim: No public EU AI Act training-content summary, copyright policy, or Article
+    55 documentation is published for GLM, and the 355B MoE's systemic-risk status is
+    unconfirmed.
+  source_type: third_party
+  doc_type: model_card
+  retrieved: false
+  url: https://huggingface.co/zai-org/GLM-4.6
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry (v2 four-domain library format; anchored to GLM-4.6 / GLM-4.5
+    / GLM-4-0414 - GLM-5 / GLM-4.7 / GLM-4.6V unverified and omitted).
+- date: '2026-07-25'
+  change: Grounded evidence against primary sources (docs/primary-sources/glm) - added
+    doc_type/retrieved to every item; grounded the per-variant licence picture (GLM-5.2
+    real in-repo MIT LICENSE; GLM-4.5/4.6/0414 MIT via metadata/README only, no checked-in
+    LICENSE; legacy glm-4-9b custom PRC-law "glm-4" registration licence read verbatim)
+    and the hosted Z.ai terms/privacy (Singapore law/SIAC vs the PRC weights licence);
+    tightened ownership rationales/verdict with # grounded in comments. No score changes.
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

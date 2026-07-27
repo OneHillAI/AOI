@@ -1,0 +1,209 @@
+---
+import AppShell from '../../layouts/AppShell.astro';
+import { getAllEntries } from '../../lib/entries';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const all = getAllEntries();
+const NOTCH = { strong: 3, moderate: 2, weak: 1 };
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+const cols = all.map((r) => ({
+  id: r.id,
+  title: r.title,
+  type: r.type === 'model' ? 'Model' : 'Provider',
+  url: `${base}/library/${r.dir}/${r.id}/`,
+  grade: r.grade,
+  score: r.score,
+  level: r.ownership.level,
+  docs: r.docsGauge,
+  facts: r.type === 'model' ? (r.opennessTier || '-') : (r.licence || '-'),
+  f: Object.fromEntries(r.factors.map((f) => [f.key, f.rating])),
+}));
+const models = cols.filter((c) => c.type === 'Model');
+const providers = cols.filter((c) => c.type === 'Provider');
+
+const FACTOR_ROWS = [
+  { key: 'use_modify', label: 'Use & modify' },
+  { key: 'transparency', label: 'Transparency' },
+  { key: 'reliability', label: 'Reliability' },
+  { key: 'data_control', label: 'Data control' },
+];
+const MAX = 5;
+const crumbs = [{ label: 'Compare' }];
+---
+<AppShell title="Compare - AI Ownership Index" crumbs={crumbs} browseActive="Compare" reviewed={`${all.length} entries`} canvas="entry">
+  <nav slot="sidebar" class="navgroup" aria-label="Compare">
+    <div class="lbl">Compare</div>
+    <a href={`${base}/library/`}>All entries</a>
+    <a href="#pick">Pick entries</a>
+    <a href="#grid">The comparison</a>
+  </nav>
+
+  <div class="lead-eyebrow">AI Ownership Index</div>
+  <h1 class="lead-h">Compare</h1>
+  <p class="lead-p">Put any models and providers side by side on the four ownership factors, the level, and the AOI score. Pick up to {MAX}; the selection is kept in the link so a comparison is shareable.</p>
+
+  <div id="pick" class="cmp-pick">
+    <div class="cmp-pick__grp">
+      <div class="cmp-pick__lbl">Models</div>
+      <div class="cmp-chips">
+        {models.map((c) => (
+          <button class="cmp-chip" data-id={c.id} type="button" aria-pressed="false">
+            <span class="cmp-chip__g">{c.grade}</span>{c.title}
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="cmp-pick__grp">
+      <div class="cmp-pick__lbl">Inference providers</div>
+      <div class="cmp-chips">
+        {providers.map((c) => (
+          <button class="cmp-chip" data-id={c.id} type="button" aria-pressed="false">
+            <span class="cmp-chip__g">{c.grade}</span>{c.title}
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="cmp-pick__foot">
+      <span class="count" id="cmpCount"></span>
+      <button class="btn" id="cmpClear" type="button">Clear</button>
+    </div>
+  </div>
+
+  <p class="cmp-empty" id="cmpEmpty" hidden>Pick entries above to build the comparison.</p>
+
+  <div id="grid" class="cmp-wrap">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th class="cmp-rowlabel"></th>
+          {cols.map((c) => (
+            <th class="cmp-col" data-col={c.id}>
+              <a href={c.url}><span class="cmp-col__kick">{c.type}</span><span class="cmp-col__name">{c.title}</span></a>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="cmp-rowlabel">Ownership</th>
+          {cols.map((c) => <td class="cmp-col" data-col={c.id}><span class={`cmp-own own-${c.level}`}>{c.level}</span></td>)}
+        </tr>
+        <tr>
+          <th class="cmp-rowlabel">AOI</th>
+          {cols.map((c) => <td class="cmp-col" data-col={c.id}><span class="cmp-aoi"><b>{c.grade}</b> {c.score}</span></td>)}
+        </tr>
+        {FACTOR_ROWS.map((fr) => (
+          <tr>
+            <th class="cmp-rowlabel">{fr.label}</th>
+            {cols.map((c) => (
+              <td class="cmp-col" data-col={c.id}>
+                <span class={`frow s-${c.f[fr.key]}`} style="justify-content:center">
+                  <span class="notch">{[0, 1, 2].map((i) => <i class={i < NOTCH[c.f[fr.key]] ? 'on' : ''}></i>)}</span>
+                  <span class="frate">{cap(c.f[fr.key])}</span>
+                </span>
+              </td>
+            ))}
+          </tr>
+        ))}
+        <tr>
+          <th class="cmp-rowlabel">Openness / region</th>
+          {cols.map((c) => <td class="cmp-col" data-col={c.id}><span class="cmp-fact">{c.facts}</span></td>)}
+        </tr>
+        <tr>
+          <th class="cmp-rowlabel">Documentation</th>
+          {cols.map((c) => <td class="cmp-col" data-col={c.id}><span class="cmp-fact">{c.docs}%</span></td>)}
+        </tr>
+        <tr>
+          <th class="cmp-rowlabel"></th>
+          {cols.map((c) => <td class="cmp-col" data-col={c.id}><a class="cmp-open" href={c.url}>Open &rarr;</a></td>)}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script is:inline define:vars={{ MAX, defaultIds: [models[0]?.id, models[3]?.id, providers[0]?.id].filter(Boolean) }}>
+    (function () {
+      var chips = Array.prototype.slice.call(document.querySelectorAll('.cmp-chip'));
+      var count = document.getElementById('cmpCount');
+      var empty = document.getElementById('cmpEmpty');
+      var grid = document.getElementById('grid');
+      var clearBtn = document.getElementById('cmpClear');
+      var valid = {};
+      chips.forEach(function (ch) { valid[ch.dataset.id] = true; });
+
+      function readUrl() {
+        var m = new URLSearchParams(location.search).get('ids');
+        var ids = (m ? m.split(',') : []).filter(function (id) { return valid[id]; });
+        return ids.length ? ids.slice(0, MAX) : defaultIds.slice(0, MAX);
+      }
+      var selected = readUrl();
+
+      function apply() {
+        document.querySelectorAll('[data-col]').forEach(function (el) {
+          el.style.display = selected.indexOf(el.dataset.col) > -1 ? '' : 'none';
+        });
+        chips.forEach(function (ch) {
+          var on = selected.indexOf(ch.dataset.id) > -1;
+          ch.setAttribute('aria-pressed', on ? 'true' : 'false');
+          ch.classList.toggle('on', on);
+          var full = selected.length >= MAX && !on;
+          ch.disabled = full;
+        });
+        if (count) count.textContent = selected.length + ' of ' + MAX + ' selected';
+        if (empty) empty.hidden = selected.length > 0;
+        if (grid) grid.style.display = selected.length ? '' : 'none';
+        var url = selected.length ? location.pathname + '?ids=' + selected.join(',') : location.pathname;
+        history.replaceState(null, '', url);
+      }
+
+      chips.forEach(function (ch) {
+        ch.addEventListener('click', function () {
+          var id = ch.dataset.id, i = selected.indexOf(id);
+          if (i > -1) selected.splice(i, 1);
+          else if (selected.length < MAX) selected.push(id);
+          apply();
+        });
+      });
+      if (clearBtn) clearBtn.addEventListener('click', function () { selected = []; apply(); });
+      apply();
+    })();
+  </script>
+</AppShell>
+
+<style is:global>
+  .cmp-pick{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:1.1rem 1.3rem;margin-top:1.5rem;}
+  .cmp-pick__grp{margin-bottom:.8rem;}
+  .cmp-pick__lbl{font-family:var(--serif);text-transform:uppercase;letter-spacing:.1em;font-size:.58rem;font-weight:700;color:var(--faint);margin-bottom:.5rem;}
+  .cmp-chips{display:flex;flex-wrap:wrap;gap:.4rem;}
+  .cmp-chip{display:inline-flex;align-items:center;gap:.4rem;font:inherit;font-size:.82rem;font-weight:600;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:.3rem .7rem;cursor:pointer;}
+  .cmp-chip:hover{border-color:var(--accent);color:var(--accent);}
+  .cmp-chip.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .cmp-chip:disabled{opacity:.4;cursor:not-allowed;}
+  .cmp-chip__g{font-family:var(--serif);font-weight:700;font-size:.78rem;}
+  .cmp-chip.on .cmp-chip__g{color:#fff;}
+  .cmp-chip:not(.on) .cmp-chip__g{color:var(--gold);}
+  .cmp-pick__foot{display:flex;align-items:center;gap:1rem;border-top:1px solid var(--line-soft);padding-top:.7rem;margin-top:.3rem;}
+  .cmp-pick__foot .count{font-size:.8rem;color:var(--faint);}
+  .cmp-pick__foot .btn{margin-left:auto;}
+  .cmp-empty{color:var(--faint);font-size:.95rem;margin:1.6rem 0;}
+
+  .cmp-wrap{margin-top:1.6rem;overflow-x:auto;}
+  .cmp{border-collapse:separate;border-spacing:0;width:100%;}
+  .cmp th,.cmp td{padding:.7rem .9rem;text-align:center;vertical-align:middle;border-bottom:1px solid var(--line-soft);}
+  .cmp-rowlabel{position:sticky;left:0;z-index:1;background:var(--bg);text-align:left;font-family:var(--serif);font-weight:600;font-size:.82rem;color:var(--muted);white-space:nowrap;min-width:9rem;}
+  .cmp thead .cmp-col{border-bottom:2px solid var(--accent);vertical-align:bottom;}
+  .cmp-col{min-width:11rem;}
+  .cmp-col a{text-decoration:none;color:inherit;display:block;}
+  .cmp-col__kick{display:block;font-family:var(--serif);text-transform:uppercase;letter-spacing:.1em;font-size:.55rem;font-weight:700;color:var(--faint);}
+  .cmp-col__name{display:block;font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--ink);margin-top:.2rem;}
+  .cmp thead .cmp-col a:hover .cmp-col__name{color:var(--accent);}
+  .cmp-own{font-weight:700;text-transform:capitalize;text-decoration:underline;text-underline-offset:2px;}
+  .cmp-aoi{font-size:.86rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+  .cmp-aoi b{font-family:var(--serif);color:var(--gold);font-size:1.05rem;}
+  .cmp .frow{display:inline-flex;}
+  .cmp-fact{font-size:.82rem;color:var(--muted);font-family:var(--mono);}
+  .cmp-open{font-size:.8rem;font-weight:600;color:var(--accent);text-decoration:none;}
+  .cmp-open:hover{text-decoration:underline;}
+  .own-full,.own-substantial{color:var(--pos);} .own-partial{color:var(--mid);} .own-limited,.own-none{color:var(--neg);}
+</style>

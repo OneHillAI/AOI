@@ -1,0 +1,408 @@
+# OneHill v2 HOSTING-PROVIDER library entry for Hugging Face Hub. Replaces data.yaml.
+# Validated against schema/hosting-provider.v2.schema.json.
+#   scores  -> scripts/score.py --check         (provider score - carried over unchanged)
+#   meters  -> scripts/completeness.py --write   (per-domain completeness/originality)
+#   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: hugging-face
+name: Hugging Face Hub
+kind: hub
+operator: Hugging Face, Inc.
+summary: 'Hugging Face is the de facto default registry for open-weight models: weights
+  live in per-repo git repositories backed by git-LFS and are pulled either with git
+  clone or, far more commonly, through huggingface_hub / transformers from_pretrained().
+  Storage is content-addressed and the client verifies file hashes, so integrity on
+  download is strong. Provenance is the best in this class of any public hub - blue
+  verified-org badges for labs like Meta, Google and Mistral; layered malware/secret
+  scanning (Picklescan, ProtectAI ModelScan/Guardian, ClamAV, TruffleHog and a JFrog
+  proprietary scanner); SHA/etag checksums; commit-hash revision pinning; and enforced
+  click-through license gating (e.g. Llama, Gemma). What you then load is the main
+  self-hosting risk here, not the download path: pickle checkpoints are flagged "unsafe"
+  in the UI but not blocked, trust_remote_code=True executes repo-shipped Python,
+  a 2026 Transformers config-injection RCE bypassed even trust_remote_code=False,
+  and the hub has repeatedly hosted malicious uploads and typosquats - so pull safetensors,
+  pin the commit, verify the hash, and keep transformers current.
+
+  '
+distribution_mechanism: 'Per-model git repositories backed by git-LFS. Fetch via git
+  clone or, typically, the huggingface_hub client and transformers from_pretrained().
+  Content-addressed storage; the client verifies file hashes on download. Revisions
+  are addressable by commit hash.
+
+  '
+provenance:
+  verified_orgs: "yes"
+  malware_scanning: 'Layered, automated scanning on upload: Picklescan and ProtectAI
+    ModelScan/Guardian for malicious pickles, ClamAV for general malware, TruffleHog
+    for leaked secrets, and a JFrog proprietary scanner that parses embedded code.
+    Findings mark files "unsafe" or "suspicious" in the UI but do NOT block or delete
+    them - the scan warns, it does not quarantine.
+
+    '
+  signing: 'GPG commit signing produces a "Verified" badge when a publisher uploads
+    their key. This is commit-signing of the git history, NOT full cryptographic signing
+    of the model weights themselves, and is not applied by default across the catalog.
+
+    '
+  checksums: "yes"
+  revision_pinning: "yes"
+  gating_enforcement: click-through license acceptance + optional access request,
+    enforced per-user at the download/API layer (e.g. Llama, Gemma)
+format_safety:
+  safetensors_default: promoted
+  pickle_handling: flagged-not-blocked
+  trust_remote_code_surface: 'trust_remote_code=True executes .py shipped inside the
+    repo. Separately, config-driven code paths have been exploitable: CVE-2026-4372
+    achieved RCE through config injection (_attn_implementation_internal) that bypassed
+    trust_remote_code=False in Transformers < 5.3.0.
+
+    '
+  known_loader_cves:
+  - CVE-2026-4372 - Transformers < 5.3.0 config-injection RCE via _attn_implementation_internal,
+    bypasses trust_remote_code=False; patched in 5.3.0
+  - CVE-2025-1716 - picklescan broken-pickle bypass (nullifAI technique)
+  - Sonatype 2025 - four additional picklescan bypass vulnerabilities
+license_surfacing: 'License is declared per repo and surfaced in the model card and
+  UI. Gated models enforce a click-through acceptance of the license (and optionally
+  a per-user access request) before the weights can be downloaded via web or API -
+  one of the few hubs that actually enforces EULA gating rather than merely displaying
+  terms.
+
+  '
+security_track_record:
+  incidents:
+  - date: '2023'
+    summary: PoisonGPT - a poisoned model surfaced via a typosquatted 'EleuterAI'
+      organization, demonstrating provenance laundering on the hub.
+    severity: high
+    url: https://thehackernews.com/2025/02/malicious-ml-models-found-on-hugging-face.html
+  - date: 2024-2025
+    summary: JFrog reported ~100+ malicious models carrying silent backdoors uploaded
+      to the hub.
+    severity: high
+    url: https://huggingface.co/blog/jfrog
+  - date: 2025-02
+    summary: nullifAI (ReversingLabs) - malicious models used 7z compression to evade
+      Picklescan and delivered a reverse shell; led to CVE-2025-1716 and a hardened
+      picklescan.
+    severity: high
+    url: https://thehackernews.com/2025/02/malicious-ml-models-found-on-hugging-face.html
+  - date: 2026-05
+    summary: Open-OSS 'privacy-filter' typosquat (HiddenLayer) - infostealer hidden
+      in loader.py reached top-trending with 200k+ downloads.
+    severity: high
+    url: https://www.hiddenlayer.com/research/malware-found-in-trending-hugging-face-repository-open-oss-privacy-filter
+  - date: 2025-2026
+    summary: Fake OpenAI repository delivering an infostealer accumulated ~244k downloads
+      before removal.
+    severity: high
+    url: https://www.hiddenlayer.com/research/malware-found-in-trending-hugging-face-repository-open-oss-privacy-filter
+  response_notes: 'Response is comparatively strong: automated layered scanning, formal
+    partnerships with JFrog and ProtectAI, malicious-repo removals typically within
+    ~24h, and a hardened picklescan after nullifAI. Hugging Face itself holds SOC
+    2 and ISO 27001. The weakness is structural - scanning marks rather than blocks,
+    and open uploads plus gameable trust signals keep the typosquat/malicious-upload
+    surface open.
+
+    '
+trust_signals_exposed:
+- Verified-org (blue) badge - strong identity signal for named labs
+- Scan status (unsafe/suspicious flags) - informative but does not block download
+- '''Verified'' commit-signing badge - attests the committer, not the weights'
+- Download counts and likes - WEAK and easily gamed; do not treat as a trust signal
+- base_model lineage field - self-declared and can be falsified
+self_hosting_notes: 'Prefer safetensors over pickle. Pin an explicit commit revision,
+  never `main`. Verify the SHA256 of downloaded files. Do not pass trust_remote_code=True
+  for code from unverified authors. Keep transformers >= 5.3.0 to close the config-injection
+  RCE. Treat download counts, likes and self-declared lineage as marketing, not provenance;
+  rely on the verified-org badge and your own hash/scan verification.
+
+  '
+ecosystem_lockin: 'Low technical lock-in: repos are plain git + LFS and every artifact
+  is portable to any other host or a local mirror. Practical gravity is high - the
+  huggingface_hub and transformers clients default to pulling from the Hub, so it
+  is the ecosystem''s center of gravity by convention rather than by contractual lock-in.
+
+  '
+score:
+  rubric_version: '1.0'
+  headline: 79.2
+  grade: B
+  hard_flags: []
+  dimensions:
+    provenance_integrity:
+      score: 4
+      rationale: 'Best-in-class for a public hub: verified-org badges, layered automated
+        malware and secret scanning, content-addressed checksums, commit-hash revision
+        pinning, and enforced license gating. Held to 4, not 5, because there is no
+        default cryptographic signing of the model weights (only optional GPG commit-signing)
+        and pickle files are marked-not-blocked rather than quarantined.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev2
+      - ev3
+    format_loader_safety:
+      score: 4
+      rationale: 'safetensors is the promoted default and was independently audited
+        by Trail of Bits (2023) with no critical RCE flaw found. Short of 5 because
+        pickle is still allowed (flagged, not blocked) and the loader surface has
+        real CVE history - trust_remote_code plus the 2026 config-injection RCE that
+        bypassed trust_remote_code=False.
+
+        '
+      evidence_refs:
+      - ev4
+      - ev5
+      - ev6
+    license_governance:
+      score: 4
+      rationale: 'Among the strongest of any hub: per-repo license declaration plus
+        actually-enforced click-through gating and optional access requests at the
+        download/API layer (Llama, Gemma). Short of 5 because enforcement is per-user
+        click-through rather than a cryptographically bound entitlement, and license
+        correctness relies on publisher self-declaration.
+
+        '
+      evidence_refs:
+      - ev3
+    security_track_record:
+      score: 3
+      rationale: 'Repeated, documented real-world incidents - PoisonGPT, nullifAI,
+        JFrog''s ~100+ backdoored models, and 2026 typosquats with hundreds of thousands
+        of downloads - pull this down, but fast (~24h) removals, hardened scanning
+        and vendor partnerships keep it at the middle anchor rather than lower.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev7
+      - ev8
+    transparency:
+      score: 4
+      rationale: 'Rich, largely honest trust signals: verified-org badges, visible
+        scan status, commit-verified badges and public gating state, plus published
+        security documentation and SOC 2 / ISO 27001. Short of 5 because prominent
+        signals (download counts, likes, self-declared base_model lineage) are gameable
+        and are not clearly labelled as such in the UI.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev9
+    ecosystem_portability:
+      score: 5
+      rationale: 'The de facto standard hub the whole open-weight ecosystem pulls
+        from: plain git + LFS artifacts, fully portable to any mirror or local store,
+        with first-class client tooling. Security researchers repeatedly target it
+        precisely because of its central, universally-integrated position - third-party
+        confirmation of its ecosystem centrality.
+
+        '
+      evidence_refs:
+      - ev7
+      - ev8
+
+# --- Four documentation domains. Item keys match checklists/hosting-provider.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     Every credited item is `aggregated` (public source, >=1 ref); OneHill has run nothing,
+#     so there are no onehill_generated items and originality = 0.
+documentation:
+  assess:
+    completeness: 100.0
+    originality: 0.0
+    items:
+      - key: provenance-integrity
+        title: "Provenance & integrity signals"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2, ev9]
+        summary: "Verified-org (blue) badges for named labs, layered automated malware/secret scanning (Picklescan, ModelScan/Guardian, ClamAV, TruffleHog, JFrog), content-addressed checksums and commit-hash pinning; scanning marks rather than blocks and there is no default weight-level cryptographic signing."
+      - key: format-safety
+        title: "Format & loader safety"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev4, ev5, ev6]
+        summary: "safetensors is promoted as the default (Trail of Bits audit found no critical RCE); pickle is flagged-not-blocked, trust_remote_code=True runs repo Python, and CVE-2026-4372 achieved config-injection RCE bypassing trust_remote_code=False in Transformers < 5.3.0."
+      - key: license-governance
+        title: "License surfacing & gating"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev3]
+        summary: "License declared per repo and surfaced in the model card; gated models (Llama, Gemma) enforce click-through acceptance plus optional access request at the download/API layer - one of the few hubs that actually enforces EULA gating."
+      - key: security-record
+        title: "Security incident history & response"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev7, ev8]
+        summary: "Repeated real-world incidents (PoisonGPT, nullifAI, JFrog's ~100+ backdoored models, 2026 typosquats with 200k+ downloads) offset by fast ~24h removals, hardened picklescan and vendor partnerships."
+      - key: transparency
+        title: "Exposed trust signals & their gameability"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev2, ev8, ev9]
+        summary: "Verified-org badges, visible scan status, commit-verified badges and public gating state are honest signals; download counts, likes and self-declared base_model lineage are gameable and not labelled as such."
+  implement:
+    completeness: 37.5
+    originality: 0.0
+    items:
+      - key: obtain-weights
+        title: "Obtaining weights (git-LFS / huggingface_hub)"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev3]
+        summary: "Weights live in per-repo git-LFS repositories pulled via git clone or, typically, huggingface_hub / transformers from_pretrained(); gated repos require click-through acceptance at the download/API layer before the pull succeeds."
+      - key: verify-integrity
+        title: "Verifying integrity (hashes & scan status)"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev2, ev9]
+        summary: "Content-addressed storage means the client verifies file hashes on download; layered scan status (unsafe/suspicious flags) is the visible integrity surface, but it warns rather than blocks, so verify the SHA256 yourself."
+      - key: pin-revision
+        title: "Pinning a revision"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev3]
+        summary: "Revisions are addressable by commit hash; pin an explicit commit rather than `main` for reproducible, tamper-evident pulls (the download/API layer resolves the pinned revision)."
+      - key: run-serve
+        title: "Running / serving"
+        doc_type: howto
+        source_type: gap
+        gap_reason: "Hugging Face Hub is a distribution hub, not a local runner or serving engine; running/serving pulled weights is out of scope for this entry and not documented in the sources reviewed."
+      - key: resource-needs
+        title: "Resource requirements"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Disk/VRAM/hardware requirements depend on the specific model pulled from the Hub rather than the Hub itself and were not captured in the sources reviewed."
+  use:
+    completeness: 90.0
+    originality: 0.0
+    items:
+      - key: catalog-scope
+        title: "Catalog scope & publishers"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev7, ev8]
+        summary: "The de facto default public registry for open-weight models - named labs (Meta, Google, Mistral) publish under verified orgs alongside a vast open-upload community; security researchers repeatedly target it precisely because of its central position."
+      - key: formats-supported
+        title: "Formats supported"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev4, ev6]
+        summary: "safetensors (promoted default, data-only), legacy pickle checkpoints (flagged-not-blocked), plus repo-shipped code paths (trust_remote_code / config); prefer safetensors and avoid untrusted pickle/remote code."
+      - key: integration
+        title: "Downstream integration"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev7]
+        summary: "First-class client tooling (huggingface_hub, transformers from_pretrained) makes it the ecosystem's center of gravity - the default source most downstream stacks pull from - though the specifics per stack were not individually catalogued."
+  support:
+    completeness: 42.9
+    originality: 0.0
+    items:
+      - key: security-disclosure
+        title: "Reporting malicious models & vulnerabilities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev2]
+        summary: "Security documentation on the Hub plus scanner partnerships (JFrog, ProtectAI) are the trust/disclosure surface; malicious repos are typically removed within ~24h, though a formal coordinated-disclosure channel was not separately captured."
+      - key: release-versioning
+        title: "Tooling versioning & patch cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: partial
+        refs: [ev6]
+        summary: "Loader security tracks client versions - CVE-2026-4372 was patched in Transformers 5.3.0 and picklescan was hardened after nullifAI (CVE-2025-1716) - so keep transformers >= 5.3.0; the Hub's own release/changelog cadence was not separately captured."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Community and support channel details (forums, Discord, enterprise support terms) were not captured in the sources reviewed."
+      - key: known-issues
+        title: "Known issues & caveats"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: full
+        refs: [ev6, ev8]
+        summary: "Loader CVE history (config-injection RCE, picklescan bypasses), scanning that marks-but-doesn't-block, and gameable trending/download signals that enabled 2026 typosquats with hundreds of thousands of downloads."
+
+evidence:
+- id: ev1
+  claim: JFrog partnership and proprietary scanner parsing embedded code; ~100+ malicious
+    models found.
+  source_type: publisher
+  url: https://huggingface.co/blog/jfrog
+  date: '2026-07-25'
+- id: ev2
+  claim: JFrog scanner integration and security documentation on the Hub.
+  source_type: publisher
+  url: https://huggingface.co/docs/hub/en/security-jfrog
+  date: '2026-07-25'
+- id: ev3
+  claim: Gated models enforce click-through license acceptance and optional access
+    requests at the download/API layer.
+  source_type: publisher
+  url: https://huggingface.co/docs/hub/en/models-gated
+  date: '2026-07-25'
+- id: ev4
+  claim: safetensors promoted as the default safe format on the Hub.
+  source_type: publisher
+  url: https://huggingface.co/blog/safetensors-security-audit
+  date: '2026-07-25'
+- id: ev5
+  claim: Independent Trail of Bits security review of safetensors found no critical
+    RCE flaw.
+  source_type: third_party
+  url: https://www.trailofbits.com/documents/2023-03-eleutherai-huggingface-safetensors-securityreview%20(2).pdf
+  date: '2026-07-25'
+- id: ev6
+  claim: CVE-2026-4372 config-injection RCE bypassing trust_remote_code=False in Transformers
+    < 5.3.0; picklescan bypasses (nullifAI / Sonatype).
+  source_type: third_party
+  url: https://thehackernews.com/2025/02/malicious-ml-models-found-on-hugging-face.html
+  date: '2026-07-25'
+- id: ev7
+  claim: Repeated malicious-model campaigns (nullifAI, PoisonGPT) target Hugging Face
+    as the dominant, widely-integrated public model hub.
+  source_type: third_party
+  url: https://thehackernews.com/2025/02/malicious-ml-models-found-on-hugging-face.html
+  date: '2026-07-25'
+- id: ev8
+  claim: 2026 Open-OSS 'privacy-filter' typosquat reached top-trending on the Hub
+    with 200k+ downloads, confirming the Hub's central position and the gameability
+    of trending/download signals.
+  source_type: third_party
+  url: https://www.hiddenlayer.com/research/malware-found-in-trending-hugging-face-repository-open-oss-privacy-filter
+  date: '2026-07-25'
+- id: ev9
+  claim: Layered scanning (Picklescan, ModelScan/Guardian, ClamAV, TruffleHog, JFrog)
+    and SOC 2 / ISO 27001 posture disclosed.
+  source_type: publisher
+  url: https://huggingface.co/blog/jfrog
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry.
+- date: '2026-07-25'
+  change: Migrated to v2 four-domain library format (added documentation block; score
+    carried over unchanged).
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

@@ -1,0 +1,52 @@
+---
+import AppShell from '../../../layouts/AppShell.astro';
+import EntrySheet from '../../../components/EntrySheet.astro';
+import { getAllEntries, DOMAINS } from '../../../lib/entries';
+
+export function getStaticPaths() {
+  const all = getAllEntries();
+  return all.map((record, i) => ({
+    params: { dir: record.dir, id: record.id },
+    props: { record, prev: all[i - 1] || null, next: all[i + 1] || null },
+  }));
+}
+
+const { record, prev, next } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const typeLabel = record.type === 'model' ? 'Models' : 'Inference providers';
+const crumbs = [
+  { label: 'Library', href: `${base}/library/` },
+  { label: typeLabel, href: `${base}/library/` },
+  { label: record.title },
+];
+const href = (r) => `${base}/library/${r.dir}/${r.id}/`;
+---
+<AppShell title={`${record.title} - AI Ownership Index`} crumbs={crumbs} browseActive="Library" reviewed="Reviewed 2026-07-25" canvas="entry">
+  <nav slot="sidebar" class="navgroup" aria-label="This entry">
+    <div class="lbl">This {record.type}</div>
+    <a href="#verdict">Verdict</a>
+    {record.factors.map((f) => <a href={`#${f.id}`}>{f.short}</a>)}
+    <a href="#calc">Score</a>
+    <a href="#sources">Sources</a>
+  </nav>
+  <nav slot="sidebar" class="navgroup" aria-label="Documentation">
+    <div class="lbl">Documentation</div>
+    {DOMAINS.map((d, i) => (
+      <a href={`${base}/library/${record.dir}/${record.id}/${d}/`}>
+        {d.charAt(0).toUpperCase() + d.slice(1)}<span class="pct">{record.dossier[i].v}</span>
+      </a>
+    ))}
+  </nav>
+  <a slot="actions" class="btn" href={`${base}/library/`}>All entries</a>
+
+  <EntrySheet record={record} />
+
+  <nav class="pager">
+    {prev
+      ? <a href={href(prev)}><span class="l">Previous, by grade</span>&larr; {prev.title}</a>
+      : <span></span>}
+    {next
+      ? <a class="nxt" href={href(next)}><span class="l">Next, by grade</span>{next.title} &rarr;</a>
+      : <span></span>}
+  </nav>
+</AppShell>

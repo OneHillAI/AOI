@@ -1,0 +1,446 @@
+# OneHill v2 INFERENCE-PROVIDER library entry for Runware.
+# Validated against schema/inference-provider.v2.schema.json.
+#   scores  -> scripts/score.py --write        (provider AOI)
+#   meters  -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: runware
+name: Runware
+profile: inference
+hq_country: United Kingdom
+summary: 'An inference platform ("one API for all AI") that runs a large catalogue of open-weight
+  Hugging Face models on its own custom stack, the Sonic Inference Engine, across pods in the US
+  and central Europe. Runware markets a US HQ (San Francisco), but the binding legal entity read in
+  its Terms and Privacy Policy is Runware Ltd (United Kingdom), under UK governing law and London
+  arbitration. The binding documents were read on 2026-07-26 and they contradict the marketing on
+  data handling. The Terms give the customer nominal ownership of outputs but grant Runware a
+  worldwide, perpetual, transferable licence over both inputs and outputs, and reference storing
+  training data; the Privacy Policy sets generic retention ("as long as necessary" / account life)
+  with no auto-purge or opt-in-storage clause, does not address training at all, names only Stripe
+  and Google Analytics as sub-processors, and cites GDPR/UK GDPR without naming SCCs or the EU-US
+  Data Privacy Framework. SOC 2 and ISO 27001 appear as badges only, with no readable report, and
+  no public DPA was found (both URLs 404). The models themselves are open weights, so use and exit
+  stay in your hands by self-hosting, but on a hosted basis the data terms are weak: a perpetual
+  licence over your inputs and outputs, generic retention, and no no-training commitment. Read the
+  binding text before sending sensitive data, and prefer self-hosting the same open checkpoints
+  where data control matters.
+
+  '
+models_served:
+- Open-weight models from Hugging Face (image, video, audio and language; ~400K model variants)
+- FLUX / Stable Diffusion family and other open image models
+- Open language and multimodal checkpoints served through one unified API
+hardware: Custom Runware inference pods (Sonic Inference Engine), US and central Europe
+pricing:
+  model: per-request
+  notes: 'Pay-as-you-go, usage-based pricing with representative rates on the pricing page (read
+    2026-07-26); enterprise plans add dedicated capacity and custom terms.
+
+    '
+  example_rates:
+  - 'Pay-as-you-go usage-based pricing (see provider pricing page for current per-model rates)'
+data_governance:
+  default_retention: 'generic, not zero - the Privacy Policy retains data "as long as necessary"
+    and for the life of the account, with no auto-purge or opt-in-storage clause. This contradicts
+    the marketing claim that generated content is auto-purged unless storage is opted into.'
+  trains_on_inputs: unclear
+  zdr_available: "no"
+  zdr_scope_caveats: 'No zero-retention posture is supported by the binding text. The Privacy
+    Policy sets generic retention ("as long as necessary" / account life) with no auto-purge, and
+    the Terms grant Runware a worldwide, perpetual, transferable licence over inputs and outputs
+    and reference storing training data. There is no no-training commitment in either document. The
+    marketing claims of no-training and default auto-purge are not supported by the documents read.
+
+    '
+  customer_data_ownership: provider_may_use
+  outputs_used_to_improve_service: unclear
+  third_party_routing_leakage: 'Runs open-weight models on its own inference pods rather than
+    reselling a closed third-party model API. The Privacy Policy names only Stripe and Google
+    Analytics as sub-processors, so the inference-infrastructure processors that actually handle
+    prompt content are not disclosed.
+
+    '
+  subprocessors_disclosed: true
+compliance:
+  soc2: unknown
+  iso_27001: unknown
+  iso_27701: unknown
+  hipaa_baa: unknown
+  gdpr_dpa: unknown
+  fedramp: ''
+  trust_center_url: https://runware.ai/trust
+residency:
+  eu_region_available: unknown
+  regions:
+  - United Kingdom (binding entity, Runware Ltd)
+  - European Union (residency advertised, not contractually pinned)
+  - United States
+  sovereign_option: 'Not a sovereign offering. The Trust page advertises "EU & US" data residency,
+    but no contractual region-pinning document was found, the binding entity is Runware Ltd (UK)
+    under UK law, and US CLOUD Act is not addressed anywhere located. EU residency is advertised,
+    not guaranteed.'
+  region_pinning: unknown
+  cloud_act_exposure: false
+  provider_can_restrict_access: 'UK jurisdiction (Runware Ltd), UK governing law and London
+    arbitration. The Terms allow termination at Runware''s sole discretion, with data deleted on
+    request; no notice window or export window was found.'
+reliability:
+  sla: ''
+  uptime_notes: 'A USD 50M Series A (December 2025) and advertised enterprise custom SLAs indicate
+    scale, but no public uptime SLA or status page was found, so availability is not independently
+    observable.'
+  incidents: []
+lock_in:
+  openai_compatible_api: false
+  portability_notes: 'The catalogue is open-weight Hugging Face models, so the same checkpoints run
+    on other providers or self-hosted and are fully portable. Runware''s API is a proprietary
+    unified schema (OpenAI compatibility not confirmed), so client code is written to Runware''s
+    shape and must be rewritten to move; the switching cost is in the API surface, not the model.
+    Self-hosting the same open checkpoints also sidesteps the hosted data terms entirely.
+
+    '
+trust_considerations:
+- The binding Terms (Runware Ltd, UK; read 2026-07-26) give the customer nominal ownership of
+  outputs but grant Runware a worldwide, perpetual, transferable licence over inputs and outputs
+  and reference storing training data. This is the central finding and it contradicts the marketing
+  line that your data belongs to you and is never reused.
+- The Privacy Policy sets generic retention ("as long as necessary" / account life) with no
+  auto-purge or opt-in-storage clause and does not address training. The marketed no-training and
+  auto-purge claims are not supported by the document read.
+- Sub-processors named are only Stripe and Google Analytics; the inference-infrastructure
+  processors that handle prompt content are not disclosed. GDPR/UK GDPR is cited without naming
+  SCCs or the EU-US Data Privacy Framework.
+- SOC 2 and ISO 27001 appear as badges on the Trust page with no readable report (no number,
+  issuer, scope, type, or period), and no public DPA was located (both URLs 404, likely
+  enterprise-only). Treat the attestations as claimed, not verified, and request a DPA and the
+  reports for any regulated use.
+- The models are open weights, so use, modification and exit remain in your hands, and self-hosting
+  the same checkpoints avoids the hosted data terms. Where data control matters, prefer that route.
+score:
+  rubric_version: '1.1'
+  headline: 45.6
+  grade: D
+  hard_flags: []
+  dimensions:
+    data_governance:
+      score: 2
+      rationale: 'Grounded in the read Terms and Privacy Policy, and the posture is weak. The Terms
+        grant Runware a worldwide, perpetual, transferable licence over inputs and outputs and
+        reference storing training data; the Privacy Policy sets generic retention with no
+        auto-purge and does not address training. There is no no-training commitment and no
+        zero-retention posture. Held at 2: the binding text actively works against customer data
+        control, and only the open-weight, self-hostable nature of the models keeps it off the
+        floor.
+
+        '
+      evidence_refs:
+      - ev-terms
+      - ev-privacy
+    compliance:
+      score: 1
+      rationale: 'SOC 2 and ISO 27001 appear as badges only, with no readable report, and no public
+        DPA was located (both URLs 404). GDPR/UK GDPR is cited without naming SCCs or the EU-US Data
+        Privacy Framework. Meets the score-1 anchor (security/privacy claims on a marketing surface
+        only): no third-party certification is verifiable and no signable data-processing instrument
+        (DPA) was reachable, so it falls short of the score-2 bar which requires an available DPA.
+
+        '
+      evidence_refs:
+      - ev-privacy
+      - ev-trust
+    residency:
+      score: 2
+      rationale: 'The Trust page advertises "EU & US" residency, but no contractual region-pinning
+        document was found, the binding entity is Runware Ltd (UK) under UK law, and US CLOUD Act is
+        not addressed. EU residency is advertised, not guaranteed. Held at 2: a UK entity with an
+        advertised-but-unpinned EU/US residency is materially weaker than an EU-owned, EU-only
+        provider.
+
+        '
+      evidence_refs:
+      - ev-trust
+      - ev-series-a
+    security:
+      score: 3
+      rationale: 'The Trust page carries SOC 2 / ISO 27001 badges and a vulnerability-disclosure
+        channel, and models run on Runware-operated hardware. Held at 3 absent a readable
+        attestation report or an independent penetration test.
+
+        '
+      evidence_refs:
+      - ev-trust
+    reliability:
+      score: 2
+      rationale: 'A USD 50M Series A (December 2025) and advertised enterprise custom SLAs indicate
+        production scale, but no public uptime SLA or status page was found, so availability is
+        asserted rather than independently observable. Meets the score-2 anchor (serving in
+        production, but no status page or published uptime history); a public status page would
+        reach 3.
+
+        '
+      evidence_refs:
+      - ev-series-a
+    transparency_lockin:
+      score: 4
+      rationale: 'The catalogue is open-weight models from Hugging Face, so the same checkpoints run
+        on other providers or self-hosted and the models are fully portable. Held to 4 because
+        Runware''s API is a proprietary unified schema (OpenAI compatibility unconfirmed), so
+        client code is written to Runware''s shape.
+
+        '
+      evidence_refs:
+      - ev-series-a
+      - ev-home
+    cost:
+      score: 4
+      rationale: 'Pay-as-you-go usage-based pricing with representative rates read on the pricing
+        page, and low cost is a core part of the positioning. Held below 5 because no independent
+        cost benchmark was run.
+
+        '
+      evidence_refs:
+      - ev-pricing
+      - ev-home
+
+documentation:
+  assess:
+    completeness: 73.1
+    originality: 0.0
+    items:
+      - key: data-governance
+        title: "Data governance - retention, ZDR & training"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-terms, ev-privacy]
+        summary: "Grounded in the read Terms and Privacy Policy. The Privacy Policy sets generic retention ('as long as necessary' / account life) with no auto-purge or opt-in-storage clause and does not address training. The Terms grant Runware a worldwide, perpetual, transferable licence over inputs and outputs and reference storing training data. There is no no-training commitment; the marketed no-training and auto-purge claims are not supported by the documents."
+      - key: data-ownership
+        title: "Data & IP ownership"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-terms]
+        summary: "Per the read Terms, the customer owns the Generations (outputs) but grants Runware a worldwide, perpetual, transferable licence over inputs and outputs. Nominal ownership sits with the customer, but Runware holds a perpetual, transferable right to use both prompts and generated content. This is the opposite of the marketing line that your data stays yours; only self-hosting the open checkpoints avoids it."
+      - key: residency
+        title: "Data residency & jurisdiction"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-trust, ev-series-a]
+        summary: "The Trust page advertises 'EU & US' residency, but no contractual region-pinning document was found and US CLOUD Act is not addressed. The binding entity is Runware Ltd (UK) under UK law, though the company markets a US HQ. EU residency is advertised, not contractually guaranteed."
+      - key: compliance
+        title: "Compliance & attestations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-privacy, ev-trust]
+        summary: "SOC 2 and ISO 27001 appear as badges on the Trust page with no readable report (no number, issuer, scope, type, or period). No public DPA was located (both URLs 404, likely enterprise-only). GDPR/UK GDPR is cited without naming SCCs or the EU-US Data Privacy Framework. Request a DPA and the attestation reports for regulated use."
+      - key: security
+        title: "Security controls"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-trust]
+        summary: "The Trust page carries SOC 2 / ISO 27001 badges and a vulnerability-disclosure channel; models run on Runware's own Sonic Inference Engine hardware. No readable attestation report or independent penetration test surfaced."
+      - key: pricing
+        title: "Pricing & cost model"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-pricing]
+        summary: "Pay-as-you-go usage-based pricing with representative rates read on the pricing page; enterprise plans add dedicated capacity and custom terms."
+      - key: reliability
+        title: "Reliability posture"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-series-a]
+        summary: "A USD 50M Series A (December 2025) and advertised enterprise custom SLAs indicate scale, but no public uptime SLA or status page was found, so availability is not independently observable."
+  implement:
+    completeness: 31.2
+    originality: 0.0
+    items:
+      - key: integration
+        title: "API integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-home, ev-series-a]
+        summary: "One unified API addresses the full open-model catalogue behind a single schema (the Sonic Inference Engine orchestration layer). OpenAI compatibility was not confirmed; integrate against Runware's own API shape and take endpoint/SDK specifics from the developer docs."
+      - key: authentication
+        title: "Authentication & account setup"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Runware's authentication model (API-key scheme, org/project key scoping) is not publicly documented; confirm from the account console and developer docs."
+      - key: region-config
+        title: "Region & residency configuration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-trust]
+        summary: "The Trust page advertises 'EU & US' residency, but whether an EU-only region can be pinned contractually was not found, and the binding entity is UK. Confirm any region-pinning guarantee directly before relying on EU residency."
+      - key: portability
+        title: "Portability & exit"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-series-a, ev-home]
+        summary: "The catalogue is open-weight Hugging Face models, so the same checkpoints run elsewhere or self-hosted and are fully portable. The API is a proprietary unified schema, so client code must be rewritten to move; lock-in is in the API surface, not the model. Self-hosting also sidesteps the hosted data terms."
+      - key: rate-limits
+        title: "Rate limits, tiers & quotas"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Specific per-tier rate limits, throughput quotas and concurrency ceilings are not publicly documented; confirm from the developer docs and account console."
+  use:
+    completeness: 42.9
+    originality: 0.0
+    items:
+      - key: models-served
+        title: "Models served"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-series-a, ev-home]
+        summary: "A large open-model catalogue aggregated from Hugging Face across image, video, audio and language (reported on the order of 400K model variants), including the FLUX / Stable Diffusion image family, served through one unified API. The stated aim is to make the broad Hugging Face open-model catalogue addressable behind a single schema."
+      - key: features
+        title: "Inference features"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-home]
+        summary: "The Sonic Inference Engine is a custom hardware and software stack built for fast, low-cost inference across the catalogue, with image and video generation as a standout capability. Per-model feature support (tool-calling, structured output, streaming) follows each served model and was not individually verified."
+      - key: context-limits
+        title: "Context & token limits"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Per-model context windows and token/output limits on Runware's endpoints are not published; they track each served model's native limits and should be confirmed on the model's Runware page."
+      - key: fine-tuning
+        title: "Fine-tuning / custom models"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Whether Runware offers first-party fine-tuning or custom-model hosting, and on what data terms, is not publicly confirmed."
+  support:
+    completeness: 28.6
+    originality: 0.0
+    items:
+      - key: security-disclosure
+        title: "Security disclosure & trust surface"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-trust]
+        summary: "The Trust page is the trust surface (SOC 2 / ISO 27001 badges, 'EU & US' residency) and there is a dedicated vulnerability-disclosure page. Downloadable attestation reports, a security.txt, and a bug-bounty programme are not published."
+      - key: channels
+        title: "Support & community channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-home]
+        summary: "Enterprise plans advertise a shared support channel and priority routing. The breadth of self-serve and community channels and standard-tier support commitments is not publicly detailed."
+      - key: status-uptime
+        title: "Status page & uptime history"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No public status page or verified uptime/SLA history was found; enterprise custom SLAs are advertised but not independently observable."
+      - key: deprecation
+        title: "Model deprecation policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published model-deprecation or end-of-life policy was surfaced; because the catalogue is open-weight, a removed model can generally be self-hosted, but no formal notice window is documented."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:   { level: strong,   rationale: "The catalogue is open-weight Hugging Face models, so you can run and adapt the same checkpoints elsewhere or self-hosted; the models themselves are fully portable, and self-hosting sidesteps the hosted data terms entirely." }
+      # grounded in: ev-series-a, ev-home (open-model catalogue)
+    transparency: { level: moderate, rationale: "The binding Terms and Privacy Policy are legible, and what they show is unfavourable. Held at moderate rather than strong: the DPA returned 404 and the SOC 2 / ISO 27001 reports are badges with no readable report." }
+      # grounded in: ev-terms, ev-privacy (retrieved:true); ev-trust (partial)
+    reliability:  { level: moderate, rationale: "A USD 50M Series A and advertised enterprise custom SLAs indicate scale, but there is no public uptime SLA, status page or independent attestation, so reliability is asserted, not observable." }
+      # grounded in: ev-series-a (third_party)
+    data_control: { level: weak,     rationale: "The read Terms grant Runware a worldwide, perpetual, transferable licence over inputs and outputs and reference storing training data; the Privacy Policy sets generic retention with no auto-purge and does not address training; inference sub-processors are undisclosed. On a hosted basis your data and derived content are not kept proprietary." }
+      # grounded in: ev-terms, ev-privacy (retrieved:true, binding)
+  verdict: "You partly own workloads here, and the split is sharp. The models are open weights, so use, modification and exit stay fully in your hands, and self-hosting the same checkpoints avoids the hosted data terms entirely. But on a hosted basis the binding documents, now read, are weak: the Terms grant Runware a worldwide, perpetual, transferable licence over your inputs and outputs and reference storing training data, the Privacy Policy sets generic retention with no auto-purge and no no-training commitment, and no DPA or readable attestation was reachable. That is the opposite of the marketed 'your data stays yours, never trained on'. Use Runware as a fast, low-cost open-model gateway for non-sensitive work, but self-host the same open checkpoints, or get a negotiated DPA that overrides the standard licence, before putting proprietary or regulated data through it."
+
+evidence:
+- id: ev-terms
+  claim: 'Runware Terms of Service (Runware Ltd, UK; read 2026-07-26): the customer owns the
+    Generations (outputs) but grants Runware a worldwide, perpetual, transferable licence over
+    inputs and outputs; the Terms reference "storing training data and models per our pricing
+    schedule"; UK governing law and London arbitration; termination at Runware''s sole discretion;
+    data deleted on request.'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://runware.ai/terms
+  date: '2026-07-26'
+- id: ev-privacy
+  claim: 'Runware Privacy Policy (Runware Ltd, UK; read 2026-07-26): generic retention ("as long as
+    necessary" / account life) with no auto-purge or opt-in-storage clause; training use not
+    addressed; sub-processors named are only Stripe and Google Analytics; GDPR/UK GDPR referenced
+    without naming SCCs or the EU-US Data Privacy Framework.'
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://runware.ai/privacy
+  date: '2026-07-26'
+- id: ev-trust
+  claim: 'Runware Trust page (read 2026-07-26, partial): "Data residency EU & US" badge with no
+    contractual region-pinning document located; SOC 2 and ISO 27001 shown as badges only with no
+    readable certificate or report; a separate security-disclosure page for vulnerability reporting.
+    US CLOUD Act not addressed. No public DPA located (runware.ai/dpa and /data-processing-agreement
+    both 404).'
+  source_type: publisher
+  doc_type: security
+  retrieved: false
+  url: https://runware.ai/trust
+  date: '2026-07-26'
+- id: ev-pricing
+  claim: 'Runware pricing page (read 2026-07-26): pay-as-you-go usage-based pricing with
+    representative rates; enterprise plans add dedicated capacity and custom terms.'
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://runware.ai/pricing
+  date: '2026-07-26'
+- id: ev-home
+  claim: 'Runware website ("One API for all AI"): a unified API over a large catalogue of open-weight
+    Hugging Face models run on Runware''s own Sonic Inference Engine; low usage-based pricing;
+    markets a US HQ and states data belongs to the customer (marketing framing not supported by the
+    binding Terms/Privacy read this session).'
+  source_type: publisher
+  doc_type: marketing
+  retrieved: false
+  url: https://runware.ai/
+  date: '2026-07-26'
+- id: ev-series-a
+  claim: 'Independent press (SiliconANGLE and others, Dec 2025): Runware raised a USD 50M Series A
+    (Speedinvest and others) to build "one API for all AI"; markets a San Francisco HQ with
+    operations in London and 10+ countries (the binding legal entity is Runware Ltd, UK); inference
+    pods in the US and central Europe; aims to make the broad Hugging Face open-model catalogue
+    addressable behind one schema.'
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://siliconangle.com/2025/12/11/ai-inference-startup-runware-raises-50m-make-ai-run-faster/
+  date: '2026-07-26'
+changelog:
+- date: '2026-07-26'
+  change: 'Initial v2 entry created from public/marketing claims (binding docs were 403 to the code
+    session).'
+- date: '2026-07-26'
+  change: 'Primary-source re-ground from documents read by a browser (Cowork) session. The binding
+    entity is Runware Ltd (UK), not US. The read Terms grant Runware a worldwide, perpetual,
+    transferable licence over inputs and outputs and reference storing training data; the Privacy
+    Policy has generic retention with no auto-purge and does not address training; sub-processors
+    named are only Stripe and Google Analytics; SOC 2 / ISO 27001 are badges with no readable
+    report; no public DPA (404). Corrected the earlier US-CLOUD-Act framing to UK jurisdiction.
+    Flipped ev-terms / ev-privacy / ev-pricing to retrieved:true. Dropped data_governance,
+    compliance and residency to 2, and set the ownership data_control factor to weak with the
+    verdict reflecting the input/output licence. This is the Infercom pattern again: marketing
+    contradicted by the binding text.'
+last_verified: '2026-07-26'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

@@ -1,0 +1,117 @@
+---
+import AppShell from '../../../../layouts/AppShell.astro';
+import { getAllEntries, getDomainMarkdown, DOMAINS, DOMAIN_FACTORS, DOMAIN_QUESTION } from '../../../../lib/entries';
+import { renderMarkdown } from '../../../../lib/prose';
+
+export function getStaticPaths() {
+  const all = getAllEntries();
+  const paths = [];
+  for (const record of all) {
+    for (const domain of DOMAINS) {
+      paths.push({ params: { dir: record.dir, id: record.id, domain }, props: { record, domain } });
+    }
+  }
+  return paths;
+}
+
+const { record, domain } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const NOTCH = { strong: 3, moderate: 2, weak: 1 };
+const capd = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+const o = record.ownership;
+const keys = DOMAIN_FACTORS[domain];
+const shown = record.factors.filter((f) => keys.includes(f.key));
+const dossierIdx = { assess: 0, implement: 1, use: 2, support: 3 };
+const typeLabel = record.type === 'model' ? 'Models' : 'Inference providers';
+const crumbs = [
+  { label: 'Library', href: `${base}/library/` },
+  { label: typeLabel, href: `${base}/library/` },
+  { label: record.title, href: `${base}/library/${record.dir}/${record.id}/` },
+  { label: capd(domain) },
+];
+const factorShorts = (d) => DOMAIN_FACTORS[d].map((k) => record.factors.find((f) => f.key === k)?.short).join(' + ');
+const proseHtml = await renderMarkdown(getDomainMarkdown(record.dir, record.id, domain));
+---
+<AppShell title={`${capd(domain)}: ${record.title} - AI Ownership Index`} crumbs={crumbs} browseActive="Library" reviewed="Reviewed 2026-07-25" canvas="read">
+  <nav slot="sidebar" class="navgroup" aria-label={record.title}>
+    <div class="lbl">{record.title}</div>
+    <a href={`${base}/library/${record.dir}/${record.id}/`}>Entry sheet</a>
+    {DOMAINS.map((d, i) => (
+      <a class={d === domain ? 'on' : ''} href={`${base}/library/${record.dir}/${record.id}/${d}/`}>
+        {capd(d)}<span class="pct">{record.dossier[i].v}</span>
+      </a>
+    ))}
+  </nav>
+
+  <article class="read">
+    <div class="kicker">{capd(domain)} &middot; {record.title}</div>
+    <h1>{DOMAIN_QUESTION[domain]}</h1>
+
+    <div class="recap">
+      <span class="lvlk">Ownership level</span>
+      <span class="lvl">{capd(o.level)}</span>
+      <span class="scale">
+        {o.scale.map((s, i) => (<>{i > 0 && <span>&middot;</span>}<span class={s === o.level ? 'on' : ''}>{s}</span></>))}
+      </span>
+      <span class="aoi">Analytical input <b>{o.aoi.replace('AOI ', '')}</b></span>
+    </div>
+
+    <p>This page is a projection of the one entry record, the {shown.map((f) => f.short).join(' and ')} {shown.length > 1 ? 'factors' : 'factor'} that <b>{capd(domain)}</b> covers. The full verdict is set by all four factors together, floor-weighted so the weakest caps the whole.</p>
+
+    <div class="dmap">
+      <div class="h">Which domain expands which factor</div>
+      <ul>
+        {DOMAINS.map((d) => (
+          <li><span class={`d ${d === domain ? 'here' : ''}`}>{capd(d)}</span><span class="fx">{factorShorts(d)}</span></li>
+        ))}
+      </ul>
+    </div>
+
+    {proseHtml && <div class="prose" set:html={proseHtml} />}
+
+    <h2 class="srch">How this scores</h2>
+    <p class="src-note">The ownership {shown.length > 1 ? 'factors' : 'factor'} this domain covers, drawn from the one entry record.</p>
+    {shown.map((f) => (
+      <section class="factor" id={f.id}>
+        <div class="factor__h">
+          <span class="factor__n">{f.n}</span>
+          <h2>{f.name}<span class="q">{f.question}</span></h2>
+          <span class={`rchip r-${f.rating}`}>{capd(f.rating)}</span>
+        </div>
+        <p class="factor__lede">{f.lede}</p>
+        <div class="scores">
+          <div class="scores__title">{f.subscores.length ? 'How this scores (AOI sub-dimensions)' : 'How this scores'}</div>
+          {f.subscores.length
+            ? f.subscores.map((s) => (
+                <div class="sub">
+                  <span class="sub__bar"><i style={`width:${(s.score / s.max) * 100}%`}></i></span>
+                  <span class="sub__name">{s.name}<b>{s.score}/{s.max}</b></span>
+                  <span class="sub__exp">{s.exp}{s.detail && <small>{s.detail}</small>}</span>
+                </div>
+              ))
+            : <div class="scores__struct">{f.struct}</div>}
+        </div>
+      </section>
+    ))}
+
+    <div class="note"><span class="h">What this means for adoption</span>{o.verdict_sentence}</div>
+
+    <h2 class="srch" id="sources">Sources</h2>
+    <p class="src-note">The same evidence records as the entry sheet. <b>Read</b> means the text was verified; <b>unverified</b> means it is known to exist but not yet read.</p>
+    <div class="apparatus">
+      {record.sources.map((s) => (
+        <div class="source">
+          <div class="source__meta"><span class="source__doc">{s.doc}</span><span class={`source__tag source__tag--${s.status === 'read' ? 'read' : 'unv'}`}>{s.status}</span><span class="source__date">{s.date}</span></div>
+          <div class="source__claim">{s.claim}</div>
+        </div>
+      ))}
+    </div>
+
+    <nav class="pager">
+      <a href={`${base}/library/${record.dir}/${record.id}/`}><span class="l">This {record.type}</span>&larr; Entry sheet</a>
+      {(() => { const i = DOMAINS.indexOf(domain); const nx = DOMAINS[i + 1]; return nx
+        ? <a class="nxt" href={`${base}/library/${record.dir}/${record.id}/${nx}/`}><span class="l">Next domain</span>{capd(nx)} &rarr;</a>
+        : <span></span>; })()}
+    </nav>
+  </article>
+</AppShell>

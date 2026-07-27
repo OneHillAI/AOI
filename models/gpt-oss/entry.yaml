@@ -1,0 +1,724 @@
+# OneHill v2 MODEL library entry for OpenAI gpt-oss.
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: "2.0"
+id: gpt-oss
+name: OpenAI gpt-oss (gpt-oss-120b / gpt-oss-20b)
+aliases:
+- gpt-oss
+- gpt-oss-120b
+- gpt-oss-20b
+- openai/gpt-oss
+publisher:
+  name: OpenAI
+  country: US
+  accountable_entity: true
+  url: https://openai.com/index/introducing-gpt-oss/
+  security_contact: https://github.com/openai/gpt-oss
+summary: 'gpt-oss is OpenAI''s first open-weight release since GPT-2 (August 2025):
+  two mixture-of-experts reasoning models - gpt-oss-120b (~117B total / 5.1B active,
+  128 experts) and gpt-oss-20b (~21B total / 3.6B active, 32 experts) - both with a
+  128K context window, configurable low/medium/high reasoning effort, native agentic
+  tool use (function calling, browsing, Python) and structured outputs, shipped under
+  a clean OSI-approved Apache-2.0 license with no click-through gate. The models are
+  distributed as safetensors on the verified openai org on Hugging Face and ship natively
+  quantized in MXFP4, so gpt-oss-120b fits on a single 80GB GPU and gpt-oss-20b runs
+  in 16GB. These are
+  genuinely open weights rather than an open recipe: the Apache-2.0 license, ungated distribution
+  and first-class serving ecosystem are excellent, but the training data and training
+  code are not released, so this sits at the open_weights tier rather than fully_open. Prompts must
+  use OpenAI''s "harmony" response format, and OpenAI is the source
+  of the published safety evaluation.
+
+  '
+variants:
+- name: gpt-oss-120b
+  params_total: ~117B
+  params_active: 5.1B
+  context_window: 128K
+  kind: reasoning
+  safety_tuned: true
+- name: gpt-oss-20b
+  params_total: ~21B
+  params_active: 3.6B
+  context_window: 128K
+  kind: reasoning
+  safety_tuned: true
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: open
+  license:
+    spdx: Apache-2.0
+    name: Apache License 2.0
+    classification: osi
+    commercial_use: allowed
+    notable_restrictions: []
+    url: https://huggingface.co/openai/gpt-oss-120b
+provenance:
+  canonical_source: https://huggingface.co/openai/gpt-oss-120b
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: Ollama / LM Studio / llama.cpp (MXFP4 + GGUF)
+      trust: community
+      note: local-inference distributions of the same weights rather than the canonical source
+    - name: Hosted on Together / Fireworks / Groq / cloud providers
+      trust: provider
+      note: hosted endpoints rather than the weight source
+  checkpoint_checklist_score: 6
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: estimated under 1e25 (gpt-oss-120b trained on ~2.1M H100-hours)
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: 'yes'
+    rationale: 'Released under genuine OSI-approved Apache-2.0 with public parameters,
+      architecture and usage information, ungated and not monetised - so it plausibly
+      qualifies for the Article 53 open-source exemption from the Annex XI/XII technical-documentation
+      duties. The two obligations that survive the exemption - a copyright policy and
+      a public training-content summary - are harder to satisfy from public artifacts
+      than for a fully-open family, because gpt-oss does NOT publish its training data:
+      the training-content summary must be authored by OpenAI rather than reconstructed
+      from a released corpus. Estimated training compute is under the 1e25-FLOP threshold,
+      so the model is not a systemic-risk GPAI and the exemption is not voided.
+
+      '
+  provider_package:
+    technical_documentation: 'yes'
+    downstream_information: 'yes'
+    copyright_policy: partial
+    training_content_summary: partial
+    code_of_practice_signatory: true
+  deployer_notes: 'OpenAI publishes a detailed model card / arXiv report and a substantial
+    safety evaluation (strong downstream information), and has committed to the EU GPAI
+    Code of Practice. Because the training data is not released, a downstream EU deployer
+    cannot assemble the training-content summary from public artifacts and depends on
+    OpenAI''s own summary. A fine-tuner placing a derivative on the EU market under
+    its own name may become a provider for that derivative and must maintain its own
+    documentation, but inherits an unusually permissive Apache-2.0 upstream to build on.
+
+    '
+  last_assessed: '2026-07-25'
+performance:
+  note: Third-party / publisher framing only.
+  class_position: Strong open-weight reasoning models; gpt-oss-120b reported near OpenAI
+    o4-mini and gpt-oss-20b near o3-mini on core reasoning benchmarks.
+behaviour:
+  refusals: Safety-tuned reasoning variants refuse clearly-harmful requests; raw chain-of-thought
+    is unfiltered and should not be shown to end users.
+  prompt_injection: Residual susceptibility like all current LLMs; treat retrieved/tool
+    content as untrusted.
+  failure_modes: Standard hallucination profile for its class; documented in the model card.
+safety:
+  variant_assessed: gpt-oss (safety-tuned reasoning)
+  jailbreak_resistance: Withstands casual jailbreaks; OpenAI tested worst-case malicious
+    fine-tuning under its Preparedness Framework.
+  guard_model: No guard model in the base release; OpenAI later published the separate
+    gpt-oss-safeguard safety-classifier family.
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: 'gpt-oss-120b fits on a single 80GB GPU (H100/MI300-class); gpt-oss-20b
+    runs in ~16GB thanks to native MXFP4 quantization. Both are cheaper to serve than
+    their total-parameter counts suggest because only 3.6B-5.1B parameters are active
+    per token.
+
+    '
+  serving_support:
+  - vllm
+  - llama.cpp
+  - ollama
+  - hf-transformers
+  - mlx
+  controls_required:
+  - Render prompts with the harmony response format (models are trained only for it)
+  - Add input/output guardrails and a companion guard classifier for customer-facing use
+  - Do not surface raw chain-of-thought to end users
+  - Pin the exact openai revision and verify checksums
+score:
+  rubric_version: '1.1'
+  headline: 78.8
+  grade: B
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Open-weights tier: ungated, downloadable Apache-2.0 weights with strong
+        public documentation (model card + arXiv report), which is materially more open
+        than a gated community license. The open-weights tier caps Dimension 1 at 3 per
+        the openness framework, because the training data and training code are not
+        released and evaluation is only partially open - it is genuinely open weights rather than
+        the open-weights-plus-recipe (4) or fully-open "open science" (5) tier. It sits at
+        the top of the score-3 band on the strength of its pristine licence and docs.
+
+        '
+      evidence_refs:
+      - ev-apache
+      - ev-hf-openai
+      - ev-hf-blog
+    provenance:
+      score: 4
+      rationale: 'Verified openai org on Hugging Face, safetensors-only distribution
+        with checksums, a clear canonical source and no malicious-checkpoint incident
+        on the canonical org (checklist ~6/8). Short of 5 only because the weights are
+        not cryptographically signed and there is no SLSA-style provenance attestation.
+
+        '
+      evidence_refs:
+      - ev-hf-openai
+    legal:
+      score: 4
+      rationale: 'A pristine, OSI-approved Apache-2.0 license - ungated, no acceptable-use
+        policy, no MAU threshold, unconditional commercial use - well above a restrictive
+        community license, and the model is under the systemic-risk FLOP threshold. Capped
+        at 4 rather than 5 because the training data is not published, so the surviving
+        EU AI Act obligation (a training-content summary) cannot be reconstructed from
+        public artifacts the way a fully-open family allows.
+
+        '
+      evidence_refs:
+      - ev-apache
+      - ev-model-card
+    safety:
+      score: 4
+      rationale: 'Safety-tuned reasoning releases with a published safety evaluation,
+        Preparedness-Framework capability testing, and a worst-case malicious-fine-tuning
+        study whose methodology was independently reviewed by external experts (METR,
+        SecureBio, Daniel Kang). Above the score-3 anchor and cited to a third-party
+        review; short of 5 because there is no shipped guard model in the base release
+        and no broad independent third-party red-team across all harm domains.
+
+        '
+      evidence_refs:
+      - ev-metr
+      - ev-model-card
+    performance:
+      score: 4
+      rationale: 'Strong reasoning models: gpt-oss-120b is reported near OpenAI o4-mini
+        and gpt-oss-20b near o3-mini on core reasoning benchmarks, and they rank well
+        among open-weight models on public leaderboards. Capped at 4 on reported and
+        leaderboard evidence without independent reproduction.
+
+        '
+      evidence_refs:
+      - ev-perf
+      - ev-model-card
+    operational:
+      score: 5
+      rationale: 'First-class ecosystem support from day 0: safetensors on the verified
+        openai org shipped in native MXFP4, with support across vLLM, llama.cpp, Ollama,
+        Hugging Face transformers and MLX, plus hosted endpoints on major providers.
+        Backed by third-party sources (the Hugging Face launch guide and the Ollama library)
+        beyond publisher marketing.
+
+        '
+      evidence_refs:
+      - ev-hf-blog
+      - ev-ollama
+    governance:
+      score: 4
+      rationale: 'Reputable, legally accountable US publisher with a detailed model card
+        / arXiv report, a public reference repository, a documented Preparedness-Framework
+        process and coordinated external safety testing. Short of 5 because there is no
+        formal cryptographic weight-signing / vulnerability-disclosure process for the
+        weights and no published deprecation policy.
+
+        '
+      evidence_refs:
+      - ev-openai-intro
+      - ev-github
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry
+#     (like the EU AI Act flag). Not a scoring input - each ties back to one of the seven
+#     AOI dimensions and summarises documentation that lives in the four domains.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tunable but not reproducible: Apache-2.0 open weights support full SFT/LoRA and OpenAI documents fine-tuning, but the training data and pre-training code are closed, so you cannot reproduce the models from scratch."
+    refs: [ev-apache, ev-github]
+  knowledge_structure:
+    level: strong
+    dimension: performance
+    summary: "Strong knowledge/RAG backbone: 128K context, native tool use (function calling, browsing, Python), structured outputs and configurable reasoning effort make it well suited to grounded, structured workflows."
+    refs: [ev-model-card, ev-openai-intro]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "Strong for specialisation: ungated Apache-2.0 open weights plus documented fine-tuning and a fast-growing adapter/serving ecosystem, though continued pre-training is limited by the closed training data and code."
+    refs: [ev-github, ev-hf-blog]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Highly exchangeable: MXFP4 safetensors on every major runtime and many hosted endpoints; the main gotcha when swapping is that gpt-oss is trained exclusively for the harmony response format."
+    refs: [ev-hf-blog, ev-harmony]
+  misuse_exposure:
+    level: partial
+    dimension: safety
+    summary: "Partially benchmarked: OpenAI published a safety evaluation and a worst-case malicious-fine-tuning study whose methodology was independently reviewed (METR, SecureBio, Daniel Kang), but no broad independent third-party red-team across all harm domains exists."
+    refs: [ev-metr, ev-model-card]
+
+# --- Four documentation domains. Item keys match checklists/model.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     No onehill_generated items this session: OneHill has run nothing, so every item
+#     is `aggregated` (public source, >=1 ref) or an honest `gap`. Originality = 0.
+documentation:
+  assess:
+    completeness: 96.7
+    originality: 0.0
+    items:
+    - key: intended-use
+      title: Intended & out-of-scope use
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-openai-intro
+      - ev-model-card
+      summary: General-purpose reasoning, agentic and coding assistant use; base/pre-safety
+        checkpoints are not shipped, and high-stakes autonomous use is out of scope without
+        added controls.
+    - key: limitations
+      title: Known limitations, bias & failure modes
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-model-card
+      - ev-openai-intro
+      summary: Class-standard hallucination, residual prompt-injection susceptibility,
+        unfiltered raw chain-of-thought, and English-centric behaviour documented in the
+        model card.
+    - key: openness
+      title: Openness tier & components
+      doc_type: explanation
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-apache
+      - ev-hf-openai
+      - ev-hf-blog
+      summary: open_weights tier - ungated Apache-2.0 weights + strong docs, but training
+        data and training code are closed, so not fully_open.
+    - key: license
+      title: License terms & permitted use
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-apache
+      - ev-hf-openai
+      summary: OSI-approved Apache-2.0 with unconditional commercial use, no acceptable-use
+        policy and no field-of-use limits; no "community license" conditions.
+    - key: provenance
+      title: Supply-chain & provenance
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-hf-openai
+      - ev-hf-blog
+      summary: Verified openai org on Hugging Face, safetensors + checksums, no signing
+        or SLSA attestation; community MXFP4/GGUF redistributions are separate artifacts.
+    - key: eu-ai-act
+      title: EU AI Act posture
+      doc_type: explanation
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-apache
+      - ev-model-card
+      summary: GPAI under the 1e25-FLOP systemic-risk threshold; likely Article 53 open-source
+        exemption, but the surviving training-content summary depends on OpenAI because
+        training data is closed.
+    - key: evaluation
+      title: Benchmarks & evaluation
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-perf
+      - ev-model-card
+      summary: Reported near o4-mini (120b) / o3-mini (20b) on core reasoning benchmarks
+        and strong among open-weight models on public leaderboards.
+    - key: safety-eval
+      title: Independent safety evaluation
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-metr
+      - ev-model-card
+      summary: OpenAI published a Preparedness-Framework safety evaluation and malicious-fine-tuning
+        study; external experts (METR, SecureBio, Daniel Kang) reviewed the methodology,
+        but no full independent red-team across all harm domains exists.
+  implement:
+    completeness: 100.0
+    originality: 0.0
+    items:
+    - key: install
+      title: Install & run
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-hf-blog
+      - ev-github
+      summary: HF from_pretrained (safetensors), Ollama pull, vLLM serve, or llama.cpp/LM
+        Studio locally; pin the exact openai revision.
+    - key: hardware
+      title: Hardware & VRAM requirements
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-openai-intro
+      - ev-hf-blog
+      summary: gpt-oss-120b fits on a single 80GB GPU; gpt-oss-20b runs in ~16GB thanks
+        to native MXFP4, with only 3.6B-5.1B active parameters per token.
+    - key: serving
+      title: Serving stacks
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-hf-blog
+      - ev-ollama
+      summary: Day-0 support across vLLM, llama.cpp, Ollama, Hugging Face transformers
+        and MLX, with native MXFP4 kernels.
+    - key: safe-deployment
+      title: Safe-deployment controls & Deployment Ceiling
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-model-card
+      - ev-openai-intro
+      summary: Deployment Ceiling T2 (customer-facing, human-reviewed), conditional -
+        harmony-correct prompts + input/output guardrails + a guard classifier + no raw
+        CoT exposure.
+    - key: quantization
+      title: Available quantizations
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-hf-blog
+      - ev-model-card
+      summary: Ships natively quantized in MXFP4 (the MoE weights are 4-bit at release);
+        community GGUF conversions exist for llama.cpp/Ollama.
+    - key: fine-tuning
+      title: Fine-tuning & adaptation
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-github
+      - ev-hf-blog
+      summary: Apache-2.0 weights fine-tune via the standard PEFT/LoRA/transformers/TRL
+        stack; OpenAI's reference repo documents fine-tuning, though pre-training data
+        and code are not released.
+    - key: integration
+      title: API / OpenAI-compatible integration
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-harmony
+      - ev-github
+      summary: Serve behind vLLM/Ollama OpenAI-compatible endpoints; prompts must be rendered
+        with the harmony format (openai/harmony renderer) rather than plain role strings.
+  use:
+    completeness: 94.4
+    originality: 0.0
+    items:
+    - key: capabilities
+      title: Capabilities & modalities
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-openai-intro
+      - ev-model-card
+      summary: Text-only reasoning models with configurable low/medium/high effort, native
+        agentic tool use (function calling, browsing, Python) and structured outputs.
+    - key: context-window
+      title: Context window & long-context behaviour
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-model-card
+      - ev-hf-openai
+      summary: Both models natively support up to a 128K-token context window.
+    - key: chat-template
+      title: Prompt format & chat template
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-harmony
+      - ev-hf-blog
+      summary: Uses OpenAI's harmony response format (system > developer > user > assistant
+        > tool roles, with separate reasoning/tool/final channels); render it via the
+        openai/harmony library rather than hand-rolled roles.
+    - key: languages
+      title: Language coverage
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-model-card
+      summary: Primarily English-oriented per the model card; other-language performance
+        is incidental and not a documented supported target.
+    - key: tool-use
+      title: Function / tool calling
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-openai-intro
+      - ev-harmony
+      summary: Native agentic tool calling, web browsing and Python execution, expressed
+        through the harmony format's tool channel.
+    - key: structured-output
+      title: Structured / JSON-constrained output
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-openai-intro
+      - ev-harmony
+      summary: Structured Outputs are a documented native capability, carried in the harmony
+        format alongside tool calls and reasoning.
+  support:
+    completeness: 50.0
+    originality: 0.0
+    items:
+    - key: troubleshooting
+      title: Common problems & fixes
+      doc_type: troubleshooting
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-hf-blog
+      - ev-github
+      summary: Aggregated common pitfalls (harmony-format mistakes, MXFP4 loader/runtime
+        version issues, GGUF-conversion incompatibilities); not an exhaustive catalogue.
+    - key: release-versioning
+      title: Versions, changelog & cadence
+      doc_type: release_notes
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-hf-openai
+      - ev-github
+      summary: Single August-2025 release of two sizes; versions tracked as immutable
+        Hugging Face revisions on the openai org - pin the revision hash.
+    - key: security-disclosure
+      title: Security / vulnerability disclosure
+      doc_type: reference
+      source_type: gap
+      gap_reason: "No formal, weight-specific vulnerability-disclosure or cryptographic
+        signing process was found for gpt-oss. OpenAI ran a time-boxed red-teaming challenge
+        at launch and accepts issues on the reference GitHub repo, but there is no documented
+        ongoing CVE-style disclosure process for the model weights to aggregate."
+    - key: channels
+      title: Community & support channels
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-github
+      - ev-hf-openai
+      summary: OpenAI's openai/gpt-oss and openai/harmony GitHub repositories, the OpenAI
+        Cookbook guides, and Hugging Face model discussions on the openai org.
+    - key: deprecation
+      title: Deprecation / end-of-life policy
+      doc_type: reference
+      source_type: gap
+      gap_reason: "No published deprecation or end-of-life policy for gpt-oss checkpoints;
+        the released Hugging Face revisions remain downloadable, but no formal support-window
+        or sunset commitment is documented."
+    - key: known-issues
+      title: Tracked known issues
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-model-card
+      summary: From model-card caveats - hallucination, raw chain-of-thought that is unsafe
+        to display, removable safety tuning (the malicious-fine-tuning concern), and English-centric
+        behaviour.
+
+ownership:
+  level: substantial
+  factors:
+    use_modify:
+      level: strong
+      rationale: "A clean, OSI-approved Apache-2.0 grant - own, run, modify and redistribute freely with no access gate and no field-of-use limit - and the only usage constraint is a single-sentence policy asking you to obey applicable law, an unusually light AUP for an open-weight release."
+      # grounded in: ev-apache (license, retrieved) - LICENSE is standard Apache-2.0 boilerplate, copyright left as a template placeholder, no bespoke restrictions in the file; ev-usage-policy (terms, retrieved) - the entire USAGE_POLICY is one sentence read verbatim
+    transparency:
+      level: moderate
+      rationale: "Weights are open and inspectable and OpenAI published a safety report whose worst-case malicious-fine-tuning methodology was independently reviewed by METR, but the training data and pre-training code are closed, so you adapt rather than reproduce and cannot see how it was made."
+      # grounded in: ev-safety-pdf (security, retrieved) - SAG concluded even aggressive fine-tuning did not reach High capability in Bio/Chem or Cyber; ev-metr (third_party, retrieved) - OpenAI at least partially addressed each of METR's 6 high-urgency items; training data/code closed (structural)
+    reliability:
+      level: strong
+      rationale: "Runs dependably across every major runtime and hosted endpoint, and misuse is well controlled: an independently reviewed worst-case safety study backs the safety tuning."
+      # grounded in: ev-hf-blog, ev-ollama (third_party) - day-0 ecosystem across vLLM/llama.cpp/Ollama/transformers/MLX and hosted providers; ev-metr (third_party, retrieved) - external methodology review
+    data_control:
+      level: strong
+      rationale: "Self-hosted, the ungated Apache weights run entirely on your own infrastructure with no clawback or telemetry - your data stays yours."
+      # grounded in: self-hosting (structural); ev-apache (license, retrieved) - no telemetry/clawback clause in the LICENSE
+  verdict: "You substantially own gpt-oss: ungated Apache-2.0 weights you run, modify and self-host, governed by a one-sentence usage policy (obey applicable law) that is about as light as an open-weight AUP gets. The safety posture is a genuine differentiator - a published worst-case malicious-fine-tuning study whose methodology METR independently reviewed, with OpenAI at least partially addressing each of METR's six high-urgency items. What holds it below full is transparency: the training data and pre-training code are closed, so you adapt rather than reproduce. Adopt it for general open-weight deployment, building to the harmony response format it requires and adding standard input/output guardrails for customer-facing use."
+
+# --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
+#     (true = the document's substantive text was read; false = known to exist but not read).
+#     Grounded 2026-07-25 against the primary-source clauses in
+#     docs/primary-sources/gpt-oss/_sources.md - the Apache-2.0 LICENSE, the one-sentence
+#     USAGE_POLICY, the arXiv 2508.10925 model card, the OpenAI safety-report PDF and the
+#     METR third-party methodology review were all read verbatim; the remaining publisher
+#     pages and third-party ecosystem sources are known-to-exist but not re-read this session.
+evidence:
+- id: ev-openai-intro
+  claim: OpenAI introduces gpt-oss-120b and gpt-oss-20b as open-weight reasoning models
+    under Apache-2.0 with configurable reasoning effort, native agentic tool use and
+    structured outputs, running on 80GB / 16GB hardware.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: false
+  url: https://openai.com/index/introducing-gpt-oss/
+  date: '2026-07-25'
+- id: ev-model-card
+  claim: 'gpt-oss-120b & gpt-oss-20b Model Card (arXiv 2508.10925), read verbatim: two
+    open-weight reasoning models on an efficient mixture-of-expert transformer architecture,
+    trained with large-scale distillation and reinforcement learning, releasing all model
+    weights, inference code, tools and tokenizers under an Apache-2.0 license; documents
+    the MoE architecture (~117B/5.1B and ~21B/3.6B, 128/32 experts), 128K context, MXFP4,
+    harmony format and the Preparedness-Framework safety and malicious-fine-tuning evaluations.'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2508.10925
+  date: '2026-07-25'
+- id: ev-hf-openai
+  claim: gpt-oss weights are hosted on the verified openai organisation on Hugging Face
+    as safetensors under Apache-2.0 with a 128K context window.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: false
+  url: https://huggingface.co/openai/gpt-oss-120b
+  date: '2026-07-25'
+- id: ev-apache
+  claim: 'gpt-oss LICENSE, read verbatim: a standard Apache License 2.0 (January 2004)
+    boilerplate with the copyright line left as a template placeholder and no bespoke
+    restrictions in the file itself - unconditional commercial use; any use guidance lives
+    separately in the one-sentence USAGE_POLICY, not the licence.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://github.com/openai/gpt-oss
+  date: '2026-07-25'
+- id: ev-usage-policy
+  claim: 'gpt-oss USAGE_POLICY, read verbatim and confirmed complete: the entire policy
+    is a single sentence - "We aim for our tools to be used safely, responsibly, and
+    democratically, while maximising your control over how you use them. By using OpenAI
+    gpt-oss-120b and gpt-oss-20b, you agree to comply with all applicable law." - an
+    unusually light acceptable-use policy with no prohibited-use taxonomy or field-of-use limits.'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://github.com/openai/gpt-oss/blob/main/USAGE_POLICY
+  date: '2026-07-25'
+- id: ev-hf-blog
+  claim: Hugging Face's launch guide documents day-0 gpt-oss support across transformers,
+    vLLM, Ollama and llama.cpp, the native MXFP4 quantization, and the harmony format.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/blog/welcome-openai-gpt-oss
+  date: '2026-07-25'
+- id: ev-harmony
+  claim: gpt-oss is trained for OpenAI's harmony response format (role hierarchy and
+    separate reasoning/tool/final channels), rendered via the openai/harmony library.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://github.com/openai/harmony
+  date: '2026-07-25'
+- id: ev-safety-pdf
+  claim: 'OpenAI gpt-oss safety report PDF, read verbatim: adversarial malicious-fine-tuning
+    on bio/cyber data to simulate a worst case (with external reviewers METR, SecureBio,
+    Daniel Kang); the default model "does not reach High capability" in any of the three
+    Tracked Categories, and OpenAI''s Safety Advisory Group concluded that even aggressive
+    fine-tuning "did not reach High capability in Biological and Chemical Risk or Cyber risk."'
+  source_type: publisher
+  doc_type: security
+  retrieved: true
+  url: https://cdn.openai.com/pdf/419b6906-9da6-406c-a19d-1bb078ac7637/oai_gpt-oss_model_card.pdf
+  date: '2026-07-25'
+- id: ev-metr
+  claim: 'METR third-party methodology review of OpenAI''s gpt-oss malicious-fine-tuning
+    safety work, read verbatim: "OpenAI at least partially addressed each of our 6
+    high-urgency items," while flagging that no published High-capability criteria exist;
+    conducted alongside SecureBio and Daniel Kang.'
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/
+  date: '2026-07-25'
+- id: ev-perf
+  claim: gpt-oss ranks strongly among open-weight models on independent public leaderboards.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://lmarena.ai/leaderboard
+  date: '2026-07-25'
+- id: ev-github
+  claim: The openai/gpt-oss reference repository provides implementations, serving guidance
+    and fine-tuning references for the open weights.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://github.com/openai/gpt-oss
+  date: '2026-07-25'
+- id: ev-ollama
+  claim: gpt-oss is available in the Ollama model library for local single-command serving.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://ollama.com/library/gpt-oss
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial v2 library entry for OpenAI gpt-oss (gpt-oss-120b / gpt-oss-20b).
+- date: '2026-07-25'
+  change: Grounded evidence against primary sources (docs/primary-sources/gpt-oss) - added doc_type/retrieved to every item; read the Apache-2.0 LICENSE, the one-sentence USAGE_POLICY, the arXiv 2508.10925 model card, the OpenAI safety-report PDF and the METR third-party methodology review verbatim (retrieved:true); grounded ownership factors.
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

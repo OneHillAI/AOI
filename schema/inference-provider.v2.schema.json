@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onehill.ai/schema/inference-provider.v2.schema.json",
+  "title": "OneHill Inference Provider Library Entry (v2)",
+  "description": "Machine-readable record for a provider that serves open models via API, as a four-domain documentation library entry. Extends the v1 registry record with a `documentation` block (Assess / Implement / Use / Support). The four domain prose files live beside this file and are joined by item `key`.",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "profile", "data_governance", "compliance", "residency", "score", "documentation", "last_verified", "freshness_sla"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string", "const": "2.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "name": {"type": "string"},
+    "profile": {"type": "string", "const": "inference"},
+    "hq_country": {"type": "string"},
+    "summary": {"type": "string"},
+    "models_served": {"type": "array", "items": {"type": "string"}},
+    "hardware": {"type": "string", "description": "e.g. NVIDIA GPU, custom LPU/RDU/wafer-scale (lock-in signal)."},
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "model": {"type": "string", "description": "per-token | per-second | per-GPU-hour | subscription | mixed"},
+        "notes": {"type": "string"},
+        "example_rates": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "data_governance": {
+      "type": "object",
+      "required": ["default_retention", "trains_on_inputs"],
+      "properties": {
+        "default_retention": {"type": "string", "description": "e.g. 'none by default', '30 days abuse monitoring', 'indefinite (web UI)'."},
+        "trains_on_inputs": {"type": "string", "enum": ["never", "opt_in_only", "by_default", "unclear"]},
+        "zdr_available": {"type": "string", "enum": ["yes_default", "yes_optional", "enterprise_only", "no", "unclear"]},
+        "zdr_scope_caveats": {"type": "string"},
+        "customer_data_ownership": {"type": "string", "enum": ["customer_retains", "provider_may_use", "shared", "unclear"], "description": "Do the customer's data and the knowledge derived from it stay the customer's - un-shared, un-sold, not captured to improve the provider's models/service?"},
+        "outputs_used_to_improve_service": {"type": "string", "enum": ["no", "opt_out", "yes", "unclear"], "description": "Are prompts/outputs used to improve the provider's service (beyond training-on-inputs) - e.g. abuse models, analytics, product tuning?"},
+        "third_party_routing_leakage": {"type": "string", "description": "Do closed/third-party models routed through this provider fall under other vendors' data terms?"},
+        "subprocessors_disclosed": {"type": "boolean"}
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "properties": {
+        "soc2": {"type": "string", "enum": ["type_ii", "type_i", "in_progress", "none", "unknown"]},
+        "iso_27001": {"$ref": "#/$defs/tri"},
+        "iso_27701": {"$ref": "#/$defs/tri"},
+        "hipaa_baa": {"$ref": "#/$defs/tri"},
+        "gdpr_dpa": {"$ref": "#/$defs/tri"},
+        "fedramp": {"type": "string"},
+        "trust_center_url": {"type": "string"}
+      }
+    },
+    "residency": {
+      "type": "object",
+      "required": ["eu_region_available"],
+      "properties": {
+        "eu_region_available": {"$ref": "#/$defs/tri"},
+        "regions": {"type": "array", "items": {"type": "string"}},
+        "sovereign_option": {"type": "string"},
+        "region_pinning": {"$ref": "#/$defs/tri"},
+        "cloud_act_exposure": {"type": "boolean", "description": "US-headquartered / US-jurisdiction exposure."},
+        "provider_can_restrict_access": {"type": "string", "description": "Sovereignty / switch-off risk: can the provider (or its jurisdiction - export controls, sanctions, CLOUD Act) unilaterally cut off or restrict the customer's access?"}
+      }
+    },
+    "reliability": {
+      "type": "object",
+      "properties": {
+        "sla": {"type": "string"},
+        "uptime_notes": {"type": "string"},
+        "incidents": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "lock_in": {
+      "type": "object",
+      "properties": {
+        "openai_compatible_api": {"type": "boolean"},
+        "portability_notes": {"type": "string"}
+      }
+    },
+    "trust_considerations": {"type": "array", "items": {"type": "string"}},
+    "score": {"$ref": "#/$defs/provider_score"},
+    "documentation": {
+      "type": "object",
+      "required": ["assess", "implement", "use", "support"],
+      "additionalProperties": false,
+      "properties": {
+        "assess": {"$ref": "#/$defs/doc_domain"},
+        "implement": {"$ref": "#/$defs/doc_domain"},
+        "use": {"$ref": "#/$defs/doc_domain"},
+        "support": {"$ref": "#/$defs/doc_domain"}
+      }
+    },
+    "ownership": {"$ref": "#/$defs/ownership"},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "changelog": {"type": "array", "items": {"type": "object"}},
+    "last_verified": {"type": "string", "format": "date"},
+    "freshness_sla": {"type": "object"}
+  },
+  "$defs": {
+    "tri": {"type": "string", "enum": ["yes", "no", "unknown"]},
+    "provider_score": {
+      "type": "object",
+      "required": ["rubric_version", "dimensions"],
+      "properties": {
+        "rubric_version": {"type": "string"},
+        "headline": {"type": ["number", "null"]},
+        "grade": {"type": ["string", "null"], "enum": ["A", "B", "C", "D", "F", null]},
+        "hard_flags": {"type": "array", "items": {"type": "string"}},
+        "dimensions": {
+          "type": "object",
+          "required": ["data_governance", "compliance", "residency", "security", "reliability", "transparency_lockin", "cost"],
+          "properties": {
+            "data_governance": {"$ref": "#/$defs/dimension"},
+            "compliance": {"$ref": "#/$defs/dimension"},
+            "residency": {"$ref": "#/$defs/dimension"},
+            "security": {"$ref": "#/$defs/dimension"},
+            "reliability": {"$ref": "#/$defs/dimension"},
+            "transparency_lockin": {"$ref": "#/$defs/dimension"},
+            "cost": {"$ref": "#/$defs/dimension"}
+          }
+        }
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 0, "maximum": 5},
+        "rationale": {"type": "string"},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "ownership": {
+      "type": "object",
+      "description": "The single closing verdict - real ownership. See methodology/ownership.md. Own it only if you can use/modify it freely, you can see what it is (transparency), it doesn't fail you, and it doesn't extract your data. `level` and factor `level`s are enforced in scripts/validate.py (OWNERSHIP_LEVELS / FACTOR_LEVELS).",
+      "required": ["level", "factors", "verdict"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "string", "minLength": 1, "description": "full | substantial | partial | limited | none - the floor-weighted synthesis of the four factors."},
+        "factors": {
+          "type": "object",
+          "required": ["use_modify", "transparency", "reliability", "data_control"],
+          "additionalProperties": false,
+          "properties": {
+            "use_modify": {"$ref": "#/$defs/ownership_factor"},
+            "transparency": {"$ref": "#/$defs/ownership_factor"},
+            "reliability": {"$ref": "#/$defs/ownership_factor"},
+            "data_control": {"$ref": "#/$defs/ownership_factor"}
+          }
+        },
+        "verdict": {"type": "string", "minLength": 1}
+      }
+    },
+    "ownership_factor": {
+      "type": "object",
+      "required": ["level", "rationale"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "string", "minLength": 1, "description": "strong | moderate | weak - enforced in scripts/validate.py (FACTOR_LEVELS)."},
+        "rationale": {"type": "string", "minLength": 1, "description": "One line, grounded in a primary document (cite via the item/evidence, not marketing)."}
+      }
+    },
+    "doc_domain": {
+      "type": "object",
+      "required": ["items"],
+      "additionalProperties": false,
+      "properties": {
+        "completeness": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "originality": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "items": {"type": "array", "items": {"$ref": "#/$defs/doc_item"}}
+      }
+    },
+    "doc_item": {
+      "type": "object",
+      "required": ["key", "title", "doc_type", "source_type"],
+      "additionalProperties": false,
+      "properties": {
+        "key": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+        "title": {"type": "string"},
+        "doc_type": {"type": "string", "enum": ["explanation", "concept", "tutorial", "howto", "reference", "troubleshooting", "release_notes", "glossary"]},
+        "source_type": {"type": "string", "enum": ["aggregated", "onehill_generated", "gap"]},
+        "coverage": {"type": "string", "enum": ["full", "partial"]},
+        "refs": {"type": "array", "items": {"type": "string"}},
+        "summary": {"type": "string"},
+        "method": {"type": "string"},
+        "gap_reason": {"type": "string"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"source_type": {"const": "gap"}}},
+          "then": {"required": ["gap_reason"]},
+          "else": {"required": ["coverage"]}
+        },
+        {
+          "if": {"properties": {"source_type": {"const": "onehill_generated"}}},
+          "then": {"required": ["method", "refs"]}
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["claim", "source_type"],
+      "properties": {
+        "id": {"type": "string"},
+        "claim": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["onehill_verified", "third_party", "publisher"]},
+        "doc_type": {"type": "string", "enum": ["terms", "privacy_policy", "dpa", "subprocessors", "security", "sla", "model_card", "license", "technical_report", "docs", "marketing", "third_party"], "description": "Which kind of primary document this evidence points to. Binding docs (terms/privacy_policy/dpa/license) outrank marketing."},
+        "retrieved": {"type": "boolean", "description": "True only if the actual document text was read (not merely known to exist). retrieved:false may back only a 'documented but unverified' statement."},
+        "method": {"type": "string", "description": "Required for onehill_verified: what OneHill actually ran/observed."},
+        "url": {"type": "string"},
+        "date": {"type": "string"}
+      }
+    }
+  }
+}

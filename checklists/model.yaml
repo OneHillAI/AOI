@@ -1,0 +1,56 @@
+# Expected-items checklist for MODEL library entries.
+#
+# This is editorial policy (what a "complete" entry should document), kept as data so it
+# can be tuned without touching code or the schema. scripts/completeness.py reads it to
+# compute each domain's completeness (coverage) and originality (% OneHill-generated).
+#
+# Each expected item:
+#   key       - must match a documentation item `key` in an entry (and its <domain>.md marker)
+#   weight    - relative contribution to the domain's completeness (default 1.0)
+#   required  - if true, a missing item is a "warn" in validate.py (still only a completeness
+#               deduction, never a hard failure)
+#
+# Doc-type guidance (which Diátaxis / ISO-IEC-IEEE-26514 type an item is usually written as)
+# lives in docs/documentation-taxonomy.md; it is advisory, not enforced here.
+
+checklist_version: "1.0"
+
+domains:
+  assess:            # "Should we adopt this?"
+    expected:
+      - {key: intended-use,   weight: 1.0, required: true}   # intended & out-of-scope use (Model Card)
+      - {key: limitations,    weight: 1.0, required: true}   # known limitations, bias, failure modes
+      - {key: openness,       weight: 1.0, required: true}   # openness tier + license classification
+      - {key: license,        weight: 1.0, required: true}   # license terms & what you may do
+      - {key: provenance,     weight: 1.0, required: true}   # supply-chain: who/where/format/signing
+      - {key: eu-ai-act,      weight: 1.0, required: true}   # GPAI posture, systemic-risk, exemption
+      - {key: evaluation,     weight: 1.0, required: true}   # benchmarks (aggregated + OneHill)
+      - {key: safety-eval,    weight: 0.5, required: false}  # independent safety / red-team results
+
+  implement:         # "How do we deploy it?"
+    expected:
+      - {key: install,          weight: 1.0, required: true}   # how to obtain & run (HF/Ollama/…)
+      - {key: hardware,         weight: 1.0, required: true}   # VRAM / hardware requirements
+      - {key: serving,          weight: 1.0, required: true}   # serving stacks (vLLM/TGI/llama.cpp/Ollama)
+      - {key: safe-deployment,  weight: 1.0, required: true}   # controls & Deployment Ceiling
+      - {key: quantization,     weight: 0.5, required: false}  # available quantizations
+      - {key: fine-tuning,      weight: 0.5, required: false}  # fine-tuning / adaptation
+      - {key: integration,      weight: 0.5, required: false}  # API / OpenAI-compat usage
+
+  use:               # "What can it do and how do we use it?"
+    expected:
+      - {key: capabilities,      weight: 1.0, required: true}   # tasks, modalities, strengths
+      - {key: context-window,    weight: 1.0, required: true}   # context length & long-context behaviour
+      - {key: chat-template,     weight: 1.0, required: true}   # prompt format / chat template
+      - {key: languages,         weight: 0.5, required: false}  # multilingual coverage
+      - {key: tool-use,          weight: 0.5, required: false}  # function/tool calling
+      - {key: structured-output, weight: 0.5, required: false}  # JSON/schema-constrained output
+
+  support:           # "How do we keep it running and get help?"
+    expected:
+      - {key: troubleshooting,      weight: 1.0, required: true}   # common problems & fixes
+      - {key: release-versioning,   weight: 1.0, required: true}   # versions, changelog, cadence
+      - {key: security-disclosure,  weight: 1.0, required: true}   # how to report/what's the process
+      - {key: channels,             weight: 0.5, required: false}  # community & support channels
+      - {key: deprecation,          weight: 0.5, required: false}  # deprecation / EoL policy
+      - {key: known-issues,         weight: 0.5, required: false}  # tracked known issues

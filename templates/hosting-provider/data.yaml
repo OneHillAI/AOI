@@ -1,0 +1,65 @@
+# OneHill hosting/distribution-provider entry.
+# Validated against schema/hosting-provider.schema.json. Copy to hosting-providers/<id>/.
+# Emphasis: provenance of the ARTIFACT you pull, and what running it can do to your box.
+
+schema_version: "1.0"
+id: "host"
+name: "Host Hub"
+kind: hub                                 # hub | local_runner | serving_engine | cloud_registry | package_ecosystem
+operator: ""
+summary: >
+  One independent paragraph: how weights are distributed, the provenance story, and the
+  main self-hosting risk.
+
+distribution_mechanism: ""
+
+provenance:
+  verified_orgs: unknown                  # yes | no | unknown
+  malware_scanning: ""                    # scanners run + coverage, or 'none documented'
+  signing: ""                             # signing/attestation surfaced to downloaders, or 'none documented'
+  checksums: unknown
+  revision_pinning: unknown
+  gating_enforcement: ""                  # click-through | access request | none
+
+format_safety:
+  safetensors_default: unknown            # yes | promoted | no | n/a | unknown
+  pickle_handling: ""                     # blocked | flagged-not-blocked | silent
+  trust_remote_code_surface: ""
+  known_loader_cves: []
+
+license_surfacing: ""
+
+security_track_record:
+  incidents: []
+  response_notes: ""
+
+trust_signals_exposed: []                 # note which are gameable
+self_hosting_notes: ""
+ecosystem_lockin: ""
+
+score:
+  rubric_version: "1.0"
+  headline: null
+  grade: null
+  hard_flags: []
+  dimensions:
+    provenance_integrity:   {score: 0, rationale: "", evidence_refs: []}
+    format_loader_safety:   {score: 0, rationale: "", evidence_refs: []}
+    license_governance:     {score: 0, rationale: "", evidence_refs: []}
+    security_track_record:  {score: 0, rationale: "", evidence_refs: []}
+    transparency:           {score: 0, rationale: "", evidence_refs: []}
+    ecosystem_portability:  {score: 0, rationale: "", evidence_refs: []}
+
+evidence:
+  - id: ev1
+    claim: ""
+    source_type: publisher
+    url: ""
+    date: "2026-07-25"
+
+changelog:
+  - date: "2026-07-25"
+    change: "Initial entry."
+
+last_verified: "2026-07-25"
+freshness_sla: {fast_days: 30, score_days: 90, slow_days: 180}

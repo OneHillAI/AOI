@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onehill.ai/schema/model.v2.schema.json",
+  "title": "OneHill Open Model Library Entry (v2)",
+  "description": "Machine-readable record for an open model as a four-domain documentation library entry. Extends the v1 registry record with a `documentation` block (Assess / Implement / Use / Support). The four domain prose files (assess.md/implement.md/use.md/support.md) live beside this file and are joined by item `key`.",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "publisher", "openness", "provenance", "eu_ai_act", "score", "signals", "documentation", "last_verified", "freshness_sla"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string", "const": "2.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "name": {"type": "string"},
+    "aliases": {"type": "array", "items": {"type": "string"}},
+    "publisher": {
+      "type": "object",
+      "required": ["name", "accountable_entity"],
+      "properties": {
+        "name": {"type": "string"},
+        "country": {"type": "string"},
+        "accountable_entity": {"type": "boolean"},
+        "url": {"type": "string"},
+        "security_contact": {"type": "string"}
+      }
+    },
+    "summary": {"type": "string"},
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {"type": "string"},
+          "params_total": {"type": "string"},
+          "params_active": {"type": "string"},
+          "context_window": {"type": "string"},
+          "kind": {"type": "string", "enum": ["base", "instruct", "reasoning", "guard", "code", "multimodal", "quantized", "other"]},
+          "safety_tuned": {"type": "boolean"}
+        }
+      }
+    },
+    "openness": {
+      "type": "object",
+      "required": ["tier", "components", "license"],
+      "properties": {
+        "tier": {"type": "string", "enum": ["fully_open", "open_weights_recipe", "open_weights", "gated_open", "open_washed", "closed"]},
+        "components": {
+          "type": "object",
+          "required": ["weights", "training_data", "training_code", "evaluation", "documentation", "license"],
+          "properties": {
+            "weights": {"$ref": "#/$defs/openness_component"},
+            "training_data": {"$ref": "#/$defs/openness_component"},
+            "training_code": {"$ref": "#/$defs/openness_component"},
+            "evaluation": {"$ref": "#/$defs/openness_component"},
+            "documentation": {"$ref": "#/$defs/openness_component"},
+            "license": {"$ref": "#/$defs/openness_component"}
+          }
+        },
+        "license": {
+          "type": "object",
+          "required": ["classification", "commercial_use"],
+          "properties": {
+            "spdx": {"type": "string"},
+            "name": {"type": "string"},
+            "classification": {"type": "string", "enum": ["osi", "permissive_open", "open_weight", "research_only", "custom"]},
+            "commercial_use": {"type": "string", "enum": ["allowed", "allowed_with_conditions", "prohibited"]},
+            "notable_restrictions": {"type": "array", "items": {"type": "string"}},
+            "url": {"type": "string"}
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["canonical_source", "formats", "integrity"],
+      "properties": {
+        "canonical_source": {"type": "string"},
+        "verified_org_on_primary_host": {"type": "boolean"},
+        "formats": {"type": "array", "items": {"type": "string", "enum": ["safetensors", "gguf", "onnx", "pickle", "mlx", "other"]}},
+        "integrity": {
+          "type": "object",
+          "properties": {
+            "checksums": {"type": "boolean"},
+            "signed": {"type": "boolean"},
+            "signing_tech": {"type": "string"},
+            "provenance_attestation": {"type": "boolean"}
+          }
+        },
+        "mirrors_and_quants": {"type": "object"},
+        "checkpoint_checklist_score": {"type": "integer", "minimum": 0, "maximum": 8},
+        "scanner_result": {"type": "object"},
+        "incidents": {"type": "array", "items": {"$ref": "#/$defs/incident"}}
+      }
+    },
+    "eu_ai_act": {
+      "type": "object",
+      "required": ["is_gpai", "last_assessed"],
+      "properties": {
+        "is_gpai": {"type": "boolean"},
+        "systemic_risk": {"type": "object"},
+        "open_source_exemption": {"type": "object"},
+        "provider_package": {"type": "object"},
+        "deployer_notes": {"type": "string"},
+        "last_assessed": {"type": "string", "format": "date"}
+      }
+    },
+    "performance": {"type": "object"},
+    "behaviour": {"type": "object"},
+    "safety": {"type": "object"},
+    "deployment": {
+      "type": "object",
+      "properties": {
+        "ceiling_tier": {"type": "string", "enum": ["T0", "T1", "T2", "T3", "T4"]},
+        "ceiling_conditional": {"type": "boolean"},
+        "hardware_notes": {"type": "string"},
+        "serving_support": {"type": "array", "items": {"type": "string"}},
+        "controls_required": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "score": {
+      "type": "object",
+      "required": ["dimensions", "rubric_version"],
+      "properties": {
+        "rubric_version": {"type": "string"},
+        "headline": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "grade": {"type": ["string", "null"], "enum": ["A", "B", "C", "D", "F", null]},
+        "hard_flags": {"type": "array", "items": {"type": "string"}},
+        "dimensions": {
+          "type": "object",
+          "required": ["openness", "provenance", "legal", "safety", "performance", "operational", "governance"],
+          "properties": {
+            "openness": {"$ref": "#/$defs/dimension"},
+            "provenance": {"$ref": "#/$defs/dimension"},
+            "legal": {"$ref": "#/$defs/dimension"},
+            "safety": {"$ref": "#/$defs/dimension"},
+            "performance": {"$ref": "#/$defs/dimension"},
+            "operational": {"$ref": "#/$defs/dimension"},
+            "governance": {"$ref": "#/$defs/dimension"}
+          }
+        }
+      }
+    },
+    "signals": {
+      "type": "object",
+      "description": "Five cross-cutting attributes assessed and highlighted at the top of the entry (EU-AI-Act-style), each tied back to one of the seven AOI scoring dimensions. Not a scoring input - a curated lens over documentation that already lives in the four domains. Per-key `level` vocabularies are enforced in scripts/validate.py (SIGNALS).",
+      "required": ["trainability", "knowledge_structure", "specialization", "exchangeability", "misuse_exposure"],
+      "additionalProperties": false,
+      "properties": {
+        "trainability": {"$ref": "#/$defs/signal"},
+        "knowledge_structure": {"$ref": "#/$defs/signal"},
+        "specialization": {"$ref": "#/$defs/signal"},
+        "exchangeability": {"$ref": "#/$defs/signal"},
+        "misuse_exposure": {"$ref": "#/$defs/signal"}
+      }
+    },
+    "documentation": {
+      "type": "object",
+      "required": ["assess", "implement", "use", "support"],
+      "additionalProperties": false,
+      "properties": {
+        "assess": {"$ref": "#/$defs/doc_domain"},
+        "implement": {"$ref": "#/$defs/doc_domain"},
+        "use": {"$ref": "#/$defs/doc_domain"},
+        "support": {"$ref": "#/$defs/doc_domain"}
+      }
+    },
+    "ownership": {"$ref": "#/$defs/ownership"},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "changelog": {"type": "array", "items": {"$ref": "#/$defs/changelog_entry"}},
+    "last_verified": {"type": "string", "format": "date"},
+    "freshness_sla": {"type": "object"}
+  },
+  "$defs": {
+    "openness_component": {"type": "string", "enum": ["open", "partial", "closed"]},
+    "ownership": {
+      "type": "object",
+      "description": "The single closing verdict - real ownership. See methodology/ownership.md. Own it only if you can use/modify it freely, you can see what it is (transparency), it doesn't fail you, and it doesn't extract your data. `level` and factor `level`s are enforced in scripts/validate.py (OWNERSHIP_LEVELS / FACTOR_LEVELS).",
+      "required": ["level", "factors", "verdict"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "string", "minLength": 1, "description": "full | substantial | partial | limited | none - the floor-weighted synthesis of the four factors."},
+        "factors": {
+          "type": "object",
+          "required": ["use_modify", "transparency", "reliability", "data_control"],
+          "additionalProperties": false,
+          "properties": {
+            "use_modify": {"$ref": "#/$defs/ownership_factor"},
+            "transparency": {"$ref": "#/$defs/ownership_factor"},
+            "reliability": {"$ref": "#/$defs/ownership_factor"},
+            "data_control": {"$ref": "#/$defs/ownership_factor"}
+          }
+        },
+        "verdict": {"type": "string", "minLength": 1}
+      }
+    },
+    "ownership_factor": {
+      "type": "object",
+      "required": ["level", "rationale"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "string", "minLength": 1, "description": "strong | moderate | weak - enforced in scripts/validate.py (FACTOR_LEVELS)."},
+        "rationale": {"type": "string", "minLength": 1, "description": "One line, grounded in a primary document (cite via the item/evidence, not marketing)."}
+      }
+    },
+    "signal": {
+      "type": "object",
+      "required": ["level", "dimension", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "string", "minLength": 1, "description": "Per-key vocabulary enforced in scripts/validate.py (SIGNALS)."},
+        "dimension": {"type": "string", "enum": ["openness", "provenance", "legal", "safety", "performance", "operational", "governance"], "description": "Which of the seven AOI dimensions this signal draws from."},
+        "summary": {"type": "string", "minLength": 1, "description": "One-line assessment shown on the badge/tooltip."},
+        "refs": {"type": "array", "items": {"type": "string"}, "description": "Evidence ids backing the assessment; each must resolve in evidence[]."}
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 0, "maximum": 5},
+        "rationale": {"type": "string"},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "doc_domain": {
+      "type": "object",
+      "required": ["items"],
+      "additionalProperties": false,
+      "properties": {
+        "completeness": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "originality": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "items": {"type": "array", "items": {"$ref": "#/$defs/doc_item"}}
+      }
+    },
+    "doc_item": {
+      "type": "object",
+      "required": ["key", "title", "doc_type", "source_type"],
+      "additionalProperties": false,
+      "properties": {
+        "key": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+        "title": {"type": "string"},
+        "doc_type": {"type": "string", "enum": ["explanation", "concept", "tutorial", "howto", "reference", "troubleshooting", "release_notes", "glossary"]},
+        "source_type": {"type": "string", "enum": ["aggregated", "onehill_generated", "gap"]},
+        "coverage": {"type": "string", "enum": ["full", "partial"]},
+        "refs": {"type": "array", "items": {"type": "string"}},
+        "summary": {"type": "string"},
+        "method": {"type": "string"},
+        "gap_reason": {"type": "string"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"source_type": {"const": "gap"}}},
+          "then": {"required": ["gap_reason"]},
+          "else": {"required": ["coverage"]}
+        },
+        {
+          "if": {"properties": {"source_type": {"const": "onehill_generated"}}},
+          "then": {"required": ["method", "refs"]}
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["claim", "source_type"],
+      "properties": {
+        "id": {"type": "string"},
+        "claim": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["onehill_verified", "third_party", "publisher"]},
+        "doc_type": {"type": "string", "enum": ["terms", "privacy_policy", "dpa", "subprocessors", "security", "sla", "model_card", "license", "technical_report", "docs", "marketing", "third_party"], "description": "Which kind of primary document this evidence points to. Binding docs (terms/privacy_policy/dpa/license) outrank marketing."},
+        "retrieved": {"type": "boolean", "description": "True only if the actual document text was read (not merely known to exist). retrieved:false may back only a 'documented but unverified' statement."},
+        "method": {"type": "string", "description": "Required for onehill_verified: what OneHill actually ran/observed."},
+        "url": {"type": "string"},
+        "date": {"type": "string"}
+      }
+    },
+    "incident": {
+      "type": "object",
+      "required": ["date", "summary"],
+      "properties": {"date": {"type": "string"}, "summary": {"type": "string"}, "severity": {"type": "string"}, "url": {"type": "string"}}
+    },
+    "changelog_entry": {
+      "type": "object",
+      "required": ["date", "change"],
+      "properties": {"date": {"type": "string"}, "change": {"type": "string"}}
+    }
+  }
+}

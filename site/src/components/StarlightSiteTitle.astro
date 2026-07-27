@@ -1,0 +1,27 @@
+---
+/**
+ * Starlight SiteTitle override. Renders the built-in title, then the gold "Alpha"
+ * badge, so the prose pages (including the homepage) carry the same pre-release
+ * badge as the app-shell top bar.
+ */
+import Default from '@astrojs/starlight/components/SiteTitle.astro';
+---
+<Default {...Astro.props}><slot /></Default>
+<span class="alpha-badge">Alpha</span>
+
+<style>
+  .alpha-badge {
+    align-self: center;
+    margin-left: 0.6rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--gold, var(--sl-color-accent));
+    background: color-mix(in srgb, var(--gold, var(--sl-color-accent)) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--gold, var(--sl-color-accent)) 34%, transparent);
+    border-radius: 999px;
+    padding: 0.16rem 0.5rem;
+    white-space: nowrap;
+  }
+</style>

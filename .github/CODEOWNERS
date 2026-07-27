@@ -1,0 +1,20 @@
+# Code owners for the load-bearing paths. A change under these paths requires a review
+# from a listed owner. Enable "Require review from Code Owners" in the branch protection
+# rule for main so this is enforced (see CONTRIBUTING.md > Review and merge).
+#
+# Replace @OneHillAI/maintainers with the real maintainer team slug or individual
+# usernames once the team exists.
+
+/methodology/            @OneHillAI/maintainers
+/schema/                 @OneHillAI/maintainers
+/scripts/                @OneHillAI/maintainers
+/checklists/             @OneHillAI/maintainers
+/models/                 @OneHillAI/maintainers
+/inference-providers/    @OneHillAI/maintainers
+/hosting-providers/      @OneHillAI/maintainers
+
+# Governance and the standard itself.
+/STANDARD.md             @OneHillAI/maintainers
+/GOVERNANCE.md           @OneHillAI/maintainers
+/CONFORMANCE.md          @OneHillAI/maintainers
+/.github/                @OneHillAI/maintainers

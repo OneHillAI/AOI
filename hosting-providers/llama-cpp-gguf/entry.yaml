@@ -1,0 +1,364 @@
+# OneHill v2 HOSTING/DISTRIBUTION-PROVIDER library entry for llama.cpp / GGUF. Replaces data.yaml.
+# Validated against schema/hosting-provider.v2.schema.json.
+#   scores  -> scripts/score.py --write        (provider score - carried over unchanged)
+#   meters  -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: llama-cpp-gguf
+name: llama.cpp / GGUF
+kind: serving_engine
+operator: ggml-org / open-source community
+summary: 'llama.cpp is the community serving engine and GGUF is its single-file container
+  format (weights + tokenizer + metadata + chat template). It is not itself a hub:
+  you obtain weights elsewhere (usually Hugging Face), convert to GGUF with convert_hf_to_gguf.py,
+  quantize with llama-quantize (Q4_K_M, Q5_K_M, Q8_0, etc.), and run with llama-cli
+  / llama-server; community quantizers (bartowski, unsloth) redistribute prebuilt
+  GGUFs on HF. The format is a genuine safety plus - GGUF is tensor + metadata with
+  no pickle-style code-execution on load. But the loaders have real, exploited weaknesses:
+  CVE-2026-5760 was a GGUF chat-template Jinja2 SSTI leading to RCE in llama-cpp-python
+  < 0.2.72 (also affecting SGLang); poisoned templates plant inference-time backdoors
+  that run on every prompt; and gguf_init_from_file() historically failed to validate
+  n_kv, so a crafted file could cause a heap overflow. Because the engine/format carries
+  no native provenance, malware scanning or signing, your safety comes entirely from
+  where you got the GGUF and your own discipline: pull from the canonical publisher
+  or a reputable quantizer, pin and hash the source revision, keep llama-cpp-python
+  >= 0.2.72, inspect the chat template before serving, and sandbox the loader.
+
+  '
+distribution_mechanism: 'Not a hub. Obtain weights (usually from Hugging Face), convert
+  to GGUF (convert_hf_to_gguf.py), quantize (llama-quantize), and run with llama-cli
+  / llama-server. GGUF is a single-file container (weights + tokenizer + metadata
+  + chat template). Community quant repos (bartowski, unsloth) distribute prebuilt
+  GGUFs on HF.
+
+  '
+provenance:
+  verified_orgs: 'no'
+  malware_scanning: 'None in the format itself. GGUF carries no scanning; provenance
+    and any scanning depend entirely on the source hub you pulled the file from (usually
+    Hugging Face).
+
+    '
+  signing: 'None native. GGUF/llama.cpp has no built-in cryptographic signing or attestation
+    of the artifact.
+
+    '
+  checksums: 'yes'
+  revision_pinning: 'yes'
+  gating_enforcement: none (inherits whatever gating the source hub enforces)
+format_safety:
+  safetensors_default: n/a
+  pickle_handling: n/a
+  trust_remote_code_surface: 'GGUF is tensor + metadata with no pickle-style code-execution
+    on load - a safety plus versus pickle. Concrete residual risks: (1) GGUF chat-template
+    Jinja2 SSTI leading to RCE - CVE-2026-5760 in llama-cpp-python < 0.2.72 (also
+    affected SGLang), patched in >= 0.2.72; (2) poisoned-template inference-time backdoors,
+    where malicious instructions in the template layer execute on every prompt; (3)
+    loader memory safety - gguf_init_from_file() historically did not validate n_kv,
+    so a crafted file could cause a heap overflow (multiple GGUF parsing bugs documented
+    by JFrog / huntr / ProtectAI).
+
+    '
+  known_loader_cves:
+  - CVE-2026-5760 - llama-cpp-python < 0.2.72 GGUF chat-template Jinja2 SSTI -> RCE
+    (also affected SGLang); patched in >= 0.2.72
+  - GGUF gguf_init_from_file n_kv heap-overflow class - unvalidated header field,
+    crafted file -> heap overflow (JFrog / huntr)
+license_surfacing: 'Inherited from the source. The engine/format surfaces no license
+  itself; whatever license and gating attach to the weights come from wherever you
+  obtained the GGUF (usually a Hugging Face repo).
+
+  '
+security_track_record:
+  incidents:
+  - date: '2026'
+    summary: CVE-2026-5760 - GGUF chat-template SSTI leading to RCE in llama-cpp-python
+      < 0.2.72 (and SGLang); the most prominent GGUF loader RCE to date.
+    severity: high
+    url: https://research.jfrog.com/model-threats/gguf-ssti/
+  - date: 2024-2026
+    summary: Multiple GGUF file-format parsing vulnerabilities (e.g. gguf_init_from_file
+      heap overflows) documented by huntr/JFrog security research.
+    severity: medium
+    url: https://blog.huntr.com/gguf-file-format-vulnerabilities-a-guide-for-hackers
+  response_notes: 'The GGUF ecosystem is where much local-inference security research
+    is concentrated; the flagship CVE was patched promptly (>= 0.2.72). Treat community-uploaded
+    GGUFs like untrusted third-party software - the format''s data-only design does
+    not neutralize template-injection or loader memory bugs.
+
+    '
+trust_signals_exposed:
+- Fully open-source engine - code is auditable (a real transparency plus)
+- 'Source-hub provenance - GGUF has none of its own; trust is entirely inherited from
+  where you pulled it (note: gameable if the source hub''s signals are gameable)'
+- Quantizer reputation (bartowski, unsloth, etc.) - informal, community reputation,
+  not a verified identity
+self_hosting_notes: 'Prefer GGUFs from the model''s canonical publisher or a reputable
+  quantizer. Pin the exact source revision and verify SHA256. Keep llama-cpp-python
+  >= 0.2.72 to close the chat-template SSTI RCE. INSPECT the GGUF chat template /
+  tokenizer config before serving - template injection runs at inference time, on
+  every prompt, not just at load. Sandbox the loader (no network, least privilege).
+  Check the template against known-malicious signatures where feasible.
+
+  '
+ecosystem_lockin: 'Minimal lock-in: llama.cpp is open-source and GGUF is the de facto
+  local-inference standard, consumed by Ollama, LM Studio, text-generation-webui and
+  many others. The format is maximally portable; conversion tooling is open.
+
+  '
+score:
+  rubric_version: '1.0'
+  headline: 56.4
+  grade: C
+  hard_flags: []
+  dimensions:
+    provenance_integrity:
+      score: 2
+      rationale: 'As a format/engine, GGUF/llama.cpp carries no native provenance
+        - no verified orgs, no scanning, no signing. Integrity depends entirely on
+        the source hub''s checksums and your own revision-pinning discipline. That
+        sits below the score-3 anchor, which expects verified orgs plus scanning at
+        the distribution layer.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev2
+    format_loader_safety:
+      score: 3
+      rationale: 'GGUF''s data-only design (no code-exec on load) is a genuine plus
+        over pickle and earns the middle anchor, but the loaders have a real exploited
+        CVE history - the chat-template SSTI RCE (CVE-2026-5760) and gguf_init_from_file
+        heap-overflow class - so the safety depends on pinning loader versions and
+        inspecting templates rather than being intrinsic.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev4
+      - ev5
+    license_governance:
+      score: 2
+      rationale: 'The engine/format surfaces and enforces nothing itself; all license
+        clarity and gating are inherited from the source hub. On its own that is minimal
+        governance, below the enforced-gating anchor.
+
+        '
+      evidence_refs:
+      - ev1
+    security_track_record:
+      score: 3
+      rationale: 'Real, documented loader vulnerabilities (SSTI RCE, heap overflows)
+        concentrate here, but they are actively researched and promptly patched; the
+        middle anchor reflects a format that is safe by design yet demands version
+        and template discipline.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev4
+    transparency:
+      score: 3
+      rationale: 'A clear plus that llama.cpp is fully open-source and independently
+        auditable, and the security research on GGUF is public. Held to the middle
+        anchor because the artifact itself exposes no provenance signal of its own
+        - a downloader must reason about trust entirely from the external source.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev3
+    ecosystem_portability:
+      score: 5
+      rationale: 'GGUF is the de facto local-inference standard, consumed across Ollama,
+        LM Studio, text-generation-webui and more; the engine and conversion tooling
+        are open-source and the format is maximally portable. Its ubiquity is independently
+        attested by the security research that treats GGUF as the dominant local model
+        format.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev5
+
+# --- Four documentation domains. Item keys match checklists/hosting-provider.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     Every credited item is `aggregated` (public source, >=1 ref); OneHill has run nothing,
+#     so there are no onehill_generated items and originality = 0.
+documentation:
+  assess:
+    completeness: 83.3
+    originality: 0.0
+    items:
+      - key: provenance-integrity
+        title: "Provenance & integrity"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2]
+        summary: "As a format/engine GGUF/llama.cpp carries no native provenance - no verified orgs, no malware scanning, no signing. Integrity rests entirely on the source hub's checksums and your own revision-pinning discipline."
+      - key: format-safety
+        title: "Format & loader safety"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev2, ev4, ev5]
+        summary: "GGUF is tensor + metadata with no pickle-style code-exec on load (a plus), but loaders have a real CVE history: chat-template Jinja2 SSTI -> RCE (CVE-2026-5760, llama-cpp-python < 0.2.72), poisoned-template inference-time backdoors, and gguf_init_from_file heap overflows."
+      - key: license-governance
+        title: "License surfacing & governance"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1]
+        summary: "The engine/format surfaces and enforces no license itself; all license clarity and gating are inherited from wherever you obtained the GGUF (usually a Hugging Face repo)."
+      - key: security-record
+        title: "Security track record"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev2, ev4]
+        summary: "Documented loader vulnerabilities concentrate in this ecosystem - CVE-2026-5760 SSTI RCE (patched in >= 0.2.72) and the gguf_init_from_file heap-overflow class - actively researched and promptly patched."
+      - key: transparency
+        title: "Transparency & trust signals"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev3]
+        summary: "The engine is fully open-source and independently auditable and GGUF security research is public, but the artifact itself exposes no native provenance signal - trust is reasoned entirely from the external source and informal quantizer reputation."
+  implement:
+    completeness: 87.5
+    originality: 0.0
+    items:
+      - key: obtain-weights
+        title: "Obtain & convert weights"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev1]
+        summary: "Not a hub: obtain weights elsewhere (usually Hugging Face), convert with convert_hf_to_gguf.py and quantize with llama-quantize, or pull prebuilt GGUFs from community quantizers (bartowski, unsloth)."
+      - key: verify-integrity
+        title: "Verify integrity before serving"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2]
+        summary: "Verify the SHA256 against the source revision, keep llama-cpp-python >= 0.2.72 to close the chat-template SSTI RCE, and inspect the GGUF chat template / tokenizer config before serving since template injection runs on every prompt."
+      - key: pin-revision
+        title: "Pin the source revision"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev1]
+        summary: "Because provenance is inherited, pin the exact source-hub revision of the GGUF you converted or downloaded so the artifact is reproducible and hashable."
+      - key: run-serve
+        title: "Run & serve locally"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev1]
+        summary: "Run inference with llama-cli or serve an OpenAI-style endpoint with llama-server; sandbox the loader (no network, least privilege)."
+      - key: resource-needs
+        title: "Disk & VRAM requirements"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Concrete disk / VRAM / hardware requirements per model and quantization level are not documented; footprint tracks the chosen quant (Q4_K_M, Q5_K_M, Q8_0, etc.) and target model and should be sized per case."
+  use:
+    completeness: 60.0
+    originality: 0.0
+    items:
+      - key: catalog-scope
+        title: "Catalog scope"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "llama.cpp / GGUF is a serving engine and format, not a hub - it has no central catalog of its own. GGUF files are produced, converted and redistributed by the community and hosted elsewhere (usually Hugging Face), so there is no first-party catalog to document."
+      - key: formats-supported
+        title: "Formats supported"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2]
+        summary: "GGUF is the single-file container format (weights + tokenizer + metadata + chat template), the de facto local-inference standard, produced via convert_hf_to_gguf.py and quantized with llama-quantize."
+      - key: integration
+        title: "Downstream integration"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2]
+        summary: "GGUF is consumed across the local-inference ecosystem (Ollama, LM Studio, text-generation-webui and others); the format is maximally portable and the conversion tooling is open."
+  support:
+    completeness: 57.1
+    originality: 0.0
+    items:
+      - key: security-disclosure
+        title: "Security disclosure"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev4]
+        summary: "GGUF loader/format vulnerabilities are disclosed through community security platforms such as huntr and research firms (JFrog / ProtectAI); the format has no first-party formal vulnerability-disclosure policy."
+      - key: release-versioning
+        title: "Release & versioning"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev2]
+        summary: "llama.cpp is versioned on GitHub; version discipline is security-relevant - the SSTI RCE was fixed in llama-cpp-python >= 0.2.72 - but the format has no formal release-cadence / changelog policy."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1]
+        summary: "Support is community-driven through the open-source project on GitHub and informal community quantizers (bartowski, unsloth); no formal support SLA exists."
+      - key: known-issues
+        title: "Known issues & caveats"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: full
+        refs: [ev2, ev4, ev5]
+        summary: "Known caveats: chat-template SSTI RCE (CVE-2026-5760), poisoned-template inference-time backdoors that run on every prompt, and gguf_init_from_file heap-overflow parsing bugs - mitigated by pinning loader versions, inspecting templates and sandboxing."
+
+evidence:
+- id: ev1
+  claim: llama.cpp is the open-source community serving engine; GGUF workflow (convert,
+    quantize, run) and single-file container format.
+  source_type: publisher
+  url: https://github.com/ggml-org/llama.cpp
+  date: '2026-07-25'
+- id: ev2
+  claim: GGUF chat-template SSTI -> RCE (CVE-2026-5760, llama-cpp-python < 0.2.72,
+    also SGLang); GGUF is the dominant local-inference format targeted by this research.
+  source_type: third_party
+  url: https://research.jfrog.com/model-threats/gguf-ssti/
+  date: '2026-07-25'
+- id: ev3
+  claim: Malicious GGUF models can trigger RCE via crafted templates; local-inference
+    risk concentrated in the GGUF ecosystem.
+  source_type: third_party
+  url: https://gbhackers.com/malicious-gguf-models-could-trigger-rce/
+  date: '2026-07-25'
+- id: ev4
+  claim: GGUF file-format parsing vulnerabilities, including gguf_init_from_file heap
+    overflows from unvalidated header fields.
+  source_type: third_party
+  url: https://blog.huntr.com/gguf-file-format-vulnerabilities-a-guide-for-hackers
+  date: '2026-07-25'
+- id: ev5
+  claim: Poisoned GGUF chat templates plant inference-time backdoors that execute
+    on every prompt across the widely-used GGUF ecosystem.
+  source_type: third_party
+  url: https://www.pillar.security/blog/llm-backdoors-at-the-inference-level-the-threat-of-poisoned-templates
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry.
+- date: '2026-07-25'
+  change: 'Migrated to v2 four-domain library format (added documentation block; score
+    carried over unchanged).'
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

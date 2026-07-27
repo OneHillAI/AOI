@@ -1,0 +1,3 @@
+# Tooling dependencies for scripts/validate.py and scripts/score.py
+PyYAML>=6.0
+jsonschema>=4.0

@@ -1,0 +1,132 @@
+---
+/**
+ * SiteFooter - the shared site footer, matching the design handover (three-column
+ * footer: brand block + Index / Legal / Contact, then a bottom bar). Rendered
+ * inside AppShell (the app pages) and as the Starlight Footer override (the prose
+ * pages), so its scoped styles resolve against whichever token set is present via
+ * the --f-* fallback layer below.
+ *
+ * Legal links point at OneHill's canonical pages (single source of truth, not
+ * duplicated here); the contact address is the index's own. Update the three legal
+ * hrefs if OneHill's URLs change.
+ */
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const CONTACT = 'contact@ownershipindex.ai';
+const IMPRESSUM = 'https://onehill.org/impressum/';
+const TERMS = 'https://onehill.org/terms/';
+const PRIVACY = 'https://onehill.org/privacy/';
+const GITHUB = 'https://github.com/OneHillAI/AOI';
+const ONEHILL = 'https://onehill.org';
+const year = 2026;
+---
+<footer class="sitefoot">
+  <div class="sitefoot__in">
+    <div class="sitefoot__brand">
+      <div class="wm">AI Ownership Index</div>
+      <p>An independent, evidence-graded read on how much you own the open models and inference providers you rely on.</p>
+      <div class="proj">A OneHill Foundation project.</div>
+    </div>
+    <nav class="sitefoot__col" aria-label="Index">
+      <h4>Index</h4>
+      <a href={`${base}/library/`}>Library</a>
+      <a href={`${base}/methodology/`}>Methodology</a>
+      <a href={`${base}/trust/`}>About</a>
+    </nav>
+    <nav class="sitefoot__col" aria-label="Legal">
+      <h4>Legal</h4>
+      <a href={IMPRESSUM}>Impressum</a>
+      <a href={TERMS}>Terms</a>
+      <a href={PRIVACY}>Privacy</a>
+    </nav>
+    <nav class="sitefoot__col" aria-label="Contact">
+      <h4>Contact</h4>
+      <a href={`mailto:${CONTACT}`}>{CONTACT}</a>
+      <a href={GITHUB} target="_blank" rel="noopener">GitHub</a>
+      <a href={ONEHILL} target="_blank" rel="noopener">onehill.org</a>
+    </nav>
+  </div>
+  <div class="sitefoot__bottom">
+    <span>&copy; {year} OneHill Foundation</span>
+    <span>Built in the open.</span>
+  </div>
+</footer>
+
+<style>
+  .sitefoot {
+    /* Resolve against the app-shell tokens on app pages, and the Starlight
+       --sl-color-* tokens on prose pages, so one component themes in both. */
+    --f-bg: var(--surface, var(--sl-color-gray-6));
+    --f-line: var(--line, var(--sl-color-gray-5));
+    --f-ink: var(--ink, var(--sl-color-white));
+    --f-muted: var(--muted, var(--sl-color-gray-2));
+    --f-faint: var(--faint, var(--sl-color-gray-4));
+    --f-accent: var(--accent, var(--sl-color-accent));
+    --f-gold: var(--gold, var(--sl-color-accent));
+    border-top: 1px solid var(--f-line);
+    background: var(--f-bg);
+    margin-top: 3rem;
+    padding: 2.6rem 1.8rem 2rem;
+  }
+  .sitefoot__in {
+    max-width: 62rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.6fr repeat(3, 1fr);
+    gap: 2rem 1.6rem;
+  }
+  .sitefoot .wm {
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--f-gold);
+    font-size: 1.1rem;
+  }
+  .sitefoot__brand p {
+    margin: 0.55rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--f-muted);
+    max-width: 19rem;
+  }
+  .sitefoot__brand .proj {
+    font-size: 0.8rem;
+    color: var(--f-faint);
+    margin-top: 0.5rem;
+  }
+  .sitefoot__col h4 {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--f-faint);
+    margin: 0 0 0.8rem;
+  }
+  .sitefoot__col a {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--f-muted);
+    text-decoration: none;
+    margin-bottom: 0.55rem;
+  }
+  .sitefoot__col a:hover {
+    color: var(--f-accent);
+  }
+  .sitefoot__bottom {
+    max-width: 62rem;
+    margin: 2rem auto 0;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--f-line);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+    color: var(--f-faint);
+  }
+  @media (max-width: 760px) {
+    .sitefoot__in { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 460px) {
+    .sitefoot__in { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onehill.ai/schema/hosting-provider.schema.json",
+  "title": "OneHill Hosting / Distribution Provider Entry",
+  "description": "Machine-readable record for a place where model weights live and are pulled from (hub, local runner, serving engine, cloud registry). Emphasis on provenance, format safety, and self-hosting risk.",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "kind", "provenance", "format_safety", "score", "last_verified"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "name": {"type": "string"},
+    "kind": {"type": "string", "enum": ["hub", "local_runner", "serving_engine", "cloud_registry", "package_ecosystem"]},
+    "operator": {"type": "string"},
+    "summary": {"type": "string"},
+    "distribution_mechanism": {"type": "string", "description": "How weights are obtained (git-LFS, OCI registry, SDK download, one-click deploy, etc.)."},
+    "provenance": {
+      "type": "object",
+      "required": ["verified_orgs", "malware_scanning", "signing"],
+      "properties": {
+        "verified_orgs": {"$ref": "#/$defs/tri"},
+        "malware_scanning": {"type": "string", "description": "Scanners run and what they cover; 'none documented' if absent."},
+        "signing": {"type": "string", "description": "Cryptographic signing / provenance attestation surfaced to downloaders; 'none documented' if absent."},
+        "checksums": {"$ref": "#/$defs/tri"},
+        "revision_pinning": {"$ref": "#/$defs/tri"},
+        "gating_enforcement": {"type": "string", "description": "How license/EULA gating is enforced (click-through, access request, none)."}
+      }
+    },
+    "format_safety": {
+      "type": "object",
+      "required": ["safetensors_default"],
+      "properties": {
+        "safetensors_default": {"type": "string", "enum": ["yes", "promoted", "no", "n/a", "unknown"]},
+        "pickle_handling": {"type": "string", "description": "Blocked, flagged-not-blocked, or silent."},
+        "trust_remote_code_surface": {"type": "string"},
+        "known_loader_cves": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "license_surfacing": {"type": "string"},
+    "security_track_record": {
+      "type": "object",
+      "properties": {
+        "incidents": {"type": "array", "items": {"$ref": "#/$defs/incident"}},
+        "response_notes": {"type": "string"}
+      }
+    },
+    "trust_signals_exposed": {"type": "array", "items": {"type": "string"}, "description": "Signals a downloader can see; note which are gameable."},
+    "self_hosting_notes": {"type": "string"},
+    "ecosystem_lockin": {"type": "string"},
+    "score": {"$ref": "#/$defs/provider_score"},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "changelog": {"type": "array", "items": {"type": "object"}},
+    "last_verified": {"type": "string", "format": "date"},
+    "freshness_sla": {"type": "object"}
+  },
+  "$defs": {
+    "tri": {"type": "string", "enum": ["yes", "no", "unknown"]},
+    "provider_score": {
+      "type": "object",
+      "required": ["rubric_version", "dimensions"],
+      "properties": {
+        "rubric_version": {"type": "string"},
+        "headline": {"type": ["number", "null"]},
+        "grade": {"type": ["string", "null"], "enum": ["A", "B", "C", "D", "F", null]},
+        "hard_flags": {"type": "array", "items": {"type": "string"}},
+        "dimensions": {
+          "type": "object",
+          "required": ["provenance_integrity", "format_loader_safety", "license_governance", "security_track_record", "transparency", "ecosystem_portability"],
+          "properties": {
+            "provenance_integrity": {"$ref": "#/$defs/dimension"},
+            "format_loader_safety": {"$ref": "#/$defs/dimension"},
+            "license_governance": {"$ref": "#/$defs/dimension"},
+            "security_track_record": {"$ref": "#/$defs/dimension"},
+            "transparency": {"$ref": "#/$defs/dimension"},
+            "ecosystem_portability": {"$ref": "#/$defs/dimension"}
+          }
+        }
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 0, "maximum": 5},
+        "rationale": {"type": "string"},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "incident": {
+      "type": "object",
+      "required": ["date", "summary"],
+      "properties": {"date": {"type": "string"}, "summary": {"type": "string"}, "severity": {"type": "string"}, "url": {"type": "string"}}
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["claim", "source_type"],
+      "properties": {
+        "id": {"type": "string"},
+        "claim": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["onehill_verified", "third_party", "publisher"]},
+        "url": {"type": "string"},
+        "date": {"type": "string"}
+      }
+    }
+  }
+}

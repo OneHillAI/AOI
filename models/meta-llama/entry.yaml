@@ -1,0 +1,666 @@
+schema_version: '2.0'
+id: meta-llama
+name: Meta Llama (Llama 3.x / Llama 4)
+aliases:
+- Llama
+- Llama 3.1
+- Llama 3.3
+- Llama 4
+publisher:
+  name: Meta Platforms, Inc.
+  country: US
+  accountable_entity: true
+  url: https://www.llama.com/
+  security_contact: https://www.llama.com/responsible-use-guide/
+summary: 'Meta''s Llama family is the most widely adopted open-weight LLM lineage,
+  spanning dense Llama 3.1 (8B/70B/405B, 128K context) and Llama 3.3 70B through the
+  Llama 4 mixture-of-experts models (Scout, Maverick, Behemoth), shipped alongside
+  the companion Llama Guard and Prompt Guard safety classifiers. Weights are downloadable
+  but gated behind a click-through acceptance of the restrictive Llama Community License
+  - which is not OSI-approved, imposes a 700M-monthly-active-user threshold, an Acceptable
+  Use Policy, "Built with Llama" attribution, and forbids EU-domiciled entities
+  from using the multimodal variants. The largest checkpoints cross the EU AI Act''s
+  1e25-FLOP systemic-risk threshold, and Meta publicly declined to sign the EU GPAI
+  Code of Practice - so the single most important thing for an adopter is that Llama
+  is technically first-class and operationally trivial to run, but legally the most
+  constrained "open" family in this class.
+
+  '
+variants:
+- name: Llama 3.1 8B
+  params_total: 8B
+  context_window: 128K
+  kind: instruct
+  safety_tuned: true
+- name: Llama 3.1 70B
+  params_total: 70B
+  context_window: 128K
+  kind: instruct
+  safety_tuned: true
+- name: Llama 3.1 405B
+  params_total: 405B
+  context_window: 128K
+  kind: instruct
+  safety_tuned: true
+- name: Llama 3.3 70B
+  params_total: 70B
+  context_window: 128K
+  kind: instruct
+  safety_tuned: true
+- name: Llama 4 Scout
+  params_total: 16 experts
+  params_active: 17B
+  context_window: very long (multi-hundred-K+)
+  kind: multimodal
+  safety_tuned: true
+- name: Llama 4 Maverick
+  params_active: 17B
+  kind: multimodal
+  safety_tuned: true
+- name: Llama 4 Behemoth
+  kind: multimodal
+  safety_tuned: true
+- name: Llama Guard
+  kind: guard
+  safety_tuned: true
+- name: Prompt Guard
+  kind: guard
+  safety_tuned: true
+openness:
+  tier: gated_open
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: partial
+  license:
+    spdx: LicenseRef-Llama-Community
+    name: Llama Community License
+    classification: open_weight
+    commercial_use: allowed_with_conditions
+    notable_restrictions:
+    - 700M monthly-active-users threshold requires a separate license from Meta
+    - Acceptable Use Policy applies
+    - '''Built with Llama'' attribution and naming requirements'
+    - Multimodal Llama models are not licensed for EU-domiciled entities
+    url: https://www.llama.com/llama4/license/
+provenance:
+  canonical_source: https://huggingface.co/meta-llama
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: bartowski / unsloth (GGUF quantizations)
+      trust: community
+      note: popular local-inference quants rather than the canonical source
+    - name: Served on Bedrock / Azure / Vertex / Together / Groq
+      trust: provider
+      note: hosted endpoints rather than the weight source
+  checkpoint_checklist_score: 6
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: '>1e25 for Llama 3.1 405B and large Llama 4 models'
+    over_1e25_threshold: true
+    article_55_docs_available: partial
+  open_source_exemption:
+    license_qualifies: 'no'
+    rationale: 'The Llama Community License is not a free-and-open-source license:
+      it carries an Acceptable Use Policy, a 700M-MAU commercial threshold, attribution/naming
+      terms, and a field-of-use restriction barring EU multimodal use - so it likely
+      fails the Act''s "free and open-source" test for the Article 53 exemption. Independently,
+      the largest Llama checkpoints exceed the 1e25-FLOP systemic-risk threshold,
+      and systemic-risk models receive NO open-source exemption regardless of license,
+      so the full Article 53 + 55 obligation set applies.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: 'yes'
+    copyright_policy: partial
+    training_content_summary: partial
+    code_of_practice_signatory: false
+  deployer_notes: 'Meta publishes detailed model cards and safety evaluations (strong
+    Annex-XII-style downstream information) but not a full Article 55 systemic-risk
+    package, and publicly declined to sign the EU GPAI Code of Practice in 2025. A
+    downstream EU deployer inherits a partial documentation set and must not use the
+    multimodal variants at all; a fine-tuner placing a derivative on the EU market
+    under its own name likely becomes a provider and must maintain its own Annex XI/XII
+    docs.
+
+    '
+  last_assessed: '2026-07-25'
+performance:
+  note: Third-party framing only.
+  class_position: Leader among open-weight generalist families on public leaderboards.
+behaviour:
+  refusals: Safety-tuned instruct variants refuse clearly-harmful requests; low over-refusal
+    in general use.
+  prompt_injection: Residual susceptibility like all current LLMs; treat retrieved/tool
+    content as untrusted.
+  failure_modes: Standard hallucination profile for its class; well documented in
+    model cards.
+safety:
+  variant_assessed: Instruct + Llama Guard
+  jailbreak_resistance: Withstands casual jailbreaks; deploy instruct + Llama Guard,
+    never base.
+  guard_model: Llama Guard and Prompt Guard shipped by the publisher.
+deployment:
+  ceiling_tier: T3
+  ceiling_conditional: true
+  hardware_notes: 8B runs on a single modern GPU; 70B needs multi-GPU or quantization;
+    405B and large MoE need a serving cluster.
+  serving_support:
+  - vllm
+  - llama.cpp
+  - ollama
+  - tgi
+  - mlx
+  controls_required:
+  - Deploy the safety-tuned instruct variant, not base
+  - Llama Guard input/output classification
+  - Prompt-injection defences
+  - Deterministic action-policy engine + kill switch for autonomous actions
+score:
+  rubric_version: '1.1'
+  headline: 72.4
+  grade: B
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Gated-open tier: weights are downloadable and documentation is strong,
+        but they sit behind a click-through gate and a restrictive community license,
+        with training data and training code closed and evaluation only partial. The
+        tier ceiling for gated-open is 3.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev3
+    provenance:
+      score: 4
+      rationale: 'Verified Meta org on Hugging Face, safetensors-only distribution,
+        published checksums, clear canonical source, and no malicious-checkpoint incident
+        on the canonical org (checklist ~6/8). Short of 5 only because weights are
+        not cryptographically signed and there is no SLSA-style provenance attestation.
+
+        '
+      evidence_refs:
+      - ev3
+    legal:
+      score: 2
+      rationale: 'A restrictive, non-OSI community license with an MAU threshold,
+        acceptable-use limits and an outright EU multimodal field-of-use ban; the
+        largest models are systemic-risk (voiding any open-source exemption) with
+        only a partial Article 55 package; and Meta declined the EU GPAI Code of Practice.
+        These compound into a weak legal-readiness posture for a compliant EU deployment.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev2
+    safety:
+      score: 4
+      rationale: 'Safety-tuned instruct releases with published safety evaluations,
+        a companion guard/classifier model (Llama Guard) and Prompt Guard, and documented
+        residual risks - well above the score-3 anchor. Short of 5 without a published
+        third-party red-team across all harm domains.
+
+        '
+      evidence_refs:
+      - ev5
+      - ev2
+    performance:
+      score: 4
+      rationale: 'Consistently strong and competitive across reasoning, coding and
+        instruction-following on public leaderboards, judged a leader among open-weight
+        generalists. Capped at 4: performance is third-party framed on public
+        leaderboards, with no independently reproduced benchmark.
+
+        '
+      evidence_refs:
+      - ev4
+    operational:
+      score: 5
+      rationale: 'First-class ecosystem support: day-0 availability across vLLM, llama.cpp,
+        Ollama, TGI and MLX, official and community quantizations, long-context and
+        tooling support, and hosted endpoints on every major cloud (Bedrock, Azure,
+        Vertex, Together, Groq).
+
+        '
+      evidence_refs:
+      - ev2
+      - ev4
+    governance:
+      score: 4
+      rationale: 'Reputable, legally accountable publisher with a predictable multi-generation
+        release cadence, a Responsible Use Guide and a reporting path. Short of 5
+        because there is no formal cryptographic vulnerability-disclosure/signing
+        process and no published deprecation policy.
+
+        '
+      evidence_refs:
+      - ev2
+      - ev3
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry
+#     (like the EU AI Act flag). Not a scoring input - each ties back to one of the seven
+#     AOI dimensions and summarises documentation that lives in the four domains.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tune with full SFT/LoRA on the open weights; training data and code are closed, so training is not reproducible, and the Community License adds naming/attribution and 700M-MAU conditions."
+    refs: [ev1, ev3]
+  knowledge_structure:
+    level: strong
+    dimension: performance
+    summary: "Strong knowledge/RAG backbone: 128K context, documented tool-calling and leading open-weight instruction-following support grounded, structured workflows."
+    refs: [ev6, ev4]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "Strong for specialisation: open weights plus the largest fine-tuning/adapter ecosystem of any open family, though continued pre-training is limited by closed data and code."
+    refs: [ev3, ev6]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Highly exchangeable: safetensors on every major runtime and cloud endpoint (Bedrock/Vertex/Together/Groq); mind the Llama-3 chat template and special tokens when swapping."
+    refs: [ev6, ev2]
+  misuse_exposure:
+    level: partial
+    dimension: safety
+    summary: "Partially benchmarked: Meta publishes safety evaluations and ships Llama Guard + Prompt Guard companion classifiers, but there is no broad independent third-party red-team across all harm domains."
+    refs: [ev5]
+documentation:
+  assess:
+    completeness: 96.7
+    originality: 0.0
+    items:
+    - key: intended-use
+      title: Intended & out-of-scope use
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev5
+      - ev2
+      summary: General-purpose assistant, coding and multilingual use; base checkpoints
+        and disallowed AUP categories are out of scope.
+    - key: limitations
+      title: Known limitations, bias & failure modes
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev5
+      - ev2
+      summary: Class-standard hallucination, residual prompt-injection susceptibility,
+        and bias documented in the model cards.
+    - key: openness
+      title: Openness tier & license classification
+      doc_type: explanation
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      - ev3
+      summary: Gated-open tier (cap 3) - open weights + strong docs behind a click-through
+        gate; data and training code closed.
+    - key: license
+      title: License terms & what you may do
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      - ev2
+      summary: Llama Community License - 700M-MAU threshold, AUP, "Built with Llama"
+        attribution, EU multimodal field-of-use ban; not OSI-approved.
+    - key: provenance
+      title: Supply-chain & provenance
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      summary: Verified meta-llama org on Hugging Face, safetensors + checksums, no
+        signing or SLSA attestation; community GGUF quants are separate artifacts.
+    - key: eu-ai-act
+      title: EU AI Act posture
+      doc_type: explanation
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev1
+      - ev2
+      summary: GPAI; 405B and large Llama 4 exceed 1e25 FLOP (systemic-risk), voiding
+        the open-source exemption; only a partial Article 55 package; Meta declined
+        the GPAI Code of Practice.
+    - key: evaluation
+      title: Benchmarks & evaluation
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev4
+      summary: A leader among open-weight generalist families on public leaderboards;
+        third-party framed.
+    - key: safety-eval
+      title: Independent safety / red-team results
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev5
+      summary: Meta publishes its own safety evaluations plus Llama Guard/Prompt Guard;
+        no comprehensive independent third-party red-team across all harm domains.
+  implement:
+    completeness: 100.0
+    originality: 0.0
+    items:
+    - key: install
+      title: Install & run
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev2
+      summary: Gated HF from_pretrained with a token; Ollama, vLLM, llama.cpp locally;
+        or hosted on Bedrock/Azure/Vertex.
+    - key: hardware
+      title: Hardware & VRAM requirements
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev2
+      summary: 8B on a single modern GPU; 70B needs multi-GPU or quantization; 405B
+        and large MoE need a serving cluster.
+    - key: serving
+      title: Serving stacks
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev2
+      - ev3
+      summary: First-class day-0 support across vLLM, TGI, llama.cpp, Ollama, MLX
+        and transformers.
+    - key: safe-deployment
+      title: Safe-deployment controls & Deployment Ceiling
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev5
+      - ev1
+      summary: Deploy Instruct + Llama Guard + input/output guards + a deterministic
+        action policy; Deployment Ceiling T3 (bounded autonomous), conditional.
+    - key: quantization
+      title: Available quantizations
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev2
+      summary: Official low-bit releases plus a large community GGUF/AWQ/GPTQ ecosystem.
+    - key: fine-tuning
+      title: Fine-tuning & adaptation
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev2
+      summary: LoRA/QLoRA via torchtune and the common PEFT/Transformers/Axolotl/Unsloth
+        stacks.
+    - key: integration
+      title: API / OpenAI-compatible usage
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev2
+      summary: OpenAI-compatible endpoints via vLLM/TGI, plus hosted cloud APIs and
+        the Llama API.
+  use:
+    completeness: 88.9
+    originality: 0.0
+    items:
+    - key: capabilities
+      title: Capabilities & modalities
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev2
+      - ev4
+      summary: Strong generalist, coding and multilingual text; Llama 4 adds native
+        multimodality (image), which is not licensed to EU-domiciled entities.
+    - key: context-window
+      title: Context window & long-context behaviour
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev6
+      - ev2
+      summary: 128K tokens for Llama 3.1/3.3; Llama 4 Scout offers a very long (multi-hundred-K+)
+        window.
+    - key: chat-template
+      title: Prompt format & chat template
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev6
+      summary: Llama 3 chat template with header/turn special tokens; apply via the
+        tokenizer's chat template.
+    - key: languages
+      title: Multilingual coverage
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev6
+      summary: Officially supports eight core languages (English, German, French,
+        Italian, Portuguese, Hindi, Spanish, Thai), with broader informal coverage.
+    - key: tool-use
+      title: Function / tool calling
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev6
+      summary: Documented tool-calling from Llama 3.1 onward, including built-in and
+        custom (JSON) tool-call formats.
+    - key: structured-output
+      title: JSON / schema-constrained output
+      doc_type: reference
+      source_type: gap
+      gap_reason: Meta documents no first-party structured-output or schema-constrained-decoding
+        guarantee for Llama; JSON/schema conformance is provided at the serving layer
+        (grammars/guided decoding in vLLM, TGI, llama.cpp).
+  support:
+    completeness: 77.8
+    originality: 0.0
+    items:
+    - key: troubleshooting
+      title: Common problems & fixes
+      doc_type: troubleshooting
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      summary: Gated-access token/acceptance failures and tokenizer/chat-template
+        mismatches are the most common pitfalls.
+    - key: release-versioning
+      title: Versions & changelog
+      doc_type: release_notes
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev2
+      - ev3
+      summary: Predictable generational cadence (3.1 -> 3.3 -> 4.x); pin exact Hugging
+        Face revisions to track updates.
+    - key: security-disclosure
+      title: Security disclosure process
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev5
+      summary: A Responsible Use reporting path exists for model issues/violations,
+        but there is no formal CVE-style vulnerability-disclosure or signing process
+        for the weights.
+    - key: channels
+      title: Community & support channels
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev3
+      - ev2
+      summary: Meta Llama community resources, Hugging Face model discussions, and
+        GitHub repositories.
+    - key: deprecation
+      title: Deprecation / end-of-life policy
+      doc_type: reference
+      source_type: gap
+      gap_reason: Meta publishes no formal deprecation or end-of-life policy for Llama
+        checkpoints; older generations remain downloadable without a stated support
+        window.
+    - key: known-issues
+      title: Tracked known issues
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev5
+      - ev2
+      summary: Model-card known issues - hallucination, residual jailbreak/prompt-injection
+        susceptibility, and safety caveats for the base checkpoints.
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: "Open weights, but on Meta's terms - an access gate, the Community License's 'Built with Llama' naming and the verbatim 700M-MAU commercial-licence trigger, and no licence for multimodal Llama 4 to EU-domiciled entities (a restriction the AUP carries for 3.2/3.3 too, but not 3.1); these are real conditions rather than a clean grant."
+      # grounded in: ev1 (license, retrieved), ev-aup (terms, retrieved) - 700M-MAU + EU-multimodal clauses read verbatim via Meta's GitHub mirror
+    transparency:
+      level: moderate
+      rationale: "You can inspect and self-guard the weights, and Meta publishes safety evaluations plus Llama Guard and Prompt Guard, but training data and code are closed and no broad independent red-team spans every harm domain: you see the finished model while its training stays hidden."
+      # grounded in: ev3, ev6 (model_card); training data/code closed (structural)
+    reliability:
+      level: strong
+      rationale: "Runs dependably on the largest fine-tuning and serving ecosystem of any open family, with documented safety tuning and an available companion guard model, so misuse is controllable off the shelf."
+      # grounded in: ev4 (third_party leaderboard), ev6 (model_card)
+    data_control:
+      level: strong
+      rationale: "Self-hosted, the weights run on your own infrastructure - the Community License adds naming and scale conditions but no telemetry or data clawback, so your data stays yours."
+      # grounded in: self-hosting (structural); ev1 (license) - no clawback/telemetry clause
+  verdict: "You own the self-hosted Llama weights in practice: they run on your infrastructure, perform at the top of the open field, and pair with Meta's Llama Guard and Prompt Guard. But overall ownership is only partial: the Community License is not a clean grant - an access gate, 'Built with Llama' attribution, a 700M-MAU commercial trigger, and no multimodal licence for EU-domiciled entities mean you cannot freely use and modify the whole family the way an OSI licence allows, and training is closed. Clear those conditions first: check the MAU trigger, honour the attribution terms, and if you are EU-domiciled avoid the multimodal variants entirely."
+
+# --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
+#     (true = the document's substantive text was read; false = known to exist but not read).
+#     Grounded 2026-07-25 against the primary-source clauses in
+#     docs/primary-sources/meta-llama/_sources.md. llama.com is JS-rendered, so the LICENSE and
+#     AUP text was read verbatim from Meta's canonical GitHub mirror (meta-llama/llama-models);
+#     the Hugging Face model cards were obtained via the fetch summariser (HF not raw-reachable).
+evidence:
+- id: ev1
+  claim: 'Llama 4 Community License, read verbatim: the "Additional Commercial Terms"
+    700M-MAU threshold ("greater than 700 million monthly active users in the preceding
+    calendar month, you must request a license from Meta"), the "Built with Llama" attribution
+    clause, California governing law, and - in the incorporated AUP - the EU multimodal
+    restriction denying the licence to individuals domiciled in, or companies with a principal
+    place of business in, the European Union.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://www.llama.com/llama4/license/
+  date: '2026-07-25'
+- id: ev-aup
+  claim: 'Llama 4 Acceptable Use Policy, read verbatim: six prohibited-use categories
+    (illegality/rights infringement; death or bodily harm incl. military/weapons/critical
+    infrastructure; deception/fraud/impersonation; failure to disclose known AI dangers;
+    generating third-party unlawful tooling), the EU multimodal restriction, and the
+    LlamaUseReport@meta.com reporting path. The 3.1 AUP omits the EU clause; 3.2/3.3 carry it.'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://www.llama.com/llama4/use-policy/
+  date: '2026-07-25'
+- id: ev2
+  claim: Llama family variants, EU multimodal licensing restriction, ecosystem/cloud
+    availability, and Meta declining the EU GPAI Code of Practice.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://en.wikipedia.org/wiki/Llama_(language_model)
+  date: '2026-07-25'
+- id: ev3
+  claim: Canonical, verified and gated meta-llama organisation on Hugging Face distributing
+    safetensors with checksums; per-version licence tags (llama4, llama3.3, llama3.2, llama3.1).
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/meta-llama
+  date: '2026-07-25'
+- id: ev4
+  claim: Llama is competitive-to-leading among open-weight generalist families on
+    public leaderboards.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://lmarena.ai/leaderboard
+  date: '2026-07-25'
+- id: ev5
+  claim: Meta ships safety-tuned instruct variants plus Llama Guard and Prompt Guard
+    companion classifiers with published safety evaluations and a responsible-use reporting
+    path.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://www.llama.com/responsible-use-guide/
+  date: '2026-07-25'
+- id: ev6
+  claim: 'Llama 3.1 Instruct model card on Hugging Face: 128K context window, the
+    Llama 3 chat template and special tokens, the eight officially supported languages,
+    and documented tool-calling.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry.
+- date: '2026-07-25'
+  change: Migrated to v2 four-domain library format (added documentation block; carried
+    the score block over unchanged).
+- date: '2026-07-25'
+  change: Grounded licence + AUP evidence against primary sources (docs/primary-sources/meta-llama) - 700M-MAU and EU-multimodal clauses read verbatim; evidence retrieved:true, doc_type added.
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

@@ -1,0 +1,618 @@
+# OneHill v2 MODEL library entry for EuroLLM.
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: "2.0"
+id: eurollm
+name: EuroLLM (EuroLLM-9B / EuroLLM-1.7B)
+aliases:
+- EuroLLM
+- EuroLLM-9B
+- EuroLLM-9B-Instruct
+- EuroLLM-1.7B
+- utter-project/EuroLLM
+publisher:
+  name: EuroLLM consortium (Unbabel, Instituto Superior Técnico / Instituto de Telecomunicações,
+    University of Edinburgh, and partners) - EU-funded
+  country: EU
+  accountable_entity: true
+  url: https://eurollm.io/
+  security_contact: https://huggingface.co/utter-project
+summary: 'EuroLLM trades frontier scale for a genuinely European, Apache-2.0, all-EU-language
+  model with the cleanest possible EU AI Act posture - an open-weight model designed in
+  and for the EU, well under any systemic-risk threshold, whose natural home is multilingual
+  EU-facing workloads rather than beating the largest labs on English reasoning. It is an
+  EU-funded, open-weight multilingual language-model family (EuroLLM-9B and EuroLLM-1.7B,
+  each in base and instruction-tuned form) built by a European academic-industrial consortium
+  - Unbabel, Instituto Superior Técnico / Instituto de Telecomunicações, the University of
+  Edinburgh and partners - on EuroHPC compute (MareNostrum5) under Horizon Europe. It is
+  trained from scratch to cover all 24 official EU languages plus roughly 11 more (Arabic,
+  Catalan, Chinese, Galician, Hindi, Japanese, Korean, Norwegian, Russian, Turkish, Ukrainian).
+
+  '
+variants:
+- name: EuroLLM-9B (base)
+  params_total: 9B
+  context_window: 4k
+  kind: base
+  safety_tuned: false
+- name: EuroLLM-9B-Instruct
+  params_total: 9B
+  context_window: 4k
+  kind: instruct
+  safety_tuned: true
+- name: EuroLLM-1.7B (base)
+  params_total: 1.7B
+  context_window: 4k
+  kind: base
+  safety_tuned: false
+- name: EuroLLM-1.7B-Instruct
+  params_total: 1.7B
+  context_window: 4k
+  kind: instruct
+  safety_tuned: true
+openness:
+  tier: open_weights_recipe
+  components:
+    weights: open
+    training_data: partial
+    training_code: partial
+    evaluation: partial
+    documentation: open
+    license: open
+  license:
+    spdx: Apache-2.0
+    name: Apache License 2.0
+    classification: osi
+    commercial_use: allowed
+    notable_restrictions: []
+    url: https://huggingface.co/utter-project/EuroLLM-9B-Instruct
+provenance:
+  canonical_source: https://huggingface.co/utter-project
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: QuantFactory / bartowski (GGUF), stelterlab (MLX 4-bit), kaitchup (GPTQ)
+      trust: community
+      note: popular local-inference quants rather than the canonical utter-project weight source
+    - name: NVIDIA NIM (utter-project/eurollm-9b-instruct)
+      trust: vendor
+      note: hosted API endpoint rather than the canonical weight source
+  checkpoint_checklist_score: 5
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: well under 1e25 (9B params, ~4T training tokens ~= 2e23 FLOPs)
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: 'yes'
+    rationale: 'Released under OSI-approved Apache-2.0 with public parameters, architecture
+      and usage information via the model cards and the EuroLLM-9B technical report, and
+      not monetised - so it qualifies for the Article 53 open-source exemption from the
+      Annex XI/XII technical-documentation duties. The surviving copyright policy and
+      public training-content summary obligations are partly discharged by the technical
+      report, which documents the data mixture (FineWeb-edu, HPLT, MADLAD-400, CulturaX,
+      mC4, The Stack) and the EuroFilter filtering pipeline, though the full pre-training
+      corpus is not published as a single downloadable artifact. Not a systemic-risk model,
+      so the exemption is not voided.
+
+      '
+  provider_package:
+    technical_documentation: 'yes'
+    downstream_information: 'yes'
+    copyright_policy: partial
+    training_content_summary: partial
+    code_of_practice_signatory: false
+  deployer_notes: 'A fine-tuner placing a derivative on the EU market under its own name
+    may become a provider for that derivative. EuroLLM is EU-domiciled, Apache-2.0 and
+    well under the systemic-risk compute threshold, so the underlying posture is unusually
+    clean; the detailed technical report lets a downstream provider assemble much of the
+    technical documentation and a training-content summary from published artifacts,
+    though not from a fully released corpus as with a fully-open model.
+
+    '
+  last_assessed: '2026-07-25'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: 'EuroLLM-9B runs on a single modern 24 GB GPU (full precision tight,
+    comfortable with light quantization); EuroLLM-1.7B runs on modest GPUs and is viable
+    on CPU/edge via GGUF. The short 4k context keeps KV-cache pressure low.
+
+    '
+  serving_support:
+  - vllm
+  - llama.cpp
+  - ollama
+  - tgi
+  - hf-transformers
+  controls_required:
+  - Deploy the Instruct (safety-tuned) variant, not the base checkpoint
+  - Add input/output guardrails and a companion classifier for customer-facing use
+  - Add your own per-language safety evaluation before relying on any specific language
+  - Pin the exact utter-project revision and verify checksums
+score:
+  rubric_version: '1.1'
+  headline: 69.2
+  grade: C
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 4
+      rationale: 'Genuinely open-weight-plus-recipe: Apache-2.0 base and Instruct weights,
+        a detailed technical report (arXiv 2506.04079) documenting tokenizer, architecture,
+        the data mixture and training procedure, plus the released EuroFilter classifier
+        and the EuroBlocks-Synthetic post-training dataset. Short of the top fully-open
+        tier only because the complete pre-training corpus and an end-to-end training
+        repository are not released as downloadable artifacts (training built on the
+        open Megatron-LM codebase), so training_data / training_code / evaluation are
+        partial rather than open.
+
+        '
+      evidence_refs:
+      - ev-tech-report
+      - ev-blog
+      - ev-apache
+    provenance:
+      score: 3
+      rationale: 'Distributed from the verified utter-project org on Hugging Face in
+        safetensors with per-file checksums (checklist ~5/8); the technical report makes
+        the pipeline well-documented and the data sources are named. Meets the score-3
+        anchor (verified org + safetensors + checksums); short of 4, which needs a scanned
+        checkpoint or a documented mirror/quantization policy (~6-7 boxes), and of 5''s
+        cryptographic weight signing / SLSA attestation.
+
+        '
+      evidence_refs:
+      - ev-hf-9b-instruct
+      - ev-tech-report
+    legal:
+      score: 4
+      rationale: 'OSI-approved Apache-2.0 with unconditional commercial use and no
+        field-of-use limits, across base and Instruct weights; EU-domiciled and well
+        under the systemic-risk compute threshold, giving a clean Article 53
+        open-source-exemption posture. Short of 5 because - unlike a fully-open model
+        that publishes its corpus - the training-content-summary obligation can only be
+        partly satisfied from the technical report rather than reconstructed from a released
+        dataset.
+
+        '
+      evidence_refs:
+      - ev-apache
+      - ev-ec-osor
+    safety:
+      score: 3
+      rationale: 'The Instruct variants are instruction-tuned on EuroBlocks and behave
+        as ordinary safety-tuned assistants, but published safety/alignment coverage is
+        light, there is no companion guard model, and multilingual coverage means safety
+        behaviour varies by language and is not uniformly evaluated. Base checkpoints are
+        untuned research artifacts.
+
+        '
+      evidence_refs:
+      - ev-hf-9b-instruct
+      - ev-tech-report
+    performance:
+      score: 3
+      rationale: 'Best-in-class for its niche: independent and publisher benchmarks put
+        EuroLLM-9B on par with Gemma-2-9B on multilingual EU-language tasks, ahead on
+        WMT24++ translation, and matching Mistral-7B on English. But it is a 9B model -
+        its raw single-language reasoning ceiling is well below frontier; the value is
+        breadth of EU-language coverage rather than category-topping capability.
+
+        '
+      evidence_refs:
+      - ev-moonlight
+      - ev-index-bench
+    operational:
+      score: 4
+      rationale: 'Standard safetensors with a conventional architecture load on all
+        mainstream stacks (vLLM, llama.cpp, Ollama, TGI, transformers); community GGUF /
+        MLX / GPTQ quants and a hosted NVIDIA NIM endpoint exist. Short of 5 mainly on
+        the short 4k context window and the breadth of official day-0 tooling versus the
+        largest ecosystems.
+
+        '
+      evidence_refs:
+      - ev-ops
+      - ev-hf-9b-instruct
+    governance:
+      score: 3
+      rationale: 'An EU-funded consortium with named academic and industrial partners,
+        detailed technical reports and a clear release cadence (1.7B -> 9B -> 22B). Held
+        to 3 because accountability is distributed across many consortium partners rather
+        than a single accountable vendor, and there is no formally published
+        vulnerability-disclosure or deprecation/EoL policy.
+
+        '
+      evidence_refs:
+      - ev-eurollm-site
+      - ev-ec-osor
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Freely adaptable but not fully reproducible: Apache-2.0 weights, a documented recipe (Megatron-LM), released EuroFilter and EuroBlocks-Synthetic support fine-tuning and continued pre-training, but the full pre-training corpus is not published for from-scratch reproduction."
+    refs: [ev-tech-report, ev-apache]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "Broad multilingual knowledge across 35 languages but a standard decoder LLM with a short 4k context, so it is a capable multilingual RAG/grounding backbone only within that limited window."
+    refs: [ev-tech-report, ev-hf-9b-instruct]
+  specialization:
+    level: moderate
+    dimension: openness
+    summary: "A strong multilingual base for specialisation via SFT/LoRA on Apache-2.0 weights, aided by the released synthetic post-training set - short of full-recipe rebuild since the pre-training data and end-to-end training code are not fully released."
+    refs: [ev-tech-report, ev-blog]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Drop-in portable: standard safetensors on mainstream runtimes behind an OpenAI-compatible endpoint; the gotchas when swapping are the 4k context and EuroLLM's own chat template."
+    refs: [ev-ops, ev-hf-9b-instruct]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Not independently benchmarked for misuse/exposure: the team documents instruction tuning but no broad third-party CBRN/cyber/prompt-injection red-team battery exists, and multilingual safety coverage is uneven."
+    refs: [ev-hf-9b-instruct]
+
+# --- Four documentation domains. Item keys match checklists/model.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+documentation:
+  assess:
+    completeness: 93.3
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-eurollm-site, ev-hf-9b-instruct]
+        summary: "Multilingual EU-facing assistant, translation and general text generation across 24 EU + ~11 more languages; deploy Instruct rather than base; not a frontier or safety-critical model."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tech-report, ev-moonlight]
+        summary: "9B capability ceiling below frontier; short 4k context; uneven per-language quality and safety; base checkpoints untuned."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tech-report, ev-blog, ev-apache]
+        summary: "open_weights_recipe - Apache-2.0 weights + technical report + released EuroFilter and synthetic post-training set; full corpus/end-to-end code not released."
+      - key: license
+        title: "License terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-apache, ev-hf-9b-instruct]
+        summary: "OSI-approved Apache-2.0 across base and Instruct weights; unconditional commercial use, no field-of-use limits."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-9b-instruct, ev-tech-report]
+        summary: "Verified utter-project org, safetensors + per-file checksums, documented pipeline; no crypto signing / SLSA, full corpus not published."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-apache, ev-tech-report, ev-ec-osor]
+        summary: "GPAI, well under 1e25 FLOPs; EU-domiciled Apache open weight; Article 53 open-source exemption; training-content summary partly satisfiable from the technical report."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tech-report, ev-moonlight, ev-index-bench]
+        summary: "Aggregated from the EuroLLM-9B technical report + third-party reviews: on par with Gemma-2-9B on multilingual, ahead on WMT24++ translation, matches Mistral-7B on English."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No broad third-party adversarial evaluation across CBRN/cyber/prompt-injection domains has been published for EuroLLM. The team documents instruction tuning but there is no independent multilingual safety battery to aggregate."
+  implement:
+    completeness: 95.5
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-9b-instruct, ev-ops]
+        summary: "HF from_pretrained (safetensors), vLLM serve, Ollama/llama.cpp GGUF, or the NVIDIA NIM endpoint; pin the exact utter-project revision."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-9b-instruct, ev-ops]
+        summary: "9B on a single 24 GB GPU (light quant for headroom); 1.7B on modest GPUs and viable on CPU/edge via GGUF; low KV pressure at 4k context."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-ops, ev-hf-9b-instruct]
+        summary: "Standard safetensors load on vLLM, llama.cpp, Ollama, TGI and transformers with no custom runtime; hosted NVIDIA NIM also available."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-9b-instruct, ev-tech-report]
+        summary: "Deployment Ceiling T2 (conditional): Instruct variant + input/output guardrails + own guard classifier + per-language safety checks + pinned revision."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-ops]
+        summary: "Community GGUF (QuantFactory/bartowski), MLX 4-bit and GPTQ quants circulate and are acknowledged; no broad first-class official quantization program."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tech-report, ev-blog]
+        summary: "Standard SFT/LoRA via transformers/TRL on Apache-2.0 safetensors; the released EuroBlocks-Synthetic post-training set and documented recipe aid multilingual adaptation."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-ops]
+        summary: "Serve behind vLLM's OpenAI-compatible /v1 server (or use the NVIDIA NIM endpoint) for drop-in client integration."
+  use:
+    completeness: 77.8
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tech-report, ev-moonlight]
+        summary: "Text-only multilingual generation, assistant tasks and translation across EU languages; best-in-class multilingual for its size rather than frontier on raw reasoning."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-9b-instruct, ev-tech-report]
+        summary: "4,096-token context for both 9B and 1.7B - short by current standards; chunk or retrieve rather than relying on long-context recall."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-9b-instruct]
+        summary: "Instruct ships a chat template in its tokenizer config (BOS id 1 / EOS id 4) - use apply_chat_template rather than hand-rolling roles; base has no template."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tech-report, ev-blog]
+        summary: "The differentiator: all 24 official EU languages plus ~11 more (Arabic, Catalan, Chinese, Galician, Hindi, Japanese, Korean, Norwegian, Russian, Turkish, Ukrainian) - trained from scratch for multilingual EU coverage."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "EuroLLM-9B-Instruct is not documented as trained for structured function/tool calling and ships no official tool-calling schema; any tool use would rely on unverified prompt scaffolding, so there is nothing reliable to aggregate."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published native JSON/schema-constrained output capability for EuroLLM. Constrained decoding is possible at the serving layer (e.g. vLLM grammars) but is a runtime feature rather than a model-documented behaviour."
+  support:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-9b-instruct, ev-ops]
+        summary: "Aggregated common pitfalls (template mismatch, 4k-context truncation, per-language quality drift, revision drift); not an exhaustive catalogue."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: full
+        refs: [ev-eurollm-site, ev-hf-9b-instruct]
+        summary: "Generational cadence 1.7B -> 9B -> 22B with dated snapshot revisions (e.g. -2512) on the utter-project org; the HF revision hash is the changelog anchor."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No formal, published vulnerability-disclosure or security policy (e.g. SECURITY.md / advisory process) was found for EuroLLM; contact is only the general eurollm.io / Hugging Face utter-project org presence, so there is no documented process to aggregate."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-eurollm-site, ev-hf-9b-instruct]
+        summary: "EuroLLM project site (eurollm.io) for announcements, and Hugging Face model discussion tabs on the utter-project org for usage questions."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published deprecation or end-of-life policy for EuroLLM checkpoints; older HF revisions remain downloadable but no formal support-window or sunset commitment is documented."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-tech-report, ev-moonlight]
+        summary: "From technical-report caveats and third-party reviews: short 4k context, uneven per-language quality, in-class (not frontier) reasoning, untuned base checkpoints."
+
+ownership:
+  level: substantial
+  factors:
+    use_modify:
+      level: strong
+      rationale: "OSI-approved Apache-2.0 across base and Instruct weights with unconditional commercial use and no field-of-use limits - run, fine-tune, redistribute and commercialise it freely."
+      # grounded in: ev-apache (license, retrieved), ev-hf-9b-instruct (model_card, retrieved) - clean Apache-2.0 grant across 9B/1.7B/22B-Instruct-2512, unconditional commercial use, no field-of-use limits
+    transparency:
+      level: moderate
+      rationale: "Open-weights-plus-recipe, but only partial data openness: the technical report documents the tokenizer, architecture, data mixture and training procedure, and the released SFT dataset (EuroBlocks-SFT-2512) plus the EuroFilter artifact make the recipe inspectable - yet the ~4T-token pre-training corpus is described rather than published as one dataset, so this is stronger than weights-only but weaker than a fully-open model (cf. OLMo) and not reproducible from a released corpus."
+      # grounded in: ev-openness (docs, retrieved) - 22B-Instruct-2512 card: EuroBlocks-SFT-2512 released, ~4T pretraining corpus described but not published as one dataset; ev-tech-report (technical_report, retrieved) - recipe documented
+    reliability:
+      level: moderate
+      rationale: "Runs dependably, but per-language safety coverage is thin and uneven, so you supply the safety layer."
+      # grounded in: ev-moonlight (third_party) - Gemma-2-9B parity / WMT24++ lead / Mistral-7B on English; ev-hf-9b-instruct (model_card, retrieved) - 4k context, not preference-aligned
+    data_control:
+      level: strong
+      rationale: "Self-hosted and EU-domiciled, the Apache weights run on your own infrastructure and nothing leaves - your data and derived knowledge stay yours."
+      # grounded in: ev-apache (license, retrieved) - Apache-2.0 grant carries no telemetry/clawback; self-hosting (structural) and EU-domiciled consortium publisher
+  verdict: "You fully own the use of these Apache-2.0 weights - clean across 9B, 1.7B and 22B-Instruct-2512, with unconditional commercial use and no field-of-use limits - and, self-hosted and EU-domiciled, you keep your data entirely. It stays short of full because data openness is partial rather than full: the SFT set (EuroBlocks-SFT-2512) is released but the ~4T-token pre-training corpus is only described, so you can inspect the recipe but not reproduce it from a released corpus as with a fully-open model; the 9B size, 4k context and uneven multilingual safety also cap reliability. Adopt it for multilingual EU-facing work that fits inside 4k, behind your own guardrails; look elsewhere for a long-context or frontier engine."
+
+# --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
+#     (true = the document's substantive text was read; false = known to exist but not read).
+#     Grounded 2026-07-25 against the primary-source clauses in
+#     docs/primary-sources/eurollm/_sources.md - the Apache-2.0 licence (9B/1.7B/22B-Instruct-2512),
+#     the EuroLLM-9B technical report (arXiv 2506.04079), the 9B and 1.7B model cards, and the
+#     22B-Instruct-2512 card that pins the openness nuance (SFT set released, pretraining corpus not).
+evidence:
+- id: ev-eurollm-site
+  claim: EuroLLM is presented as an open-source European multilingual LLM suite covering
+    all 24 official EU languages plus additional strategic languages, developed by an
+    EU-funded consortium.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: false
+  url: https://eurollm.io/
+  date: '2026-07-25'
+- id: ev-hf-9b-instruct
+  claim: 'EuroLLM-9B-Instruct model card, read verbatim: hosted on the verified utter-project
+    org on Hugging Face in safetensors under Apache-2.0, trained on 4T tokens, instruction-tuned
+    on EuroBlocks, a 4k context and a documented chat template (BOS id 1 / EOS id 4); noted
+    as not preference-aligned (may hallucinate or produce harmful content); comparable to
+    Gemma-2-9B on EU languages and Mistral-7B on English.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/utter-project/EuroLLM-9B-Instruct
+  date: '2026-07-25'
+- id: ev-1.7b-card
+  claim: 'EuroLLM-1.7B-Instruct model card, read verbatim: 1.7B parameters, a 4,096-token
+    context, coverage of 35 languages, Apache-2.0, and comparable to Gemma-7B on machine-translation
+    benchmarks.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/utter-project/EuroLLM-1.7B-Instruct
+  date: '2026-07-25'
+- id: ev-tech-report
+  claim: 'EuroLLM-9B: Technical Report (arXiv 2506.04079), read verbatim: EuroLLM is trained
+    from scratch to cover all 24 official EU languages plus 11 more, and documents the
+    tokenizer, architecture, ~4T-token data mixture, EuroFilter pipeline, EuroBlocks-Synthetic
+    post-training set and Megatron-LM training; the report frames its "Open release" as the
+    "Public availability of models, filters, and datasets."'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2506.04079
+  date: '2026-07-25'
+- id: ev-openness
+  claim: 'EuroLLM-22B-Instruct-2512 model card, read verbatim: openness is PARTIAL, not
+    fully-open - the SFT dataset EuroBlocks-SFT-2512 IS released (utter-project/EuroBlocks-SFT-2512),
+    but the ~4T-token pretraining corpus (web, parallel, Wikipedia, Arxiv, books, math, code,
+    Apollo) is only described, not published as one downloadable dataset. Position: stronger
+    than weights-only, weaker than a fully-open model (cf. OLMo, which releases its full
+    pretraining data).'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/utter-project/EuroLLM-22B-Instruct-2512
+  date: '2026-07-25'
+- id: ev-blog
+  claim: The EuroLLM team's release blog describes EuroLLM-9B, its EU consortium and EU
+    funding (EuroHPC / Horizon Europe), multilingual coverage, Apache-2.0 licensing and
+    the release of the models, filter and synthetic post-training data.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: false
+  url: https://huggingface.co/blog/eurollm-team/eurollm-9b
+  date: '2026-07-25'
+- id: ev-apache
+  claim: EuroLLM base and Instruct weights - 9B, 1.7B and 22B-Instruct-2512 - are distributed
+    under OSI-approved Apache-2.0 with unconditional commercial use and no field-of-use limits
+    (the licence is not a preference-alignment/safety grant, and the cards warn the models may
+    hallucinate).
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/utter-project/EuroLLM-9B-Instruct
+  date: '2026-07-25'
+- id: ev-ec-osor
+  claim: The European Commission's Open Source Observatory profiles EuroLLM as EU-funded
+    pioneering European open-source AI released under an open licence.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://interoperable-europe.ec.europa.eu/collection/open-source-observatory-osor/news/eurollm-pioneering-european-open-source-ai
+  date: '2026-07-25'
+- id: ev-moonlight
+  claim: An independent review of the EuroLLM-9B technical report reports it on par with
+    Gemma-2-9B on multilingual benchmarks, ahead on WMT24++ translation, and matching
+    Mistral-7B on English.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://www.themoonlight.io/en/review/eurollm-9b-technical-report
+  date: '2026-07-25'
+- id: ev-index-bench
+  claim: Independent coverage ranks EuroLLM among the leading European-developed open
+    models for multilingual EU-language performance.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://www.index.dev/blog/european-llms-top-models
+  date: '2026-07-25'
+- id: ev-ops
+  claim: EuroLLM safetensors checkpoints load on mainstream serving stacks (vLLM,
+    llama.cpp, Ollama, TGI, transformers), with community GGUF/MLX/GPTQ quants and a
+    hosted NVIDIA NIM endpoint available.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/QuantFactory/EuroLLM-9B-Instruct-GGUF
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial v2 four-domain library entry.
+- date: '2026-07-25'
+  change: Grounded evidence against primary sources (docs/primary-sources/eurollm) - Apache-2.0 licence (9B/1.7B/22B-Instruct-2512), the EuroLLM-9B technical report, and the 9B/1.7B/22B-Instruct-2512 model cards read verbatim; added doc_type + retrieved to all evidence and a docs item pinning the partial-openness nuance (SFT set released, ~4T pretraining corpus not); ownership factors and verdict grounded to clean Apache-2.0 + partial (not full) data openness.
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

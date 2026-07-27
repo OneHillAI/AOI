@@ -1,0 +1,82 @@
+# OneHill inference-provider entry. Validated against schema/inference-provider.schema.json.
+# Copy to inference-providers/<id>/. Emphasis: your DATA LEAVES your network to reach it.
+
+schema_version: "1.0"
+id: "provider"
+name: "Provider AI"
+profile: inference
+hq_country: ""
+summary: >
+  One independent paragraph: what it serves, the standout data-governance/residency
+  fact, and the single biggest caveat.
+
+models_served: []
+hardware: ""                              # NVIDIA GPU | custom LPU/RDU/wafer-scale (lock-in signal)
+
+pricing:
+  model: per-token                        # per-token | per-second | per-GPU-hour | subscription | mixed
+  notes: ""
+  example_rates: []
+
+data_governance:
+  default_retention: ""                   # 'none by default' | '30d abuse monitoring' | 'indefinite (web UI)' ...
+  trains_on_inputs: opt_in_only           # never | opt_in_only | by_default | unclear
+  zdr_available: yes_optional             # yes_default | yes_optional | enterprise_only | no | unclear
+  zdr_scope_caveats: ""
+  third_party_routing_leakage: ""         # do routed closed models fall under other vendors' terms?
+  subprocessors_disclosed: false
+
+compliance:
+  soc2: unknown                           # type_ii | type_i | in_progress | none | unknown
+  iso_27001: unknown                      # yes | no | unknown
+  iso_27701: unknown
+  hipaa_baa: unknown
+  gdpr_dpa: unknown
+  fedramp: ""
+  trust_center_url: ""
+
+residency:
+  eu_region_available: unknown            # yes | no | unknown
+  regions: []
+  sovereign_option: ""
+  region_pinning: unknown
+  cloud_act_exposure: true                # US jurisdiction exposure (disclosed, not auto-penalised)
+
+reliability:
+  sla: ""
+  uptime_notes: ""
+  incidents: []
+
+lock_in:
+  openai_compatible_api: true
+  portability_notes: ""
+
+trust_considerations: []
+
+score:
+  rubric_version: "1.0"
+  headline: null
+  grade: null
+  hard_flags: []
+  dimensions:
+    data_governance:     {score: 0, rationale: "", evidence_refs: []}
+    compliance:          {score: 0, rationale: "", evidence_refs: []}
+    residency:           {score: 0, rationale: "", evidence_refs: []}
+    security:            {score: 0, rationale: "", evidence_refs: []}
+    reliability:         {score: 0, rationale: "", evidence_refs: []}
+    transparency_lockin: {score: 0, rationale: "", evidence_refs: []}
+    cost:                {score: 0, rationale: "", evidence_refs: []}
+
+evidence:
+  - id: ev1
+    claim: ""
+    source_type: publisher
+    url: ""
+    date: "2026-07-25"
+
+changelog:
+  - date: "2026-07-25"
+    change: "Initial entry."
+
+last_verified: "2026-07-25"
+freshness_sla: {fast_days: 30, score_days: 90, slow_days: 180}

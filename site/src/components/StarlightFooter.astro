@@ -1,0 +1,11 @@
+---
+/**
+ * Starlight Footer override. Renders Starlight's built-in footer (pagination,
+ * last-updated, edit link) and then the shared SiteFooter, so the prose pages
+ * carry the same Terms / Privacy / Contact footer as the app pages.
+ */
+import Default from '@astrojs/starlight/components/Footer.astro';
+import SiteFooter from './SiteFooter.astro';
+---
+<Default><slot /></Default>
+<SiteFooter />

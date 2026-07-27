@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://onehill.ai/schema/inference-provider.schema.json",
+  "title": "OneHill Inference Provider Entry",
+  "description": "Machine-readable record for a provider that serves open models via API. Your data leaves your network to reach it - hence the privacy/residency/compliance emphasis.",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "profile", "data_governance", "compliance", "residency", "score", "last_verified"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "name": {"type": "string"},
+    "profile": {"type": "string", "const": "inference"},
+    "hq_country": {"type": "string"},
+    "summary": {"type": "string"},
+    "models_served": {"type": "array", "items": {"type": "string"}},
+    "hardware": {"type": "string", "description": "e.g. NVIDIA GPU, custom LPU/RDU/wafer-scale (lock-in signal)."},
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "model": {"type": "string", "description": "per-token | per-second | per-GPU-hour | subscription | mixed"},
+        "notes": {"type": "string"},
+        "example_rates": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "data_governance": {
+      "type": "object",
+      "required": ["default_retention", "trains_on_inputs"],
+      "properties": {
+        "default_retention": {"type": "string", "description": "e.g. 'none by default', '30 days abuse monitoring', 'indefinite (web UI)'."},
+        "trains_on_inputs": {"type": "string", "enum": ["never", "opt_in_only", "by_default", "unclear"]},
+        "zdr_available": {"type": "string", "enum": ["yes_default", "yes_optional", "enterprise_only", "no", "unclear"]},
+        "zdr_scope_caveats": {"type": "string"},
+        "third_party_routing_leakage": {"type": "string", "description": "Do closed/third-party models routed through this provider fall under other vendors' data terms?"},
+        "subprocessors_disclosed": {"type": "boolean"}
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "properties": {
+        "soc2": {"type": "string", "enum": ["type_ii", "type_i", "in_progress", "none", "unknown"]},
+        "iso_27001": {"$ref": "#/$defs/tri"},
+        "iso_27701": {"$ref": "#/$defs/tri"},
+        "hipaa_baa": {"$ref": "#/$defs/tri"},
+        "gdpr_dpa": {"$ref": "#/$defs/tri"},
+        "fedramp": {"type": "string"},
+        "trust_center_url": {"type": "string"}
+      }
+    },
+    "residency": {
+      "type": "object",
+      "required": ["eu_region_available"],
+      "properties": {
+        "eu_region_available": {"$ref": "#/$defs/tri"},
+        "regions": {"type": "array", "items": {"type": "string"}},
+        "sovereign_option": {"type": "string"},
+        "region_pinning": {"$ref": "#/$defs/tri"},
+        "cloud_act_exposure": {"type": "boolean", "description": "US-headquartered / US-jurisdiction exposure."}
+      }
+    },
+    "reliability": {
+      "type": "object",
+      "properties": {
+        "sla": {"type": "string"},
+        "uptime_notes": {"type": "string"},
+        "incidents": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "lock_in": {
+      "type": "object",
+      "properties": {
+        "openai_compatible_api": {"type": "boolean"},
+        "portability_notes": {"type": "string"}
+      }
+    },
+    "trust_considerations": {"type": "array", "items": {"type": "string"}},
+    "score": {"$ref": "#/$defs/provider_score"},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "changelog": {"type": "array", "items": {"type": "object"}},
+    "last_verified": {"type": "string", "format": "date"},
+    "freshness_sla": {"type": "object"}
+  },
+  "$defs": {
+    "tri": {"type": "string", "enum": ["yes", "no", "unknown"]},
+    "provider_score": {
+      "type": "object",
+      "required": ["rubric_version", "dimensions"],
+      "properties": {
+        "rubric_version": {"type": "string"},
+        "headline": {"type": ["number", "null"]},
+        "grade": {"type": ["string", "null"], "enum": ["A", "B", "C", "D", "F", null]},
+        "hard_flags": {"type": "array", "items": {"type": "string"}},
+        "dimensions": {
+          "type": "object",
+          "required": ["data_governance", "compliance", "residency", "security", "reliability", "transparency_lockin", "cost"],
+          "properties": {
+            "data_governance": {"$ref": "#/$defs/dimension"},
+            "compliance": {"$ref": "#/$defs/dimension"},
+            "residency": {"$ref": "#/$defs/dimension"},
+            "security": {"$ref": "#/$defs/dimension"},
+            "reliability": {"$ref": "#/$defs/dimension"},
+            "transparency_lockin": {"$ref": "#/$defs/dimension"},
+            "cost": {"$ref": "#/$defs/dimension"}
+          }
+        }
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": {"type": "integer", "minimum": 0, "maximum": 5},
+        "rationale": {"type": "string"},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["claim", "source_type"],
+      "properties": {
+        "id": {"type": "string"},
+        "claim": {"type": "string"},
+        "source_type": {"type": "string", "enum": ["onehill_verified", "third_party", "publisher"]},
+        "url": {"type": "string"},
+        "date": {"type": "string"}
+      }
+    }
+  }
+}

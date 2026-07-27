@@ -1,0 +1,58 @@
+name: preview-pages
+
+# Pre-launch preview deploy to GitHub Pages, served at onehillai.github.io/AOI (a project
+# sub-path, so the build sets SITE_BASE=/AOI). This lets the site be reviewed on a real URL
+# before the production domain (ownershipindex.ai, on Cloudflare Pages) is attached.
+#
+# Requires the repository to be public (or a paid plan for private Pages) and Pages set to
+# "GitHub Actions" as the source. Remove this workflow once the Cloudflare production
+# deploy is live, or keep it as a staging URL.
+
+# Manual trigger only, so it never fails before Pages is enabled. Once the repo is
+# public and Pages source is set to "GitHub Actions", run this workflow to publish the
+# preview; re-run it after later pushes to refresh onehillai.github.io/AOI.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SITE_BASE: /AOI
+      SITE_URL: https://onehillai.github.io
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install site deps
+        working-directory: site
+        run: npm ci
+      - name: Build preview (sub-path base)
+        working-directory: site
+        run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

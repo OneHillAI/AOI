@@ -1,0 +1,50 @@
+name: build-site
+
+# Builds the Astro site as a CI check. Hosting is handled by Cloudflare Pages
+# (connected to this repo; see docs/deploy.md), which runs its own build on push,
+# so this workflow no longer deploys - it only fails the PR/commit if the site
+# stops building or the data validator finds an inconsistency.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - "models/**"
+      - "inference-providers/**"
+      - "hosting-providers/**"
+      - "site/**"
+      - "schema/**"
+      - "checklists/**"
+      - "scripts/**"
+      - ".github/workflows/site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install validator deps
+        run: pip install -r requirements.txt
+      - name: Validate data (gate)
+        run: python scripts/validate.py --no-freshness
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install site deps
+        working-directory: site
+        run: npm ci
+      - name: Build site
+        working-directory: site
+        run: npm run build

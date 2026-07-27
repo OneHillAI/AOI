@@ -1,0 +1,442 @@
+# OneHill v2 INFERENCE-PROVIDER library entry for DeepInfra. Replaces data.yaml.
+# Validated against schema/inference-provider.v2.schema.json.
+#   scores  -> scripts/score.py --write        (provider AOI - carried over unchanged)
+#   meters  -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: deepinfra
+name: DeepInfra
+profile: inference
+hq_country: United States
+summary: 'A US-headquartered, low-cost inference provider serving ~77-90+ open models
+  (Llama 3.x/4.x, DeepSeek V3/V3.2/V4 variants, Qwen3, Kimi K2, GLM-5, gpt-oss-120B,
+  MiniMax-M2, Nemotron, Gemma) over pay-as-you-go per-token pricing plus by-the-hour
+  dedicated GPUs, and is among the cheapest providers available. Its standout fact
+  is aggressive cost with a zero-retention policy; the biggest caveat is that its
+  zero-retention covers only its own open-model serving, while closed models (Anthropic
+  Claude, Google) routed through it fall under those vendors'' terms - and no EU data-residency
+  option was surfaced.
+
+  '
+models_served:
+- Llama 3.x / 4.x
+- DeepSeek V3 / V3.2 / V4 variants
+- Qwen3
+- Kimi K2
+- GLM-5
+- gpt-oss-120B
+- MiniMax-M2
+- Nemotron
+- Gemma
+- '(also re-sells some closed models: Anthropic Claude, Google)'
+hardware: NVIDIA GPU (+ per-hour dedicated GPU instances)
+pricing:
+  model: mixed
+  notes: 'Among the cheapest providers: pay-as-you-go per-token plus dedicated GPU
+    by the hour. Rates are approximate (third-party research).
+
+    '
+  example_rates:
+  - 'Llama 3.1 8B: ~$0.02/M'
+  - 'Llama 3.3 70B: ~$0.35/M'
+  - 'gpt-oss-120B: ~$0.08/M (blended)'
+  - 'GPU/hr: A100 $0.89, H100 $1.79, H200 $2.19, B200 $2.79'
+data_governance:
+  default_retention: zero-retention for inputs/outputs; batch may store data temporarily
+    (encrypted on disk) then delete after inference
+  trains_on_inputs: never
+  zdr_available: yes_default
+  zdr_scope_caveats: 'Batch requests may store data temporarily, encrypted on disk,
+    and delete it after inference. Zero-retention covers DeepInfra''s
+    OWN open-model serving only.
+
+    '
+  customer_data_ownership: customer_retains
+  outputs_used_to_improve_service: "no"
+  third_party_routing_leakage: 'When using Google or Anthropic (closed) models THROUGH
+    DeepInfra, data is subject to THAT vendor''s storage and training policy - DeepInfra''s
+    Terms state it transfers data to those endpoints to fulfil the request, and its
+    zero-retention/no-training does NOT extend to third-party model routing. This is a
+    key finding, grounded in the Terms of Service and the data-privacy documentation.
+
+    '
+  subprocessors_disclosed: false
+compliance:
+  soc2: type_i
+  iso_27001: "yes"
+  iso_27701: unknown
+  hipaa_baa: unknown
+  gdpr_dpa: "yes"
+  fedramp: ''
+  trust_center_url: https://trust.deepinfra.com/compliance
+residency:
+  eu_region_available: "no"
+  regions:
+  - United States
+  sovereign_option: ''
+  region_pinning: unknown
+  cloud_act_exposure: true
+reliability:
+  sla: ''
+  uptime_notes: No specific incidents surfaced; no public uptime SLA independently
+    verified.
+  incidents: []
+lock_in:
+  openai_compatible_api: true
+  portability_notes: 'OpenAI-compatible API serving portable open-weight models on
+    NVIDIA GPUs; open checkpoints run elsewhere or self-hosted. Note that some closed
+    models are re-sold, which are not portable and carry different data terms.
+
+    '
+trust_considerations:
+- Zero-retention covers DeepInfra's own open-model serving only; closed models (Claude,
+  Google) routed through it fall under those vendors' storage/training terms.
+- SOC 2 is Type 1 only (not Type II); HIPAA/BAA is not a formal attestation.
+- No EU data-residency option surfaced; US-only data centres.
+- US HQ implies standing CLOUD Act exposure.
+score:
+  rubric_version: '1.1'
+  headline: 60.4
+  grade: C
+  hard_flags: []
+  dimensions:
+    data_governance:
+      score: 4
+      rationale: 'Grounded in the retrieved data-privacy documentation and Terms of
+        Service: zero-retention by default (only debugging metadata - request ID, cost,
+        sampling parameters - is logged), no training on submitted data, and customers
+        retain IP over their Submissions. Held below 5 because that guarantee covers
+        only DeepInfra''s own open-model serving - the same documents state that data
+        for Google/Anthropic closed models is transferred to those vendors and governed
+        by their terms - and no sub-processor list is disclosed.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev2
+      - ev7
+    compliance:
+      score: 3
+      rationale: 'SOC 2 and ISO 27001 certification plus GDPR/HIPAA technical and
+        organisational measures are stated on the retrieved data-privacy documentation,
+        meeting the "SOC 2 or ISO 27001 + DPA" anchor. Held to 3 because the finer SOC 2
+        Type 1 (point-in-time, not Type II) designation and the sub-processor list live
+        on the Sprinto-powered trust centre, which is unreachable
+        (documented but unverified), and HIPAA is framed as measures rather than a BAA.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev3
+    residency:
+      score: 1
+      rationale: 'The retrieved data-privacy documentation states DeepInfra runs on
+        secure US-based data centres; no EU data-residency option was surfaced and
+        region pinning is unconfirmed, so it sits near the single-region floor.
+
+        '
+      evidence_refs:
+      - ev5
+    security:
+      score: 3
+      rationale: 'ISO 27001 and SOC 2 certification indicate baseline controls, and the
+        retrieved data-privacy documentation confirms batch data is held encrypted on
+        disk then deleted. Held to 3 because the SOC 2 Type-1-vs-Type-II distinction
+        rests on the unretrieved trust centre and no independent pen-test was surfaced.
+
+        '
+      evidence_refs:
+      - ev1
+      - ev3
+    reliability:
+      score: 2
+      rationale: 'No incidents surfaced, but no public uptime SLA, status page or failover
+        documentation was independently verified. Meets the score-2 anchor (serving in
+        production, but no status page or published uptime history); a public status page
+        would reach 3.
+
+        '
+      evidence_refs:
+      - ev1
+    transparency_lockin:
+      score: 4
+      rationale: 'OpenAI-compatible API serving portable open-weight models with clear
+        per-token and per-GPU-hour options. Held below 5 because the Terms and data-privacy
+        documentation confirm it also re-sells closed models (Anthropic, Google) that are
+        not portable and route data under those vendors'' terms, adding governance and
+        routing opacity - and the served-catalogue count rests on third-party research.
+
+        '
+      evidence_refs:
+      - ev6
+      - ev2
+    cost:
+      score: 5
+      rationale: 'Among the cheapest providers on the market, with very low per-token
+        rates and competitive by-the-hour dedicated GPUs. Rests on third-party pricing
+        research (ev4, a third-party attestation); exact rates are approximate and
+        should be confirmed against live pricing.
+
+        '
+      evidence_refs:
+      - ev4
+
+# --- Four documentation domains. Item keys match checklists/inference-provider.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+#     completeness/originality are written by scripts/completeness.py --write.
+#     Every credited item is `aggregated` (public source, >=1 ref); OneHill has run nothing,
+#     so there are no onehill_generated items and originality = 0.
+documentation:
+  assess:
+    completeness: 80.8
+    originality: 0.0
+    items:
+      - key: data-governance
+        title: "Data governance - retention, ZDR & training"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev2]
+        summary: "Zero-retention for inputs/outputs by default, only debugging metadata (request ID, cost, sampling parameters) logged, and no training on submitted data (batch data held encrypted on disk, then deleted). Key caveat, per the retrieved Terms and data-privacy docs: this covers DeepInfra's own open-model serving only - closed models (Claude, Google) routed through it fall under those vendors' terms."
+      - key: data-ownership
+        title: "Data & IP ownership"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev2, ev7]
+        summary: "The retrieved Terms state customers retain IP rights over their Submissions, which remain private, and DeepInfra does not train on or share that data - so for its own open-model serving your data and outputs stay yours (customer_retains). Ownership is not uniform, though: closed models (Anthropic Claude, Google) re-sold through DeepInfra are transferred to those vendors and fall under their storage/training terms. Sub-processors are not disclosed."
+      - key: compliance
+        title: "Compliance & attestations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev1, ev3]
+        summary: "The retrieved data-privacy documentation states SOC 2 and ISO 27001 certification plus GDPR/HIPAA technical and organisational measures. The finer SOC 2 Type 1 (not Type II) designation, sub-processor list and ISO 27701 status live on the Sprinto-powered trust centre, which is unreachable - documented but unverified. HIPAA is framed as measures, not a BAA."
+      - key: residency
+        title: "Data residency & jurisdiction"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev5]
+        summary: "The retrieved data-privacy documentation states DeepInfra runs on secure US-based data centres; no EU data-residency option surfaced and region pinning is unconfirmed. US HQ carries standing CLOUD Act exposure."
+      - key: security
+        title: "Security controls"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev3]
+        summary: "ISO 27001 and SOC 2 certification indicate baseline controls, and the retrieved data-privacy docs confirm batch data is held encrypted on disk then deleted; the SOC 2 Type-1-vs-Type-II distinction rests on the unretrieved trust centre and no independent pen-test was surfaced."
+      - key: pricing
+        title: "Pricing & cost model"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev4]
+        summary: "Among the cheapest providers: pay-as-you-go per-token (e.g. Llama 3.1 8B ~$0.02/M, Llama 3.3 70B ~$0.35/M, gpt-oss-120B ~$0.08/M blended) plus dedicated GPU/hr (A100 $0.89, H100 $1.79, H200 $2.19, B200 $2.79); rates approximate."
+      - key: reliability
+        title: "Reliability posture"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1]
+        summary: "No incidents surfaced, but no public uptime SLA or failover documentation was independently verified."
+  implement:
+    completeness: 43.8
+    originality: 0.0
+    items:
+      - key: integration
+        title: "API integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev6]
+        summary: "OpenAI-compatible API over NVIDIA GPUs plus per-hour dedicated GPU instances - point an existing OpenAI client at DeepInfra's base URL and key to integrate against ~77-90+ served models."
+      - key: region-config
+        title: "Region & ZDR configuration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1, ev5]
+        summary: "Zero-retention is the default posture, so no toggle is needed for the core no-store behaviour; there is no EU region to select (US-only) and region pinning is unconfirmed."
+      - key: portability
+        title: "Portability & exit"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev6, ev2]
+        summary: "OpenAI-compatible endpoint over portable open-weight checkpoints keeps switching cost low, but the re-sold closed models (Claude, Google) are not portable and carry different data terms."
+      - key: authentication
+        title: "Authentication & account setup"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "API-key issuance and org/project key-scoping details are not documented in the public sources reviewed; confirm the available granularity in the DeepInfra console."
+      - key: rate-limits
+        title: "Rate limits, tiers & quotas"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Specific per-tier rate limits and throughput quotas are not documented in the public sources reviewed and should be confirmed in the account console."
+  use:
+    completeness: 42.9
+    originality: 0.0
+    items:
+      - key: models-served
+        title: "Models served"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev6, ev4]
+        summary: "~77-90+ open models: Llama 3.x/4.x, DeepSeek V3/V3.2/V4 variants, Qwen3, Kimi K2, GLM-5, gpt-oss-120B, MiniMax-M2, Nemotron, Gemma; also re-sells some closed models (Anthropic Claude, Google) that carry different data terms."
+      - key: features
+        title: "Inference features"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev6]
+        summary: "OpenAI-compatible API for chat/completions across the catalogue, plus per-hour dedicated GPU instances; per-model support for tool-calling / structured output follows each served model and was not individually verified."
+      - key: context-limits
+        title: "Context & token limits"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Per-model maximum context and token limits on DeepInfra's endpoints were not captured in the sources reviewed; they track each served model's native window and should be confirmed on the model's DeepInfra page."
+      - key: fine-tuning
+        title: "Fine-tuning / custom models"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No first-party fine-tuning / custom-model documentation is published, so whether and how DeepInfra supports fine-tuning (methods, formats, hosting terms) is not verified here."
+  support:
+    completeness: 28.6
+    originality: 0.0
+    items:
+      - key: security-disclosure
+        title: "Security disclosure & trust centre"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev3]
+        summary: "A public trust centre (trust.deepinfra.com/compliance) is the trust surface, covering ISO 27001 / SOC 2 Type 1 / GDPR posture; a dedicated vulnerability-disclosure process (security.txt / bug-bounty) was not surfaced."
+      - key: channels
+        title: "Support & community channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev1]
+        summary: "Product documentation exists (deepinfra.com/docs); support-tier response commitments and community-channel breadth were not detailed in the sources reviewed."
+      - key: status-uptime
+        title: "Status page & uptime history"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No public status page or verified uptime/SLA history was found for DeepInfra; reliability is asserted but not independently observable."
+      - key: deprecation
+        title: "Model deprecation policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published model-deprecation or end-of-life policy was surfaced; because most of the catalogue is open-weight, a removed model can generally be self-hosted, but no formal notice window is documented."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:   { level: strong,   rationale: "OpenAI-compatible API over ~77-90+ portable open-weight checkpoints on NVIDIA GPUs - the same models run elsewhere or self-hosted, so switching cost for the open catalogue is low." }
+      # grounded in: ev6 (served catalogue + OpenAI-compatible API, third_party)
+    transparency: { level: moderate, rationale: "The Terms and data-privacy docs are legible and the open catalogue is clear, but re-selling closed models under other vendors' terms adds routing opacity, sub-processors are undisclosed, and the SOC 2 Type designation sits on an unretrieved trust centre." }
+      # grounded in: ev2 (privacy_policy, retrieved), ev7 (terms, retrieved), ev3 (security, not retrieved)
+    reliability:  { level: moderate, rationale: "SOC 2 and ISO 27001 certification give baseline controls, but the Type designation is unverified and no public uptime SLA, status page or independent pen-test was found." }
+      # grounded in: ev1 (docs, retrieved - no SLA), ev3 (security, not retrieved)
+    data_control: { level: moderate, rationale: "For DeepInfra's own open-model serving the retrieved Terms and data-privacy docs confirm zero-retention, no-training and customer-retained IP (customer_retains). It falls short of strong because closed models (Claude, Google) re-sold through it are transferred to those vendors under their storage/training terms, sub-processors are undisclosed, and residency is US-only with CLOUD Act exposure." }
+      # grounded in: ev7 (terms, retrieved - IP retention), ev2 (privacy_policy, retrieved - no-train + closed-model routing), ev5 (docs, retrieved - US-only)
+  verdict: "You substantially control your data on DeepInfra's own open-model serving: the retrieved Terms let you keep IP over your Submissions, and zero-retention plus no-training keep inputs and outputs yours, with the open checkpoints a clean portable exit. Ownership is capped at partial because that control is not uniform - the re-sold closed models (Claude, Google) are transferred to those vendors and carry their data terms rather than DeepInfra's, so route no sensitive data through them - and US-only residency rules it out where EU data sovereignty is required."
+
+# Evidence. `doc_type` = which kind of primary document; `retrieved` = true only where the
+# document's substantive content was actually obtained this session. deepinfra.com and
+# docs.deepinfra.com 403'd on direct fetch; their governing clauses were extracted via
+# scoped WebSearch and are marked retrieved:true accordingly. The Sprinto-powered trust
+# centre (trust.deepinfra.com) did not resolve at all → retrieved:false.
+evidence:
+- id: ev1
+  claim: "DeepInfra data-privacy documentation: zero-retention by default, only debugging
+    metadata (request ID, cost, sampling parameters) is logged, batch/bulk data is held
+    encrypted on disk then deleted after a short retention period, it does not train on
+    submitted data, it runs on secure US-based data centres, and it is SOC 2 and ISO 27001
+    certified."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://deepinfra.com/docs/data
+  date: '2026-07-25'
+- id: ev2
+  claim: "DeepInfra data-privacy statement: it does not use API data for training except
+    when using Google or Anthropic models, where the receiving company's training policy
+    applies - if you use a Google model, Google stores the output per its Privacy Notice;
+    if you use an Anthropic model, Anthropic stores the output per its Trust Centre."
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://docs.deepinfra.com/account/data-privacy
+  date: '2026-07-25'
+- id: ev7
+  claim: "DeepInfra Terms of Service: 'When you submit data, content, materials, or requests
+    into models through DeepInfra (Submissions), you retain any intellectual property rights
+    over such Submissions, which will remain private'; DeepInfra does not share data with
+    third parties except when using Google or Anthropic models, where it is required to
+    transfer data to those endpoints to fulfil the request."
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://deepinfra.com/terms
+  date: '2026-07-25'
+- id: ev3
+  claim: "Trust centre (Sprinto-powered) is stated to list SOC 2 Type 1 (not Type II) and
+    ISO 27001; the SOC 2 Type designation, sub-processor list and ISO 27701 status were not
+    read verbatim this session - documented but unverified."
+  source_type: publisher
+  doc_type: security
+  retrieved: false
+  url: https://trust.deepinfra.com/compliance
+  date: '2026-07-25'
+- id: ev4
+  claim: 'Among the cheapest providers (third-party pricing research): per-token e.g. Llama
+    3.1 8B ~$0.02/M, Llama 3.3 70B ~$0.35/M, gpt-oss-120B ~$0.08/M blended; GPU/hr A100
+    $0.89, H100 $1.79, H200 $2.19, B200 $2.79. Rates approximate.'
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://deepinfra.com/pricing
+  date: '2026-07-25'
+- id: ev5
+  claim: "DeepInfra data-privacy documentation states it runs on secure US-based data
+    centres; no EU data-residency option was surfaced."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://deepinfra.com/docs/data
+  date: '2026-07-25'
+- id: ev6
+  claim: Serves ~77-90+ open models over an OpenAI-compatible API on NVIDIA GPUs plus
+    per-hour GPU instances; also re-sells some closed models (Anthropic Claude, Google).
+    Catalogue count from third-party research.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://deepinfra.com/pricing
+  date: '2026-07-25'
+changelog:
+- date: '2026-07-25'
+  change: Initial entry.
+- date: '2026-07-25'
+  change: Migrated to v2 four-domain library format (added documentation block; score
+    carried over unchanged).
+- date: '2026-07-25'
+  change: 'Primary-source grounding pass. Retrieved (via scoped WebSearch; direct fetch
+    403''d) the Terms of Service, the data-privacy documentation and the docs/data page:
+    grounded zero-retention/no-training, customer-retained IP (customer_data_ownership
+    resolved unclear -> customer_retains), the closed-model routing carve-out (Google/
+    Anthropic transferred under their terms), and US-only residency onto those binding
+    docs. Added doc_type/retrieved to every evidence item and a dedicated Terms item (ev7).
+    Trust centre (SOC 2 Type designation, sub-processors) did not resolve -> retrieved:false,
+    documented but unverified. Ownership data_control weak -> moderate on the retrieved
+    Terms; level unchanged (partial).'
+last_verified: '2026-07-25'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180
