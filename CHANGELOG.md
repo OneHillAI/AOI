@@ -10,6 +10,10 @@ Initial public foundation (v0.1).
 
 ### Added
 
+- NVIDIA Nemotron 3 model entry (Nano/Super/Ultra/Nano Omni): open_weights_recipe (tier 4), AOI
+  69.2, grade C. Ungated weights, runnable recipes and CC-BY post-training data, with a real safety
+  stack (guard classifiers, NeMo Guardrails, garak); ownership held at partial by a partly-released
+  corpus and a revocable, three-way-split, non-OSI licence.
 - Kimi K3 (Moonshot AI) model entry: open-weights (2.8T total / 104B active MoE, 1M context,
   native vision), AOI 53.2, grade D. Classified open-weights, not closed-frontier; grounded to
   primary sources, with the offensive-cyber safety finding and the new Model-as-a-Service licence
