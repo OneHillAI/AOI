@@ -16,6 +16,9 @@ id: "publisher-model"
 name: "Publisher Model Family"
 aliases: []
 
+family:
+  id: "publisher-family"
+  name: "Publisher Family"
 publisher:
   name: ""
   country: ""

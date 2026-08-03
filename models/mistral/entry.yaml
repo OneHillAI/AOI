@@ -18,6 +18,9 @@ aliases:
 - Ministral
 - Codestral
 - mistralai
+family:
+  id: mistral
+  name: Mistral
 publisher:
   name: Mistral AI
   country: FR

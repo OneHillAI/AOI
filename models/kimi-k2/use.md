@@ -1,4 +1,4 @@
-# Use - Kimi (Moonshot AI - Kimi K2)
+# Use - Kimi K2 (Moonshot AI)
 
 _What can it do and how do we use it well? Capabilities, context window, chat template,
 languages, and native tool use; structured output is a current gap._

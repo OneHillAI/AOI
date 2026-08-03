@@ -6,6 +6,9 @@ aliases:
 - Llama 3.1
 - Llama 3.3
 - Llama 4
+family:
+  id: meta-llama
+  name: Meta Llama
 publisher:
   name: Meta Platforms, Inc.
   country: US

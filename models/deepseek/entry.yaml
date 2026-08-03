@@ -4,6 +4,9 @@ name: DeepSeek (V3 / R1)
 aliases:
 - DeepSeek-V3
 - DeepSeek-R1
+family:
+  id: deepseek
+  name: DeepSeek
 publisher:
   name: DeepSeek
   country: CN

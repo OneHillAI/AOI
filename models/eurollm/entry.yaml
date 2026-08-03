@@ -13,6 +13,9 @@ aliases:
 - EuroLLM-9B-Instruct
 - EuroLLM-1.7B
 - utter-project/EuroLLM
+family:
+  id: eurollm
+  name: EuroLLM
 publisher:
   name: EuroLLM consortium (Unbabel, Instituto Superior Técnico / Instituto de Telecomunicações,
     University of Edinburgh, and partners) - EU-funded

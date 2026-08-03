@@ -12,6 +12,9 @@ aliases:
 - Qwen3-Coder
 - Alibaba Qwen
 - Tongyi Qianwen
+family:
+  id: qwen
+  name: Qwen
 publisher:
   name: Alibaba (Qwen team)
   country: China

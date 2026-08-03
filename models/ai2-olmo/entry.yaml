@@ -12,6 +12,9 @@ aliases:
 - OLMo 2
 - OLMo 3
 - allenai/OLMo
+family:
+  id: ai2-olmo
+  name: Ai2 OLMo
 publisher:
   name: Allen Institute for AI (Ai2)
   country: US

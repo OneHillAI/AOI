@@ -1,4 +1,4 @@
-# Implement - Kimi (Moonshot AI - Kimi K2)
+# Implement - Kimi K2 (Moonshot AI)
 
 _How do we deploy and run it? Install, hardware, serving, quantization, fine-tuning, and
 the safe-deployment controls & Deployment Ceiling (**T2, conditional**)._

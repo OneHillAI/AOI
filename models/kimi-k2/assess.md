@@ -1,4 +1,4 @@
-# Assess - Kimi (Moonshot AI - Kimi K2)
+# Assess - Kimi K2 (Moonshot AI)
 
 _Should we adopt this? Openness, license, provenance, EU AI Act, safety, evaluation, and
 the AOI score live here._
