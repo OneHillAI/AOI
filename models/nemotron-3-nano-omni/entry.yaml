@@ -1,0 +1,588 @@
+# OneHill v2 MODEL library entry for NVIDIA Nemotron 3 Nano Omni (multimodal).
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: nemotron-3-nano-omni
+name: NVIDIA Nemotron 3 Nano Omni (multimodal)
+aliases:
+- Nemotron 3 Nano Omni
+- Nemotron-3-Nano-Omni
+- nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning
+family:
+  id: nemotron
+  name: NVIDIA Nemotron
+publisher:
+  name: NVIDIA
+  country: US
+  accountable_entity: true
+  url: https://huggingface.co/nvidia
+  security_contact: https://www.nvidia.com/en-us/security/
+summary: 'NVIDIA Nemotron 3 Nano Omni is the multimodal member of the Nemotron 3 family: a 31B-total /
+  roughly 3B-active Mamba2-Transformer hybrid Mixture-of-Experts that takes video, audio, image and
+  text in and returns text, with a 256k-token context and around 717B training tokens. It is governed
+  by a THIRD distinct family licence, the NVIDIA Open Model Agreement (v. 2026-03-09), whose text is
+  near-identical to the NVIDIA Nemotron Open Model License: an Apache-2.0-derived, perpetual,
+  royalty-free and IRREVOCABLE grant to reproduce, modify, sublicense and distribute in source or
+  object form, with commercial use allowed and no Trustworthy-AI clause, acceptable-use restriction or
+  guardrail clause (their absence is confirmed), terminating only on the licensee bringing IP
+  litigation over the Work or an output from it. Its openness posture is the weakest of the family and
+  is why it is classified open_weights rather than open_weights_recipe: unlike the Super, Nano and
+  Ultra cards, the Nano Omni card does NOT carry the "open weights, training data, and recipes"
+  self-description, and links only an image-training dataset and a TensorRT-LLM deploy cookbook. A
+  genuine training recipe does exist in the NeMo repo (docs/nemotron/omni3, SFT then RL), but it
+  surfaces only the public subset of the alignment corpus, and the card signals do not carry the
+  stronger recipe claim. As with the rest of the family, there is no dedicated model-level safety
+  evaluation; safety is post-training data curation plus the downloadable, multimodal-capable family
+  guard stack. Ownership is partial.
+
+  '
+variants:
+- name: Nemotron-3-Nano-Omni-30B-A3B-Reasoning
+  params_total: 31B
+  params_active: 3B
+  context_window: 256k
+  kind: multimodal
+  safety_tuned: true
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: partial
+    training_code: partial
+    evaluation: partial
+    documentation: partial
+    license: partial
+  license:
+    spdx: ''
+    name: NVIDIA Open Model Agreement (v. 2026-03-09)
+    classification: open_weight
+    commercial_use: allowed
+    notable_restrictions:
+    - A third distinct family licence, near-identical in text to the NVIDIA Nemotron Open Model
+      License; Apache-2.0-derived and source-available, not OSI
+    - Perpetual, royalty-free and IRREVOCABLE grant with commercial use allowed and no Trustworthy-AI,
+      acceptable-use or guardrail clause (their absence is confirmed)
+    - Terminates only on the licensee filing patent or copyright litigation over the Work or an output
+      from it; on-document date (v. 2026-03-09) is inconsistent with a later HTML date and is
+      unverified against the PDF
+    url: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-agreement/
+provenance:
+  canonical_source: https://huggingface.co/nvidia
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: Official BF16 quantization (nvidia)
+      trust: publisher
+      note: NVIDIA publishes an official BF16 variant of Nano Omni; pin the revision and verify
+        checksums
+  checkpoint_checklist_score: 4
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: 'Not published. Only a training-token count is disclosed (~717B tokens);
+      no absolute FLOP or GPU-hour figure appears in the model card or blogs read. At 31B / ~3B active
+      on ~717B tokens a systemic-risk designation is not indicated.'
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: uncertain
+    rationale: 'The NVIDIA Open Model Agreement is irrevocable and carries no acceptable-use
+      restriction, which is favourable, but it is source-available and not OSI, and the openness
+      posture is weaker than the rest of the family (open_weights, not open_weights_recipe): the card
+      does not advertise open data or a recipe. There is no formal GPAI documentation package, no
+      public training-content summary and no copyright policy, and NVIDIA is not a GPAI Code of
+      Practice signatory. A non-OSI licence with a weaker open-data posture most likely does NOT
+      cleanly reach the open-source exemption. Recorded as ''uncertain''.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: partial
+    code_of_practice_signatory: false
+  deployer_notes: 'Nano Omni is small (31B / ~3B active) and multimodal, so an EU deployer must
+    additionally consider the video/audio/image input surface. The licence is irrevocable with no
+    acceptable-use restriction, but there is no formal GPAI documentation package, no copyright policy,
+    and NVIDIA is not a Code of Practice signatory. Training compute is undisclosed but at this scale a
+    systemic-risk designation is not indicated. The openness posture is weaker than the rest of the
+    family (open_weights, not open_weights_recipe), so a downstream deployer inherits less than for
+    Super/Nano/Ultra.
+
+    '
+  last_assessed: '2026-08-03'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: 'Small and multimodal: 31B total / ~3B active runs on modest single-GPU hardware. An
+    official BF16 variant is published and a TensorRT-LLM deploy cookbook is linked on the card. Exact
+    per-GPU VRAM is not restated here; size against the variant and the multimodal input path.
+
+    '
+  serving_support:
+  - vllm
+  - sglang
+  - nim
+  controls_required:
+  - Add NVIDIA's downloadable safety stack, using the multimodal-capable Nemotron-3-Content-Safety
+    classifier (text and images), NeMo Guardrails and garak, because there is no model-level safety
+    evaluation and the multimodal input surface widens the misuse path
+  - Red-team the video/audio/image input path for THIS use case before autonomous deployment; safety
+    is post-training data curation only
+  - Honour the NVIDIA Open Model Agreement attribution and terms; the grant is irrevocable and carries
+    no field-of-use restriction, but confirm the licence version against the PDF (on-document date is
+    inconsistent with the HTML date)
+  - Verify checksums and pin the exact nvidia revision
+score:
+  rubric_version: '1.1'
+  headline: 60.0
+  grade: C
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Open weights, a model card and a clear licence, but the openness posture is weaker
+        than the rest of the family. Unlike the Super, Nano and Ultra cards, the Nano Omni card does
+        NOT carry the "open weights, training data, and recipes" self-description; it links only an
+        image-training dataset and a TensorRT-LLM deploy cookbook. A genuine training recipe does
+        exist in the NeMo repo (docs/nemotron/omni3), but it surfaces only the public subset of the
+        alignment corpus and the card signals do not carry the recipe claim. On card signals this is
+        open_weights (tier 3), not open_weights_recipe - the anchor-3 case (open weights + card +
+        licence, training data/code not clearly released).
+
+        '
+      evidence_refs:
+      - ev-omni-recipe
+      - ev-omni-card
+    provenance:
+      score: 3
+      rationale: 'Distributed from the verified nvidia org on Hugging Face as ungated safetensors with
+        an official BF16 variant and a clear canonical source (checklist ~4/8). Meets the score-3
+        anchor; short of 4 because published checksums, checkpoint scanning and a documented
+        signing/attestation policy were not verified this pass, and short of 5''s cryptographic weight
+        signing / SLSA provenance. Note the repo id has no "NVIDIA-" prefix, unlike its siblings, so
+        pin the exact path.
+
+        '
+      evidence_refs:
+      - ev-omni-provenance
+      - ev-omni-card
+    legal:
+      score: 3
+      rationale: 'A clean, commercially permissive grant: the NVIDIA Open Model Agreement is
+        Apache-2.0-derived, perpetual, royalty-free and IRREVOCABLE, with commercial use allowed and no
+        Trustworthy-AI, acceptable-use or guardrail clause (their absence is confirmed), terminating
+        only on the licensee bringing IP litigation over the Work or an output from it. Held at 3 by
+        the regulatory-readiness half: it is source-available and not OSI, there is no formal GPAI
+        documentation package, no training-content summary and no copyright policy, NVIDIA is not a
+        Code of Practice signatory, and the on-document licence date is inconsistent with the HTML date
+        and unverified against the PDF.
+
+        '
+      evidence_refs:
+      - ev-omni-agreement
+      - ev-omni-eu
+    safety:
+      score: 3
+      rationale: 'A safety-tuned reasoning release with the downloadable family guard stack, whose
+        Nemotron-3-Content-Safety classifier is multimodal (text and images) and so is partly
+        attributable to this model, plus Apache-2.0 NeMo Guardrails and garak. Held at 3, below the old
+        aggregate''s 4, because there is NO dedicated model-level safety evaluation - safety is
+        post-training data curation only - and the multimodal input surface (video/audio/image) widens
+        the misuse path without a published characterisation of it. The downloadable guard stack keeps
+        it from dropping to 2.
+
+        '
+      evidence_refs:
+      - ev-omni-safety
+      - ev-omni-card
+    performance:
+      score: 3
+      rationale: 'A small (31B / ~3B active) multimodal reasoning model that takes video, audio, image
+        and text in and returns text, competitive for its class. Held at 3 because the evidence is
+        publisher and architectural (the model card); OneHill has not reproduced benchmarks and no
+        independent third-party re-runs were gathered this pass.
+
+        '
+      evidence_refs:
+      - ev-omni-card
+    operational:
+      score: 3
+      rationale: 'Runs on mainstream stacks (vLLM, SGLang, NVIDIA NIM) with an official BF16 variant
+        and a linked TensorRT-LLM deploy cookbook, and at 31B / ~3B active it is genuinely portable.
+        Held at 3, not 4, because the multimodal serving path is narrower and less mature than the
+        text ladder, the official quantization coverage is thinner (BF16 only in this pass), and exact
+        hardware guidance for the multimodal path was not verified.
+
+        '
+      evidence_refs:
+      - ev-omni-nim
+      - ev-omni-card
+    governance:
+      score: 3
+      rationale: 'A reputable, accountable publisher (NVIDIA) with a verified hub presence and an
+        active release cadence, and a general corporate security-reporting path. Held at 3 because a
+        model-specific vulnerability-disclosure and deprecation policy was not confirmed, NVIDIA is not
+        a GPAI Code of Practice signatory, and the licence document carries a date inconsistency.
+
+        '
+      evidence_refs:
+      - ev-omni-card
+      - ev-omni-eu
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "A training recipe exists in the NeMo repo (SFT then RL), but it surfaces only the public subset of the alignment corpus and the card does not advertise it, so you can adapt from the released checkpoint, not fully reproduce."
+    refs: [ev-omni-recipe, ev-omni-card]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "A small multimodal hybrid Mamba-Transformer MoE (video/audio/image in, text out) with a 256k context; capable for its class and modality but not independently benchmarked in this pass."
+    refs: [ev-omni-card]
+  specialization:
+    level: moderate
+    dimension: openness
+    summary: "The irrevocable licence and small size make adaptation permissible and cheap, but the weaker open-data posture and the unadvertised recipe make domain adaptation less turnkey than for the Super/Nano/Ultra releases."
+    refs: [ev-omni-recipe, ev-omni-agreement]
+  exchangeability:
+    level: medium
+    dimension: operational
+    summary: "Portable safetensors on vLLM/SGLang/NIM with an official BF16 variant and a small footprint, but the multimodal serving path is narrower and less mature than the text-only members of the family."
+    refs: [ev-omni-nim, ev-omni-card]
+  misuse_exposure:
+    level: partial
+    dimension: safety
+    summary: "Misuse is partly mitigated but not characterised at the model level, and the video/audio/image input surface widens the path: the multimodal guard classifier is attributable, but there is no published model-level safety evaluation."
+    refs: [ev-omni-safety, ev-omni-card]
+
+# --- Four documentation domains.
+documentation:
+  assess:
+    completeness: 90.0
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-card]
+        summary: "Small multimodal reasoning (video/audio/image in, text out) at 256k context where you want an open, portable, permissively-licensed model; autonomous use is out of scope without a self-run red-team of the multimodal input path, because there is no model-level safety evaluation."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-recipe, ev-omni-safety]
+        summary: "Weaker openness posture than the family (open_weights, not open_weights_recipe): the card does not advertise open data or a recipe; no model-level safety evaluation; the multimodal input surface widens the misuse path; the licence document carries a date inconsistency."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-card, ev-omni-recipe]
+        summary: "open_weights (tier 3) - ungated safetensors weights, a model card and a clear licence, but the card does not carry the family's open-data/recipe self-description; a recipe exists in the NeMo repo but surfaces only the public subset, so it is not forced up to open_weights_recipe on card signals alone."
+      - key: license
+        title: "License terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-agreement]
+        summary: "NVIDIA Open Model Agreement (v. 2026-03-09): a third distinct family licence, near-identical to the Nemotron OML - Apache-2.0-derived, source-available (non-OSI), perpetual, royalty-free and IRREVOCABLE, commercial use allowed, no acceptable-use or guardrail clause; terminates only on the licensee bringing IP litigation over the Work or an output from it. On-document date is unverified against the PDF."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-provenance]
+        summary: "Verified nvidia org on Hugging Face; ungated safetensors with an official BF16 variant; the repo id has no 'NVIDIA-' prefix unlike its siblings, so pin the exact path; checksums, scanning and signing not verified this pass."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-eu, ev-omni-agreement]
+        summary: "GPAI; the irrevocable but non-OSI licence, a weaker open-data posture and the absence of a GPAI documentation package or copyright policy most likely keep it short of the open-source exemption; at 31B / ~3B active on ~717B tokens a systemic-risk designation is not indicated."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-card]
+        summary: "Aggregated from the Nano Omni model card; claims are publisher-reported and not OneHill-reproduced, and no independent third-party re-runs of the multimodal benchmarks were gathered this pass."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-safety]
+        summary: "No dedicated model-level safety evaluation for Nano Omni; the multimodal-capable Nemotron-3-Content-Safety classifier (text and images), NeMo Guardrails and garak are attributable, but the guard scores are NVIDIA self-reported and the video/audio input path is uncharacterised."
+  implement:
+    completeness: 86.4
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-card, ev-omni-nim]
+        summary: "Download ungated safetensors from the verified nvidia org (repo id has no 'NVIDIA-' prefix) and serve with vLLM, SGLang or NVIDIA NIM; a TensorRT-LLM deploy cookbook is linked on the card. Pin the revision and verify checksums."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-card]
+        summary: "Small and portable: 31B total / ~3B active runs on modest single-GPU hardware; an official BF16 variant is published. Budget additionally for the multimodal input pipeline."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-nim, ev-omni-card]
+        summary: "vLLM, SGLang and NVIDIA NIM self-hosted microservices, plus a linked TensorRT-LLM deploy cookbook; NIM keeps data in your own enclave. The multimodal serving path is less mature than the text-only members."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-safety, ev-omni-agreement]
+        summary: "Deployment Ceiling T2 (bounded), conditional: assemble NVIDIA's downloadable stack (the multimodal-capable guard classifier + NeMo Guardrails + garak) and red-team the video/audio/image input path yourself, because there is no model-level safety evaluation; the irrevocable licence imposes no field-of-use restriction."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-card]
+        summary: "An official NVIDIA BF16 variant is published; a broader official FP8/NVFP4 program like the text models' was not confirmed for Nano Omni this pass."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-recipe]
+        summary: "A training recipe exists in the NeMo repo (docs/nemotron/omni3, SFT then RL), but it surfaces only the public subset of the alignment corpus (the full upstream corpus of 20 RL datasets / 25 environments / ~2.3M rollouts is not open), so adaptation is realistic and full reproduction is not."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-nim]
+        summary: "Serve behind vLLM/SGLang or NVIDIA NIM for OpenAI-compatible endpoints; the multimodal input path may need the documented preprocessing. A hosted build.nvidia.com preview API exists for evaluation only."
+  use:
+    completeness: 44.4
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-card]
+        summary: "Multimodal reasoning: video, audio, image and text in, text out. A small (31B / ~3B active) hybrid Mamba2-Transformer MoE built for portable multimodal agentic use."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-card]
+        summary: "256k tokens; OneHill has not independently measured effective long-context or cross-modal recall, so treat the maximum as an architectural ceiling."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-card]
+        summary: "Positioned for multimodal agentic use; expose tools through the serving layer's function-calling API and bound their effects with guardrail action rails."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "The exact Nano Omni chat template and multimodal input formatting were not captured from a primary source this pass; confirm apply_chat_template and the image/audio/video preprocessing from the tokenizer/processor config before deploying."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-card]
+        summary: "English and code are primary, with supported multilingual contexts; per-language and per-modality depth is not exhaustively documented."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No model-documented native JSON/schema-constrained output guarantee was captured for Nano Omni; constrained decoding is available at the serving layer but is a runtime feature, not a model behaviour."
+  support:
+    completeness: 61.1
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-card, ev-omni-nim]
+        summary: "Aggregated pitfalls (multimodal preprocessing and processor-config mismatches, hybrid Mamba-Transformer kernel/engine version mismatches, wrong repo path from the missing 'NVIDIA-' prefix, revision drift); not an exhaustive catalogue."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-card]
+        summary: "Nemotron 3 Nano Omni released ~2026 on the verified nvidia org with a BF16 variant; the Hugging Face revision hash is the changelog anchor, and the licence document carries a date inconsistency to watch."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-provenance]
+        summary: "NVIDIA has a general corporate product-security reporting path, but a model-specific vulnerability-disclosure policy for Nemotron was not confirmed this pass."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-omni-card, ev-omni-safety]
+        summary: "The nvidia Hugging Face org (model discussions), the NVIDIA-NeMo GitHub organisation (the omni3 recipe and NeMo Guardrails) and the garak repository for usage, deployment and safety-tooling questions."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published deprecation or end-of-life policy for Nano Omni was found; older Hugging Face revisions remain downloadable but no formal support-window commitment is documented."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-omni-recipe, ev-omni-safety]
+        summary: "From the card and recipe: the weaker open-data posture and unadvertised recipe, the absence of a model-level safety evaluation over the multimodal input path, and the licence date inconsistency are the recurring caveats to track."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: "The NVIDIA Open Model Agreement is genuinely permissive - perpetual, royalty-free, IRREVOCABLE, commercial use allowed, no acceptable-use or field-of-use restriction, weights ungated and fine-tunable. It is held at moderate, not strong, because it is Apache-2.0-derived but non-OSI (the termination reaches an output from the Work), it is a distinct third family licence whose on-document date is unverified against the PDF, and the released recipe surfaces only the public subset of the alignment corpus, so this is an open_weight community licence with conditions, short of Ultra's unconditional OpenMDW grant."
+      # grounded in: ev-omni-agreement (license, retrieved) - irrevocable grant + output-reaching termination; ev-omni-recipe - public-subset recipe caveat
+    transparency:
+      level: moderate
+      rationale: "open_weights, not open_weights_recipe: the weights are ungated and inspectable and there is a model card and licence, but the card does not carry the family's open-data/recipe self-description, links only an image-training dataset, and the recipe that exists surfaces only the public subset. You can see the weights, but the data and full recipe are not clearly released - the anchor for moderate, not strong."
+      # grounded in: ev-omni-card (model_card, retrieved) - no open-data self-description, image-training dataset + deploy cookbook only; ev-omni-recipe - public-subset recipe
+    reliability:
+      level: moderate
+      rationale: "Operational is 3 (runs on mainstream stacks with an official BF16 variant, but the multimodal serving path is narrower and the quantization coverage thinner) and safety is 3 (no model-level safety evaluation over a wider multimodal misuse surface). Under the ownership rule, a safety score of 3 caps this factor at moderate."
+      # grounded in: dimension scores operational 3 / safety 3; ev-omni-safety
+    data_control:
+      level: strong
+      rationale: "Self-hosted via NIM (or the linked TensorRT-LLM path), the weights and inference run on your own infrastructure and data never leaves your enclave, and the NVIDIA Open Model Agreement claws back no rights - the grant is explicitly IRREVOCABLE, terminating only on the licensee's own IP litigation. That is the strong case for a self-hostable model."
+      # grounded in: ev-omni-nim (deployment, retrieved) - self-hosted, data stays in your enclave; ev-omni-agreement (license, retrieved) - irrevocable grant, no revocation claw-back
+  verdict: "Nano Omni gives you a small, portable, natively multimodal model under a clean irrevocable licence, and self-hosting keeps your data and rights yours - so data control is strong. Ownership stays partial because use-and-modify is only moderate (a non-OSI third licence with an unverified date and a public-subset-only recipe), transparency is only moderate (open_weights, not open_weights_recipe: the card does not release the data or advertise the recipe), and reliability is moderate (no model-level safety evaluation over a wider multimodal misuse surface). Self-host, assemble the multimodal guard stack, red-team the video/audio/image input path, and confirm the licence version against the PDF."
+
+# --- Evidence. Each item carries doc_type and retrieved (true = substantive text read).
+#     Grounded 2026-08-03 against the primary-source clauses in docs/primary-sources/nemotron-3-nano-omni/.
+evidence:
+- id: ev-omni-card
+  claim: 'Nemotron 3 Nano Omni model card on the verified nvidia HF org
+    (nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16, no "NVIDIA-" prefix): 31B total / ~3B active;
+    Mamba2-Transformer hybrid MoE; multimodal (Video, Audio, Image, Text in / Text out); 256k context;
+    ~717B training tokens; licence tag nvidia-open-model-agreement. The card does NOT carry the
+    family "open weights, training data, and recipes" self-description and links only
+    nvidia/Nemotron-Image-Training-v3 and a TensorRT-LLM deploy cookbook.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16
+  date: '2026-08-03'
+- id: ev-omni-agreement
+  claim: 'NVIDIA Open Model Agreement (v. 2026-03-09), read: a third distinct family licence,
+    text near-identical to the NVIDIA Nemotron OML. Grant "perpetual, worldwide, non-exclusive,
+    no-charge, royalty-free, irrevocable license to reproduce, prepare Derivative Works of, publicly
+    display, publicly perform, sublicense, and distribute the Work ... in source or object form."
+    Terminates only on IP litigation over the Work or an output from it. Trustworthy-AI / guardrail /
+    acceptable-use clauses CONFIRMED ABSENT. Governing law US / Delaware. NOT OSI. Commercial use
+    allowed. On-document date inconsistent with the HTML date and unverified against the PDF.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-agreement/
+  date: '2026-08-03'
+- id: ev-omni-recipe
+  claim: 'A training recipe for Nano Omni exists in the NeMo repo (github.com/NVIDIA-NeMo/Nemotron
+    docs/nemotron/omni3, SFT then RL), read: caveat "The 20 RL datasets / 25 environments / ~2.3M
+    rollouts referenced in the release blog compose the full upstream alignment corpus; this recipe
+    surfaces the public/open-source subset." The card does not advertise this recipe, so on card
+    signals the model is classified open_weights, with a note that a recipe exists.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://github.com/NVIDIA-NeMo/Nemotron
+  date: '2026-08-03'
+- id: ev-omni-safety
+  claim: 'Safety, read: no dedicated model-level safety evaluation for Nano Omni; safety is
+    post-training data curation only, over a wider multimodal (video/audio/image) misuse surface. The
+    family Nemotron-3-Content-Safety classifier is multimodal (text and images) and so is partly
+    attributable; NeMo Guardrails and garak are Apache-2.0. Guard-classifier scores are NVIDIA
+    self-reported.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/nvidia/Nemotron-3-Content-Safety
+  date: '2026-08-03'
+- id: ev-omni-provenance
+  claim: 'Verified nvidia org on Hugging Face; the Nano Omni weight repo is ungated safetensors with an
+    official BF16 variant. The repo id has no "NVIDIA-" prefix, unlike Super/Nano/Ultra. Published
+    checksums / signing / attestation not verified this pass.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/nvidia
+  date: '2026-08-03'
+- id: ev-omni-nim
+  claim: 'NVIDIA NIM is self-hosted deployment tooling ("data never leaves your secure enclave"), and
+    the Nano Omni card links a TensorRT-LLM deploy cookbook, so self-hosting supports data control and
+    NVIDIA is not an AOI inference-provider entry. The hosted build.nvidia.com preview API is an
+    evaluation surface that reserves use of content "to improve NVIDIA products and services, including
+    AI models".'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://www.nvidia.com/en-us/ai-data-science/products/nim-microservices/
+  date: '2026-08-03'
+- id: ev-omni-eu
+  claim: 'NVIDIA is NOT a signatory to the EU GPAI Code of Practice (EU signatory list), and no NVIDIA
+    training-content summary or copyright policy for Nemotron was located. Nano Omni training compute
+    is undisclosed but at 31B / ~3B active on ~717B tokens a systemic-risk designation is not
+    indicated.'
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai
+  date: '2026-08-03'
+changelog:
+- date: '2026-08-03'
+  change: Initial entry (NVIDIA Nemotron 3 Nano Omni, multimodal), split out of the former aggregate nemotron entry so each per-licence release is scored on its own. Governed by the NVIDIA Open Model Agreement (a third distinct family licence, near-identical to the Nemotron OML); the corrected reading records it as Apache-2.0-derived, perpetual, royalty-free and IRREVOCABLE with the Trustworthy-AI / acceptable-use / guardrail clauses confirmed absent. Classified open_weights (not open_weights_recipe) because the card carries a weaker open-data posture than the rest of the family, though a public-subset recipe exists in the NeMo repo. Safety scored 3, not the old aggregate 4, because there is no model-level safety evaluation over the multimodal input surface - only post-training data curation plus the downloadable, multimodal-capable family guard stack. AOI 60.0, grade C, ownership partial.
+last_verified: '2026-08-03'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180
