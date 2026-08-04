@@ -32,12 +32,13 @@ summary: 'Mistral AI is the Paris-based EU lab whose open-weight releases are th
   7B, the Mixtral 8x7B / 8x22B sparse mixture-of-experts models, Mistral Nemo (12B, a
   128K-context collaboration with NVIDIA) and the 24B Mistral Small 3.x, plus specialist
   variants (Codestral for code, Mathstral, Pixtral for vision, Devstral). The licence
-  split is what an adopter must get right: the general-purpose
-  flagship models (Mistral 7B, Mixtral, Nemo, Mistral Small 3.x, Magistral/Devstral Small)
-  are genuine OSI-approved Apache-2.0, but a meaningful subset - Ministral 8B, Mistral
-  Large, Pixtral Large - ships under the research-only Mistral Research Licence (MRL),
-  and Codestral originally under the non-production MNPL, so commercial use must be
-  checked per model. Offsetting that, Mistral''s EU domicile and its status as an early
+  split is what an adopter must get right. THIS entry is the genuine OSI-approved
+  Apache-2.0 line: Mistral 7B, Mixtral, Nemo, Mistral Small 3.x, Pixtral 12B, and the
+  Apache specialist models (Codestral Mamba, Mathstral, Devstral Small, Magistral Small) -
+  all with unconditional commercial use. The non-commercial Mistral models (Ministral 8B,
+  Mistral Large, Pixtral Large under the research-only MRL; Codestral under the
+  non-production MNPL) are the separate mistral-research-license entry. Offsetting the
+  split, Mistral''s EU domicile and its status as an early
   signatory of the EU GPAI Code of Practice give it the strongest regulatory posture of
   any non-US family here.
 
@@ -70,21 +71,12 @@ variants:
   context_window: 128k
   kind: instruct
   safety_tuned: true
-- name: Codestral / Mathstral / Devstral
+- name: Codestral Mamba / Mathstral / Devstral Small (Apache)
   kind: code
   safety_tuned: false
 - name: Pixtral 12B
   params_total: 12B
   kind: multimodal
-  safety_tuned: true
-- name: Ministral 8B (MRL)
-  params_total: 8B
-  kind: instruct
-  safety_tuned: true
-- name: Mistral Large 2 (123B, MRL)
-  params_total: 123B
-  context_window: 128k
-  kind: instruct
   safety_tuned: true
 openness:
   tier: open_weights

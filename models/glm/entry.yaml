@@ -34,8 +34,10 @@ summary: 'GLM is Zhipu AI''s open-weight family - Zhipu AI is the Beijing compan
   the 355B MoE may approach the EU AI Act 1e25 systemic-risk compute threshold (unconfirmed,
   with no Article 55 documentation published), and the hosted API applies Chinese content
   moderation while the models carry China-aligned alignment - so deploy behind your
-  own guards and verify the LICENSE per checkpoint (the original glm-4-9b used a custom
-  non-OSI license rather than MIT).
+  own guards and verify the LICENSE per checkpoint. This entry is the MIT GLM line
+  (GLM-4.6/4.5/4.5-Air and the GLM-4-0414 series, including GLM-4-9B-0414); the original
+  glm-4-9b-chat, under the custom non-OSI "glm-4" licence, is the separate
+  glm-4-9b-chat-original entry.
 
   '
 variants:
