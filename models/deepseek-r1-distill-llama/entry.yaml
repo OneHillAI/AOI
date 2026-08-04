@@ -1,0 +1,365 @@
+# OneHill v2 MODEL library entry for the DeepSeek-R1-Distill (Llama base) checkpoints. Split from the
+# aggregate deepseek entry on the LICENCE axis: these distils are built on Meta Llama bases (Llama-8B
+# = Llama 3.1, Llama-70B = Llama 3.3) and carry the Llama Community Licence - use restrictions, the
+# 700M-MAU clause, naming/attribution - distinct from the Apache-2.0 Qwen-base distils
+# (deepseek-r1-distill-qwen). The use restrictions drop use-and-modify to moderate and ownership to
+# partial. Validated against schema/model.v2.schema.json.
+
+schema_version: '2.0'
+id: deepseek-r1-distill-llama
+name: DeepSeek-R1-Distill (Llama base)
+aliases:
+- DeepSeek-R1-Distill-Llama-8B
+- DeepSeek-R1-Distill-Llama-70B
+family:
+  id: deepseek
+  name: DeepSeek
+publisher:
+  name: DeepSeek
+  country: China
+  accountable_entity: true
+  url: https://huggingface.co/deepseek-ai
+  security_contact: https://huggingface.co/deepseek-ai
+summary: 'The DeepSeek-R1-Distill checkpoints built on Meta Llama bases - Llama-8B (Llama 3.1) and
+  Llama-70B (Llama 3.3) - dense reasoning models distilled from DeepSeek-R1. They are a separate entry
+  from the Qwen-base distils because they inherit a different, more restrictive licence: the Llama
+  Community Licence, which (unlike Apache-2.0) is non-OSI and carries RAIL-style acceptable-use
+  restrictions, the "700M monthly active users" threshold above which you must obtain a separate licence
+  from Meta, and naming/attribution requirements ("Built with Llama", derivative names must include
+  "Llama"). Those field-of-use restrictions hold use-and-modify to moderate and ownership to partial -
+  the material difference from the Apache-2.0 Qwen distils, which reach substantial. Like all the
+  distils they are small (not systemic-risk), carry no safety tuning of their own, inherit R1''s
+  China-aligned filtering, and are scored strong-for-size rather than frontier-absolute. Trivial to serve
+  (llama.cpp, Ollama, vLLM), with the widest hardware and toolchain support of any base thanks to the
+  Llama ecosystem.
+
+  '
+variants:
+- name: DeepSeek-R1-Distill-Llama-8B
+  params_total: 8B
+  context_window: 128k
+  kind: reasoning
+  safety_tuned: false
+- name: DeepSeek-R1-Distill-Llama-70B
+  params_total: 70B
+  context_window: 128k
+  kind: reasoning
+  safety_tuned: false
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: partial
+    evaluation: partial
+    documentation: open
+    license: partial
+  license:
+    spdx: LicenseRef-Llama-Community
+    name: Llama Community Licence (3.1 for 8B / 3.3 for 70B)
+    classification: open_weight
+    commercial_use: allowed_with_conditions
+    notable_restrictions:
+    - 'Non-OSI community licence inherited from the Llama base. Acceptable Use Policy (RAIL-style
+      field-of-use restrictions) applies'
+    - 'The "700M monthly active users" clause: if the products using it exceed 700M MAU, you must
+      request a separate licence from Meta'
+    - 'Naming/attribution - derivative model names must include "Llama"; you must display "Built with
+      Llama" and include the licence and AUP with redistribution'
+    url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B/blob/main/LICENSE
+provenance:
+  canonical_source: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: Community GGUF / quantized distils
+      trust: community
+      note: Widely mirrored and quantized (the Llama ecosystem has the broadest toolchain support); each
+        mirror is a separate artifact whose trust equals its uploader, and redistribution must carry the
+        Llama licence + AUP - pin the deepseek-ai revision and verify checksums
+  checkpoint_checklist_score: 5
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: 'Well below the systemic-risk threshold: these are 8B and 70B dense models
+      distilled from R1, under the 1e25-FLOP presumption. Systemic risk does not arise.'
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: 'no'
+    rationale: 'Unlike the Apache-2.0 Qwen distils, the Llama Community Licence is NOT a
+      free-and-open-source licence (it carries acceptable-use and 700M-MAU field-of-use restrictions), so
+      the Article 53 open-source exemption does not apply on the licence axis. The models are not
+      systemic-risk, so the systemic-risk duties do not arise, but the transparency obligations are not
+      exemption-covered here, and DeepSeek publishes no copyright policy or training-content summary.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: 'no'
+    code_of_practice_signatory: false
+  deployer_notes: 'A use-restricted, non-OSI licence (inherited from Llama) on small non-systemic-risk
+    models. No open-source exemption on the licence axis, and no DeepSeek copyright policy /
+    training-content summary. You must also honour Meta''s Acceptable Use Policy, the 700M-MAU clause,
+    and the "Built with Llama" naming/attribution downstream. Prefer the Apache-2.0 Qwen distils
+    (deepseek-r1-distill-qwen) where the use-restriction burden does not apply.
+
+    '
+  last_assessed: '2026-08-03'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: 'Small dense models (8B, 70B): the 8B runs on a single consumer GPU, the 70B on a
+    single data-centre GPU or high-end consumer hardware when quantized. 128K context. The Llama base
+    gives the broadest toolchain and hardware support of any distil base.
+
+    '
+  serving_support:
+  - vllm
+  - sglang
+  - llama.cpp
+  - ollama
+  controls_required:
+  - Honour the Llama Community Licence acceptable-use policy, the 700M-MAU clause, and the "Built with
+    Llama" naming/attribution in your deployment and any redistribution
+  - Add your own input/output guardrails and a guard/classifier model - these are research distils with
+    no safety tuning of their own and no first-party guard
+  - Account for China-aligned topic filtering inherited from R1 on politically sensitive prompts
+  - Add prompt-injection defences and treat retrieved/tool content as untrusted for agentic use; parse
+    and usually strip the reasoning (think-tag) output
+score:
+  rubric_version: '1.1'
+  headline: 61.6
+  grade: C
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Open-weights tier: weights openly downloadable with open documentation, but the
+        licence is conditional (Llama community use restrictions), the distillation data closed, training
+        code partial. Meets the open-weights anchor (3) - the restrictions bite on legal and ownership.
+
+        '
+      evidence_refs:
+      - ev-dsrl-license
+      - ev-dsrl-card
+    provenance:
+      score: 3
+      rationale: 'Verified deepseek-ai org on Hugging Face, safetensors with checksums, clear canonical
+        source, no malicious-checkpoint incident (checklist ~5/8). Short of 4/5 (scanned checkpoint /
+        cryptographic signing).
+
+        '
+      evidence_refs:
+      - ev-dsrl-card
+    legal:
+      score: 2
+      rationale: 'The Llama Community Licence is non-OSI with acceptable-use and 700M-MAU field-of-use
+        restrictions and naming/attribution duties, so the open-source exemption does not apply and
+        DeepSeek publishes no copyright policy or training-content summary. Usable and commercial (below
+        700M MAU) but restricted - a 2, and materially the reason ownership is only partial. Below the
+        Apache-2.0 Qwen distils (legal 3).
+
+        '
+      evidence_refs:
+      - ev-dsrl-license
+      - ev-dsrl-eu
+    safety:
+      score: 3
+      rationale: 'Documented reasoning behaviour meeting the score-3 anchor, but these are research
+        distils with no safety tuning of their own, inheriting R1''s China-aligned topic censorship, and
+        no first-party guard model ships - deployers must add their own guardrails.
+
+        '
+      evidence_refs:
+      - ev-dsrl-behaviour
+    performance:
+      score: 3
+      rationale: 'Strong reasoning for their size - the 70B distil is a notable public result - but this
+        is a distilled derivative class (the 8B is modest), not a frontier-absolute release, and OneHill
+        has not reproduced the benchmarks. A solid 3.
+
+        '
+      evidence_refs:
+      - ev-dsrl-perf
+    operational:
+      score: 5
+      rationale: 'Easy to run: small dense models on a Llama base, which carries the broadest toolchain
+        and hardware support of any distil base - first-class serving (vLLM, SGLang, llama.cpp, Ollama)
+        and extensive quantization on consumer hardware.
+
+        '
+      evidence_refs:
+      - ev-dsrl-card
+      - ev-dsrl-perf
+    governance:
+      score: 3
+      rationale: 'Active, named publisher (DeepSeek) with a verified org and technical reports, meeting
+        the score-3 anchor. Held down by the absence of a published
+        security-contact/vulnerability-disclosure process and China-origin policy restrictions some
+        organisations apply.
+
+        '
+      evidence_refs:
+      - ev-dsrl-card
+      - ev-dsrl-behaviour
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tune the weights, but under the Llama Community Licence restrictions (naming, AUP, 700M-MAU), and with distillation data and code unreleased, so full reproduction from scratch is not possible."
+    refs: [ev-dsrl-license]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "Capable reasoning-for-size, but inherits R1's China-aligned topic censorship, which distorts coverage on sensitive subjects."
+    refs: [ev-dsrl-perf, ev-dsrl-behaviour]
+  specialization:
+    level: moderate
+    dimension: openness
+    summary: "Adaptable and cheap to fine-tune, but derivatives inherit the Llama use restrictions and must be named with 'Llama' and attributed - a real constraint the Apache-2.0 Qwen distils do not impose."
+    refs: [ev-dsrl-license]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Highly exchangeable at the serving layer: Llama-base safetensors with the broadest toolchain support; the reasoning / think-tag output format is the main behaviour to account for."
+    refs: [ev-dsrl-card]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Not independently benchmarked for misuse; as un-safety-tuned research distils they are easier to elicit unwanted output from, but no broad third-party red-team exists."
+    refs: [ev-dsrl-behaviour]
+documentation:
+  assess:
+    completeness: 86.7
+    originality: 0.0
+    items:
+      - {key: intended-use, title: "Intended & out-of-scope use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-license, ev-dsrl-perf], summary: "Small open-weight reasoning models on a Llama base, for cost-sensitive reasoning and as fine-tuning bases within the Llama ecosystem; the Llama Community Licence restrictions (AUP, 700M-MAU, naming) are binding, and deploy behind your own guards."}
+      - {key: limitations, title: "Known limitations, bias & failure modes", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-behaviour], summary: "No own safety tuning (research distils); inherited China-aligned censorship; use-restricted Llama licence; closed distillation data; strong-for-size but not frontier-absolute (the 8B is modest)."}
+      - {key: openness, title: "Openness tier & components", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-license, ev-dsrl-card], summary: "open_weights with a conditional (Llama community) licence - weights + documentation, but distillation data closed and code partial, so not reproducible."}
+      - {key: license, title: "License terms & permitted use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-license], summary: "Llama Community Licence (non-OSI), inherited from the base (8B=Llama 3.1, 70B=Llama 3.3): commercial use allowed below 700M MAU, but with an Acceptable Use Policy, the 700M-MAU clause, and 'Built with Llama' naming/attribution. Distinct from the Apache-2.0 Qwen distils."}
+      - {key: provenance, title: "Supply-chain & provenance", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-card], summary: "Verified deepseek-ai org; safetensors with checksums; widely mirrored, and redistribution must carry the Llama licence + AUP - pin the revision and verify checksums."}
+      - {key: eu-ai-act, title: "EU AI Act posture", doc_type: explanation, source_type: aggregated, coverage: full, refs: [ev-dsrl-eu, ev-dsrl-license], summary: "GPAI but not systemic-risk (small); the Llama licence is NOT FOSS, so no open-source exemption on the licence axis, and no DeepSeek copyright policy / training-content summary; you must also honour Meta's AUP and 700M-MAU clause."}
+      - {key: evaluation, title: "Benchmarks & evaluation", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsrl-perf], summary: "The 70B distil is a notable strong-for-size public result; the 8B is modest. Not OneHill-reproduced."}
+      - {key: safety-eval, title: "Independent safety evaluation", doc_type: reference, source_type: gap, gap_reason: "No broad independent red-team / safety battery has been published for the R1-Distill-Llama checkpoints, and OneHill ran none this session; as un-safety-tuned research distils the behavioural caveats are captured under limitations above."}
+  implement:
+    completeness: 100.0
+    originality: 0.0
+    items:
+      - {key: install, title: "Install & run", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsrl-card], summary: "Download safetensors from the deepseek-ai org and serve with Ollama, llama.cpp, vLLM or SGLang; the 8B runs on a single consumer GPU. Pin the revision and verify checksums."}
+      - {key: hardware, title: "Hardware & VRAM requirements", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-card], summary: "8B on a single consumer GPU; 70B on a single data-centre GPU or high-end consumer hardware when quantized. The Llama base gives the broadest hardware support."}
+      - {key: serving, title: "Serving stacks", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-card, ev-dsrl-perf], summary: "First-class support across vLLM, SGLang, llama.cpp and Ollama; the Llama base has the widest toolchain coverage."}
+      - {key: safe-deployment, title: "Safe-deployment controls & Deployment Ceiling", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsrl-behaviour, ev-dsrl-license], summary: "Deployment Ceiling T2 (conditional): honour the Llama AUP / 700M-MAU / naming terms, supply your own guardrails and a guard model (no own safety tuning), add prompt-injection defences for agentic use, and account for inherited China-aligned censorship."}
+      - {key: quantization, title: "Available quantizations", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-card], summary: "Extensively quantized (GGUF and lower-bit) via the Llama ecosystem; redistribution must carry the Llama licence + AUP."}
+      - {key: fine-tuning, title: "Fine-tuning & adaptation", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsrl-license], summary: "Fine-tuning and derivatives are permitted but inherit the Llama restrictions (AUP, 700M-MAU, 'Llama' naming). The distillation data/code are closed, so no from-scratch reproduction."}
+      - {key: integration, title: "API / OpenAI-compatible integration", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsrl-card], summary: "Serve behind an OpenAI-compatible endpoint (vLLM/SGLang/Ollama); handle the reasoning / think-tag output format at the client."}
+  use:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - {key: capabilities, title: "Capabilities & modalities", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-perf], summary: "Text reasoning models (maths, coding, analysis) distilled from R1 onto Llama bases; emit explicit reasoning traces (think tags). Strong for their size, the 70B notably."}
+      - {key: context-window, title: "Context window & long-context behaviour", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsrl-card], summary: "128K-token context per the cards; OneHill has not independently measured effective long-context recall."}
+      - {key: chat-template, title: "Prompt format & chat template", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsrl-card], summary: "Ship a chat template with the R1 reasoning / think-tag convention; use apply_chat_template and handle the reasoning segment at the client."}
+      - {key: languages, title: "Language coverage", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsrl-card], summary: "English strongest (Llama base + R1 distillation); per-language depth varies with size."}
+      - {key: tool-use, title: "Function / tool calling", doc_type: reference, source_type: gap, gap_reason: "These are reasoning distils; native structured tool-calling is not the primary documented behaviour and was not grounded this session - confirm per serving stack and size."}
+      - {key: structured-output, title: "Structured / JSON-constrained output", doc_type: reference, source_type: gap, gap_reason: "No model-documented native JSON/schema-constrained output guarantee; constrained decoding is available at the serving layer but is a runtime feature."}
+  support:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - {key: troubleshooting, title: "Common problems & fixes", doc_type: troubleshooting, source_type: aggregated, coverage: partial, refs: [ev-dsrl-card], summary: "Reasoning/think-tag parsing, quant-quality trade-offs at 8B, and confusing a distil with the full R1; not exhaustive."}
+      - {key: release-versioning, title: "Versions, changelog & cadence", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [ev-dsrl-card], summary: "The R1-Distill-Llama-8B/70B on the verified deepseek-ai org; the Hugging Face revision hash is the changelog anchor."}
+      - {key: security-disclosure, title: "Security / vulnerability disclosure", doc_type: reference, source_type: gap, gap_reason: "No formal published vulnerability-disclosure/security policy was found; contact is only the general deepseek-ai org presence."}
+      - {key: channels, title: "Community & support channels", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsrl-card], summary: "The deepseek-ai Hugging Face org and GitHub, plus the very large Llama-ecosystem community."}
+      - {key: deprecation, title: "Deprecation / end-of-life policy", doc_type: reference, source_type: gap, gap_reason: "No published deprecation or end-of-life policy for the distil checkpoints; older revisions remain downloadable but no sunset commitment is documented."}
+      - {key: known-issues, title: "Tracked known issues", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsrl-behaviour, ev-dsrl-license], summary: "Use-restricted Llama licence, no own safety tuning, inherited China-aligned censorship, and quant-quality trade-offs at 8B."}
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: "The Llama Community Licence permits commercial use and modification, but it is non-OSI with an Acceptable Use Policy, the 700M-MAU clause (a separate Meta licence above that threshold), and naming/attribution duties ('Built with Llama', derivative names must include 'Llama') that flow down to derivatives - so use-and-modify is moderate, not strong. Below the Apache-2.0 Qwen distils."
+      # grounded in: ev-dsrl-license (license, retrieved) - Llama Community Licence AUP + 700M-MAU + naming
+    transparency:
+      level: moderate
+      rationale: "Weights are inspectable, but the distillation data and code are closed and the weights inherit R1's China-aligned topic filtering you cannot inspect - open_weights, so moderate."
+      # grounded in: ev-dsrl-card (model_card) - open_weights; ev-dsrl-behaviour (third_party) - inherited filtering
+    reliability:
+      level: strong
+      rationale: "Performance 3, operational 5 and safety 3: solid reasoning-for-size with the broadest serving support of the distils; all three at or above 3, operational at 5, so reliability is strong. The caveat is the absence of own safety tuning / a first-party guard model."
+      # grounded in: dimension scores performance 3 / operational 5 / safety 3
+    data_control:
+      level: strong
+      rationale: "Self-hosted, the weights run entirely on your own infrastructure - including on-device at 8B - with no telemetry and no claw-back, so your data stays yours. The licence restrictions constrain use, not data residency."
+      # grounded in: ev-dsrl-license (license, retrieved) - self-host, no telemetry; small sizes enable on-device
+  verdict: "You partially own these self-hosted Llama-base R1-Distill models: self-hosting keeps your data yours (data-control strong, reliability strong), but the Llama Community Licence's acceptable-use policy, 700M-MAU clause, and naming/attribution duties hold use-and-modify to moderate - so ownership is partial, one step below the Apache-2.0 Qwen distils (deepseek-r1-distill-qwen), which reach substantial. For friction-free ownership prefer the Qwen distils unless you specifically need the Llama toolchain; where you use these, honour the Llama terms, deploy behind your own guardrails, and note there is no EU open-source exemption on the licence axis."
+evidence:
+- id: ev-dsrl-license
+  claim: 'DeepSeek-R1 README + the distil checkpoint cards, read: the R1-Distill-Llama checkpoints are
+    built on Meta Llama bases (Llama-8B on Llama 3.1, Llama-70B on Llama 3.3) and carry the Llama
+    Community Licence - non-OSI, with an Acceptable Use Policy, the "700 million monthly active users"
+    clause (a separate Meta licence required above it), and "Built with Llama" naming/attribution
+    requirements.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
+  date: '2026-08-03'
+- id: ev-dsrl-card
+  claim: 'R1-Distill-Llama model cards on the verified deepseek-ai HF org: dense 8B/70B models distilled
+    from R1, 128K context, safetensors; widely mirrored/quantized through the Llama ecosystem, serving
+    on consumer hardware via Ollama, llama.cpp, vLLM, SGLang.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
+  date: '2026-08-03'
+- id: ev-dsrl-perf
+  claim: On public leaderboards the R1-Distill-Llama-70B is a notably strong reasoning model for its
+    size; the 8B is modest. Not OneHill-reproduced this session.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
+  date: '2026-08-03'
+- id: ev-dsrl-behaviour
+  claim: The R1-Distill checkpoints are research distils with no safety tuning of their own and inherit
+    R1's China-aligned content filtering; no companion guard model ships.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
+  date: '2026-08-03'
+- id: ev-dsrl-eu
+  claim: The R1-Distill-Llama checkpoints are small (8B-70B), below the systemic-risk threshold; the
+    Llama Community Licence is not FOSS, so no open-source exemption applies on the licence axis, and
+    DeepSeek publishes no copyright policy or training-content summary.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
+  date: '2026-08-03'
+changelog:
+- date: '2026-08-03'
+  change: Initial entry - split from the aggregate `deepseek` entry on the licence axis. These are the R1-Distill checkpoints on Meta Llama bases (8B=Llama 3.1, 70B=Llama 3.3), carrying the Llama Community Licence (AUP, 700M-MAU, naming/attribution); the Apache-2.0 Qwen-base distils are the separate deepseek-r1-distill-qwen entry. The use restrictions drop use-and-modify to moderate and ownership to partial. Shared behavioural grounding carried from the deepseek family entry. Grounded 2026-08-03.
+last_verified: '2026-08-03'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

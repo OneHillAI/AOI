@@ -1,0 +1,397 @@
+# OneHill v2 MODEL library entry for Meta Llama 4. Split from the aggregate meta-llama entry on a
+# LICENCE + scored divergence: Llama 4's Community Licence carries a restriction the Llama 3.x text
+# models do not - the incorporated AUP denies EU-domiciled individuals/companies any licence to the
+# MULTIMODAL models - and the large Llama 4 models exceed 1e25 FLOP (systemic-risk). That EU-multimodal
+# carve-out drops legal to 2 and is a hard flag. Validated against schema/model.v2.schema.json.
+
+schema_version: '2.0'
+id: llama-4
+name: Meta Llama 4 (multimodal)
+aliases:
+- Llama 4
+- Llama 4 Scout
+- Llama 4 Maverick
+- Llama 4 Behemoth
+- meta-llama/Llama-4
+family:
+  id: meta-llama
+  name: Meta Llama
+publisher:
+  name: Meta
+  country: United States
+  accountable_entity: true
+  url: https://huggingface.co/meta-llama
+  security_contact: LlamaUseReport@meta.com
+summary: 'Meta Llama 4 - the natively multimodal, mixture-of-experts generation: Scout and Maverick
+  (released) and the larger Behemoth. It is a separate entry from the Llama 3.x text line (the
+  meta-llama entry) because of a licence divergence that actually bites: the Llama 4 Community Licence
+  incorporates an Acceptable Use Policy whose EU clause, read verbatim, states that "with respect to any
+  multimodal models included in Llama 4, the rights granted under Section 1(a) ... are not being granted
+  to you if you are an individual domiciled in, or a company with a principal place of business in, the
+  European Union" (end users of a downstream product are exempted). Because Llama 4 is genuinely
+  multimodal, that carve-out denies EU-domiciled organisations any licence to use these models at all -
+  a hard restriction the Llama 3.1 text models do not carry. On top of that, the licence keeps the 700M
+  monthly-active-users commercial trigger and "Built with Llama" naming/attribution, and the large Llama
+  4 models exceed the 1e25-FLOP systemic-risk threshold, voiding the open-source exemption. For non-EU
+  users Llama 4 is a strong, well-supported multimodal family paired with Meta''s Llama Guard / Prompt
+  Guard; for EU-domiciled entities the multimodal licence gap is decisive. Ownership is partial (and
+  effectively none for EU-domiciled use).
+
+  '
+variants:
+- name: Llama 4 Scout
+  params_total: 109B
+  params_active: 17B
+  context_window: 10M
+  kind: multimodal
+  safety_tuned: true
+- name: Llama 4 Maverick
+  params_total: 400B
+  params_active: 17B
+  context_window: 1M
+  kind: multimodal
+  safety_tuned: true
+- name: Llama 4 Behemoth
+  params_total: ~2T
+  params_active: 288B
+  context_window: unspecified
+  kind: multimodal
+  safety_tuned: true
+openness:
+  tier: gated_open
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: partial
+  license:
+    spdx: LicenseRef-Llama-Community
+    name: Llama 4 Community License
+    classification: open_weight
+    commercial_use: allowed_with_conditions
+    notable_restrictions:
+    - 'EU multimodal carve-out (verbatim, in the incorporated AUP): the rights granted "are not being
+      granted to you if you are an individual domiciled in, or a company with a principal place of
+      business in, the European Union" for any multimodal models in Llama 4. Since Llama 4 is
+      multimodal, EU-domiciled entities get no licence (downstream end users are exempted)'
+    - '700M-MAU commercial trigger: "if ... the monthly active users ... is greater than 700 million
+      monthly active users in the preceding calendar month, you must request a license from Meta"'
+    - 'Naming/attribution - display "Built with Llama" and prefix derivative model names with "Llama";
+      Acceptable Use Policy with six prohibited-use categories; California governing law; download is
+      access-gated (click-through) on Hugging Face'
+    url: https://www.llama.com/llama4/license/
+provenance:
+  canonical_source: https://huggingface.co/meta-llama
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: bartowski / unsloth (GGUF quantizations)
+      trust: community
+      note: Widely mirrored/quantized; each mirror is a separate artifact whose trust equals its
+        uploader, and use remains bound by the Llama 4 licence (including the EU-multimodal carve-out) -
+        pin the meta-llama revision and verify checksums
+    - name: Served on Bedrock / Azure / Vertex / Together / Groq
+      trust: verified
+      note: Major clouds host Llama 4; a hosted end-user product is the AUP-exempted path for EU end
+        users (but not for EU-domiciled entities building on the weights)
+  checkpoint_checklist_score: 5
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: '>1e25 FLOP for the large Llama 4 models (Maverick, Behemoth), placing them
+      in systemic-risk territory; Scout is smaller. Meta does not publish absolute figures, but the
+      largest Llama 4 models are broadly understood to cross the presumption.'
+    over_1e25_threshold: true
+    article_55_docs_available: partial
+  open_source_exemption:
+    license_qualifies: 'no'
+    rationale: 'Two independent reasons the Article 53 open-source exemption does not apply. First, the
+      Llama 4 Community Licence is not FOSS - it carries the 700M-MAU trigger, naming/attribution, an
+      AUP, and the EU-multimodal carve-out. Second, the large Llama 4 models are systemic-risk (>1e25),
+      which voids the exemption regardless of licence. And the EU-multimodal carve-out means
+      EU-domiciled entities have no licence to the models at all.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: 'no'
+    code_of_practice_signatory: false
+  deployer_notes: 'Decisive for EU deployers: the Llama 4 multimodal licence is NOT granted to
+    individuals domiciled in, or companies with a principal place of business in, the EU - so an
+    EU-domiciled organisation cannot licence these models (only downstream end users of someone else''s
+    product are exempted). Meta also declined the EU GPAI Code of Practice, publishes no copyright policy
+    or training-content summary, and the large models are systemic-risk. For EU-domiciled use, prefer the
+    Llama 3.1 text models (the meta-llama entry, no EU clause) or a non-Llama family.
+
+    '
+  last_assessed: '2026-08-03'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T3
+  ceiling_conditional: true
+  hardware_notes: 'Mixture-of-experts multimodal models: Scout (109B total / 17B active) fits a single
+    high-memory node or aggressive quantization; Maverick (400B/17B) needs serious multi-GPU
+    infrastructure; Behemoth (~2T/288B active) is data-centre-scale. Very long context (Scout advertises
+    up to 10M tokens) is memory-intensive in practice.
+
+    '
+  serving_support:
+  - vllm
+  - transformers
+  - bedrock
+  - vertex
+  controls_required:
+  - 'EU-domiciled entities: do not use the Llama 4 multimodal weights - the licence is not granted to
+    you (confirm your domicile/principal place of business against the AUP)'
+  - Check the 700M-MAU commercial trigger and honour the "Built with Llama" naming/attribution and the
+    Acceptable Use Policy
+  - Pair with Meta's Llama Guard and Prompt Guard (shipped with the family) and add your own
+    input/output guardrails
+  - Add prompt-injection defences and treat retrieved/tool content and input images as untrusted for
+    agentic/multimodal use
+score:
+  rubric_version: '1.1'
+  headline: 70.8
+  grade: C
+  hard_flags:
+  - '🚩 EU AI Act / licence - the Llama 4 Community Licence denies EU-domiciled individuals and companies
+    any licence to the multimodal models (verbatim AUP carve-out); the large Llama 4 models also exceed
+    1e25 FLOP (systemic-risk), voiding the open-source exemption. Llama 3.x text models do not carry the
+    EU carve-out.'
+  dimensions:
+    openness:
+      score: 3
+      rationale: 'Gated-open tier: weights are downloadable (after click-through acceptance) with strong
+        documentation, but training data and code are closed and the licence is conditional. Meets the
+        gated-open/open-weights anchor at 3 on access, with the licence conditions scored under legal.
+
+        '
+      evidence_refs:
+      - ev-l4-license
+      - ev-l4-card
+    provenance:
+      score: 4
+      rationale: 'Canonical, verified (and access-gated) meta-llama org on Hugging Face distributing
+        safetensors with checksums and per-version licence tags; no malicious-checkpoint incident on the
+        canonical org. Short of 5 for the absence of cryptographic signing / provenance attestation.
+
+        '
+      evidence_refs:
+      - ev-l4-card
+    legal:
+      score: 2
+      rationale: 'The weakest legal position in the Llama family: the Community Licence is non-OSI with a
+        700M-MAU trigger and AUP, AND - unlike the Llama 3.x text models - denies EU-domiciled entities
+        any licence to the multimodal models, AND the large models are systemic-risk (voiding the
+        open-source exemption). Usable commercially for non-EU users below 700M MAU (hence a 2, not a
+        1), but the EU carve-out is a hard flag and the reason EU-domiciled ownership is effectively
+        none.
+
+        '
+      evidence_refs:
+      - ev-l4-license
+      - ev-l4-aup
+    safety:
+      score: 4
+      rationale: 'A genuine strength: the family ships a first-party guard stack - Llama Guard
+        (input/output moderation) and Prompt Guard (prompt-injection/jailbreak detection) - alongside
+        documented safety tuning. Short of 5 without an independent, methodologically-documented
+        red-team OneHill can aggregate.
+
+        '
+      evidence_refs:
+      - ev-l4-safety
+    performance:
+      score: 4
+      rationale: 'Llama 4 Maverick is competitive among open multimodal models, and the family adds
+        native multimodality and very long context. Capped at 4 because OneHill has not independently
+        re-run the benchmarks.
+
+        '
+      evidence_refs:
+      - ev-l4-perf
+    operational:
+      score: 5
+      rationale: 'First-class ecosystem support: safetensors on every major runtime and cloud endpoint
+        (Bedrock, Vertex, Together, Groq), extensive quantization, and the broadest toolchain of any
+        open family. The largest models need serious infrastructure but tooling coverage is complete.
+
+        '
+      evidence_refs:
+      - ev-l4-card
+      - ev-l4-perf
+    governance:
+      score: 3
+      rationale: 'A named, accountable US provider (Meta) with a verified org and a reporting path
+        (LlamaUseReport@meta.com), meeting the score-3 anchor. Held down by Meta declining the EU GPAI
+        Code of Practice, the access gate, and the EU-multimodal licensing restriction.
+
+        '
+      evidence_refs:
+      - ev-l4-card
+      - ev-l4-aup
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tunable (SFT/LoRA) for non-EU users under the Community Licence, but derivatives inherit the 700M-MAU, naming, and EU-multimodal conditions, and training data/code are closed - so not reproducible and legally conditioned; EU-domiciled entities have no licence to train on these at all."
+    refs: [ev-l4-license]
+  knowledge_structure:
+    level: strong
+    dimension: performance
+    summary: "A strong multimodal knowledge/reasoning backbone with native image understanding and very long context - subject to the licence conditions above."
+    refs: [ev-l4-perf]
+  specialization:
+    level: moderate
+    dimension: openness
+    summary: "Good for specialisation for non-EU users (large ecosystem, adapters), but derivatives carry the Llama naming and use conditions, and the EU carve-out excludes EU-domiciled builders."
+    refs: [ev-l4-license]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Highly exchangeable: safetensors on every major runtime and cloud; mind the Llama-4 chat template, special tokens, and multimodal input handling when swapping."
+    refs: [ev-l4-card]
+  misuse_exposure:
+    level: partial
+    dimension: safety
+    summary: "Better positioned than most: Llama Guard and Prompt Guard provide a first-party moderation and injection-detection layer, though no broad independent multimodal red-team is aggregated here."
+    refs: [ev-l4-safety]
+documentation:
+  assess:
+    completeness: 90.0
+    originality: 0.0
+    items:
+      - {key: intended-use, title: "Intended & out-of-scope use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-license, ev-l4-perf], summary: "Strong multimodal MoE models for non-EU users under the Llama 4 Community Licence; OUT of scope for EU-domiciled entities (the multimodal licence is not granted to them). Check the 700M-MAU trigger and honour the Llama terms."}
+      - {key: limitations, title: "Known limitations, bias & failure modes", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-aup, ev-l4-license], summary: "The EU-domiciled multimodal licence gap and systemic-risk status; 700M-MAU trigger; naming/attribution; access gate; closed data/code; very large infra for Maverick/Behemoth."}
+      - {key: openness, title: "Openness tier & components", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-license, ev-l4-card], summary: "gated_open - weights downloadable after click-through, strong docs, but training data/code closed and the licence conditional (incl. the EU-multimodal carve-out)."}
+      - {key: license, title: "License terms & permitted use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-license, ev-l4-aup], summary: "Llama 4 Community Licence (non-OSI): the incorporated AUP denies the multimodal-model licence to EU-domiciled individuals/companies (end users exempted); 700M-MAU trigger; 'Built with Llama' naming; California law. Llama 3.x text models (meta-llama entry) do not carry the EU carve-out."}
+      - {key: provenance, title: "Supply-chain & provenance", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "Verified, access-gated meta-llama org; safetensors with checksums and per-version licence tags; hosted on major clouds - pin the revision and verify checksums."}
+      - {key: eu-ai-act, title: "EU AI Act posture", doc_type: explanation, source_type: aggregated, coverage: full, refs: [ev-l4-aup, ev-l4-license], summary: "GPAI, systemic-risk for the large models (>1e25); no open-source exemption (non-FOSS + systemic-risk); Meta declined the GPAI Code of Practice; and the EU-multimodal carve-out denies EU-domiciled entities a licence outright."}
+      - {key: evaluation, title: "Benchmarks & evaluation", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-l4-perf], summary: "Llama 4 Maverick is competitive among open multimodal models; not OneHill-reproduced."}
+      - {key: safety-eval, title: "Independent safety evaluation", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-l4-safety], summary: "Meta ships Llama Guard and Prompt Guard and documents safety tuning; no broad independent multimodal red-team is aggregated here."}
+  implement:
+    completeness: 100.0
+    originality: 0.0
+    items:
+      - {key: install, title: "Install & run", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "Accept the licence on the gated meta-llama org, download safetensors, and serve with vLLM/transformers or a major cloud endpoint. EU-domiciled entities: confirm you are licensed before use (multimodal is not granted to you)."}
+      - {key: hardware, title: "Hardware & VRAM requirements", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "Scout (109B/17B) on a high-memory node or quantized; Maverick (400B/17B) multi-GPU; Behemoth (~2T/288B active) data-centre-scale. Very long context is memory-intensive."}
+      - {key: serving, title: "Serving stacks", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-card, ev-l4-perf], summary: "vLLM, transformers, and every major cloud (Bedrock, Vertex, Together, Groq); the broadest toolchain of any open family."}
+      - {key: safe-deployment, title: "Safe-deployment controls & Deployment Ceiling", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-l4-safety, ev-l4-aup], summary: "Deployment Ceiling T3 (conditional): EU-domiciled entities must not use the weights; check the 700M-MAU trigger; pair with Llama Guard + Prompt Guard, add your own guardrails, and treat images/tool content as untrusted."}
+      - {key: quantization, title: "Available quantizations", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "Extensive community GGUF/quantized builds; use remains bound by the Llama 4 licence including the EU carve-out."}
+      - {key: fine-tuning, title: "Fine-tuning & adaptation", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-l4-license], summary: "SFT/LoRA supported for licensed (non-EU-domiciled) users; derivatives inherit the Llama conditions and naming. Training data/code closed, so no from-scratch reproduction."}
+      - {key: integration, title: "API / OpenAI-compatible integration", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "Serve behind an OpenAI-compatible endpoint or a cloud API; handle the Llama-4 chat template, special tokens, and multimodal (image) inputs at the client."}
+  use:
+    completeness: 66.7
+    originality: 0.0
+    items:
+      - {key: capabilities, title: "Capabilities & modalities", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-perf], summary: "Natively multimodal (image + text) MoE models with strong general, coding and multilingual ability and very long context."}
+      - {key: context-window, title: "Context window & long-context behaviour", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-l4-card], summary: "Scout advertises up to 10M tokens, Maverick up to 1M per Meta; OneHill has not independently measured effective recall at those lengths."}
+      - {key: chat-template, title: "Prompt format & chat template", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-l4-card], summary: "Llama-4 chat template with header/turn special tokens and multimodal input formatting; apply via the tokenizer's chat template."}
+      - {key: languages, title: "Language coverage", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-l4-card], summary: "Broad multilingual coverage (a Llama strength); per-language depth varies and is not exhaustively documented."}
+      - {key: tool-use, title: "Function / tool calling", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "Documented tool-calling (built-in and custom) continuing the Llama 3.1+ tradition; confirm the schema per serving stack."}
+      - {key: structured-output, title: "Structured / JSON-constrained output", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-l4-card], summary: "Tool-calling supports structured responses; strict JSON/schema-constrained decoding is a serving-layer feature (vLLM grammars)."}
+  support:
+    completeness: 72.2
+    originality: 0.0
+    items:
+      - {key: troubleshooting, title: "Common problems & fixes", doc_type: troubleshooting, source_type: aggregated, coverage: partial, refs: [ev-l4-card], summary: "Multimodal input formatting, very-long-context memory, MoE sharding for Maverick/Behemoth, and chat-template/special-token errors; not exhaustive."}
+      - {key: release-versioning, title: "Versions, changelog & cadence", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "Scout and Maverick released, Behemoth larger; on the verified meta-llama org with per-version licence tags. The revision hash is the changelog anchor."}
+      - {key: security-disclosure, title: "Security / vulnerability disclosure", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-aup], summary: "Meta provides a reporting path (LlamaUseReport@meta.com) and ships Llama Guard / Prompt Guard, though a formal model-vulnerability-disclosure policy is limited."}
+      - {key: channels, title: "Community & support channels", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-l4-card], summary: "The meta-llama org, Meta's Llama site/docs, and the very large Llama-ecosystem community and cloud partners."}
+      - {key: deprecation, title: "Deprecation / end-of-life policy", doc_type: reference, source_type: gap, gap_reason: "No published deprecation/end-of-life policy for Llama 4 checkpoints; prior versions remain downloadable but no sunset commitment is documented."}
+      - {key: known-issues, title: "Tracked known issues", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-l4-aup, ev-l4-license], summary: "The EU-domiciled multimodal licence gap, systemic-risk status, 700M-MAU trigger, and access gate."}
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: "For non-EU users the Community Licence permits commercial use and modification below 700M MAU, with an AUP and 'Built with Llama' naming - moderate. But for EU-domiciled individuals/companies the multimodal licence is NOT granted at all, so their use-and-modify is effectively none. Scored moderate as the global position, with the EU carve-out flagged as decisive for EU entities."
+      # grounded in: ev-l4-license + ev-l4-aup (license/terms, retrieved) - EU-multimodal carve-out, 700M-MAU, naming
+    transparency:
+      level: moderate
+      rationale: "Weights are inspectable and documentation is strong, but training data and code are closed - open weights, closed process, so moderate."
+      # grounded in: ev-l4-card (model_card) - open weights + strong docs; data/code closed
+    reliability:
+      level: strong
+      rationale: "Performance 4, operational 5 and safety 4 (with first-party Llama Guard / Prompt Guard): capable multimodal models with the broadest serving and a real guard stack; all at or above 4, so reliability is strong."
+      # grounded in: dimension scores performance 4 / operational 5 / safety 4
+    data_control:
+      level: moderate
+      rationale: "Self-hosting keeps your data local with no telemetry or clawback, but the access gate and the EU-multimodal carve-out mean your right to use the model is conditional on domicile and licence acceptance - moderate."
+      # grounded in: ev-l4-license (license, retrieved) - access gate + EU carve-out; self-host no telemetry
+  verdict: "For non-EU users you partially own self-hosted Llama 4: it runs on your infrastructure, performs strongly as a multimodal family, and pairs with Meta's Llama Guard and Prompt Guard (reliability strong), but the Community Licence's 700M-MAU trigger, naming conditions, and access gate keep use-and-modify at moderate - ownership partial. For EU-domiciled individuals and companies the picture is worse: the licence denies you any grant to the multimodal models, so your effective ownership is none - prefer the Llama 3.1 text line (the meta-llama entry, no EU clause) or a non-Llama family. Either way, check the 700M-MAU trigger, honour the Llama attribution terms, and confirm your domicile against the AUP before use."
+evidence:
+- id: ev-l4-license
+  claim: 'Llama 4 Community License, read verbatim (via Meta''s canonical GitHub mirror
+    meta-llama/llama-models): the "Additional Commercial Terms" 700M-MAU threshold ("greater than 700
+    million monthly active users in the preceding calendar month, you must request a license from
+    Meta"), the "Built with Llama" attribution clause, California governing law, and the incorporated AUP
+    carrying the EU multimodal restriction.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://www.llama.com/llama4/license/
+  date: '2026-08-03'
+- id: ev-l4-aup
+  claim: 'Llama 4 Acceptable Use Policy, read verbatim: "With respect to any multimodal models included
+    in Llama 4, the rights granted under Section 1(a) ... are not being granted to you if you are an
+    individual domiciled in, or a company with a principal place of business in, the European Union. This
+    restriction does not apply to end users of a product or service that incorporates any such multimodal
+    models." Plus six prohibited-use categories and the LlamaUseReport@meta.com reporting path. The 3.1
+    AUP omits the EU clause; 3.2/3.3 carry it (3.3 is text-only, so it is moot there).'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://www.llama.com/llama4/use-policy/
+  date: '2026-08-03'
+- id: ev-l4-card
+  claim: 'Llama 4 on the verified, access-gated meta-llama HF org: Scout (109B/17B, very long context),
+    Maverick (400B/17B), Behemoth (larger); natively multimodal MoE; safetensors with checksums and a
+    llama4 licence tag; hosted on Bedrock/Vertex/Together/Groq.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/meta-llama
+  date: '2026-08-03'
+- id: ev-l4-perf
+  claim: On public leaderboards Llama 4 Maverick is competitive among open multimodal models; the family
+    adds native multimodality and very long context. Not OneHill-reproduced this session.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://lmarena.ai/leaderboard
+  date: '2026-08-03'
+- id: ev-l4-safety
+  claim: Meta ships Llama Guard (input/output moderation) and Prompt Guard (prompt-injection/jailbreak
+    detection) with the Llama family and documents safety tuning; no broad independent multimodal
+    red-team is aggregated here.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: false
+  url: https://huggingface.co/meta-llama
+  date: '2026-08-03'
+changelog:
+- date: '2026-08-03'
+  change: Initial entry - split from the aggregate `meta-llama` entry. Llama 4 (Scout/Maverick/Behemoth) is scored apart from the Llama 3.x text line because of a licence + scored divergence that bites - the incorporated AUP denies EU-domiciled individuals/companies any licence to the multimodal models (verbatim), and the large Llama 4 models are systemic-risk (>1e25) - dropping legal to 2 with a hard flag, and making EU-domiciled ownership effectively none. Non-EU ownership is partial. Licence/AUP read verbatim from Meta's canonical mirror; grounded 2026-08-03.
+last_verified: '2026-08-03'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

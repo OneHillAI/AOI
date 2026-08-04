@@ -1,0 +1,384 @@
+# OneHill v2 MODEL library entry for the NON-COMMERCIAL Mistral models. Split from the aggregate
+# mistral entry on the LICENCE axis: these ship under Mistral's research/non-production licences (MRL
+# research-only: Ministral 8B, Mistral Large, Pixtral Large; MNPL non-production: Codestral) - NOT the
+# Apache-2.0 of the flagship line (the `mistral` entry). The non-commercial restriction takes
+# use-and-modify to weak and ownership to limited - that is the divergence.
+# Validated against schema/model.v2.schema.json.
+
+schema_version: '2.0'
+id: mistral-research-license
+name: Mistral (research / non-production licence)
+aliases:
+- Ministral 8B
+- Mistral Large 2
+- Pixtral Large
+- Codestral
+- mistralai/Mistral-Large-Instruct-2411
+family:
+  id: mistral
+  name: Mistral
+publisher:
+  name: Mistral AI
+  country: France
+  accountable_entity: true
+  url: https://huggingface.co/mistralai
+  security_contact: https://mistral.ai/terms
+summary: 'The Mistral models that are NOT Apache-2.0 - shipped under Mistral''s two non-commercial
+  licences. Under the Mistral Research Licence (MRL, research-only): Ministral 8B, Mistral Large (2,
+  123B) and the multimodal Pixtral Large. Under the Mistral AI Non-Production Licence (MNPL,
+  non-production-only): Codestral. They are a separate entry from the Apache-2.0 flagship line (the
+  `mistral` entry) because the licence is the divergence: the MRL grants use "solely for (a) personal,
+  scientific or academic research, and (b) for non-profit and non-commercial purposes", excluding
+  revenue activity and SaaS distribution; the MNPL permits only "testing, research, Personal, or
+  evaluation purposes in Non-Production Environments". In both cases production or commercial use
+  requires a separately negotiated commercial licence from Mistral. That bar takes use-and-modify to
+  weak and ownership to limited - well below the Apache line. What keeps the rest of the profile strong
+  is the provider: Mistral is an EU-domiciled, accountable lab and an early GPAI Code of Practice
+  signatory, and the models themselves (Mistral Large 2, Pixtral Large) are highly capable. Weights are
+  openly downloadable and inspectable for research; the restriction is on deployment, not access.
+
+  '
+variants:
+- name: Ministral 8B (MRL)
+  params_total: 8B
+  context_window: 128k
+  kind: instruct
+  safety_tuned: true
+- name: Mistral Large 2 (123B, MRL)
+  params_total: 123B
+  context_window: 128k
+  kind: instruct
+  safety_tuned: true
+- name: Pixtral Large (124B, multimodal, MRL)
+  params_total: 124B
+  context_window: 128k
+  kind: multimodal
+  safety_tuned: true
+- name: Codestral (22B, MNPL non-production)
+  params_total: 22B
+  context_window: 32k
+  kind: code
+  safety_tuned: true
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: open
+    license: partial
+  license:
+    spdx: LicenseRef-Mistral-MRL-0.1
+    name: Mistral Research Licence 0.1 (MRL) / Mistral AI Non-Production Licence 0.1 (MNPL for Codestral)
+    classification: research_only
+    commercial_use: prohibited
+    notable_restrictions:
+    - 'MRL (Ministral 8B, Mistral Large, Pixtral Large) - research-only: use "solely for (a) personal,
+      scientific or academic research, and (b) for non-profit and non-commercial purposes"; excludes
+      revenue activity and SaaS distribution. France/Paris jurisdiction'
+    - 'MNPL (Codestral) - non-production only: "You shall only use the Mistral Models and Derivatives for
+      testing, research, Personal, or evaluation purposes in Non-Production Environments"; no commercial
+      supply including SaaS/cloud instances'
+    - Production or commercial use of any of these models requires a separately negotiated commercial
+      licence from Mistral. Outputs are not claimed by Mistral
+    url: https://mistral.ai/licenses/MRL-0.1.md
+provenance:
+  canonical_source: https://huggingface.co/mistralai
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: Community GGUF / AWQ / FP8 quantizations
+      trust: community
+      note: Quantized builds circulate, but redistribution and use remain bound by the MRL/MNPL
+        non-commercial terms - a community quant does not confer commercial rights. Pin the mistralai
+        revision and verify checksums
+  checkpoint_checklist_score: 5
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: 'Mistral Large 2 (123B) and Pixtral Large (124B) are the largest here;
+      Mistral does not publish absolute FLOP figures, but these dense models plausibly sit below or near
+      the 1e25 threshold rather than clearly above it. Ministral 8B and Codestral are well below.'
+    over_1e25_threshold: null
+    article_55_docs_available: partial
+  open_source_exemption:
+    license_qualifies: 'no'
+    rationale: 'The MRL and MNPL are NOT free-and-open-source licences - they bar commercial /
+      production use - so the Article 53 open-source exemption does not apply on the licence axis
+      (unlike the Apache Mistral models). That said, Mistral is EU-domiciled, an early GPAI Code of
+      Practice signatory, and publishes fuller technical documentation than most, so the surviving GPAI
+      obligations are partially met.
+
+      '
+  provider_package:
+    technical_documentation: 'yes'
+    downstream_information: partial
+    copyright_policy: partial
+    training_content_summary: partial
+    code_of_practice_signatory: true
+  deployer_notes: 'EU-domiciled provider with a Code-of-Practice posture and good documentation, but the
+    licence bars production/commercial use without a negotiated commercial agreement. An EU research or
+    evaluation user is well served; a commercial deployer must negotiate a licence first, and should
+    otherwise use the Apache Mistral models (the `mistral` entry).
+
+    '
+  last_assessed: '2026-08-03'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T2
+  ceiling_conditional: true
+  hardware_notes: 'A wide range: Ministral 8B and Codestral 22B run on one or two GPUs, while Mistral
+    Large 2 (123B) and Pixtral Large (124B) need serious multi-GPU infrastructure or aggressive
+    quantization. Note that any production deployment is licence-barred without a commercial agreement.
+
+    '
+  serving_support:
+  - vllm
+  - transformers
+  - llama.cpp
+  - ollama
+  controls_required:
+  - Do not deploy in production or for commercial purposes without a separately negotiated commercial
+    licence from Mistral - the MRL/MNPL bar it
+  - Add your own input/output guardrails and a guard/classifier model - historically lighter safety
+    tuning and no first-party guard
+  - Add prompt-injection defences and treat retrieved/tool content as untrusted for agentic use;
+    for Pixtral Large treat images as untrusted input too
+  - Verify checksums and pin the exact mistralai revision
+score:
+  rubric_version: '1.1'
+  headline: 63.2
+  grade: C
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 2
+      rationale: 'Weights are openly downloadable and inspectable, but the licence bars commercial /
+        production use (research or non-production only), training data and code are closed, and
+        evaluation is partial. The non-commercial restriction pulls this below the open-weights anchor -
+        a 2, a notch under the Apache Mistral line (3).
+
+        '
+      evidence_refs:
+      - ev-mrl-license
+      - ev-mrl-card
+    provenance:
+      score: 4
+      rationale: 'Verified mistralai org on Hugging Face, safetensors with checksums, a clear canonical
+        source and a documented per-model licence table, no malicious-checkpoint incident (checklist
+        ~5/8). Short of 5 only for the absence of cryptographic signing / provenance attestation.
+
+        '
+      evidence_refs:
+      - ev-mrl-card
+    legal:
+      score: 2
+      rationale: 'A clear licence from an EU-domiciled provider (France law) with good documentation, but
+        it bars commercial / production use without a separately negotiated agreement, so the
+        open-source exemption does not apply and a commercial adopter cannot use it as released. Usable
+        for research (hence a 2, not a 1), but the non-commercial bar is the reason ownership is only
+        limited.
+
+        '
+      evidence_refs:
+      - ev-mrl-license
+      - ev-mrl-eu
+    safety:
+      score: 3
+      rationale: 'Safety-tuned instruct/multimodal models with documented behaviour, meeting the score-3
+        anchor, but Mistral has historically shipped lighter safety tuning than some peers and no
+        first-party guard model - deployers must add their own guardrails.
+
+        '
+      evidence_refs:
+      - ev-mrl-behaviour
+    performance:
+      score: 4
+      rationale: 'These include some of Mistral''s most capable models - Mistral Large 2 (123B) was a
+        flagship, Pixtral Large a strong multimodal, Ministral 8B strong-for-size. Capped at 4 because
+        OneHill has not independently re-run the benchmarks.
+
+        '
+      evidence_refs:
+      - ev-mrl-perf
+    operational:
+      score: 4
+      rationale: 'Strong serving mechanics (vLLM, transformers, llama.cpp, Ollama) and community quants,
+        but the largest models (123B/124B) need serious infrastructure and, decisively, production
+        deployment is licence-barred - so the practical operational ceiling is lower than the Apache
+        line. A 4.
+
+        '
+      evidence_refs:
+      - ev-mrl-card
+      - ev-mrl-perf
+    governance:
+      score: 4
+      rationale: 'A strong governance posture: a named, accountable, EU-domiciled provider (Mistral AI),
+        an early GPAI Code of Practice signatory with a public licence table and good documentation.
+        Short of 5 for the absence of a formal published vulnerability-disclosure process.
+
+        '
+      evidence_refs:
+      - ev-mrl-card
+      - ev-mrl-eu
+signals:
+  trainability:
+    level: limited
+    dimension: openness
+    summary: "You may fine-tune for research, but any commercial or production use of the model or a derivative needs a separately negotiated Mistral licence, and training data and code are closed - so trainability is legally boxed in."
+    refs: [ev-mrl-license]
+  knowledge_structure:
+    level: strong
+    dimension: performance
+    summary: "Capable knowledge/analysis and coding backbones (Mistral Large 2, Codestral, Pixtral Large's vision) - but only usable as such in research/non-production settings without a commercial licence."
+    refs: [ev-mrl-perf, ev-mrl-license]
+  specialization:
+    level: weak
+    dimension: openness
+    summary: "Poorly suited to friction-free specialisation for deployment: derivatives inherit the non-commercial bar, so a specialised production model needs a negotiated commercial licence."
+    refs: [ev-mrl-license]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Mechanically easy to swap (safetensors, broad serving), but the non-commercial licence, not the tooling, is what constrains real-world adoption."
+    refs: [ev-mrl-card]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Not independently benchmarked for misuse; historically lighter safety tuning and no companion guard, with no broad third-party red-team to aggregate."
+    refs: [ev-mrl-behaviour]
+documentation:
+  assess:
+    completeness: 86.7
+    originality: 0.0
+    items:
+      - {key: intended-use, title: "Intended & out-of-scope use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-license, ev-mrl-perf], summary: "Capable Mistral models for research and evaluation only; production/commercial use is licence-barred without a negotiated agreement. For commercial work use the Apache Mistral line, or negotiate a licence."}
+      - {key: limitations, title: "Known limitations, bias & failure modes", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-behaviour, ev-mrl-license], summary: "The non-commercial licence is the dominant limitation; plus historically lighter safety tuning, no first-party guard, closed data/code, and large infra for the 123B/124B models."}
+      - {key: openness, title: "Openness tier & components", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-license, ev-mrl-card], summary: "open_weights with a conditional (non-commercial) licence - weights downloadable and inspectable for research, but training data/code closed and commercial/production use barred."}
+      - {key: license, title: "License terms & permitted use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-license], summary: "MRL (Ministral 8B, Mistral Large, Pixtral Large): research/academic/non-profit only. MNPL (Codestral): testing/research/personal/evaluation in non-production only. Both require a separately negotiated commercial licence for production; France law. NOT Apache-2.0."}
+      - {key: provenance, title: "Supply-chain & provenance", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-card], summary: "Verified mistralai org with a public per-model licence table; safetensors with checksums; community quants remain bound by the non-commercial terms - pin the revision and verify checksums."}
+      - {key: eu-ai-act, title: "EU AI Act posture", doc_type: explanation, source_type: aggregated, coverage: full, refs: [ev-mrl-eu, ev-mrl-license], summary: "GPAI; the MRL/MNPL are not FOSS, so no open-source exemption on the licence axis (unlike the Apache line), but Mistral is EU-domiciled, a Code-of-Practice signatory, and documents well - surviving obligations partially met."}
+      - {key: evaluation, title: "Benchmarks & evaluation", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-perf], summary: "Mistral Large 2 and Pixtral Large are strong; not OneHill-reproduced."}
+      - {key: safety-eval, title: "Independent safety evaluation", doc_type: reference, source_type: gap, gap_reason: "No broad independent red-team / safety battery has been published for these Mistral models, and OneHill ran none this session; historically lighter safety tuning is noted under limitations."}
+  implement:
+    completeness: 95.5
+    originality: 0.0
+    items:
+      - {key: install, title: "Install & run", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-mrl-card], summary: "Download safetensors from the mistralai org and serve with vLLM, transformers, llama.cpp or Ollama - for research/non-production use only. Pin the revision and verify checksums."}
+      - {key: hardware, title: "Hardware & VRAM requirements", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-card], summary: "Ministral 8B / Codestral 22B on one-to-two GPUs; Mistral Large 2 (123B) and Pixtral Large (124B) need serious multi-GPU infrastructure or heavy quantization."}
+      - {key: serving, title: "Serving stacks", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-card], summary: "vLLM, transformers, llama.cpp and Ollama - strong mechanics, but production serving is licence-barred without a commercial agreement."}
+      - {key: safe-deployment, title: "Safe-deployment controls & Deployment Ceiling", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-mrl-license, ev-mrl-behaviour], summary: "Deployment Ceiling T2 (conditional): do not deploy in production/commercially without a negotiated Mistral licence; supply your own guardrails and a guard model; add prompt-injection defences (and treat images as untrusted for Pixtral Large)."}
+      - {key: quantization, title: "Available quantizations", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-card], summary: "Community GGUF/AWQ/FP8 builds circulate, but their use remains bound by the MRL/MNPL non-commercial terms - a quant confers no commercial rights."}
+      - {key: fine-tuning, title: "Fine-tuning & adaptation", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-mrl-license], summary: "Fine-tuning for research is permitted, but derivatives inherit the non-commercial bar; commercial/production use of a derivative needs a negotiated licence. Data/code closed."}
+      - {key: integration, title: "API / OpenAI-compatible integration", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-mrl-card], summary: "Serve behind vLLM's OpenAI-compatible endpoint for research; Mistral also offers these on its own commercial API/platform, which is the licensed commercial path."}
+  use:
+    completeness: 61.1
+    originality: 0.0
+    items:
+      - {key: capabilities, title: "Capabilities & modalities", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-perf], summary: "Strong instruct (Ministral 8B, Mistral Large 2), code (Codestral), and multimodal image+text (Pixtral Large) capability."}
+      - {key: context-window, title: "Context window & long-context behaviour", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-card], summary: "128K on the instruct/multimodal models, 32K on Codestral per the cards; OneHill has not independently measured effective long-context recall."}
+      - {key: chat-template, title: "Prompt format & chat template", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-card], summary: "Mistral instruct templates (v3/tekken tokenizer on newer models); use apply_chat_template and confirm the tokenizer per model."}
+      - {key: languages, title: "Language coverage", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-card], summary: "Strong European-language coverage (a Mistral strength) alongside English; per-language depth varies."}
+      - {key: tool-use, title: "Function / tool calling", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-card], summary: "The instruct models support function/tool calling via the Mistral schema; confirm and test per serving stack."}
+      - {key: structured-output, title: "Structured / JSON-constrained output", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-card], summary: "Mistral documents JSON/structured-output modes on its platform; self-hosted, constrained decoding is a serving-layer feature."}
+  support:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - {key: troubleshooting, title: "Common problems & fixes", doc_type: troubleshooting, source_type: aggregated, coverage: partial, refs: [ev-mrl-card], summary: "Tokenizer/template mismatches on newer models, multi-GPU sharding for the 123B/124B, and image-preprocessing for Pixtral Large; not exhaustive."}
+      - {key: release-versioning, title: "Versions, changelog & cadence", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [ev-mrl-card], summary: "Released on the verified mistralai org with dated version tags (e.g. -2411); the Hugging Face revision hash is the changelog anchor. Licence tier is per-model - verify each."}
+      - {key: security-disclosure, title: "Security / vulnerability disclosure", doc_type: reference, source_type: gap, gap_reason: "No formal published model vulnerability-disclosure/security policy was found; Mistral's general terms/contact is the only channel."}
+      - {key: channels, title: "Community & support channels", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-mrl-card], summary: "The mistralai Hugging Face org, Mistral's docs/platform, and a large community; commercial licensing is via Mistral directly."}
+      - {key: deprecation, title: "Deprecation / end-of-life policy", doc_type: reference, source_type: gap, gap_reason: "No published deprecation/end-of-life policy for the open-weight checkpoints; dated versions remain downloadable but no sunset commitment is documented."}
+      - {key: known-issues, title: "Tracked known issues", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-mrl-license, ev-mrl-behaviour], summary: "The non-commercial licence bar, historically lighter safety tuning, no first-party guard, and large infra for the flagship sizes."}
+ownership:
+  level: limited
+  factors:
+    use_modify:
+      level: weak
+      rationale: "The MRL restricts use to research/academic/non-profit purposes, and the MNPL to non-production testing/evaluation; any commercial or production use of the model or a derivative requires a separately negotiated Mistral licence. A blanket non-commercial bar is the weakest use-and-modify position - weak."
+      # grounded in: ev-mrl-license (license, retrieved) - MRL-0.1 research-only / MNPL-0.1 non-production-only
+    transparency:
+      level: moderate
+      rationale: "Weights are inspectable and Mistral documents its models well, but training data and code are closed - open weights, closed process, so moderate."
+      # grounded in: ev-mrl-card (model_card) - open weights + good docs; data/code closed
+    reliability:
+      level: strong
+      rationale: "Performance 4, operational 4 and safety 3 from an accountable EU provider: capable models with strong serving; all at or above 3, two at 4, so reliability is strong. The caveat is the absence of a first-party guard model."
+      # grounded in: dimension scores performance 4 / operational 4 / safety 3
+    data_control:
+      level: strong
+      rationale: "Self-hosted for research, the weights run entirely on your own infrastructure with no telemetry or clawback, so your data stays yours - the constraint is on permitted use, not data residency."
+      # grounded in: ev-mrl-license (license, retrieved) - self-host, no telemetry; EU-domiciled provider
+  verdict: "You have only limited ownership of these Mistral models: self-hosting keeps your data yours and the models are capable and well-supported (data-control and reliability strong), but the MRL/MNPL bar commercial and production use without a separately negotiated licence, so use-and-modify is weak - ownership is limited. For anything beyond research or evaluation, either negotiate a commercial licence with Mistral or use the Apache-2.0 Mistral models (the `mistral` entry), which carry none of these restrictions and reach substantial ownership."
+evidence:
+- id: ev-mrl-license
+  claim: 'Mistral licence docs, read: [MRL-0.1] use "solely for (a) personal, scientific or academic
+    research, and (b) for non-profit and non-commercial purposes", excluding revenue activity and SaaS
+    distribution (Ministral 8B, Mistral Large, Pixtral Large). [MNPL-0.1] "You shall only use the
+    Mistral Models and Derivatives for testing, research, Personal, or evaluation purposes in
+    Non-Production Environments", no commercial supply including SaaS/cloud (Codestral). France/Paris
+    jurisdiction; outputs not claimed by Mistral. Mistral''s per-model weights doc assigns each model to
+    Apache-2.0 / MRL / MNPL.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://mistral.ai/licenses/MRL-0.1.md
+  date: '2026-08-03'
+- id: ev-mrl-card
+  claim: 'mistralai Hugging Face org (verified) and Mistral docs: Ministral 8B, Mistral Large 2 (123B),
+    Pixtral Large (124B multimodal) tagged MRL; Codestral tagged MNPL; safetensors with checksums; broad
+    serving (vLLM, transformers, llama.cpp, Ollama).'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/mistralai
+  date: '2026-08-03'
+- id: ev-mrl-perf
+  claim: On public leaderboards Mistral Large 2 and Pixtral Large are strong open-weight models, and
+    Ministral 8B is strong for its size; not OneHill-reproduced this session.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/mistralai
+  date: '2026-08-03'
+- id: ev-mrl-behaviour
+  claim: Mistral has historically shipped lighter safety tuning than some peers and no first-party guard
+    model; independent behavioural analysis is limited.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://huggingface.co/mistralai
+  date: '2026-08-03'
+- id: ev-mrl-eu
+  claim: Mistral AI is EU-domiciled (France) and an early GPAI Code of Practice signatory with public
+    per-model licensing and good documentation, but the MRL/MNPL are non-commercial (non-FOSS), so no
+    open-source exemption applies on the licence axis.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: false
+  url: https://mistral.ai/licenses/MRL-0.1.md
+  date: '2026-08-03'
+changelog:
+- date: '2026-08-03'
+  change: Initial entry - split from the aggregate `mistral` entry on the licence axis. This is the non-commercial Mistral line - MRL research-only (Ministral 8B, Mistral Large 2, Pixtral Large) and MNPL non-production (Codestral); the Apache-2.0 flagship models remain the `mistral` entry. The non-commercial bar takes use-and-modify to weak and ownership to limited - the divergence that justifies the split. Licences read from Mistral's MRL-0.1 / MNPL-0.1 docs; grounded 2026-08-03.
+last_verified: '2026-08-03'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

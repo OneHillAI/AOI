@@ -16,13 +16,14 @@ publisher:
   url: https://www.llama.com/
   security_contact: https://www.llama.com/responsible-use-guide/
 summary: 'Meta''s Llama family is the most widely adopted open-weight LLM lineage,
-  spanning dense Llama 3.1 (8B/70B/405B, 128K context) and Llama 3.3 70B through the
-  Llama 4 mixture-of-experts models (Scout, Maverick, Behemoth), shipped alongside
-  the companion Llama Guard and Prompt Guard safety classifiers. Weights are downloadable
+  spanning dense Llama 3.1 (8B/70B/405B, 128K context) and Llama 3.3 70B. THIS entry is
+  the Llama 3.x TEXT line, shipped alongside the companion Llama Guard and Prompt Guard
+  safety classifiers; the natively multimodal Llama 4 mixture-of-experts models (Scout,
+  Maverick, Behemoth) are the separate llama-4 entry, because Llama 4''s licence carries an
+  EU-domiciled multimodal carve-out the 3.x text models do not. Weights are downloadable
   but gated behind a click-through acceptance of the restrictive Llama Community License
   - which is not OSI-approved, imposes a 700M-monthly-active-user threshold, an Acceptable
-  Use Policy, "Built with Llama" attribution, and forbids EU-domiciled entities
-  from using the multimodal variants. The largest checkpoints cross the EU AI Act''s
+  Use Policy, and "Built with Llama" attribution. Llama 3.1 405B crosses the EU AI Act''s
   1e25-FLOP systemic-risk threshold, and Meta publicly declined to sign the EU GPAI
   Code of Practice - so the single most important thing for an adopter is that Llama
   is technically first-class and operationally trivial to run, but legally the most
@@ -49,19 +50,6 @@ variants:
   params_total: 70B
   context_window: 128K
   kind: instruct
-  safety_tuned: true
-- name: Llama 4 Scout
-  params_total: 16 experts
-  params_active: 17B
-  context_window: very long (multi-hundred-K+)
-  kind: multimodal
-  safety_tuned: true
-- name: Llama 4 Maverick
-  params_active: 17B
-  kind: multimodal
-  safety_tuned: true
-- name: Llama 4 Behemoth
-  kind: multimodal
   safety_tuned: true
 - name: Llama Guard
   kind: guard
