@@ -1,6 +1,6 @@
 ---
 import AppShell from '../../layouts/AppShell.astro';
-import { getAllEntries } from '../../lib/entries';
+import { getAllEntries, getFamilies } from '../../lib/entries';
 
 const all = getAllEntries();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -39,7 +39,9 @@ const row = (r) => {
     : [r.regionCode].filter(Boolean).join(' · ');
   return { r, region, meta };
 };
-const modelRows = models.map(row);
+// The showcase groups model releases under their `family` relation (families ordered by
+// their strongest release, releases within a family by score). Providers stay a flat list.
+const families = getFamilies();
 const providerRows = providers.map(row);
 ---
 <AppShell title="Library - AI Ownership Index" crumbs={crumbs} browseActive="Library" reviewed={`${all.length} entries`} canvas="ledger">
@@ -87,20 +89,27 @@ const providerRows = providers.map(row);
   <div class="ledger">
     <div class="ledger__head"><span>Grade</span><span>Entry</span><span>Openness</span><span>Ownership</span><span>Docs</span></div>
 
-    <div class="grouplabel" data-group="model">Models</div>
-    <div data-groupbody="model">
-      {modelRows.map(({ r, region, meta }) => (
-        <a class={`entry own-${r.ownership.level}`} href={`${base}/library/${r.dir}/${r.id}/`}
-           data-type="model" data-openness={r.opennessTier} data-ownership={r.ownership.level}
-           data-region={region} data-name={r.title.toLowerCase()} data-score={r.score} data-docs={r.docsGauge} data-rank={rank(r.ownership.level)}>
-          <span class="entry__grade"><span class="entry__letter">{r.grade}</span><span class="entry__score">{r.score}</span></span>
-          <span class="entry__nameblock"><span class="entry__name">{r.title}</span><span class="entry__meta">{meta}</span></span>
-          <span class="entry__open">{r.opennessTier}<small>{r.licence}</small></span>
-          <span class="entry__own"><span>{r.ownership.level}</span></span>
-          <span class="gauge"><span class="gauge__track"><span class="gauge__fill" style={`width:${r.docsGauge}%`}></span></span><span class="gauge__pct">{r.docsGauge}%</span></span>
-        </a>
-      ))}
-    </div>
+    {families.map((fam) => (
+      <Fragment>
+        <div class="grouplabel grouplabel--fam" data-group={`fam-${fam.id}`} data-fam="model">
+          <span class="grouplabel__fam">Family</span> {fam.name}
+          <span class="pct">{fam.entries.length}</span>
+        </div>
+        <div data-groupbody={`fam-${fam.id}`}>
+          {fam.entries.map(row).map(({ r, region, meta }) => (
+            <a class={`entry own-${r.ownership.level}`} href={`${base}/library/${r.dir}/${r.id}/`}
+               data-type="model" data-openness={r.opennessTier} data-ownership={r.ownership.level}
+               data-region={region} data-name={r.title.toLowerCase()} data-score={r.score} data-docs={r.docsGauge} data-rank={rank(r.ownership.level)}>
+              <span class="entry__grade"><span class="entry__letter">{r.grade}</span><span class="entry__score">{r.score}</span></span>
+              <span class="entry__nameblock"><span class="entry__name">{r.title}</span><span class="entry__meta">{meta}</span></span>
+              <span class="entry__open">{r.opennessTier}<small>{r.licence}</small></span>
+              <span class="entry__own"><span>{r.ownership.level}</span></span>
+              <span class="gauge"><span class="gauge__track"><span class="gauge__fill" style={`width:${r.docsGauge}%`}></span></span><span class="gauge__pct">{r.docsGauge}%</span></span>
+            </a>
+          ))}
+        </div>
+      </Fragment>
+    ))}
 
     <div class="grouplabel" data-group="provider">Inference providers</div>
     <div data-groupbody="provider">
@@ -239,4 +248,11 @@ const providerRows = providers.map(row);
       apply();
     })();
   </script>
+
+  <style>
+    /* The library groups model releases under their family; a small kicker marks each
+       family header so it reads as a grouping, not another entry. */
+    .grouplabel__fam { font-size: .55rem; text-transform: uppercase; letter-spacing: .12em;
+      font-weight: 700; color: var(--faint); margin-right: .15rem; }
+  </style>
 </AppShell>
