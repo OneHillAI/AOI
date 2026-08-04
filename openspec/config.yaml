@@ -1,0 +1,10 @@
+schema: spec-driven
+
+# Project context shown to agents when creating artifacts.
+context: |
+  The AI Ownership Index (AOI): an evidence-graded registry rating how much you own open
+  models and the inference providers that serve them. Each model entry is a `models/<id>/`
+  folder with a schema-validated `entry.yaml` (scored by scripts/score.py into a seven-dimension
+  headline and a four-factor ownership verdict) plus four dossier files. House style: plain
+  hyphens only, British spelling, no marketing slop; every claim traces to a retrieved primary
+  document under docs/primary-sources/<id>/.

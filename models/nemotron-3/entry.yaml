@@ -1,0 +1,604 @@
+# OneHill v2 MODEL library entry for NVIDIA Nemotron 3 (Super + Nano).
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: nemotron-3
+name: NVIDIA Nemotron 3 (Super + Nano)
+aliases:
+- Nemotron 3 Super
+- Nemotron 3 Nano
+- Nemotron-3-Super
+- Nemotron-3-Nano
+- nvidia/NVIDIA-Nemotron-3-Super-120B-A12B
+- nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+family:
+  id: nemotron
+  name: NVIDIA Nemotron
+publisher:
+  name: NVIDIA
+  country: US
+  accountable_entity: true
+  url: https://huggingface.co/nvidia
+  security_contact: https://www.nvidia.com/en-us/security/
+summary: 'NVIDIA Nemotron 3 Super and Nano are the text flagships of NVIDIA''s open, agent-focused
+  hybrid Mamba-Transformer Mixture-of-Experts family: Super (120B total / 12B active) and Nano (30B
+  / 3.5B active), both with a context window up to 1M tokens and both trained on roughly 25T tokens.
+  They are among the more genuinely open releases in the registry: ungated safetensors weights,
+  runnable training recipes, a white paper, and post-training datasets under CC-BY-4.0, so they reach
+  the open_weights_recipe tier, not merely open_weights. Both are governed by the NVIDIA Nemotron
+  Open Model License (v. 2025-12-15), an Apache-2.0-derived, source-available (non-OSI) licence whose
+  grant is perpetual, worldwide, royalty-free and IRREVOCABLE, with commercial use allowed and no
+  acceptable-use or field-of-use restriction; it terminates only if the licensee brings patent or
+  copyright litigation over the Work or an output from it. Two things cap ownership at partial. First,
+  the training corpus is only PARTIALLY released: the official recipes "train exclusively on the
+  open-sourced subset of training data", so the model is not reproducible. Second, on the safety side
+  there is no published model-level safety evaluation or independent red-team for the base models -
+  safety appears only as post-training data curation - though NVIDIA does ship a genuinely
+  downloadable companion guard classifier (Nemotron-3-Content-Safety) plus the Apache-2.0 NeMo
+  Guardrails and garak tooling at the family level.
+
+  '
+variants:
+- name: NVIDIA-Nemotron-3-Super-120B-A12B
+  params_total: 120B
+  params_active: 12B
+  context_window: 1M
+  kind: reasoning
+  safety_tuned: true
+- name: NVIDIA-Nemotron-3-Nano-30B-A3B
+  params_total: 30B
+  params_active: 3.5B
+  context_window: 1M
+  kind: reasoning
+  safety_tuned: true
+openness:
+  tier: open_weights_recipe
+  components:
+    weights: open
+    training_data: partial
+    training_code: open
+    evaluation: partial
+    documentation: open
+    license: partial
+  license:
+    spdx: ''
+    name: NVIDIA Nemotron Open Model License (v. 2025-12-15)
+    classification: open_weight
+    commercial_use: allowed
+    notable_restrictions:
+    - Apache-2.0-derived and source-available, not OSI (the termination reaches "an output from the
+      Work", broader than Apache-2.0)
+    - Redistribution must carry the attribution notice "Licensed by NVIDIA Corporation under the
+      NVIDIA Nemotron Model License"
+    - Terminates only on the licensee filing patent or copyright litigation over the Work or an
+      output from it; otherwise perpetual and IRREVOCABLE, with no acceptable-use or field-of-use
+      restriction and no guardrail clause
+    url: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
+provenance:
+  canonical_source: https://huggingface.co/nvidia
+  verified_org_on_primary_host: true
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: Official BF16 / FP8 / NVFP4 quantizations (nvidia)
+      trust: publisher
+      note: NVIDIA publishes official BF16, FP8 and NVFP4 variants for Super and Nano; pin the
+        revision and verify checksums
+  checkpoint_checklist_score: 4
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: 'Not published. Only training-token counts are disclosed (~25T tokens
+      for both Super and Nano); no absolute FLOP or GPU-hour figure appears in the white paper
+      abstract, model cards or blogs read.'
+    over_1e25_threshold: null
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: uncertain
+    rationale: 'NVIDIA publishes weights, recipes, a white paper and partial training data, which is
+      more than most, and the corrected licence reading removes the earlier revocable / use-restricted
+      concern: the NVIDIA Nemotron Open Model License is irrevocable and carries no field-of-use
+      restriction. But it is source-available and not OSI, there is no formal GPAI documentation
+      package, no public training-content summary and no copyright policy, and NVIDIA is not a GPAI
+      Code of Practice signatory. A non-OSI licence without the GPAI documentation package most likely
+      does NOT cleanly reach the EU AI Act open-source exemption. Recorded as ''uncertain'' pending
+      the full Article 53 analysis.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: partial
+    code_of_practice_signatory: false
+  deployer_notes: 'NVIDIA (US-based) provides more than most - a white paper, runnable recipes, and
+    partially released, partly CC-BY-4.0 training data - so an EU deployer inherits a real information
+    base, and the governing licence is irrevocable and carries no acceptable-use restriction. But
+    there is no formal EU AI Act GPAI documentation package, no copyright policy, NVIDIA is not a GPAI
+    Code of Practice signatory, and the training corpus is not fully released. Training compute is
+    undisclosed, but at ~25T tokens on a 120B / 30B scale a systemic-risk designation is not
+    indicated for these two models.
+
+    '
+  last_assessed: '2026-08-03'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T3
+  ceiling_conditional: true
+  hardware_notes: 'A real size step: Nano (30B / 3.5B active) is genuinely portable and runs on
+    modest single-GPU hardware; Super (120B / 12B) is a mid-tier multi-GPU target. Official BF16 /
+    FP8 / NVFP4 quantizations are published for each. Exact per-GPU VRAM is not restated here; size
+    against the variant.
+
+    '
+  serving_support:
+  - vllm
+  - sglang
+  - ollama
+  - llama.cpp
+  - nim
+  controls_required:
+  - Add NVIDIA's own downloadable safety stack - a guard classifier (Nemotron-3-Content-Safety), the
+    Apache-2.0 NeMo Guardrails toolkit for input/output/action rails, and the Apache-2.0 garak
+    red-team scanner - because there is no published model-level safety evaluation to rely on
+  - Run garak (or equivalent) red-team for THIS use case before autonomous deployment; the base cards
+    carry only a data-filtering note, so misuse characterisation is your responsibility
+  - Honour the NVIDIA Nemotron Open Model License attribution notice on redistribution; the grant is
+    irrevocable and carries no field-of-use restriction, so ordinary commercial use and modification
+    are unencumbered
+  - Verify checksums and pin the exact nvidia revision
+score:
+  rubric_version: '1.1'
+  headline: 66.0
+  grade: C
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 4
+      rationale: 'Open weights plus recipe: ungated safetensors weights, runnable training recipes on
+        GitHub, a white paper, and post-training datasets genuinely under CC-BY-4.0 put Super and Nano
+        at the open_weights_recipe tier - materially more open than the open-weights norm. Short of 5
+        (fully open) because the training corpus is only partially released: the official recipes
+        "train exclusively on the open-sourced subset of training data", and the pretraining web
+        corpus is under a custom NVIDIA data licence, so the model is not reproducible.
+
+        '
+      evidence_refs:
+      - ev-n3-data
+      - ev-n3-report
+    provenance:
+      score: 3
+      rationale: 'Distributed from the verified nvidia org on Hugging Face as ungated safetensors with
+        official BF16 / FP8 / NVFP4 quantization variants and a clear canonical source (checklist
+        ~4/8). Meets the score-3 anchor; short of 4 because published checksums, checkpoint scanning
+        and a documented signing/attestation policy were not verified this pass, and short of 5''s
+        cryptographic weight signing / SLSA provenance.
+
+        '
+      evidence_refs:
+      - ev-n3-provenance
+      - ev-n3-cards
+    legal:
+      score: 3
+      rationale: 'A clean, commercially permissive grant for common uses: the NVIDIA Nemotron Open
+        Model License is perpetual, royalty-free and IRREVOCABLE, with no acceptable-use or
+        field-of-use restriction, terminating only on the licensee bringing IP litigation over the
+        Work or an output from it - more permissive than the earlier aggregate reading claimed. Held
+        at 3, not 4, by the regulatory-readiness half: the licence is source-available and not OSI,
+        there is no formal GPAI documentation package, no public training-content summary and no
+        copyright policy, and NVIDIA is not a GPAI Code of Practice signatory.
+
+        '
+      evidence_refs:
+      - ev-n3-oml
+      - ev-n3-eu
+    safety:
+      score: 3
+      rationale: 'A safety-tuned release (Nemotron-SFT-Safety post-training data plus keyword/regex
+        filtering) with a genuinely downloadable, multi-domain companion guard classifier
+        (Nemotron-3-Content-Safety, 23 categories / 12 languages) and the Apache-2.0 NeMo Guardrails
+        and garak tooling at the family level. Held at 3, below the old aggregate''s 4, because there
+        is NO published model-level safety evaluation or independent red-team: the base cards carry
+        only a data-filtering note and the white paper''s safety section is a contributor list. The
+        downloadable companion guard stack is what keeps it from dropping to 2.
+
+        '
+      evidence_refs:
+      - ev-n3-safety
+      - ev-n3-cards
+    performance:
+      score: 3
+      rationale: 'Competitive frontier-scale open models (hybrid Mamba-Transformer LatentMoE, up to 1M
+        context, ~25T training tokens) across a Super and Nano pair. Held at 3 because the evidence is
+        publisher and architectural (model cards + white paper); OneHill has not reproduced benchmarks
+        and no independent third-party re-runs were gathered this pass, so class-leading claims are not
+        verified.
+
+        '
+      evidence_refs:
+      - ev-n3-cards
+      - ev-n3-report
+    operational:
+      score: 4
+      rationale: 'Broad, mature serving story: vLLM, SGLang, Ollama, llama.cpp and NVIDIA''s own NIM
+        self-hosted microservices, with official BF16 / FP8 / NVFP4 quantizations and, crucially, a
+        genuinely small Nano (30B / 3.5B active) that runs on modest hardware. Short of 5 because
+        exact hardware/scaling guidance was not verified per variant and day-0 ecosystem breadth is
+        publisher-reported.
+
+        '
+      evidence_refs:
+      - ev-n3-nim
+      - ev-n3-cards
+    governance:
+      score: 3
+      rationale: 'A reputable, accountable publisher (NVIDIA) with a white paper, a verified hub
+        presence and an active release cadence, and a general corporate security-reporting path. Held
+        at 3 because a model-specific vulnerability-disclosure and deprecation policy was not confirmed
+        and NVIDIA is not a GPAI Code of Practice signatory.
+
+        '
+      evidence_refs:
+      - ev-n3-cards
+      - ev-n3-eu
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Fine-tune and even run NVIDIA's released recipes, with post-training data under CC-BY-4.0 - but the recipes train on the open subset only and the full corpus is under a custom NVIDIA data licence, so you can adapt, not fully reproduce."
+    refs: [ev-n3-data, ev-n3-report]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "Frontier-scale hybrid Mamba-Transformer MoE with up to 1M context across a Super/Nano pair; capable and well-documented, but not independently benchmarked in this pass, so treat class-leading claims as publisher-reported."
+    refs: [ev-n3-cards, ev-n3-report]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "Built for agent specialisation: released runnable recipes, CC-BY post-training datasets, a downloadable guard model, and a small Nano variant make domain adaptation genuinely accessible, not just theoretically permitted."
+    refs: [ev-n3-data, ev-n3-safety]
+  exchangeability:
+    level: high
+    dimension: operational
+    summary: "Portable safetensors across vLLM/SGLang/Ollama/llama.cpp/NIM with official quantizations and a real size step - the Nano (30B / 3.5B active) is a near-drop-in single-GPU model, unusual at this capability level."
+    refs: [ev-n3-nim, ev-n3-cards]
+  misuse_exposure:
+    level: partial
+    dimension: safety
+    summary: "Misuse is partly mitigated but not characterised at the model level: a downloadable guard classifier, a guardrails toolkit and the garak red-team scanner exist, but there is no published model-level safety evaluation or independent red-team."
+    refs: [ev-n3-safety, ev-n3-cards]
+
+# --- Four documentation domains.
+documentation:
+  assess:
+    completeness: 90.0
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-cards, ev-n3-report]
+        summary: "General-purpose reasoning, chat and agentic workloads across a Super/Nano pair where you want open weights, runnable recipes and a downloadable guard model; autonomous or high-stakes use is out of scope without a self-run red-team, because there is no published model-level safety evaluation."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-data, ev-n3-safety]
+        summary: "Training corpus only partially released (not reproducible); no published model-level safety evaluation or independent red-team (safety is post-training data curation only); frontier-scale performance is publisher-reported, not OneHill-reproduced."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-data, ev-n3-cards]
+        summary: "open_weights_recipe - ungated safetensors weights, runnable recipes, a white paper and CC-BY-4.0 post-training data, but the full pretraining corpus is a partial release under a custom NVIDIA data licence, so the model is not reproducible."
+      - key: license
+        title: "License terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-oml]
+        summary: "NVIDIA Nemotron Open Model License (v. 2025-12-15): Apache-2.0-derived, source-available (non-OSI), perpetual, royalty-free and IRREVOCABLE, commercial use allowed, no acceptable-use or field-of-use restriction; terminates only on the licensee bringing IP litigation over the Work or an output from it, and redistribution must carry the NVIDIA attribution notice."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-provenance]
+        summary: "Verified nvidia org on Hugging Face; ungated safetensors with official BF16/FP8/NVFP4 quantizations; published checksums, scanning and signing not verified this pass - pin the revision and verify checksums."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-eu, ev-n3-oml]
+        summary: "GPAI; NVIDIA is not a Code of Practice signatory and publishes no training-content summary or copyright policy; the irrevocable but non-OSI licence, without a GPAI documentation package, most likely does not cleanly reach the open-source exemption; training compute is undisclosed but a systemic-risk designation is not indicated at this scale."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-report, ev-n3-cards]
+        summary: "Aggregated from NVIDIA's white paper and model cards; frontier-scale claims are publisher-reported and not OneHill-reproduced, and no independent third-party re-runs were gathered this pass."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-safety]
+        summary: "No published model-level safety evaluation or independent red-team for Super/Nano; the downloadable companion guard classifier (Nemotron-3-Content-Safety) has its own NVIDIA self-reported benchmark scores, and NeMo Guardrails and garak are Apache-2.0."
+  implement:
+    completeness: 95.5
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-cards, ev-n3-nim]
+        summary: "Download ungated safetensors from the verified nvidia org and serve with vLLM, SGLang, Ollama, llama.cpp or NVIDIA NIM; pin the revision and verify checksums."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-cards]
+        summary: "Nano (30B / 3.5B active) runs on modest single-GPU hardware; Super (120B / 12B) is a mid-tier multi-GPU target; official BF16/FP8/NVFP4 quantizations for each."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-nim, ev-n3-cards]
+        summary: "Broad support: vLLM, SGLang, Ollama, llama.cpp and NVIDIA NIM self-hosted microservices (data stays in your own enclave)."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-safety, ev-n3-oml]
+        summary: "Deployment Ceiling T3 (bounded autonomous), conditional: assemble NVIDIA's downloadable stack (guard classifier + NeMo Guardrails action/output rails + garak red-team) yourself, and red-team for your own use case because there is no published model-level safety evaluation; the irrevocable licence carries no field-of-use restriction."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-cards]
+        summary: "Official NVIDIA BF16, FP8 and NVFP4 variants are published for Super and Nano, in addition to the base safetensors."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-data]
+        summary: "Runnable training/fine-tuning recipes are released on GitHub (Pretrain -> SFT -> RL), with CC-BY-4.0 post-training data; note the recipes train on the open subset only, so results differ from the tech-report benchmarks."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-nim]
+        summary: "Serve behind vLLM/SGLang or NVIDIA NIM for OpenAI-compatible endpoints; a hosted build.nvidia.com preview API exists for evaluation only (it reserves use of content to improve NVIDIA models)."
+  use:
+    completeness: 44.4
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-cards]
+        summary: "Reasoning, chat, coding and agentic workloads; text in / text out for both Super and Nano."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-cards]
+        summary: "Up to 1M tokens for both (Nano defaults to 256k in the HF config); OneHill has not independently measured effective long-context recall."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-cards, ev-n3-report]
+        summary: "Positioned for agentic, tool-using workloads (multi-environment RL in the recipe); expose tools through the serving layer's function-calling API and bound their effects."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "The exact Nemotron 3 chat template / prompt format was not captured from a primary source this pass; confirm apply_chat_template from each variant's tokenizer config before deploying."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-cards]
+        summary: "English and code are primary, with supported multilingual contexts (the companion content-safety classifier covers 12 languages); per-language depth is not exhaustively documented."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No model-documented native JSON/schema-constrained output guarantee was captured for Nemotron 3; constrained decoding is available at the serving layer but is a runtime feature, not a model behaviour."
+  support:
+    completeness: 61.1
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-cards, ev-n3-nim]
+        summary: "Aggregated pitfalls (hybrid Mamba-Transformer kernel/engine version mismatches, MoE sharding for Super, NVFP4/FP8 quant-engine compatibility, revision drift); not an exhaustive catalogue."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-cards, ev-n3-report]
+        summary: "Nemotron 3 Super and Nano released ~2025-12 on the verified nvidia org, each with BF16/FP8/NVFP4 variants; the Hugging Face revision hash is the changelog anchor."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-provenance]
+        summary: "NVIDIA has a general corporate product-security reporting path, but a model-specific vulnerability-disclosure policy for Nemotron was not confirmed this pass."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-n3-cards, ev-n3-safety]
+        summary: "The nvidia Hugging Face org (model discussions), the NVIDIA-NeMo GitHub organisation (Nemotron recipes, NeMo Guardrails) and the garak repository for usage, deployment and safety-tooling questions."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published deprecation or end-of-life policy for Nemotron 3 checkpoints was found; older Hugging Face revisions remain downloadable but no formal support-window commitment is documented."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-n3-data, ev-n3-safety]
+        summary: "From the cards, recipes and licence: partial-corpus non-reproducibility and the absence of a published model-level safety evaluation are the recurring caveats to track."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: "The NVIDIA Nemotron Open Model License is genuinely permissive - perpetual, royalty-free, IRREVOCABLE, commercial use allowed, no acceptable-use or field-of-use restriction, weights ungated and fine-tunable - which is a real improvement on the earlier reading. It is held at moderate, not strong, because it is Apache-2.0-derived but non-OSI: the termination reaches 'an output from the Work' (broader than Apache-2.0) and redistribution must carry the NVIDIA attribution notice, so it is an open_weight community licence with conditions, short of Ultra's unconditional OpenMDW 'deal without restriction' grant."
+      # grounded in: ev-n3-oml (license, retrieved) - irrevocable grant + output-reaching termination + attribution notice
+    transparency:
+      level: strong
+      rationale: "Unusually inspectable for the registry: ungated weights, a white paper, runnable training recipes, and partially released post-training data under CC-BY-4.0 let you see a great deal of how the model was built (open_weights_recipe tier). The limit is reproducibility, not visibility - the full corpus is not released - which caps the openness tier, not transparency."
+      # grounded in: ev-n3-data (training_data, retrieved) - released recipes + CC-BY post-training datasets; ev-n3-report (technical_report, retrieved) - white paper
+    reliability:
+      level: moderate
+      rationale: "Operational is strong (4: broad serving, official quantizations, a small portable Nano), but safety is only 3: there is no published model-level safety evaluation or independent red-team, so misuse control is a gap you must fill yourself with the downloadable guard stack. Under the ownership rule a safety score of 3 caps this factor at moderate, however capable the models are."
+      # grounded in: dimension scores operational 4 / safety 3; ev-n3-safety
+    data_control:
+      level: strong
+      rationale: "Self-hosted via NIM, the weights and inference run on your own infrastructure and data never leaves your enclave, and the licence claws back no rights - the grant is explicitly IRREVOCABLE, terminating only on the licensee's own IP litigation. That is the strong case for a self-hostable model."
+      # grounded in: ev-n3-nim (deployment, retrieved) - self-hosted, data stays in your enclave; ev-n3-oml (license, retrieved) - irrevocable grant, no revocation claw-back
+  verdict: "You get unusually strong transparency for an open model - ungated weights, a white paper, runnable recipes and CC-BY post-training data - and, on the corrected licence reading, a clean irrevocable grant with no field-of-use restriction, so self-hosting keeps your data and rights yours. Ownership stays partial, not substantial, because the corpus is only partly released (not reproducible), the non-OSI licence with its attribution notice and output-reaching termination holds use-and-modify at moderate, and the absence of a published model-level safety evaluation holds reliability at moderate. Self-host via NIM, assemble the downloadable guard stack, and red-team for your own use case."
+
+# --- Evidence. Each item carries doc_type and retrieved (true = substantive text read).
+#     Grounded 2026-08-03 against the primary-source clauses in docs/primary-sources/nemotron-3/.
+evidence:
+- id: ev-n3-cards
+  claim: 'Nemotron 3 Super and Nano model cards on the verified nvidia HF org: Super 120B/12B, Nano
+    30B/3.5B active; hybrid Mamba-Transformer LatentMoE + MTP; up to 1M context; ~25T training tokens;
+    ungated safetensors with BF16/FP8/NVFP4 variants; both cards state "a family of open models with
+    open weights, training data, and recipes"; licence tag nvidia-nemotron-open-model-license.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+  date: '2026-08-03'
+- id: ev-n3-oml
+  claim: 'NVIDIA Nemotron Open Model License (v. 2025-12-15), read: "perpetual, worldwide,
+    non-exclusive, no-charge, royalty-free, irrevocable license to reproduce, prepare Derivative
+    Works of, publicly display, publicly perform, sublicense, and distribute the Work ... in source
+    or object form." Terminates ONLY if the licensee institutes patent or copyright litigation
+    alleging the Work or an output from the Work infringes. NO Trustworthy-AI clause, NO acceptable-use
+    restriction, NO guardrail clause. Attribution notice "Licensed by NVIDIA Corporation under the
+    NVIDIA Nemotron Model License". Governing law US / Delaware. NOT OSI. Commercial use allowed.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
+  date: '2026-08-03'
+- id: ev-n3-data
+  claim: 'Training data + recipes are PARTIALLY released: post-training datasets
+    (Nemotron-Post-Training-v3, e.g. Nemotron-SFT-Safety-v1) are CC-BY-4.0 and confirmed as the
+    post-training data used for Nano/Super/Ultra v3; runnable recipes exist at
+    github.com/NVIDIA-NeMo/Nemotron but "train exclusively on the open-sourced subset of training
+    data", and the pretraining web corpus (Nemotron-CC-v2.1) is under a custom NVIDIA data licence,
+    so the full model is not reproducible.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://github.com/NVIDIA-NeMo/Nemotron
+  date: '2026-08-03'
+- id: ev-n3-report
+  claim: 'Nemotron 3 White Paper (arXiv 2512.20856), read (abstract): hybrid Mamba-Transformer
+    LatentMoE, up to 1M context, NVFP4 training for Super/Ultra. Training FLOPs/compute NOT stated
+    (tokens only).'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2512.20856
+  date: '2026-08-03'
+- id: ev-n3-safety
+  claim: 'Safety, read: no published model-level safety evaluation or independent red-team for
+    Super/Nano (base cards carry only a keyword/regex data-filter note; white paper safety section is
+    a contributor list). NVIDIA does ship a downloadable companion guard classifier
+    (Nemotron-3-Content-Safety on Gemma-3-4B, 23 categories / 12 languages, NVIDIA self-reported
+    scores), the Apache-2.0 NeMo Guardrails toolkit and the Apache-2.0 garak red-team scanner at the
+    family level.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/nvidia/Nemotron-3-Content-Safety
+  date: '2026-08-03'
+- id: ev-n3-provenance
+  claim: 'Verified nvidia org on Hugging Face; Super and Nano weight repos are ungated safetensors
+    with published BF16/FP8/NVFP4 quantization variants; some training DATASETS are gated but the
+    WEIGHTS are not. Published checksums / signing / attestation not verified this pass.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/nvidia
+  date: '2026-08-03'
+- id: ev-n3-nim
+  claim: 'NVIDIA NIM is self-hosted deployment tooling ("data never leaves your secure enclave"), so
+    NVIDIA is not an AOI inference-provider entry and self-hosting supports data control. The hosted
+    build.nvidia.com preview API is an evaluation surface that reserves use of content "to improve
+    NVIDIA products and services, including AI models".'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://www.nvidia.com/en-us/ai-data-science/products/nim-microservices/
+  date: '2026-08-03'
+- id: ev-n3-eu
+  claim: 'NVIDIA is NOT a signatory to the EU GPAI Code of Practice (EU signatory list), and no NVIDIA
+    training-content summary or copyright policy for Nemotron was located on the NVIDIA trust centre.'
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai
+  date: '2026-08-03'
+changelog:
+- date: '2026-08-03'
+  change: Initial entry (NVIDIA Nemotron 3 Super + Nano), split out of the former aggregate nemotron entry so each per-licence release is scored on its own. Governed by the NVIDIA Nemotron Open Model License (v. 2025-12-15); the corrected reading records it as Apache-2.0-derived, perpetual, royalty-free and IRREVOCABLE with no acceptable-use / field-of-use restriction and no guardrail clause (the earlier revocable / Trustworthy-AI reading was wrong and belonged to a different, generic NVIDIA licence). open_weights_recipe (tier 4, partial corpus). Safety scored 3, not the old aggregate 4, because there is no published model-level safety evaluation - only post-training data curation plus a downloadable family guard stack. AOI 66.0, grade C, ownership partial.
+last_verified: '2026-08-03'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

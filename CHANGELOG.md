@@ -10,10 +10,34 @@ Initial public foundation (v0.1).
 
 ### Added
 
+- NVIDIA Nemotron 3, as three per-licence entries under one family: `nemotron-3` (Super + Nano,
+  NVIDIA Nemotron Open Model License, AOI 66.0, grade C, ownership partial), `nemotron-3-ultra`
+  (Ultra 550B, OpenMDW-1.1, AOI 63.6, grade C, ownership substantial) and `nemotron-3-nano-omni`
+  (multimodal, NVIDIA Open Model Agreement, AOI 60.0, grade C, ownership partial). Ungated weights
+  and, for Super/Nano/Ultra, runnable recipes and CC-BY post-training data. The governing licences
+  are Apache-2.0-derived and IRREVOCABLE, with commercial use allowed and no acceptable-use or
+  guardrail restriction; ownership is capped by a partly-released corpus and the absence of any
+  published model-level safety evaluation.
 - Kimi K3 (Moonshot AI) model entry: open-weights (2.8T total / 104B active MoE, 1M context,
   native vision), AOI 53.2, grade D. Classified open-weights, not closed-frontier; grounded to
   primary sources, with the offensive-cyber safety finding and the new Model-as-a-Service licence
   gate as the load-bearing risks.
+
+### Changed
+
+- Registry entries are now scoped to a single release and always grouped under a non-scored `family`
+  relation; a family is split into separate entries only when its releases diverge on a scored
+  attribute (OpenSpec `model-family-scope`). Renamed the Kimi K2 entry from `kimi` to `kimi-k2`.
+- Split the aggregate `nemotron` entry into three per-licence entries under the `nemotron` family:
+  `nemotron-3` (Super + Nano), `nemotron-3-ultra` and `nemotron-3-nano-omni`, because the three
+  releases diverge on their governing licence (NVIDIA Nemotron Open Model License, OpenMDW-1.1, and
+  NVIDIA Open Model Agreement) and, for Nano Omni, on their openness tier. The split also corrects a
+  wrong licence reading: the Nemotron 3 licences are Apache-2.0-derived, perpetual and IRREVOCABLE
+  with no Trustworthy-AI, acceptable-use or guardrail clause (they terminate only on the licensee
+  bringing IP litigation over the work), not the revocable, use-restricted, guardrail-terminating
+  grant the aggregate entry had described. Safety was re-scored from 4 to 3 across all three, because
+  no published model-level safety evaluation was found for any release; Ultra's ownership is now
+  substantial on the OpenMDW "without restriction" grant.
 
 ### The index
 

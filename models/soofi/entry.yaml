@@ -13,6 +13,9 @@ aliases:
 - Soofi S 30B-A3B
 - Soofi-Project/Soofi-S-Base
 - Sovereign Open Source Foundation Models
+family:
+  id: soofi
+  name: Soofi
 publisher:
   name: Soofi Consortium (Sovereign Open Source Foundation Models)
   country: DE

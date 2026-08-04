@@ -1,4 +1,4 @@
-# Support - Kimi (Moonshot AI - Kimi K2)
+# Support - Kimi K2 (Moonshot AI)
 
 _How do we keep it running and get help? Troubleshooting, versions/changelog, channels;
 security-disclosure and deprecation policy are current gaps._

@@ -1,18 +1,21 @@
-# OneHill v2 MODEL library entry for Kimi (Moonshot AI - Kimi K2). New entry.
+# OneHill v2 MODEL library entry for Kimi K2 (Moonshot AI). New entry.
 # Validated against schema/model.v2.schema.json.
 #   scores    -> scripts/score.py --write        (AOI headline/grade)
 #   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
 #   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
 
 schema_version: '2.0'
-id: kimi
-name: Kimi (Moonshot AI - Kimi K2)
+id: kimi-k2
+name: Kimi K2 (Moonshot AI)
 aliases:
 - Kimi K2
 - Kimi-K2-Base
 - Kimi-K2-Instruct
 - moonshotai/Kimi-K2
 - Moonshot Kimi
+family:
+  id: kimi
+  name: Kimi
 publisher:
   name: Moonshot AI
   country: China
@@ -492,7 +495,7 @@ ownership:
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
 #     (true = the document's substantive text was read; false = known to exist but not read).
 #     Grounded 2026-07-25 against the primary-source clauses in
-#     docs/primary-sources/kimi/_sources.md. The LICENSE text was read verbatim from the
+#     docs/primary-sources/kimi-k2/_sources.md. The LICENSE text was read verbatim from the
 #     canonical raw.githubusercontent.com mirror (the GitHub blob path 404s, raw resolves);
 #     the HF model card, arXiv technical report and the hosted platform.kimi.ai terms and
 #     privacy policy were read directly. The separate consumer policy at kimi.com was not fetched.
@@ -601,7 +604,7 @@ changelog:
 - date: '2026-07-25'
   change: Initial entry (Kimi K2 - Moonshot AI).
 - date: '2026-07-25'
-  change: Grounded evidence against primary sources (docs/primary-sources/kimi) - Modified-MIT 100M-MAU/$20M-revenue clause read verbatim; arXiv technical report and HF model card retrieved; added hosted platform.kimi.ai terms + privacy_policy evidence (trains-by-default, Singapore/SIAC); doc_type/retrieved added to every evidence item; ownership factors + verdict tightened around the attribution trigger and the weights-vs-hosted split.
+  change: Grounded evidence against primary sources (docs/primary-sources/kimi-k2) - Modified-MIT 100M-MAU/$20M-revenue clause read verbatim; arXiv technical report and HF model card retrieved; added hosted platform.kimi.ai terms + privacy_policy evidence (trains-by-default, Singapore/SIAC); doc_type/retrieved added to every evidence item; ownership factors + verdict tightened around the attribution trigger and the weights-vs-hosted split.
 last_verified: '2026-07-25'
 freshness_sla:
   fast_days: 30

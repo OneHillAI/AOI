@@ -213,7 +213,9 @@ export function toRecord(item: { id: string; type: 'model' | 'provider'; dir: st
   const type = item.type;
   const nameParts = String(e.name || item.id).match(/^(.*?)\s*\((.*)\)\s*$/);
   const title = type === 'model' && nameParts ? nameParts[1].trim() : e.name || item.id;
-  const family = type === 'model' && nameParts ? nameParts[2].trim() : '';
+  // The family relation is the entry's `family` field (a grouping, never scored),
+  // not the publisher parenthetical the title strips.
+  const family = type === 'model' && e.family ? String(e.family.name) : '';
   const level: Level = (e.ownership?.level || 'partial') as Level;
   const factors = buildFactors(e, type);
   const dossier = DOMAINS.map((d) => ({ k: cap(d), v: `${Math.round(e.documentation?.[d]?.completeness ?? 0)}%` }));
@@ -228,6 +230,7 @@ export function toRecord(item: { id: string; type: 'model' | 'provider'; dir: st
   return {
     id: item.id,
     type,
+    family: type === 'model' && e.family ? { id: String(e.family.id), name: String(e.family.name) } : null,
     dir: item.dir, // 'models' | 'inference-providers'
     kicker: type === 'model' ? 'Model' : 'Inference provider',
     title,
@@ -284,6 +287,24 @@ export function getAllEntries() {
 
 export function getEntry(dir: string, id: string) {
   return getAllEntries().find((r) => r.dir === dir && r.id === id) || null;
+}
+
+/** Group model release entries by their `family` relation for the showcase. A
+ * family is a grouping only and is never scored: the family node carries just its
+ * id, name and its release entries, each of which keeps its own score. Families are
+ * ordered by their strongest release; releases within a family by score. */
+export function getFamilies() {
+  const models = getAllEntries().filter((r) => r.type === 'model');
+  const byId = new Map<string, { id: string; name: string; entries: typeof models }>();
+  for (const r of models) {
+    const fam = (r as any).family;
+    if (!fam) continue;
+    if (!byId.has(fam.id)) byId.set(fam.id, { id: fam.id, name: fam.name, entries: [] });
+    byId.get(fam.id)!.entries.push(r);
+  }
+  return [...byId.values()]
+    .map((f) => ({ ...f, entries: f.entries.slice().sort((a, b) => (b.score ?? 0) - (a.score ?? 0)) }))
+    .sort((a, b) => (b.entries[0]?.score ?? 0) - (a.entries[0]?.score ?? 0));
 }
 
 /** Raw domain prose for a sub-page: the long-form <domain>.md for an entry, with

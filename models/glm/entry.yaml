@@ -15,6 +15,9 @@ aliases:
 - ChatGLM
 - zai-org/GLM
 - THUDM/GLM
+family:
+  id: glm
+  name: GLM
 publisher:
   name: Zhipu AI (Z.ai)
   country: China

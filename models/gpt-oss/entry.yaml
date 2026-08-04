@@ -12,6 +12,9 @@ aliases:
 - gpt-oss-120b
 - gpt-oss-20b
 - openai/gpt-oss
+family:
+  id: gpt-oss
+  name: OpenAI gpt-oss
 publisher:
   name: OpenAI
   country: US

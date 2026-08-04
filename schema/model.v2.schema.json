@@ -4,12 +4,22 @@
   "title": "OneHill Open Model Library Entry (v2)",
   "description": "Machine-readable record for an open model as a four-domain documentation library entry. Extends the v1 registry record with a `documentation` block (Assess / Implement / Use / Support). The four domain prose files (assess.md/implement.md/use.md/support.md) live beside this file and are joined by item `key`.",
   "type": "object",
-  "required": ["schema_version", "id", "name", "publisher", "openness", "provenance", "eu_ai_act", "score", "signals", "documentation", "last_verified", "freshness_sla"],
+  "required": ["schema_version", "id", "name", "family", "publisher", "openness", "provenance", "eu_ai_act", "score", "signals", "documentation", "last_verified", "freshness_sla"],
   "additionalProperties": false,
   "properties": {
     "schema_version": {"type": "string", "const": "2.0"},
     "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
     "name": {"type": "string"},
+    "family": {
+      "type": "object",
+      "description": "The model family this release belongs to. A grouping relation only; a family is never scored. Present on every entry.",
+      "required": ["id", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+        "name": {"type": "string"}
+      }
+    },
     "aliases": {"type": "array", "items": {"type": "string"}},
     "publisher": {
       "type": "object",

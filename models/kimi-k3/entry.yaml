@@ -11,6 +11,9 @@ aliases:
 - Kimi K3
 - Kimi-K3
 - moonshotai/Kimi-K3
+family:
+  id: kimi
+  name: Kimi
 publisher:
   name: Moonshot AI
   country: China
