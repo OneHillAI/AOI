@@ -92,8 +92,9 @@ const providerRows = providers.map(row);
     {families.map((fam) => (
       <Fragment>
         <div class="grouplabel grouplabel--fam" data-group={`fam-${fam.id}`} data-fam="model">
-          <span class="grouplabel__fam">Family</span> {fam.name}
-          <span class="pct">{fam.entries.length}</span>
+          <span class="fam-kick">Family</span>
+          <span class="fam-name">{fam.name}</span>
+          <span class="fam-n">{fam.entries.length} {fam.entries.length === 1 ? 'release' : 'releases'}</span>
         </div>
         <div data-groupbody={`fam-${fam.id}`}>
           {fam.entries.map(row).map(({ r, region, meta }) => (
@@ -250,9 +251,40 @@ const providerRows = providers.map(row);
   </script>
 
   <style>
-    /* The library groups model releases under their family; a small kicker marks each
-       family header so it reads as a grouping, not another entry. */
-    .grouplabel__fam { font-size: .55rem; text-transform: uppercase; letter-spacing: .12em;
-      font-weight: 700; color: var(--faint); margin-right: .15rem; }
+    /* The library groups model releases under their family. The family header overrides the
+       flat section-label treatment: the family name reads as itself (cased, inked), preceded by
+       a small gold kicker and followed by a muted release count, with a hairline separating groups. */
+    .grouplabel--fam {
+      display: flex;
+      align-items: baseline;
+      gap: .55rem;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--ink);
+      font-size: 1rem;
+      font-weight: 700;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line-soft);
+    }
+    /* No divider or extra gap above the very first family group. */
+    .ledger__head + .grouplabel--fam { border-top: 0; padding-top: .6rem; }
+    .fam-kick {
+      align-self: center;
+      font-size: .52rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--gold);
+    }
+    .fam-name { color: var(--ink); }
+    .fam-n {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: .66rem;
+      font-weight: 500;
+      letter-spacing: .02em;
+      text-transform: none;
+      color: var(--muted);
+    }
   </style>
 </AppShell>
