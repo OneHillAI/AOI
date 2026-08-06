@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Own 2026: The State of AI Ownership in the Age of AI</title>
+<meta name="description" content="A short primer on who gets to own AI: the weights, the compute, the data, and the interface. Written for founders, builders, and anyone who intends to use this technology rather than be used by it.">
+<meta name="author" content="Christoph Welsbach">
+<link rel="canonical" href="https://ownershipindex.ai/AIownership2026/">
+<meta property="og:type" content="book">
+<meta property="og:title" content="Own 2026: The State of AI Ownership in the Age of AI">
+<meta property="og:description" content="Access is the easy part. Ownership is where the power sits. A free online primer by Christoph Welsbach.">
+<meta property="og:url" content="https://ownershipindex.ai/AIownership2026/">
+<meta property="og:site_name" content="Ownership Index">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF6EF;
+    --paper-deep:#F2ECDF;
+    --panel:#F5EFE4;
+    --line:#E3DACA;
+    --line-strong:#CFC4AE;
+    --ink:#211F1A;
+    --ink-2:#57503F;
+    --ink-3:#8A8271;
+    --accent:#A8442A;
+    --accent-deep:#8C3A20;
+    --accent-wash:#F3E2D9;
+    --serif:"Newsreader", Georgia, "Times New Roman", serif;
+    --sans:"Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --measure:41rem;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:1.24rem;
+    line-height:1.66;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--accent-wash);color:var(--accent-deep)}
+
+  /* ---------- reading progress ---------- */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--accent);z-index:60;transition:width .1s linear;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.85rem 1.4rem;
+    font-family:var(--sans);font-size:.72rem;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s;
+  }
+  .topbar.scrolled{border-bottom-color:var(--line)}
+  .topbar a{color:inherit;text-decoration:none}
+  .topbar .brand:hover,.topbar .toclink:hover{color:var(--accent-deep)}
+  .topbar .title-mini{opacity:0;transition:opacity .3s;color:var(--ink)}
+  .topbar.scrolled .title-mini{opacity:1}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:88vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;padding:7rem 1.5rem 4rem;
+    position:relative;
+  }
+  .hero .kicker{
+    font-family:var(--sans);font-size:.78rem;font-weight:600;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--accent-deep);
+    margin-bottom:2.2rem;
+  }
+  .hero h1{
+    font-size:clamp(3.4rem, 9vw, 6.8rem);
+    font-weight:500;line-height:1.02;letter-spacing:-.015em;
+  }
+  .hero .subtitle{
+    font-size:clamp(1.25rem, 2.6vw, 1.7rem);
+    font-style:italic;color:var(--ink-2);
+    margin-top:1.3rem;max-width:34ch;line-height:1.4;
+  }
+  .hero .rule{
+    width:64px;height:2px;background:var(--accent);margin:2.6rem auto 2.2rem;
+  }
+  .hero .byline{
+    font-family:var(--sans);font-size:.86rem;font-weight:500;
+    letter-spacing:.06em;color:var(--ink-2);
+  }
+  .hero .byline b{color:var(--ink);font-weight:600}
+  .hero .meta{
+    font-family:var(--sans);font-size:.74rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-3);margin-top:.7rem;
+  }
+  .hero .down{
+    position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
+    color:var(--ink-3);text-decoration:none;font-size:1.4rem;
+    animation:drift 2.4s ease-in-out infinite;
+  }
+  @keyframes drift{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:var(--measure);margin:0 auto;padding:0 1.5rem}
+
+  /* ---------- table of contents ---------- */
+  .toc{
+    max-width:44rem;margin:0 auto 6rem;padding:0 1.5rem;
+  }
+  .toc-card{
+    border-top:2px solid var(--ink);
+    padding-top:2rem;
+  }
+  .toc h2{
+    font-family:var(--sans);font-size:.8rem;font-weight:700;
+    letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.8rem;
+  }
+  .toc .part-label{
+    font-family:var(--sans);font-size:.72rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);
+    margin:1.6rem 0 .5rem;
+  }
+  .toc ol{list-style:none}
+  .toc li a{
+    display:flex;align-items:baseline;gap:.9rem;
+    padding:.55rem 0;text-decoration:none;color:var(--ink);
+    border-bottom:1px solid var(--line);
+    font-size:1.12rem;
+  }
+  .toc li a:hover .toc-title{color:var(--accent-deep)}
+  .toc .num{
+    font-family:var(--sans);font-size:.75rem;font-weight:600;
+    color:var(--ink-3);min-width:1.6rem;
+  }
+  .toc .toc-title{transition:color .15s}
+  .toc .dots{flex:1;border-bottom:1px dotted var(--line-strong);transform:translateY(-4px)}
+  .toc .pg{font-family:var(--sans);font-size:.72rem;color:var(--ink-3)}
+
+  /* ---------- parts ---------- */
+  .part{
+    text-align:center;padding:5.5rem 1.5rem 4.5rem;
+    background:var(--paper-deep);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    margin:5rem 0;
+  }
+  .part .part-kicker{
+    font-family:var(--sans);font-size:.75rem;font-weight:600;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--accent-deep);
+    margin-bottom:1rem;
+  }
+  .part h2{
+    font-size:clamp(2rem, 4.5vw, 3rem);font-weight:500;letter-spacing:-.01em;
+  }
+
+  /* ---------- chapters ---------- */
+  .chapter{padding:1rem 0;scroll-margin-top:5.5rem}
+  .ch-head{margin:4.5rem 0 2.2rem}
+  .ch-num{
+    font-family:var(--sans);font-size:.75rem;font-weight:700;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--accent-deep);
+  }
+  .ch-head h2{
+    font-size:clamp(1.9rem, 4vw, 2.7rem);
+    font-weight:500;letter-spacing:-.012em;line-height:1.12;
+    margin:.55rem 0 1.1rem;
+  }
+  .in-this{
+    font-style:italic;color:var(--ink-2);font-size:1.08rem;
+    border-left:2px solid var(--accent);padding-left:1rem;line-height:1.5;
+  }
+  .chapter p{margin:0 0 1.35rem}
+  .chapter p + p{text-indent:0}
+  .lead:first-letter{
+    float:left;font-size:3.6em;line-height:.82;
+    padding:.06em .08em 0 0;font-weight:500;color:var(--accent-deep);
+  }
+  em{font-style:italic}
+
+  /* ---------- figures ---------- */
+  figure{
+    margin:3rem -1rem;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:2.2rem 1.6rem 1.4rem;
+  }
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{
+    font-family:var(--sans);font-size:.78rem;line-height:1.5;
+    color:var(--ink-2);text-align:center;margin-top:1.3rem;
+    padding-top:.9rem;border-top:1px solid var(--line);
+  }
+  figcaption b{color:var(--ink);font-weight:600}
+  @media(max-width:640px){figure{margin:2.4rem 0;padding:1.4rem .8rem 1rem}}
+
+  /* pull quote */
+  .pull{
+    margin:3rem 0;padding:0 0 0 1.4rem;border-left:3px solid var(--accent);
+    font-size:1.5rem;line-height:1.42;font-style:italic;color:var(--ink);
+    font-weight:500;
+  }
+
+  /* ---------- conclusion & footer ---------- */
+  .coda{
+    text-align:center;margin:6rem auto 0;padding:5rem 1.5rem;
+    border-top:2px solid var(--ink);max-width:44rem;
+  }
+  .coda .q{
+    font-size:clamp(1.5rem,3.4vw,2.1rem);font-style:italic;font-weight:500;
+    line-height:1.35;max-width:26ch;margin:0 auto 1.2rem;
+  }
+  footer{
+    background:var(--paper-deep);border-top:1px solid var(--line);
+    padding:3rem 1.5rem 3.4rem;text-align:center;
+    font-family:var(--sans);font-size:.78rem;color:var(--ink-2);line-height:2;
+  }
+  footer a{color:var(--accent-deep);text-decoration:none;font-weight:600}
+  footer a:hover{text-decoration:underline}
+  footer .fbrand{
+    font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink);font-size:.72rem;margin-bottom:.3rem;
+  }
+
+  @media(max-width:640px){
+    body{font-size:1.12rem}
+    .topbar .toclink span{display:none}
+    .topbar .title-mini{display:none}
+    .toc .pg{display:none}
+  }
+  @media print{
+    .topbar,#progress,.hero .down{display:none}
+    body{font-size:11pt}
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav class="topbar" id="topbar">
+  <a class="brand" href="https://ownershipindex.ai">Ownership&nbsp;Index</a>
+  <span class="title-mini">Own 2026</span>
+  <a class="toclink" href="#contents"><span>Contents</span> &#9776;</a>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="kicker">A Free Online Book &middot; AI Ownership Status 2026</div>
+  <h1>Own 2026</h1>
+  <p class="subtitle">The State of AI Ownership in the Age&nbsp;of&nbsp;AI</p>
+  <div class="rule"></div>
+  <p class="byline">By <b>Christoph Welsbach</b></p>
+  <p class="meta">ownershipindex.ai &middot; August 2026 &middot; A short read</p>
+  <a class="down" href="#contents" aria-label="Scroll to contents">&darr;</a>
+</header>
+
+<!-- ================= CONTENTS ================= -->
+<section class="toc" id="contents">
+  <div class="toc-card">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#preface"><span class="num">00</span><span class="toc-title">Preface: Motivation</span><span class="dots"></span><span class="pg">Preface</span></a></li>
+    </ol>
+    <div class="part-label">Part 1 &middot; What It Means To Own AI</div>
+    <ol>
+      <li><a href="#ch1"><span class="num">01</span><span class="toc-title">The Four Layers</span><span class="dots"></span><span class="pg">Ch. 1</span></a></li>
+      <li><a href="#ch2"><span class="num">02</span><span class="toc-title">Open Weights, and Why They Matter</span><span class="dots"></span><span class="pg">Ch. 2</span></a></li>
+      <li><a href="#ch3"><span class="num">03</span><span class="toc-title">The Distribution Question</span><span class="dots"></span><span class="pg">Ch. 3</span></a></li>
+    </ol>
+    <div class="part-label">Part 2 &middot; How Ownership Is Won Or Lost</div>
+    <ol>
+      <li><a href="#ch4"><span class="num">04</span><span class="toc-title">The Gravity Of The Data Centre</span><span class="dots"></span><span class="pg">Ch. 4</span></a></li>
+      <li><a href="#ch5"><span class="num">05</span><span class="toc-title">Licences: The Fine Print Of Ownership</span><span class="dots"></span><span class="pg">Ch. 5</span></a></li>
+      <li><a href="#ch6"><span class="num">06</span><span class="toc-title">What You Can Do</span><span class="dots"></span><span class="pg">Ch. 6</span></a></li>
+    </ol>
+    <ol style="margin-top:1.6rem">
+      <li><a href="#conclusion"><span class="num">&middot;</span><span class="toc-title">Conclusion</span><span class="dots"></span><span class="pg">End</span></a></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= PREFACE ================= -->
+<article class="wrap chapter" id="preface">
+  <div class="ch-head">
+    <div class="ch-num">Preface</div>
+    <h2>Motivation</h2>
+  </div>
+  <p class="lead">Almost everyone now agrees that AI is a technology of the future, on the order of electricity or the internet. Far fewer have asked the question that decides who benefits: not who gets to <em>use</em> it, but who gets to <em>own</em> it.</p>
+  <p>Access is the easy part. A chat box in a browser is access. Ownership is harder, and it is where the power sits. The thesis of this primer is simple. If a general-purpose technology is going to shape every industry and most of daily life, then the ability to run it, inspect it, change it, and depend on it should belong to the many and not the few. Access without ownership is tenancy. This is a short guide to telling the difference, and to seeing which way things are heading.</p>
+</article>
+
+<!-- ================= PART 1 ================= -->
+<div class="part">
+  <div class="part-kicker">Part One</div>
+  <h2>What It Means To Own AI</h2>
+</div>
+
+<!-- ================= CHAPTER 1 ================= -->
+<article class="wrap chapter" id="ch1">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 01</div>
+    <h2>The Four Layers</h2>
+    <p class="in-this">In this chapter: the weights, the compute, the data, and the interface, and why owning one is not owning the rest.</p>
+  </div>
+  <p><em>"Owning AI"</em> sounds like one thing. It is really four, stacked.</p>
+  <p>The weights are the model itself, the file you can download and run. The compute is the hardware it runs on. The data is what it was trained on and what you feed it. The interface is the app in front of it. You can own any of these without owning the others, and most people today own only the interface, which is to say they own nothing. When the weights, the compute, and the data all sit with someone else, you are renting intelligence by the token, on terms you did not write.</p>
+
+  <figure role="img" aria-label="Diagram of the four layers of AI ownership: interface, data, compute, and weights. Most people own only the interface; the lower three layers typically sit with a provider.">
+    <svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- left annotation: you -->
+      <text x="24" y="66" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#8C3A20" letter-spacing="1">MOST PEOPLE</text>
+      <text x="24" y="83" font-family="Inter, sans-serif" font-size="12" fill="#57503F">own only this</text>
+      <path d="M118 76 H 158" stroke="#8C3A20" stroke-width="1.5" fill="none" marker-end="url(#arrA)"/>
+      <defs>
+        <marker id="arrA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8C3A20"/></marker>
+      </defs>
+
+      <!-- layer 1: interface -->
+      <rect x="170" y="46" width="380" height="62" rx="6" fill="#FFFDF8" stroke="#CFC4AE" stroke-width="1.5"/>
+      <text x="196" y="73" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#211F1A" letter-spacing="1.5">THE INTERFACE</text>
+      <text x="196" y="93" font-family="Newsreader, Georgia, serif" font-size="14" font-style="italic" fill="#57503F">the app in front of it</text>
+
+      <!-- layer 2: data -->
+      <rect x="170" y="128" width="380" height="62" rx="6" fill="#F0E7D6" stroke="#CFC4AE" stroke-width="1.5"/>
+      <text x="196" y="155" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#211F1A" letter-spacing="1.5">THE DATA</text>
+      <text x="196" y="175" font-family="Newsreader, Georgia, serif" font-size="14" font-style="italic" fill="#57503F">what it was trained on, and what you feed it</text>
+
+      <!-- layer 3: compute -->
+      <rect x="170" y="210" width="380" height="62" rx="6" fill="#E7DCC5" stroke="#CFC4AE" stroke-width="1.5"/>
+      <text x="196" y="237" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#211F1A" letter-spacing="1.5">THE COMPUTE</text>
+      <text x="196" y="257" font-family="Newsreader, Georgia, serif" font-size="14" font-style="italic" fill="#57503F">the hardware it runs on</text>
+
+      <!-- layer 4: weights -->
+      <rect x="170" y="292" width="380" height="62" rx="6" fill="#A8442A"/>
+      <text x="196" y="319" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#FFFDF8" letter-spacing="1.5">THE WEIGHTS</text>
+      <text x="196" y="339" font-family="Newsreader, Georgia, serif" font-size="14" font-style="italic" fill="#F3E2D9">the model itself: the file you can download and run</text>
+
+      <!-- right bracket: provider -->
+      <path d="M566 132 h12 v218 h-12" stroke="#8A8271" stroke-width="1.5" fill="none"/>
+      <text x="592" y="230" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#57503F" letter-spacing="1">TODAY, USUALLY</text>
+      <text x="592" y="247" font-family="Inter, sans-serif" font-size="12" fill="#57503F">someone else's.</text>
+      <text x="592" y="264" font-family="Inter, sans-serif" font-size="12" fill="#57503F">You rent it</text>
+      <text x="592" y="281" font-family="Inter, sans-serif" font-size="12" fill="#57503F">by the token.</text>
+    </svg>
+    <figcaption><b>Figure 1. The four layers of owning AI.</b> You can own any layer without owning the others. Real ownership starts at the weights.</figcaption>
+  </figure>
+
+  <p>Real ownership means holding the layers that matter: a model you possess, running on hardware you control, on data that never leaves your hands.</p>
+</article>
+
+<!-- ================= CHAPTER 2 ================= -->
+<article class="wrap chapter" id="ch2">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 02</div>
+    <h2>Open Weights, and Why They Matter</h2>
+    <p class="in-this">In this chapter: what "open" actually buys you, and where the fine print hides.</p>
+  </div>
+  <p class="lead">The single most important development of the last two years is that capable models now ship with open weights. You can download them, keep them, and run them offline, forever, no permission required. That is a genuine transfer of ownership, and it is rare in the history of frontier technology.</p>
+  <p>But "open" is a spectrum, not a switch. Some models are open in the way that matters most: permissive licences, weights you can use commercially, no strings. Others are open-ish: the weights are there, but the licence carries user caps, field-of-use limits, or a clause that lets the publisher change the terms later. And a few are open in name only.</p>
+
+  <figure role="img" aria-label="Diagram of the spectrum of openness, from truly open with permissive licences, through open-ish with strings attached, to open in name only. Ownership sits at one end, tenancy at the other.">
+    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+          <rect width="8" height="8" fill="#FFFDF8"/>
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#C98A6E" stroke-width="3"/>
+        </pattern>
+        <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8A8271"/></marker>
+      </defs>
+
+      <!-- poles -->
+      <text x="40" y="52" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#8C3A20" letter-spacing="2">OWNERSHIP</text>
+      <text x="680" y="52" text-anchor="end" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#8A8271" letter-spacing="2">TENANCY</text>
+      <path d="M160 47 H 560" stroke="#8A8271" stroke-width="1.2" fill="none" marker-end="url(#arrB)" stroke-dasharray="2 5"/>
+
+      <!-- spectrum bar -->
+      <rect x="40" y="86" width="212" height="56" rx="6" fill="#A8442A"/>
+      <rect x="256" y="86" width="212" height="56" rx="6" fill="url(#hatch)" stroke="#C98A6E" stroke-width="1.5"/>
+      <rect x="472" y="86" width="208" height="56" rx="6" fill="#FFFDF8" stroke="#CFC4AE" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+      <text x="146" y="119" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#FFFDF8" letter-spacing="1.5">OPEN</text>
+      <text x="362" y="119" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#8C3A20" letter-spacing="1.5">OPEN-ISH</text>
+      <text x="576" y="112" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#8A8271" letter-spacing="1.5">OPEN IN</text>
+      <text x="576" y="129" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#8A8271" letter-spacing="1.5">NAME ONLY</text>
+
+      <!-- descriptions -->
+      <line x1="146" y1="152" x2="146" y2="170" stroke="#CFC4AE" stroke-width="1.5"/>
+      <line x1="362" y1="152" x2="362" y2="170" stroke="#CFC4AE" stroke-width="1.5"/>
+      <line x1="576" y1="152" x2="576" y2="170" stroke="#CFC4AE" stroke-width="1.5"/>
+
+      <text x="146" y="190" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">permissive licence,</text>
+      <text x="146" y="209" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">commercial use,</text>
+      <text x="146" y="228" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">no strings</text>
+
+      <text x="362" y="190" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">weights are there, but:</text>
+      <text x="362" y="209" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">user caps, field-of-use limits,</text>
+      <text x="362" y="228" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">terms revisable later</text>
+
+      <text x="576" y="190" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">the label on the box</text>
+      <text x="576" y="209" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13.5" font-style="italic" fill="#57503F">is not the contents</text>
+
+      <text x="360" y="272" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#8C3A20" letter-spacing="1">THE LICENCE GRANTS OWNERSHIP, OR WITHHOLDS IT</text>
+    </svg>
+    <figcaption><b>Figure 2. The spectrum of openness.</b> The licence is the text that decides which end of it you are on.</figcaption>
+  </figure>
+
+  <p>Clearly, the label on the box is not the contents. If ownership is the goal, the licence is the document that grants it or withholds it, so it is the one worth reading.</p>
+</article>
+
+<!-- ================= CHAPTER 3 ================= -->
+<article class="wrap chapter" id="ch3">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 03</div>
+    <h2>The Distribution Question</h2>
+    <p class="in-this">In this chapter: owning the file is not enough, you have to be able to run it.</p>
+  </div>
+  <p class="lead">Here is the part that sounds complicated, but all is not lost. A model you cannot run is a model you do not really own. For years the honest objection to "just download it" was that frontier models needed a room full of accelerators nobody outside a large lab could afford.</p>
+  <p>That objection is weakening fast. A large open model can now run on a single consumer GPU, or an ordinary laptop with enough memory, using nothing but open-source tools. The techniques that make this possible, quantisation and expert offloading among them, are themselves open and free.</p>
+
+  <figure role="img" aria-label="Diagram showing the hardware needed to run a capable open model shrinking over time: from a whole data centre, to a single consumer GPU, to an ordinary laptop, enabled by open techniques such as quantisation and expert offloading.">
+    <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A8442A"/></marker>
+      </defs>
+
+      <!-- stage 1: data centre -->
+      <g>
+        <rect x="52" y="70" width="34" height="96" rx="3" fill="#E7DCC5" stroke="#CFC4AE" stroke-width="1.5"/>
+        <rect x="92" y="70" width="34" height="96" rx="3" fill="#E7DCC5" stroke="#CFC4AE" stroke-width="1.5"/>
+        <rect x="132" y="70" width="34" height="96" rx="3" fill="#E7DCC5" stroke="#CFC4AE" stroke-width="1.5"/>
+        <g stroke="#8A8271" stroke-width="1.2">
+          <line x1="58" y1="86" x2="80" y2="86"/><line x1="58" y1="100" x2="80" y2="100"/><line x1="58" y1="114" x2="80" y2="114"/>
+          <line x1="98" y1="86" x2="120" y2="86"/><line x1="98" y1="100" x2="120" y2="100"/><line x1="98" y1="114" x2="120" y2="114"/>
+          <line x1="138" y1="86" x2="160" y2="86"/><line x1="138" y1="100" x2="160" y2="100"/><line x1="138" y1="114" x2="160" y2="114"/>
+        </g>
+        <text x="109" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="700" fill="#211F1A" letter-spacing="1">A ROOM FULL</text>
+        <text x="109" y="217" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="700" fill="#211F1A" letter-spacing="1">OF ACCELERATORS</text>
+        <text x="109" y="238" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13" font-style="italic" fill="#8A8271">the old objection</text>
+      </g>
+
+      <path d="M196 118 H 268" stroke="#A8442A" stroke-width="2" fill="none" marker-end="url(#arrC)"/>
+
+      <!-- stage 2: single GPU -->
+      <g>
+        <rect x="300" y="94" width="120" height="48" rx="6" fill="#FFFDF8" stroke="#A8442A" stroke-width="2"/>
+        <circle cx="330" cy="118" r="12" fill="none" stroke="#A8442A" stroke-width="2"/>
+        <circle cx="330" cy="118" r="4.5" fill="#A8442A"/>
+        <line x1="352" y1="106" x2="404" y2="106" stroke="#C98A6E" stroke-width="2.5"/>
+        <line x1="352" y1="118" x2="404" y2="118" stroke="#C98A6E" stroke-width="2.5"/>
+        <line x1="352" y1="130" x2="404" y2="130" stroke="#C98A6E" stroke-width="2.5"/>
+        <text x="360" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="700" fill="#211F1A" letter-spacing="1">ONE CONSUMER GPU</text>
+        <text x="360" y="221" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13" font-style="italic" fill="#8A8271">possible now</text>
+      </g>
+
+      <path d="M446 118 H 518" stroke="#A8442A" stroke-width="2" fill="none" marker-end="url(#arrC)"/>
+
+      <!-- stage 3: laptop -->
+      <g>
+        <rect x="556" y="82" width="110" height="64" rx="6" fill="#FFFDF8" stroke="#A8442A" stroke-width="2"/>
+        <rect x="566" y="92" width="90" height="44" rx="3" fill="#F3E2D9"/>
+        <path d="M540 146 h142 l-12 14 h-118 z" fill="#E7DCC5" stroke="#CFC4AE" stroke-width="1.5"/>
+        <text x="611" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="700" fill="#211F1A" letter-spacing="1">AN ORDINARY LAPTOP</text>
+        <text x="611" y="221" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="13" font-style="italic" fill="#8A8271">with enough memory</text>
+      </g>
+
+      <line x1="60" y1="272" x2="660" y2="272" stroke="#E3DACA" stroke-width="1"/>
+      <text x="360" y="298" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#8C3A20" letter-spacing="1">QUANTISATION &middot; EXPERT OFFLOADING &middot; OPEN-SOURCE TOOLS &middot; ALL OPEN AND FREE</text>
+    </svg>
+    <figcaption><b>Figure 3. Distribution is catching up to capability.</b> The hardware needed to run a capable open model keeps shrinking, and the techniques driving it are open too.</figcaption>
+  </figure>
+
+  <p>In other words, distribution is catching up to capability. The more that ownership of the weights is matched by the practical ability to run them, the more real that ownership becomes.</p>
+</article>
+
+<!-- ================= PART 2 ================= -->
+<div class="part">
+  <div class="part-kicker">Part Two</div>
+  <h2>How Ownership Is Won Or Lost</h2>
+</div>
+
+<!-- ================= CHAPTER 4 ================= -->
+<article class="wrap chapter" id="ch4">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 04</div>
+    <h2>The Gravity Of The Data Centre</h2>
+    <p class="in-this">In this chapter: the centralising pull, and why it is not destiny.</p>
+  </div>
+  <p class="lead">There is a strong pull towards the centre. Training the largest models takes enormous compute, that compute lives in a handful of data centres, and the economics reward scale. Left alone, this pull ends in a world where a few organisations own the intelligence and everyone else rents it. That is the default, and defaults have momentum.</p>
+
+  <figure role="img" aria-label="Two diagrams side by side. Left: the centralised default, a hub-and-spoke network where many users rent intelligence from one centre. Right: the distributed counterweight, a mesh of nodes that each own and run their own model.">
+    <svg viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg">
+      <!-- LEFT: centralised -->
+      <g>
+        <text x="180" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#8A8271" letter-spacing="2">THE DEFAULT</text>
+        <!-- spokes (dashed = renting) -->
+        <g stroke="#B9AE97" stroke-width="1.4" stroke-dasharray="4 4">
+          <line x1="180" y1="160" x2="70"  y2="82"/>
+          <line x1="180" y1="160" x2="180" y2="72"/>
+          <line x1="180" y1="160" x2="290" y2="82"/>
+          <line x1="180" y1="160" x2="60"  y2="170"/>
+          <line x1="180" y1="160" x2="300" y2="170"/>
+          <line x1="180" y1="160" x2="80"  y2="248"/>
+          <line x1="180" y1="160" x2="180" y2="256"/>
+          <line x1="180" y1="160" x2="280" y2="248"/>
+        </g>
+        <!-- hub -->
+        <circle cx="180" cy="160" r="34" fill="#57503F"/>
+        <text x="180" y="156" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#FFFDF8" letter-spacing="1">A FEW</text>
+        <text x="180" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="10.5" font-weight="700" fill="#FFFDF8" letter-spacing="1">OWN</text>
+        <!-- tenants -->
+        <g fill="#FFFDF8" stroke="#B9AE97" stroke-width="1.4">
+          <circle cx="70" cy="82" r="11"/><circle cx="180" cy="72" r="11"/><circle cx="290" cy="82" r="11"/>
+          <circle cx="60" cy="170" r="11"/><circle cx="300" cy="170" r="11"/>
+          <circle cx="80" cy="248" r="11"/><circle cx="180" cy="256" r="11"/><circle cx="280" cy="248" r="11"/>
+        </g>
+        <text x="180" y="298" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="14" font-style="italic" fill="#57503F">everyone else rents</text>
+      </g>
+
+      <!-- divider -->
+      <line x1="360" y1="52" x2="360" y2="280" stroke="#E3DACA" stroke-width="1"/>
+
+      <!-- RIGHT: distributed -->
+      <g>
+        <text x="540" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#8C3A20" letter-spacing="2">THE COUNTERWEIGHT</text>
+        <!-- mesh links (solid = peers) -->
+        <g stroke="#D8A48F" stroke-width="1.3">
+          <line x1="450" y1="90" x2="540" y2="70"/><line x1="540" y1="70" x2="630" y2="90"/>
+          <line x1="450" y1="90" x2="430" y2="170"/><line x1="630" y1="90" x2="650" y2="170"/>
+          <line x1="430" y1="170" x2="470" y2="245"/><line x1="650" y1="170" x2="610" y2="245"/>
+          <line x1="470" y1="245" x2="540" y2="258"/><line x1="540" y1="258" x2="610" y2="245"/>
+          <line x1="540" y1="70" x2="540" y2="162"/><line x1="430" y1="170" x2="540" y2="162"/>
+          <line x1="650" y1="170" x2="540" y2="162"/><line x1="540" y1="162" x2="470" y2="245"/>
+          <line x1="540" y1="162" x2="610" y2="245"/>
+        </g>
+        <!-- nodes: each owns a model (accent core) -->
+        <g>
+          <g fill="#FFFDF8" stroke="#A8442A" stroke-width="1.6">
+            <circle cx="450" cy="90" r="14"/><circle cx="540" cy="70" r="14"/><circle cx="630" cy="90" r="14"/>
+            <circle cx="430" cy="170" r="14"/><circle cx="540" cy="162" r="14"/><circle cx="650" cy="170" r="14"/>
+            <circle cx="470" cy="245" r="14"/><circle cx="540" cy="258" r="14"/><circle cx="610" cy="245" r="14"/>
+          </g>
+          <g fill="#A8442A">
+            <circle cx="450" cy="90" r="5"/><circle cx="540" cy="70" r="5"/><circle cx="630" cy="90" r="5"/>
+            <circle cx="430" cy="170" r="5"/><circle cx="540" cy="162" r="5"/><circle cx="650" cy="170" r="5"/>
+            <circle cx="470" cy="245" r="5"/><circle cx="540" cy="258" r="5"/><circle cx="610" cy="245" r="5"/>
+          </g>
+        </g>
+        <text x="540" y="298" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="14" font-style="italic" fill="#57503F">everyone who wants to, owns</text>
+      </g>
+    </svg>
+    <figcaption><b>Figure 4. Two ways the build-out can end.</b> On the left, intelligence owned by a few and rented to the rest. On the right, capable models owned and run locally. Both are live possibilities right now.</figcaption>
+  </figure>
+
+  <p>The counterweight is that most useful work does not need the largest model. It needs a good-enough model you fully control. Once a capable model can be owned and run locally, the centre loses its monopoly on usefulness. The question of ownership, then, is really a question of whether the distributed path is kept open, or quietly allowed to close.</p>
+</article>
+
+<!-- ================= CHAPTER 5 ================= -->
+<article class="wrap chapter" id="ch5">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 05</div>
+    <h2>Licences: The Fine Print Of Ownership</h2>
+    <p class="in-this">In this chapter: the clause is the contract, and not all "open" is equal.</p>
+  </div>
+  <p class="lead">In theory, an open-weight model is yours. In practice, the licence decides. A permissive licence hands you ownership outright: use it, change it, sell what you build, no gatekeeper. A restrictive one hands you a lease dressed as a gift: fine until you cross a user threshold, enter the wrong market, or the publisher revises the terms.</p>
+  <div class="pull">Ownership you cannot describe in a sentence from the licence is ownership you do not have.</div>
+  <p>The lesson is unglamorous but it is the whole game. Before you build on a model, read what governs it, because that text, and not the marketing, is what you actually own.</p>
+</article>
+
+<!-- ================= CHAPTER 6 ================= -->
+<article class="wrap chapter" id="ch6">
+  <div class="ch-head">
+    <div class="ch-num">Chapter 06</div>
+    <h2>What You Can Do</h2>
+    <p class="in-this">In this chapter: the short list that turns the argument into a position.</p>
+  </div>
+  <p class="lead">Prefer open weights under permissive licences, and treat the licence as a first-class fact, not an afterthought. Keep at least one capable model you can run yourself, so that access is never conditional on someone else's uptime or pricing. Support the tools and standards that keep the distributed path open, because they are the difference between owning intelligence and being permitted to use it. And when you evaluate a model, score it on openness and terms, not benchmarks alone.</p>
+  <p>None of this requires waiting for permission. That is the point.</p>
+</article>
+
+<!-- ================= CONCLUSION ================= -->
+<section class="coda" id="conclusion">
+  <div class="ch-num" style="margin-bottom:1.4rem">Conclusion</div>
+  <p style="text-align:left;margin-bottom:1.35rem">The build-out of AI can go two ways. It can end with intelligence owned by everyone who wants to own it, running on their own machines under terms they can read. Or it can end with intelligence owned by a few and rented to the rest. Both are live possibilities right now, which is exactly why the moment matters.</p>
+  <div class="hero-rule" style="width:64px;height:2px;background:var(--accent);margin:2.4rem auto"></div>
+  <p class="q">So, will the future of AI be owned by the many or the few?</p>
+  <p style="max-width:36ch;margin:0 auto;color:var(--ink-2)">Unsatisfyingly, it depends. But now you can tell which way it is going, and which side of it to build on.</p>
+</section>
+
+<footer>
+  <div class="fbrand">Ownership Index</div>
+  <div>Own 2026 &middot; The State of AI Ownership in the Age of AI</div>
+  <div>&copy; 2026 Christoph Welsbach &middot; Published free at <a href="https://ownershipindex.ai/AIownership2026">ownershipindex.ai/AIownership2026</a></div>
+</footer>
+
+<script>
+  const bar=document.getElementById('progress'),top=document.getElementById('topbar');
+  addEventListener('scroll',()=>{
+    const h=document.documentElement;
+    bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    top.classList.toggle('scrolled',h.scrollTop>80);
+  },{passive:true});
+</script>
+</body>
+</html>
