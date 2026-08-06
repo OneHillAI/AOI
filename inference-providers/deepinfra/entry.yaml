@@ -47,9 +47,11 @@ data_governance:
     (encrypted on disk) then delete after inference
   trains_on_inputs: never
   zdr_available: yes_default
-  zdr_scope_caveats: 'Batch requests may store data temporarily, encrypted on disk,
-    and delete it after inference. Zero-retention covers DeepInfra''s
-    OWN open-model serving only.
+  zdr_scope_caveats: 'Batch requests may store data temporarily, encrypted on disk, and delete
+    it after inference. Beyond batch, the ToS permits storing Submissions (content) "for a limited
+    time for the purpose of debugging" with no numeric limit, and the content licence has an "other
+    internal uses only" tail - so "zero retention" is not absolute. There is no ZDR toggle.
+    Zero-retention covers DeepInfra''s OWN open-model serving only.
 
     '
   customer_data_ownership: customer_retains
@@ -62,12 +64,19 @@ data_governance:
 
     '
   subprocessors_disclosed: false
+  confidentiality: functional_only
+  confidentiality_caveats: 'No confidentiality clause; the ToS states only that Submissions "will
+    remain private" (a privacy statement, not a duty of confidence). Read 2026-08-06, two soft spots
+    beyond it: the no-store/no-train commitment carries an open-ended debugging carve-out - "We might
+    store some Submissions for a limited time for the purpose of debugging our Services" with no
+    numeric limit (Submissions = content, not only metadata) - and the content licence has an
+    "other internal uses only" tail. For trade-secret material, negotiate an NDA/enterprise terms.'
 compliance:
   soc2: type_i
   iso_27001: "yes"
   iso_27701: unknown
   hipaa_baa: unknown
-  gdpr_dpa: "yes"
+  gdpr_dpa: "no"
   fedramp: ''
   trust_center_url: https://trust.deepinfra.com/compliance
 residency:
@@ -89,27 +98,42 @@ lock_in:
     models are re-sold, which are not portable and carry different data terms.
 
     '
+dedicated_availability: self_serve
+dedicated_notes: 'Genuinely self-serve dedicated: dedicated instances billed per GPU-hour (A100
+  through B300, four-GPU self-serve limit), raw dedicated GPU rental with SSH, and negotiated DGX
+  clusters via sales. BYO weights: private custom LLMs pulled from public or private Hugging Face
+  repos plus LoRA adapters on dedicated GPU allocations ("your weights, your endpoint, your
+  isolation"). Single-tenancy is described in docs, not warranted in the contract.'
 trust_considerations:
+- No confidentiality clause - the ToS says only that Submissions "will remain private". Combined
+  with an open-ended "debugging" carve-out that may store Submissions (content) with no time limit
+  and an "other internal uses only" licence tail, "zero retention" is not absolute; negotiate an
+  NDA/enterprise terms for trade-secret material. Under rubric 1.2 this holds data_governance at 3.
 - Zero-retention covers DeepInfra's own open-model serving only; closed models (Claude,
   Google) routed through it fall under those vendors' storage/training terms.
-- SOC 2 is Type 1 only (not Type II); HIPAA/BAA is not a formal attestation.
+- SOC 2 is Type 1 only (not Type II) and self-attested on an unreachable trust centre; HIPAA/BAA is
+  not a formal attestation. No signable DPA and no SCCs / EU transfer mechanism are offered (verified
+  2026-08-06) - the Privacy Policy names a DPO and acknowledges GDPR rights but processes data in the
+  US with no transfer instrument - a blocker for EU controllers, and it drops compliance to 2.
 - No EU data-residency option surfaced; US-only data centres.
 - US HQ implies standing CLOUD Act exposure.
 score:
-  rubric_version: '1.1'
-  headline: 60.4
-  grade: C
+  rubric_version: '1.2'
+  headline: 52.0
+  grade: D
   hard_flags: []
   dimensions:
     data_governance:
-      score: 4
-      rationale: 'Grounded in the retrieved data-privacy documentation and Terms of
-        Service: zero-retention by default (only debugging metadata - request ID, cost,
-        sampling parameters - is logged), no training on submitted data, and customers
-        retain IP over their Submissions. Held below 5 because that guarantee covers
-        only DeepInfra''s own open-model serving - the same documents state that data
-        for Google/Anthropic closed models is transferred to those vendors and governed
-        by their terms - and no sub-processor list is disclosed.
+      score: 3
+      rationale: 'Explicit no-store/no-sell/no-train on Submissions and customer-retained IP are a
+        genuine strength, grounded in the retrieved Terms and data-privacy docs. But the
+        zero-retention claim is not clean: the ToS (re-read 2026-08-06) permits storing SUBMISSIONS
+        (content, not only metadata) "for a limited time for the purpose of debugging" with NO
+        numeric limit, the content licence has an "other internal uses only" tail, there is no
+        express confidentiality duty (only "will remain private"), and the guarantee covers only
+        DeepInfra''s own open-model serving - Google/Anthropic closed models routed through it fall
+        under those vendors'' terms. Under rubric 1.2 that unbounded debugging-content carve-out
+        misses the score-4 "short bounded retention" bar, so 3.
 
         '
       evidence_refs:
@@ -117,13 +141,14 @@ score:
       - ev2
       - ev7
     compliance:
-      score: 3
-      rationale: 'SOC 2 and ISO 27001 certification plus GDPR/HIPAA technical and
-        organisational measures are stated on the retrieved data-privacy documentation,
-        meeting the "SOC 2 or ISO 27001 + DPA" anchor. Held to 3 because the finer SOC 2
-        Type 1 (point-in-time, not Type II) designation and the sub-processor list live
-        on the Sprinto-powered trust centre, which is unreachable
-        (documented but unverified), and HIPAA is framed as measures rather than a BAA.
+      score: 2
+      rationale: 'SOC 2 (Type 1 only, not Type II) and ISO 27001 appear as claims on the
+        Sprinto-powered trust centre, which is unreachable - self-attested, not independently
+        verified. Decisively, NO signable DPA and NO Standard Contractual Clauses / EU transfer
+        mechanism are offered: the Privacy Policy (verified 2026-08-06) names a DPO and
+        acknowledges GDPR rights but states data is "transferred, stored, and processed ... in the
+        United States" with no transfer instrument. Without a DPA the score-3 "GDPR/DPA available"
+        bar is not met; the self-attested cert claims keep it above the score-1 floor, so 2.
 
         '
       evidence_refs:
@@ -212,7 +237,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev1, ev3]
-        summary: "The retrieved data-privacy documentation states SOC 2 and ISO 27001 certification plus GDPR/HIPAA technical and organisational measures. The finer SOC 2 Type 1 (not Type II) designation, sub-processor list and ISO 27701 status live on the Sprinto-powered trust centre, which is unreachable - documented but unverified. HIPAA is framed as measures, not a BAA."
+        summary: "SOC 2 (Type 1 only) and ISO 27001 appear as self-attested claims on the Sprinto-powered trust centre, which is unreachable (documented but unverified). No signable DPA and no SCCs / EU transfer mechanism are offered (verified 2026-08-06): the Privacy Policy names a DPO and acknowledges GDPR rights but processes data in the US with no transfer instrument. HIPAA is framed as measures, not a BAA."
       - key: residency
         title: "Data residency & jurisdiction"
         doc_type: reference
@@ -435,7 +460,18 @@ changelog:
     Trust centre (SOC 2 Type designation, sub-processors) did not resolve -> retrieved:false,
     documented but unverified. Ownership data_control weak -> moderate on the retrieved
     Terms; level unchanged (partial).'
-last_verified: '2026-07-25'
+- date: '2026-08-06'
+  change: 'Confidentiality + dedicated-availability pass (OpenSpec provider-confidentiality-dedicated,
+    rubric 1.2). Re-read the ToS (eff. 2024-07-04): confirmed there is no confidentiality clause (only
+    Submissions "will remain private"), an open-ended debugging carve-out that may store Submissions
+    (content, not only metadata) with no time limit, and an "other internal uses only" licence tail.
+    Added confidentiality: functional_only and dedicated_availability: self_serve. **data_governance
+    4 -> 3** (data_governance). Verified against the Privacy Policy + data-privacy docs (2026-08-06)
+    that DeepInfra offers NO signable DPA and NO SCCs / EU transfer mechanism (US-only processing,
+    DPO named): corrected gdpr_dpa yes -> no and **compliance 3 -> 2** (fails the "GDPR/DPA available"
+    bar). Added confidentiality: functional_only and dedicated_availability: self_serve. Net headline
+    60.4 -> 52.0 (grade C -> D).'
+last_verified: '2026-08-06'
 freshness_sla:
   fast_days: 30
   score_days: 90

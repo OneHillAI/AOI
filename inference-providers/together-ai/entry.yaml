@@ -55,6 +55,13 @@ data_governance:
 
     '
   subprocessors_disclosed: false
+  confidentiality: disclaimed
+  confidentiality_caveats: 'ToS Sec 9 expressly disclaims confidentiality: "The parties will have
+    no confidentiality obligations to each other unless otherwise agreed in writing" (read
+    2026-08-06). That is an express waiver, not mere silence - on self-serve terms Together owes you
+    no duty of confidence over your prompts; they are protected only by the narrow content licence
+    and the ZDR use-limitations. For trade-secret material an enterprise MSA with a negotiated
+    confidentiality clause (or a standalone NDA) is a prerequisite.'
 compliance:
   soc2: type_ii
   iso_27001: unknown
@@ -82,7 +89,20 @@ lock_in:
     stacks.
 
     '
+dedicated_availability: self_serve
+dedicated_notes: 'The fullest deployment ladder of the providers here: shared serverless, dedicated
+  endpoints on reserved hardware, self-serve and reserved bare-metal GPU clusters, and an enterprise
+  platform deployable in your own VPC or on-prem ("your data remains within your firewall"). Caveats:
+  EU-region dedicated endpoints are gated to Scale/Enterprise tiers, and single-tenancy is described
+  in product docs, not warranted in the contract.'
 trust_considerations:
+- ToS Sec 9 EXPRESSLY DISCLAIMS confidentiality ("The parties will have no confidentiality
+  obligations to each other unless otherwise agreed in writing") - a decisive gap for
+  trade-secret material on self-serve terms; an enterprise MSA with a negotiated confidentiality
+  clause, or a standalone NDA, is a prerequisite. Under rubric 1.2 this caps data_governance at 3.
+- Deployment ladder is a genuine strength - serverless, dedicated endpoints, self-serve bare-metal
+  GPU clusters, and VPC/on-prem enterprise deployment. But EU dedicated endpoints are gated to
+  Scale/Enterprise tiers and single-tenancy is in the docs, not warranted in the contract.
 - ZDR-by-default and no-training-without-opt-in are stated in the binding Privacy Policy
   and Terms of Service but are not independently audited.
 - EU residency and region pinning are gated to Scale/Enterprise tiers, per the support KB.
@@ -92,19 +112,21 @@ trust_considerations:
 - US HQ implies standing CLOUD Act exposure even for EU-hosted workloads; the DPA confirms
   default routing through North America data centres with EU transfers under SCCs.
 score:
-  rubric_version: '1.1'
-  headline: 75.2
+  rubric_version: '1.2'
+  headline: 70.4
   grade: B
   hard_flags: []
   dimensions:
     data_governance:
-      score: 4
-      rationale: 'Grounded in the binding Privacy Policy and Terms of Service:
-        inputs and outputs are not stored by default (ZDR), training on your
-        data requires explicit org-admin opt-in and is off by default, and you retain
-        ownership of Your Content and Output. Held below 5 because the no-retention behaviour
-        is self-attested in Together''s own terms rather than independently audited, and no
-        public sub-processor list was found.
+      score: 3
+      rationale: 'ZDR by default, training opt-in and off by default, and customer-retained
+        ownership of Your Content and Output are all grounded in the binding Privacy Policy and
+        Terms of Service - a genuinely strong retention/training posture. But ToS Sec 9 expressly
+        DISCLAIMS confidentiality ("no confidentiality obligations ... unless otherwise agreed in
+        writing"), so on standard terms your data is not contractually kept in confidence - under
+        rubric 1.2 an express confidentiality disclaimer caps data_governance at 3. Also held down
+        by the self-attested (unaudited) no-retention behaviour, the undisclosed sub-processor list,
+        and access to Third-Party Models under their own terms.
 
         '
       evidence_refs:
@@ -343,7 +365,7 @@ ownership:
     # grounded in: ev1 (privacy_policy, retrieved), ev7 (terms, retrieved); no third-party attestation of retention
     reliability:  { level: moderate, rationale: "SOC 2 Type II is announced via an independent audit and the security docs describe encryption and pen-testing, but there is no public uptime SLA, status page or SOC 2 report obtained." }
     # grounded in: ev3 (SOC 2 announcement), ev2 (security docs); reliability dim 2
-    data_control: { level: moderate, rationale: "The Terms leave you owning Your Content and Output, and ZDR-by-default with training opt-in/off keeps your data yours - but the no-retention guarantee is self-attested, and the US HQ plus DPA-confirmed North America default routing carry standing CLOUD Act exposure even for EU-hosted workloads." }
+    data_control: { level: moderate, rationale: "The Terms leave you owning Your Content and Output, and ZDR-by-default with training opt-in/off keeps your data yours - but ToS Sec 9 expressly disclaims any confidentiality duty, the no-retention guarantee is self-attested, and the US HQ plus DPA-confirmed North America default routing carry standing CLOUD Act exposure even for EU-hosted workloads." }
     # grounded in: ev7 (terms ownership, retrieved), ev1 (privacy_policy ZDR, retrieved), ev9 (dpa routing/SCCs, retrieved)
   verdict: "You own your workloads here in the ways that matter most: the Terms leave you owning your inputs and outputs, ZDR-by-default with no-training keeps them yours, and the open-weight catalogue on an OpenAI-compatible API is a clean portable exit. But overall ownership is partial, not substantial: the no-retention posture is Together's own self-attestation rather than independently audited, and the US HQ with DPA-confirmed North America default routing carries standing CLOUD Act exposure even for EU-hosted workloads, so data-control is moderate rather than strong. Pin the EU region on a paid tier if residency matters, and teams needing an audited no-retention guarantee should contract it in the DPA rather than rely on the default terms."
 
@@ -413,15 +435,18 @@ evidence:
   url: https://docs.together.ai/docs/inference/openai-compatibility
   date: '2026-07-25'
 - id: ev7
-  claim: 'Terms of Service: as between you and Company you exclusively own all right, title
-    and interest in Your Content and Output, granting Company only a limited license to
-    operate them to provide the Services; Together does not use your data to train its models
-    without your explicit opt-in and consent; the Company owns Company IP and Usage Data.'
+  claim: 'Terms of Service (re-read 2026-08-06): as between you and Company you exclusively own all
+    right, title and interest in Your Content and Output, granting Company only a limited license to
+    operate them to provide the Services; Together does not use your data to train its models without
+    your explicit opt-in and consent; the Company owns Company IP and Usage Data. Sec 9 (verbatim):
+    "The parties will have no confidentiality obligations to each other unless otherwise agreed in
+    writing" - an express confidentiality disclaimer. Sec 2.4 grants access to Third-Party Models,
+    which remain subject to their own terms.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://www.together.ai/terms-of-service
-  date: '2026-07-25'
+  date: '2026-08-06'
 - id: ev8
   claim: Independent third-party price/performance analysis of Together AI corroborates the
     approximate serverless rates and shows the same open-weight models served across many
@@ -458,7 +483,15 @@ changelog:
     term or independent attestation, and OneHill has not reproduced a provider swap). Ownership
     unchanged at substantial with the two transparency/data_control factors now grounded in the
     read binding terms while noting they remain self-attested.'
-last_verified: '2026-07-25'
+- date: '2026-08-06'
+  change: 'Confidentiality + dedicated-availability pass (OpenSpec provider-confidentiality-dedicated,
+    rubric 1.2). Re-read the ToS (eff. 2026-05-19) and confirmed Sec 9 expressly disclaims
+    confidentiality ("no confidentiality obligations ... unless otherwise agreed in writing"). Added
+    confidentiality: disclaimed and dedicated_availability: self_serve. **data_governance 4 -> 3**
+    (75.2 -> 70.4 headline): under rubric 1.2 an express confidentiality disclaimer caps D1 at 3 -
+    the retention/training posture is strong but standard terms give no duty of confidence. Ownership
+    verdict/level unchanged (still partial).'
+last_verified: '2026-08-06'
 freshness_sla:
   fast_days: 30
   score_days: 90

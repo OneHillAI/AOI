@@ -62,6 +62,15 @@ data_governance:
 
     '
   subprocessors_disclosed: true
+  confidentiality: adverse
+  confidentiality_caveats: 'Actively adverse on the standard terms (read 2026-08-06): "any
+    Contributions you upload ... or Generations you create using the Services will be considered
+    non-confidential and non-proprietary", and you grant Runware "a worldwide, non-exclusive,
+    royalty-free, transferable license to use, reproduce, distribute, prepare derivative works of,
+    display, and otherwise utilize" them in connection with the Services. Express exception: privately
+    uploaded custom models (weights/architectures) are treated as confidential, with a separate NDA
+    available. The no-training commitment covers only uploaded Training Data / Trained Models, not
+    ordinary prompts and generations.'
 compliance:
   soc2: unknown
   iso_27001: unknown
@@ -100,11 +109,21 @@ lock_in:
     Self-hosting the same open checkpoints also sidesteps the hosted data terms entirely.
 
     '
+dedicated_availability: enterprise_only
+dedicated_notes: 'Enterprise plans advertise "dedicated capacity, custom SLAs" at FAQ level only,
+  with no public terms. The newly announced Sonic Inference Pods (containerised, deployable "within
+  any national border") point at sovereign/on-prem deployment but are a press-announcement claim, not
+  a documented, generally-available offering.'
 trust_considerations:
 - The binding Terms (Runware Ltd, UK; read 2026-07-26) give the customer nominal ownership of
   outputs but grant Runware a worldwide, perpetual, transferable licence over inputs and outputs
   and reference storing training data. This is the central finding and it contradicts the marketing
-  line that your data belongs to you and is never reused.
+  line that your data belongs to you and is never reused. The ordinary prompt/generation path is
+  the concern; privately uploaded custom models are the exception.
+- Express exception (a genuine positive for that path) - privately uploaded custom models
+  (weights/architectures) ARE treated as confidential and a separate NDA is available - so the
+  private-model route is materially safer than ordinary prompts/generations, which the standard
+  Terms deem non-confidential. Prefer that route for anything sensitive.
 - The Privacy Policy sets generic retention ("as long as necessary" / account life) with no
   auto-purge or opt-in-storage clause and does not address training. The marketed no-training and
   auto-purge claims are not supported by the document read.
@@ -118,10 +137,15 @@ trust_considerations:
 - The models are open weights, so use, modification and exit remain in your hands, and self-hosting
   the same checkpoints avoids the hosted data terms. Where data control matters, prefer that route.
 score:
-  rubric_version: '1.1'
+  rubric_version: '1.2'
   headline: 45.6
   grade: D
-  hard_flags: []
+  hard_flags:
+  - '🚩 Adverse confidentiality: the standard Terms deem your Contributions and Generations
+    "non-confidential and non-proprietary" and take a worldwide, transferable, derivative-works
+    licence over them (private uploaded models excepted). data_governance is capped at 3 (it already
+    sits at 2), and trade-secret / patent-sensitive material should not go through the standard
+    prompt/generation path - use the private-model route or self-host.'
   dimensions:
     data_governance:
       score: 2
@@ -439,7 +463,15 @@ changelog:
     compliance and residency to 2, and set the ownership data_control factor to weak with the
     verdict reflecting the input/output licence. This is the Infercom pattern again: marketing
     contradicted by the binding text.'
-last_verified: '2026-07-26'
+- date: '2026-08-06'
+  change: 'Confidentiality + dedicated-availability pass (OpenSpec provider-confidentiality-dedicated,
+    rubric 1.2). Re-read the Terms: confirmed contributions/generations are deemed "non-confidential
+    and non-proprietary" with a worldwide, transferable, derivative-works licence taken over them, and
+    the express exception that privately uploaded custom models are confidential (NDA available).
+    Added confidentiality: adverse (+ hard flag) and dedicated_availability: enterprise_only (Sonic
+    Pods announced, not GA). No dimension score changed - data_governance already sits at 2 (below the
+    adverse cap of 3); added the private-model exception as a genuine positive for that path.'
+last_verified: '2026-08-06'
 freshness_sla:
   fast_days: 30
   score_days: 90
