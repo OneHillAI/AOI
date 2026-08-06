@@ -34,7 +34,9 @@
         "customer_data_ownership": {"type": "string", "enum": ["customer_retains", "provider_may_use", "shared", "unclear"], "description": "Do the customer's data and the knowledge derived from it stay the customer's - un-shared, un-sold, not captured to improve the provider's models/service?"},
         "outputs_used_to_improve_service": {"type": "string", "enum": ["no", "opt_out", "yes", "unclear"], "description": "Are prompts/outputs used to improve the provider's service (beyond training-on-inputs) - e.g. abuse models, analytics, product tuning?"},
         "third_party_routing_leakage": {"type": "string", "description": "Do closed/third-party models routed through this provider fall under other vendors' data terms?"},
-        "subprocessors_disclosed": {"type": "boolean"}
+        "subprocessors_disclosed": {"type": "boolean"},
+        "confidentiality": {"type": "string", "enum": ["mutual", "explicit", "functional_only", "none", "disclaimed", "adverse", "unknown"], "description": "Contractual confidentiality/NDA-grade duty over customer data in the STANDARD terms (a data-governance input, informs the data_governance dimension). mutual = express mutual clause treating Customer Data as Confidential Information; explicit = express provider-side duty; functional_only = no express duty of confidence but isolation / zero-retention / narrow-licence protections; none = no clause and no functional basis; disclaimed = terms expressly disclaim confidentiality obligations; adverse = terms deem customer content non-confidential and/or take a broad licence over it."},
+        "confidentiality_caveats": {"type": "string"}
       }
     },
     "compliance": {
@@ -76,6 +78,8 @@
         "portability_notes": {"type": "string"}
       }
     },
+    "dedicated_availability": {"type": "string", "enum": ["self_serve", "available", "enterprise_only", "coming_soon", "none", "unknown"], "description": "Single-tenant / dedicated / on-prem / air-gapped deployment availability (an isolation/control input, informs the transparency_lockin dimension). self_serve = provision a dedicated instance yourself; available = shipped today (may be sales-contracted), including on-prem / air-gapped; enterprise_only = enterprise-negotiated with no public terms; coming_soon = announced but not generally available."},
+    "dedicated_notes": {"type": "string"},
     "trust_considerations": {"type": "array", "items": {"type": "string"}},
     "score": {"$ref": "#/$defs/provider_score"},
     "documentation": {

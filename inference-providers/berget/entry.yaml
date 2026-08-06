@@ -17,12 +17,14 @@ summary: 'A Stockholm-based, Swedish-owned EU-sovereign inference provider servi
   title and IP in its data under a licence scoped only to providing the Service, and a
   30-day post-termination export window precedes irreversible deletion; the Privacy and
   Security pages place all processing on EU/Sweden-only servers, and Swedish ownership
-  puts Berget outside the US CLOUD Act. The main caveat is verification depth: there is
-  no independent attestation of the data-handling guarantees (no SOC 2 / ISO 27001), the
-  GDPR DPA is published but its clauses and sub-processor list are not disclosed, and
-  the Terms reserve a right to aggregated, anonymised, non-identifying usage data. This
-  is a strong, document-grounded governance posture that stops short of audited
-  assurance.
+  puts Berget outside the US CLOUD Act. The GDPR DPA has now been read (2026-08-06) and
+  names an entirely-EEA sub-processor list, and the Terms carry a mutual confidentiality
+  clause (Sec 18). The main caveat is verification depth: there is no independent
+  attestation of the data-handling guarantees (no SOC 2 / ISO 27001), the never-train
+  commitment rests on the service-scoped licence plus the DPA purpose-limitation rather than
+  an express anti-training clause, and the Terms reserve a right to aggregated, anonymised,
+  non-identifying usage data. This is a strong, document-grounded governance posture that
+  stops short of audited assurance.
 
   '
 models_served:
@@ -53,7 +55,7 @@ data_governance:
     for 30 days to allow export/recovery and then irreversibly deleted. The Terms also
     reserve a right to process aggregated, anonymised data that does not identify the
     customer or any natural person. No independent attestation corroborates the data-handling
-    guarantees, and the DPA sub-processor list is not disclosed.
+    guarantees; the DPA (read 2026-08-06) does disclose an entirely-EEA sub-processor list.
 
     '
   customer_data_ownership: customer_retains
@@ -62,7 +64,13 @@ data_governance:
     model routing, so no other vendor''s data terms attach to routed inference.
 
     '
-  subprocessors_disclosed: false
+  subprocessors_disclosed: true
+  confidentiality: explicit
+  confidentiality_caveats: 'Terms Sec 18 is a mutual confidentiality clause covering each
+    party''s non-public information, expressly "including in particular Customer Data", with a
+    keep-confidential and purpose-limitation duty and standard carve-outs. Weaknesses versus a
+    dedicated NDA: no express post-termination survival term, and the Sec 19.1 aggregated,
+    anonymised usage-data reservation sits outside the confidentiality perimeter.'
 compliance:
   soc2: unknown
   iso_27001: unknown
@@ -97,6 +105,12 @@ lock_in:
     or self-hosted.
 
     '
+dedicated_availability: coming_soon
+dedicated_notes: 'The advertised "Dedicated Inference" product ("run your own fine-tuned models
+  on dedicated capacity") is marked Coming Soon, with no contract language, docs or pricing. The
+  only shipped dedicated pool is Berget Code, which is dedicated to that product, not reserved
+  per customer. Treat per-customer single-tenancy and first-party fine-tuning as not yet generally
+  available (as of 2026-08).'
 trust_considerations:
 - ZDR-by-default, no-training, customer-retained ownership and a 30-day export window
   are confirmed in Berget''s binding Terms of Service, a real upgrade from a
@@ -105,14 +119,24 @@ trust_considerations:
 - Swedish ownership and EU-only infrastructure mean no US CLOUD Act exposure - a genuine
   sovereignty advantage over US-headquartered providers, independently reported by EU
   tech press.
-- The GDPR DPA is published at berget.ai/dpa, but its clauses (transfer mechanism, SCCs,
-  sub-processor list) are not disclosed. Contractualise the data terms and request
-  current attestation status for regulated procurement.
+- The GDPR DPA (read 2026-08-06) names an entirely-EEA sub-processor list - 6G AI Sweden,
+  Acebit, Toriv, Obenet (Swedish) and Stripe Payments Europe (Ireland) - with all data
+  centres in the EEA (Sec 10.1); still no SOC 2 / ISO 27001 attestation, so contractualise
+  the data terms and request current attestation status for regulated procurement.
+- Terms Sec 18 is a mutual confidentiality clause covering each party's non-public
+  information (customer data included) - a real contractual protection beyond the
+  retention and ownership terms.
+- The never-train commitment rests on the service-scoped licence plus the DPA
+  purpose-limitation ("not... for any other purposes other than providing the Service"),
+  not an express anti-training sentence - a slightly weaker evidence tier than an explicit clause.
+- A dedicated / reserved-capacity ("Dedicated Inference") product is signalled but not yet
+  shipped - the Terms describe only serverless per-token inference, with no dedicated pricing
+  or terms.
 - The Terms reserve a right to process aggregated, anonymised, non-identifying usage
   data - standard, but note it alongside the zero-retention-of-content guarantee.
 - No public uptime SLA or status history is published.
 score:
-  rubric_version: '1.1'
+  rubric_version: '1.2'
   headline: 70.4
   grade: B
   hard_flags: []
@@ -121,12 +145,13 @@ score:
       score: 4
       rationale: 'Zero data retention (Berget never stores prompt input or model output
         content), customer retains all title and IP under a service-scoped licence, a
-        30-day post-termination export window and open-weight-only routing are all
-        confirmed in the Terms of Service - a strong, document-grounded posture. Held to
-        4 rather than 5 because no independent third-party attestation or audit (SOC 2 /
-        ISO 27001) corroborates the data-handling guarantees, the GDPR DPA clauses and
-        sub-processor list are not disclosed, and the Terms reserve an
-        aggregated/anonymised usage-data right.
+        30-day post-termination export window, a mutual confidentiality clause (Terms Sec 18)
+        and open-weight-only routing are all confirmed in the Terms of Service, and the DPA
+        (read 2026-08-06) names an entirely-EEA sub-processor list - a strong, document-grounded
+        posture. Held to 4 rather than 5 because no independent third-party attestation or audit
+        (SOC 2 / ISO 27001) corroborates the data-handling guarantees, the never-train commitment
+        rests on the service-scoped licence and DPA purpose-limitation rather than an express
+        anti-training clause, and the Terms reserve an aggregated/anonymised usage-data right.
 
         '
       evidence_refs:
@@ -135,11 +160,12 @@ score:
       - ev-privacy
     compliance:
       score: 2
-      rationale: 'A GDPR DPA is published (governing processing of personal data), but
-        SOC 2 / ISO 27001 / ISO 27701 / HIPAA attestations are not confirmed and the DPA''s
-        own clauses are not disclosed. Meets the score-2 anchor: a DPA/GDPR basis is in
-        place, but no completed independent audit (SOC 2 Type II or ISO 27001) is
-        confirmed, so it falls short of the score-3 "SOC 2 Type II or ISO 27001" bar.
+      rationale: 'A GDPR DPA is published and now read (Art. 28(3); an entirely-EEA
+        sub-processor list in Appendix 1; personnel confidentiality in Sec 7.1(iii); all data
+        centres within the EEA per Sec 10.1), but SOC 2 / ISO 27001 / ISO 27701 / HIPAA
+        attestations are not confirmed. Meets the score-2 anchor: a DPA/GDPR basis is in place,
+        but no completed independent audit (SOC 2 Type II or ISO 27001) is confirmed, so it
+        falls short of the score-3 "SOC 2 Type II or ISO 27001" bar.
 
         '
       evidence_refs:
@@ -220,7 +246,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-terms]
-        summary: "Per the Terms, the Customer retains all title and intellectual property rights in its Customer Data, and Berget's licence is limited to hosting, processing and transmitting that data to provide the Service - no training right is granted. Zero retention of content and open-weight-only serving mean nothing is captured to improve the service beyond aggregated, anonymised, non-identifying usage data; sub-processors are not disclosed."
+        summary: "Per the Terms, the Customer retains all title and intellectual property rights in its Customer Data, and Berget's licence is limited to hosting, processing and transmitting that data to provide the Service - no training right is granted. Zero retention of content and open-weight-only serving mean nothing is captured to improve the service beyond aggregated, anonymised, non-identifying usage data; the DPA discloses an entirely-EEA sub-processor list."
       - key: residency
         title: "Data residency & jurisdiction"
         doc_type: reference
@@ -234,7 +260,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-dpa, ev-security]
-        summary: "A GDPR DPA is published at berget.ai/dpa (governing processing of personal data), but its clauses and sub-processor list are not disclosed. SOC 2 / ISO 27001 / ISO 27701 / HIPAA-BAA are not confirmed - request current attestation status directly for regulated procurement."
+        summary: "A GDPR DPA is published at berget.ai/dpa and now read (Art. 28(3); entirely-EEA sub-processor list in Appendix 1; personnel confidentiality Sec 7.1; EEA-only data centres Sec 10.1). SOC 2 / ISO 27001 / ISO 27701 / HIPAA-BAA are not confirmed - request current attestation status directly for regulated procurement."
       - key: security
         title: "Security controls"
         doc_type: reference
@@ -355,29 +381,34 @@ ownership:
   factors:
     use_modify:   { level: strong,   rationale: "OpenAI-compatible API (api.berget.ai/v1) over portable open-weight models (Llama, Mistral, Gemma, gpt-oss, GLM) - migrate by switching base URL and key, and the same checkpoints run elsewhere or self-hosted." }
       # grounded in: ev-mastra (third_party directory, OpenAI-compatible), ev-terms
-    transparency: { level: moderate, rationale: "The binding Terms, Privacy and Security pages confirm ZDR, customer-retained ownership, the 30-day export window and EU-only processing in-clause. Held below strong because the GDPR DPA's own clauses and the sub-processor list are undisclosed and no SOC 2 / ISO 27001 attestation exists." }
-      # grounded in: ev-terms, ev-privacy, ev-security (retrieved:true); ev-dpa (retrieved:false)
+    transparency: { level: moderate, rationale: "The binding Terms, Privacy and Security pages and now the DPA confirm ZDR, customer-retained ownership, the 30-day export window, EU-only processing, a Sec 18 mutual confidentiality clause and an entirely-EEA sub-processor list - all in-clause and read. Held below strong because no SOC 2 / ISO 27001 attestation independently corroborates the data-handling guarantees." }
+      # grounded in: ev-terms, ev-privacy, ev-security, ev-dpa (all retrieved:true 2026-08-06)
     reliability:  { level: moderate, rationale: "Independent press reports production customers (Riksbanken, 300+ pilots), but there is no public uptime SLA, status page or independent pen-test, and no SOC 2 / ISO 27001 attestation is confirmed." }
       # grounded in: ev-techeu (third_party)
     data_control: { level: strong,   rationale: "The Terms of Service state Berget never stores prompt input or model output content, the Customer retains all title and IP under a licence scoped only to providing the Service, and Customer Data is exportable for 30 days post-termination then deleted; EU-only infrastructure with no US transfers puts it outside US CLOUD Act reach." }
       # grounded in: ev-terms (retrieved:true, doc_type terms), ev-privacy
-  verdict: "You substantially own workloads here: the binding Terms confirm zero retention of prompt/output content, customer-retained ownership under a service-scoped licence, and a 30-day export window, while EU-only residency and Swedish ownership keep you outside US CLOUD Act reach and a portable open-weight exit keeps switching cheap. What holds it below full is verification depth - no independent audit or SOC 2 / ISO 27001 attests the data-handling guarantees, and the GDPR DPA's clauses and sub-processor list are not disclosed. Adopt as an EU-sovereign default, but contractualise the data terms in the DPA and request current attestation status for regulated procurement."
+  verdict: "You substantially own workloads here: the binding Terms confirm zero retention of prompt/output content, customer-retained ownership under a service-scoped licence, and a 30-day export window, while EU-only residency and Swedish ownership keep you outside US CLOUD Act reach and a portable open-weight exit keeps switching cheap. What holds it below full is verification depth - no independent audit or SOC 2 / ISO 27001 attests the data-handling guarantees (the DPA is now read: an entirely-EEA sub-processor list and a Sec 18 mutual confidentiality clause). Adopt as an EU-sovereign default, and request current attestation status for regulated procurement."
 
 evidence:
 - id: ev-terms
-  claim: 'Berget AI Terms of Service: Berget will never store any of the actual prompt
-    content used as model input or any of the output content generated by the LLMs it
-    hosts (zero data retention); as between Berget and the Customer, the Customer retains
-    all title and intellectual property rights in the Customer Data and grants Berget a
-    licence limited to hosting, processing and transmitting it to provide the Service;
+  claim: 'Berget AI Terms of Service (re-read 2026-08-06): Berget will never store any of the
+    actual prompt content used as model input or any of the output content generated by the
+    LLMs it hosts (zero data retention); as between Berget and the Customer, the Customer
+    retains all title and intellectual property rights in the Customer Data and grants Berget
+    a licence limited to hosting, processing and transmitting it to provide the Service;
     Customer Data is retained for 30 days after termination for export/recovery then
     irreversibly deleted; Berget may process aggregated, anonymised data that does not
-    identify the Customer or any natural person.'
+    identify the Customer or any natural person. Sec 18 is a mutual confidentiality clause:
+    each party must keep the other''s non-public information confidential and use it only for
+    the Agreement''s purposes (standard carve-outs for public / pre-known / independently
+    developed information). Note Sec 7 addresses storage ("never store... prompt... or output
+    content"), not training - the anti-training basis is the service-scoped licence plus the
+    DPA purpose-limitation, not an express "will not train" sentence.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://berget.ai/en/terms
-  date: '2026-07-25'
+  date: '2026-08-06'
 - id: ev-privacy
   claim: 'Berget AI Data Privacy Policy: all data stays within EU-based servers in Sweden
     and never leaves Berget''s infrastructure; zero retention; GDPR-compliant by design.'
@@ -397,14 +428,20 @@ evidence:
   url: https://berget.ai/en/security
   date: '2026-07-25'
 - id: ev-dpa
-  claim: 'Berget AI publishes a Data Processing Agreement governing the processing of
-    personal data contained in Customer Data; its internal clauses (transfer mechanism,
-    SCCs, sub-processor list) were not reachable this session.'
+  claim: 'Berget AI Data Processing Agreement (read 2026-08-06): an Art. 28(3) GDPR
+    controller-processor agreement. Appendix 1 names the sub-processors - 6G AI Sweden AB,
+    Acebit AB, Toriv AB, Obenet AB (all Swedish) and Stripe Payments Europe Ltd (Ireland) -
+    so the sub-processor list IS disclosed and is entirely EEA (no US hyperscaler); Sec 10.1
+    states "All our data centres are within the European Economic Area". Sec 7.1(iii) binds
+    personnel under confidentiality undertakings, and the DPA limits processing to providing
+    the Service ("shall not use the Relevant Personal Data for any other purposes other than
+    that of providing the Service") - a purpose-limitation, not an express "will not train"
+    clause.'
   source_type: publisher
   doc_type: dpa
-  retrieved: false
+  retrieved: true
   url: https://berget.ai/dpa
-  date: '2026-07-25'
+  date: '2026-08-06'
 - id: ev-landing
   claim: Berget AI landing page - Swedish-owned, EU-sovereign inference, not subject to
     the US CLOUD Act, no US data transfers, OpenAI-compatible (marketing framing).
@@ -470,7 +507,16 @@ changelog:
     as it is a commercial partner, not an independent attestation; regrounded residency on
     retrieved Privacy/Security + independent tech press. DPA published but its clauses were
     not reachable (retrieved:false).'
-last_verified: '2026-07-25'
+- date: '2026-08-06'
+  change: 'Confidentiality + dedicated-availability pass (OpenSpec provider-confidentiality-dedicated,
+    rubric 1.2). Read the DPA (Appendix 1: entirely-EEA sub-processor list - 6G AI Sweden, Acebit,
+    Toriv, Obenet, Stripe Payments Europe/Ireland; Sec 10.1 EEA-only; Sec 7.1 personnel
+    confidentiality) and re-read the ToS (Sec 18 mutual confidentiality; Sec 7 storage not training),
+    both retrieved:true (doc effective dates ToS 2025-10-16 / DPA 2026-04-08). Corrected
+    subprocessors_disclosed false -> true. Added confidentiality: explicit and dedicated_availability:
+    coming_soon. No dimension score changed (never-train rests on the service-scoped licence + DPA
+    purpose-limitation, not an express clause; still no independent attestation).'
+last_verified: '2026-08-06'
 freshness_sla:
   fast_days: 30
   score_days: 90

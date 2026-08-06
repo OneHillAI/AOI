@@ -63,6 +63,13 @@ data_governance:
 
     '
   subprocessors_disclosed: false
+  confidentiality: functional_only
+  confidentiality_caveats: 'The standard ToS contains NO confidentiality clause at all - no
+    definition of Confidential Information covering your inputs, no express duty of confidence. What
+    exists is functional: logical isolation from other tenants and model creators, the narrow
+    service licence, the no-other-use commitments, and zero retention. The DPA''s confidentiality
+    obligations (personnel; sub-processor flow-down) attach to personal data, not trade secrets. For
+    proprietary/trade-secret material, use a separate NDA or the enterprise/on-prem contract.'
 compliance:
   soc2: unknown
   iso_27001: "yes"
@@ -103,6 +110,14 @@ lock_in:
     run on GPU-based providers or self-hosted, so customer lock-in is low.
 
     '
+dedicated_availability: available
+dedicated_notes: 'Two shipped isolation levels available today (per the On-Premises page, read
+  2026-08-06): single-tenant dedicated racks in the EU data centres ("no other tenants", flat
+  monthly, custom SLAs) and full on-prem / air-gapped deployment in your own facility (SambaRack
+  SN40L; "SambaStack runs fully offline" in an air-gap; ~90 days contract-to-production), with BYOC
+  (bring-your-own-checkpoint). Per-engagement contracts, so the weight-ownership language sits in
+  unpublished paper, but the deployment options are real and shipped - the strongest control/exit
+  path among the EU providers here.'
 trust_considerations:
 - ISO 27001 certified plus a completed CSA AI security assessment (CSA STAR / AI CAIQ),
   GDPR / German BDSG / EU AI Act alignment - a strong, third-party-corroborated compliance
@@ -118,9 +133,16 @@ trust_considerations:
   verified, and the exact model roster is not fully confirmed.
 - SambaNova custom RDU hardware is a mild provider-side lock-in note; customer-facing
   models remain open-weight and portable.
+- The standard ToS has NO express confidentiality clause - only functional protections (isolation,
+  zero-retention, narrow licence); the DPA's confidentiality attaches to personal data, not trade
+  secrets. For trade-secret material this is arguably the more important caveat than sovereignty -
+  use an NDA or the enterprise / on-prem contract.
+- Genuinely shipped isolation - single-tenant dedicated racks plus full on-prem / air-gapped BYOC,
+  available today (unlike Groq's enterprise-only/undocumented or Berget's coming-soon) - the
+  strongest control and exit path among the providers here.
 score:
-  rubric_version: '1.1'
-  headline: 74.0
+  rubric_version: '1.2'
+  headline: 76.0
   grade: B
   hard_flags: []
   dimensions:
@@ -195,14 +217,18 @@ score:
       evidence_refs:
       - ev4
     transparency_lockin:
-      score: 4
-      rationale: 'OpenAI-compatible API over portable open-weight models keeps customer
-        lock-in low. Held below 5 because the SambaNova RDU is a provider-side hardware
-        dependency and the exact served-model roster is not fully confirmed.
+      score: 5
+      rationale: 'OpenAI-compatible API over portable open-weight models, plus a shipped
+        on-prem / air-gapped / single-tenant BYOC deployment path (read 2026-08-06): you can run
+        the same open checkpoints in your own facility, the strongest possible control and exit.
+        The SambaNova RDU is a provider-side dependency in the hosted mode only - the
+        on-prem/air-gapped option removes it entirely. Reaches the top anchor on control/exit;
+        the exact served-model roster is the remaining unknown.
 
         '
       evidence_refs:
       - ev5
+      - ev-onprem
     cost:
       score: 3
       rationale: 'Pay-as-you-go OpenAI-compatible pricing, but exact per-model rates
@@ -491,6 +517,28 @@ evidence:
   retrieved: true
   url: https://infercom.ai/privacypolicy/
   date: '2026-07-25'
+- id: ev-onprem
+  claim: 'On-Premises page (read 2026-08-06): shipped today, present tense - "On-premises AI
+    inference. Full control, cloud speed", ~90 days contract-to-production. Air-gapped supported
+    ("SambaStack runs fully offline. In an air-gap, software and model updates are shipped and
+    installed manually"); single-tenant dedicated "SambaRack SN40L" systems run in the customer''s
+    own datacentre; BYOC ("fine-tunes of supported architectures load immediately"). Alongside a
+    Dedicated Capacity product (single-tenant racks in the EU DCs).'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://infercom.ai/on-premises
+  date: '2026-08-06'
+- id: ev-noconf
+  claim: 'Privacy Policy / standard ToS (read 2026-08-06): functional protections only (transient
+    processing + discard, no secondary use, logical isolation, encryption, access controls) with NO
+    express confidentiality clause / duty of confidence over customer inputs; the DPA''s
+    confidentiality obligations attach to personal data, not trade secrets.'
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://infercom.ai/privacypolicy/
+  date: '2026-08-06'
 changelog:
 - date: '2026-07-25'
   change: Initial v2 four-domain library entry.
@@ -512,7 +560,15 @@ changelog:
     reworked ownership to expanded factors with # grounded-in comments (data_control -> strong
     on the extraction axis per the retrieved Privacy Policy, with the conditional US-routing
     residency caveat explicit). Scores unchanged.'
-last_verified: '2026-07-25'
+- date: '2026-08-06'
+  change: 'Confidentiality + dedicated-availability pass (OpenSpec provider-confidentiality-dedicated,
+    rubric 1.2). Read the On-Premises page (shipped single-tenant racks + on-prem/air-gapped BYOC,
+    SambaRack SN40L) and confirmed the standard ToS/PP carry no express confidentiality clause
+    (functional protections only). Added confidentiality: functional_only and dedicated_availability:
+    available. **transparency_lockin 4 -> 5** (76.0 headline): the shipped on-prem/air-gapped BYOC path
+    is a top-tier control/exit signal - you can run the same open checkpoints in your own facility.
+    Doc effective dates: ToS v2.1, PP v2.2 2026-03-09, DPA v1.3 2026-03-04.'
+last_verified: '2026-08-06'
 freshness_sla:
   fast_days: 30
   score_days: 90

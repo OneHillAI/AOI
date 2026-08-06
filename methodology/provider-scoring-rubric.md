@@ -16,12 +16,12 @@ Two profiles share most dimensions but weight them differently.
 
 | # | Dimension | Weight | What it measures |
 |---|---|--------|---|
-| 1 | **Data Governance & Privacy** | 0.24 | Default retention, training-on-inputs, ZDR availability & scope, sub-processors, third-party model routing leakage |
+| 1 | **Data Governance & Privacy** | 0.24 | Default retention, training-on-inputs, ZDR availability & scope, sub-processors, third-party model routing leakage, contractual confidentiality of customer data |
 | 2 | **Compliance & Certifications** | 0.18 | SOC 2 (Type I vs II), ISO 27001/27701, HIPAA/BAA, GDPR/DPA, FedRAMP |
 | 3 | **Data Residency & Sovereignty** | 0.16 | EU regions, sovereign options, CLOUD Act exposure, region pinning |
 | 4 | **Security Posture** | 0.14 | Isolation/tenancy, encryption, access controls, pen-testing, incident history |
 | 5 | **Reliability & SLA** | 0.12 | Uptime record, SLA terms, failover, incident communication |
-| 6 | **Transparency & Lock-in** | 0.10 | Model portability, OpenAI-compat, dedicated-vs-serverless clarity, exit cost |
+| 6 | **Transparency & Lock-in** | 0.10 | Model portability, OpenAI-compat, dedicated/on-prem availability, exit cost |
 | 7 | **Cost & Value** | 0.06 | Pricing clarity and competitiveness (informational; lightly weighted) |
 
 ### Inference-provider anchors
@@ -39,6 +39,15 @@ inference-provider score maps to a written anchor the same way a model score doe
 | 3 | No training by default; ZDR available; retention documented; some caveats (e.g. free-tier logs, third-party model routing under other terms). |
 | 4 | Contractually no training; short bounded retention or ZDR by default on paid tiers; sub-processors disclosed and routing terms clear - short of zero-retention-by-default. |
 | 5 | Zero retention by default, contractually no training, ZDR verifiable, sub-processors disclosed, third-party routing leakage clearly flagged. |
+
+**Confidentiality input (v1.2).** `data_governance.confidentiality` feeds D1. An express duty over
+customer data - `mutual` (both parties, Customer Data named as Confidential Information) or
+`explicit` (provider-side) - is a positive at the top of the scale. `functional_only` (no express
+duty, but isolation + zero-retention + narrow-licence protections) is neutral. `disclaimed`
+(standard terms expressly waive confidentiality) or `adverse` (customer content deemed
+non-confidential and/or a broad licence taken over it) is a material negative: it caps D1 at **3**
+regardless of retention/training, because your data is not contractually kept in confidence on the
+standard terms. Record the standard-terms posture, not an enterprise-only exception.
 
 **D2 Compliance & Certifications** (weight 0.18)
 
@@ -95,6 +104,12 @@ inference-provider score maps to a written anchor the same way a model score doe
 | 4 | OpenAI-compatible API over open models with transparent routing and a documented exit path - short of full sub-processor transparency. |
 | 5 | Fully portable (open models + open API), transparent routing/sub-processors, clear exit path. |
 
+**Dedicated availability input (v1.2).** `dedicated_availability` feeds D6. Shipped self-serve
+dedicated instances, or `available` on-prem / air-gapped / single-tenant deployment (you can run it
+in your own environment), strengthen control and exit and support the top rungs. `enterprise_only`
+(negotiated, no public terms) and `coming_soon` (announced, not GA) do not lift D6 on their own;
+record what is actually available today, not what is advertised.
+
 **D7 Cost & Value** (weight 0.06)
 
 | Score | Anchor |
@@ -138,11 +153,18 @@ inference-provider score maps to a written anchor the same way a model score doe
   - 🚩 No documented compliance and indefinite/unclear retention → **C** ceiling (inference).
   - 🚩 No malware scanning and pickle-first with anonymous uploads → **C** ceiling (hosting).
   - 🚩 Product discontinued / catalogue materially misrepresented → flagged prominently.
+  - 🚩 Standard terms deem customer content non-confidential and/or take a broad licence over it
+    (`confidentiality: adverse`) → **D1 capped at 3** and flagged prominently.
 - **Universal disclosure:** US-headquartered providers carry a standing **CLOUD Act**
   note even when EU regions are offered; this is disclosed, not scored as a defect on
   its own.
 
 ### Rubric changelog
+- **1.2** (2026-08) - Added two contractual inputs (OpenSpec `provider-confidentiality-dedicated`):
+  `data_governance.confidentiality` feeds D1 (an express mutual/provider-side duty is a positive;
+  `disclaimed`/`adverse` caps D1 at 3), and `dedicated_availability` feeds D6 (shipped self-serve /
+  on-prem / air-gapped strengthens control and exit). No new dimension and no weight change; triggers
+  a re-score of every provider entry against the two inputs and current primary sources.
 - **1.1** (2026-07) - Defined every rung 0-5 for all seven inference-provider dimensions
   (previously only D1/D2/D3/D6 carried abbreviated 0/3/5 bullets; D4 Security, D5
   Reliability and D7 Cost had none). Weights unchanged; triggers a re-score of every

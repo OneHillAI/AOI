@@ -47,9 +47,11 @@ data_governance:
     (encrypted on disk) then delete after inference
   trains_on_inputs: never
   zdr_available: yes_default
-  zdr_scope_caveats: 'Batch requests may store data temporarily, encrypted on disk,
-    and delete it after inference. Zero-retention covers DeepInfra''s
-    OWN open-model serving only.
+  zdr_scope_caveats: 'Batch requests may store data temporarily, encrypted on disk, and delete
+    it after inference. Beyond batch, the ToS permits storing Submissions (content) "for a limited
+    time for the purpose of debugging" with no numeric limit, and the content licence has an "other
+    internal uses only" tail - so "zero retention" is not absolute. There is no ZDR toggle.
+    Zero-retention covers DeepInfra''s OWN open-model serving only.
 
     '
   customer_data_ownership: customer_retains
@@ -62,6 +64,13 @@ data_governance:
 
     '
   subprocessors_disclosed: false
+  confidentiality: functional_only
+  confidentiality_caveats: 'No confidentiality clause; the ToS states only that Submissions "will
+    remain private" (a privacy statement, not a duty of confidence). Read 2026-08-06, two soft spots
+    beyond it: the no-store/no-train commitment carries an open-ended debugging carve-out - "We might
+    store some Submissions for a limited time for the purpose of debugging our Services" with no
+    numeric limit (Submissions = content, not only metadata) - and the content licence has an
+    "other internal uses only" tail. For trade-secret material, negotiate an NDA/enterprise terms.'
 compliance:
   soc2: type_i
   iso_27001: "yes"
@@ -89,27 +98,39 @@ lock_in:
     models are re-sold, which are not portable and carry different data terms.
 
     '
+dedicated_availability: self_serve
+dedicated_notes: 'Genuinely self-serve dedicated: dedicated instances billed per GPU-hour (A100
+  through B300, four-GPU self-serve limit), raw dedicated GPU rental with SSH, and negotiated DGX
+  clusters via sales. BYO weights: private custom LLMs pulled from public or private Hugging Face
+  repos plus LoRA adapters on dedicated GPU allocations ("your weights, your endpoint, your
+  isolation"). Single-tenancy is described in docs, not warranted in the contract.'
 trust_considerations:
+- No confidentiality clause - the ToS says only that Submissions "will remain private". Combined
+  with an open-ended "debugging" carve-out that may store Submissions (content) with no time limit
+  and an "other internal uses only" licence tail, "zero retention" is not absolute; negotiate an
+  NDA/enterprise terms for trade-secret material. Under rubric 1.2 this holds data_governance at 3.
 - Zero-retention covers DeepInfra's own open-model serving only; closed models (Claude,
   Google) routed through it fall under those vendors' storage/training terms.
 - SOC 2 is Type 1 only (not Type II); HIPAA/BAA is not a formal attestation.
 - No EU data-residency option surfaced; US-only data centres.
 - US HQ implies standing CLOUD Act exposure.
 score:
-  rubric_version: '1.1'
-  headline: 60.4
+  rubric_version: '1.2'
+  headline: 55.6
   grade: C
   hard_flags: []
   dimensions:
     data_governance:
-      score: 4
-      rationale: 'Grounded in the retrieved data-privacy documentation and Terms of
-        Service: zero-retention by default (only debugging metadata - request ID, cost,
-        sampling parameters - is logged), no training on submitted data, and customers
-        retain IP over their Submissions. Held below 5 because that guarantee covers
-        only DeepInfra''s own open-model serving - the same documents state that data
-        for Google/Anthropic closed models is transferred to those vendors and governed
-        by their terms - and no sub-processor list is disclosed.
+      score: 3
+      rationale: 'Explicit no-store/no-sell/no-train on Submissions and customer-retained IP are a
+        genuine strength, grounded in the retrieved Terms and data-privacy docs. But the
+        zero-retention claim is not clean: the ToS (re-read 2026-08-06) permits storing SUBMISSIONS
+        (content, not only metadata) "for a limited time for the purpose of debugging" with NO
+        numeric limit, the content licence has an "other internal uses only" tail, there is no
+        express confidentiality duty (only "will remain private"), and the guarantee covers only
+        DeepInfra''s own open-model serving - Google/Anthropic closed models routed through it fall
+        under those vendors'' terms. Under rubric 1.2 that unbounded debugging-content carve-out
+        misses the score-4 "short bounded retention" bar, so 3.
 
         '
       evidence_refs:
@@ -435,7 +456,16 @@ changelog:
     Trust centre (SOC 2 Type designation, sub-processors) did not resolve -> retrieved:false,
     documented but unverified. Ownership data_control weak -> moderate on the retrieved
     Terms; level unchanged (partial).'
-last_verified: '2026-07-25'
+- date: '2026-08-06'
+  change: 'Confidentiality + dedicated-availability pass (OpenSpec provider-confidentiality-dedicated,
+    rubric 1.2). Re-read the ToS (eff. 2024-07-04): confirmed there is no confidentiality clause (only
+    Submissions "will remain private"), an open-ended debugging carve-out that may store Submissions
+    (content, not only metadata) with no time limit, and an "other internal uses only" licence tail.
+    Added confidentiality: functional_only and dedicated_availability: self_serve. **data_governance
+    4 -> 3** (60.4 -> 55.6 headline): the unbounded debugging-content carve-out + internal-uses tail
+    miss the score-4 "short bounded retention" bar. Research also flags no public DPA / no SCCs /
+    US-only (not re-scored here pending DPA re-verification).'
+last_verified: '2026-08-06'
 freshness_sla:
   fast_days: 30
   score_days: 90
