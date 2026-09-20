@@ -1,0 +1,11 @@
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+terms | https://www.baseten.co/terms-and-conditions/ | 2026-09-20 | yes | true | Full Section 11 (mutual confidentiality) confirmed verbatim across 2 fetches; ZDR in Terms is CONDITIONAL (Sec 2.5), not default; no-train Sec 6.3; customer IP Sec 6.1; 30-day export Sec 7.4; California law Sec 12.8; 12-mo liability cap Sec 9.1. publisher.
+dpa | https://www.baseten.co/dpa/ | 2026-09-20 | yes | true | Dated 2026-09-15; Baseten=Processor; SCCs Module 2/3; 15-day sub-processor notice; confidentiality re personal data Sec 5.3. publisher.
+security | https://www.baseten.co/security-practices/ | 2026-09-20 | yes | true | ZDR DEFAULT stated here; SOC2 Type II/HIPAA/GDPR; TLS1.2+/AES-256; MFA; pen-test; sub-processor list "maintained at trust.baseten.co" 15-day notice. publisher.
+security | https://docs.baseten.co/observability/security | 2026-09-20 | yes | true | ZDR default; per-customer K8s namespaces; Calico/Cilium; GPUs never shared; self-hosted control/workload split. publisher.
+security | https://trust.baseten.co/ (+ /subprocessors) | 2026-09-20 | yes | false | Vanta portal JS-gated; only meta + security@baseten.co. NO cert dates/scope; ISO 27001/PCI DSS/FedRAMP/CSA STAR UNVERIFIABLE. Named infra sub-processor list not readable.
+sla | https://www.baseten.co/service-level-agreement/ | 2026-09-20 | yes | true | 99.9% committed (Sec 2.0) for Model APIs + Dedicated Inference; 40% max monthly credits (Sec 4.2); 24h claim window (Sec 4.3); exclusions Sec 1.4. publisher.
+sla | https://status.baseten.co/ | 2026-09-20 | yes | true | "All Systems Operational"; 6 components; 90-day history, no numeric % on face; incidents Sep 9/14/20 2026. publisher.
+pricing | https://www.baseten.co/pricing/ | 2026-09-20 | yes | true | Model APIs per-token; Dedicated per-minute (self-serve); self-hosted Enterprise-only; Truss/open-model portability. publisher.
+privacy | https://www.baseten.co/privacy-policy/ | 2026-09-20 | yes | true | Names only Google Analytics/Segment/Sendgrid/Stripe (marketing vendors), NOT inference infra sub-processors.
+legal_index | https://www.baseten.co/legal/ | 2026-09-20 | no | false | 404 (DPA at /dpa/, terms at /terms-and-conditions/).

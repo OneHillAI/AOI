@@ -1,0 +1,622 @@
+# OneHill v2 INFERENCE-PROVIDER library entry for Fireworks AI.
+# Validated against schema/inference-provider.v2.schema.json.
+#   scores  -> scripts/score.py --write        (provider AOI)
+#   meters  -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: fireworks-ai
+name: Fireworks AI
+profile: inference
+hq_country: United States
+summary: 'A US-headquartered (Delaware-domiciled) inference provider serving a broad,
+  fast-moving open-model catalogue (Kimi K3, DeepSeek V4-generation, GLM-5.3, Qwen3.8,
+  Llama 3.x, Mistral, NVIDIA Nemotron, gpt-oss 120B, plus embeddings and FLUX image
+  models) over per-token serverless and per-GPU-second dedicated deployments. A
+  Cowork browser session (2026-09-20) found that Fireworks'' Terms of Service and DPA -
+  the two most contractually load-bearing documents - are page-level noindexed and
+  return ROBOTS_DISALLOWED to a real browser pass, so the ToS-level Zero Data Retention
+  clause, the exact confidentiality-clause direction, and the DPA sub-processor Schedule
+  (including a prior claim that Anthropic is named as a sub-processor) could NOT be
+  independently verified and are coded accordingly. What IS independently confirmed via
+  readable docs pages: a Zero Data Retention posture for all services except the
+  Response API (which stores conversation data by default, 30-day auto-delete,
+  store=false opt-out), and via the Privacy Policy: no training on prompts/inputs
+  without the customer''s explicit opt-in. Compliance (SOC 2 Type II, HIPAA, ISO
+  27001/27701/42001) remains publisher/blog-grade only - the Trust Center is fully
+  JS-gated and returns no dated certificate.
+
+  '
+models_served:
+- Kimi K3 / K2.7 (Code) / K2.6
+- DeepSeek V4.1 Flash / V4 Pro / V4 Flash (incl. Vision Exp)
+- GLM-5.3 (Flash/Fast/US variants) / GLM-5.2 / GLM-4.5V (vision)
+- Qwen3.8 Max / Flash, Qwen3 VL, Qwen3 Embedding/Reranker
+- Llama 3.3 70B, 3.2 (incl. Vision), 3.1 family
+- Mistral Large 3 / Ministral 3 / Nemo
+- NVIDIA Nemotron 3 Ultra / 3.5 Lightning
+- gpt-oss 120B
+- Embeddings (BGE-M3, Voyage 4 Lite/Large/Nano) and image (FLUX.1 schnell/dev + ControlNet)
+hardware: NVIDIA GPU
+pricing:
+  model: mixed
+  notes: 'Per-token serverless pricing (input / discounted cached-input / output),
+    billed per-GPU-second for on-demand dedicated deployments, and a 50% discount for
+    batch inference. Generic (non-featured) models are priced by parameter size. A
+    "US-only serverless" residency option carries a 1.5x price premium (effective
+    2026-09-01). Read directly from Fireworks'' own pricing docs.
+
+    '
+  example_rates:
+  - 'Kimi K3 (standard): $3.00/M in, $0.30/M cached-in, $15.00/M out'
+  - 'DeepSeek V4.1 Flash: $0.30/M in, $0.006/M cached-in, $1.20/M out'
+  - 'GLM-5.3 Flash: $0.15/M in, $0.03/M cached-in, $0.50/M out'
+  - 'gpt-oss-120B: read from the featured-model pricing table (rate not independently
+    re-confirmed this pass - see gpt-oss line item on docs.fireworks.ai/serverless/pricing)'
+data_governance:
+  default_retention: 'Zero Data Retention for serverless/dedicated inference (docs.fireworks.ai
+    data_handling page, independently browser-read): Content is not logged for human review nor
+    retained beyond generating and delivering Output. Exception is the Response API, which
+    stores conversation data by default (store=true) with 30-day auto-deletion - store=false
+    disables retention entirely, and stored responses can be force-deleted by response_id. This
+    retention posture is grounded in the readable docs pages, not the unreadable ToS.'
+  trains_on_inputs: opt_in_only
+  zdr_available: yes_default
+  zdr_scope_caveats: 'ZDR is the posture for serverless/dedicated inference per the readable
+    data_handling docs page. The one carve-out is the Response API''s default-on conversation
+    storage (30-day auto-delete, opt-out via store=false) - a lifecycle exception similar in
+    shape to Groq''s batch/fine-tune retention, not a general retention default. Separately, the
+    Privacy Policy (independently browser-read) states Fireworks does not use prompts/API inputs
+    to train or improve its models "without your explicit opt-in" - i.e. training is opt-in, not
+    a flat "never." The ToS-level ZDR clause number could not be independently confirmed (see
+    confidentiality_caveats below).
+
+    '
+  customer_data_ownership: customer_retains
+  outputs_used_to_improve_service: 'no'
+  third_party_routing_leakage: 'Serves an overwhelmingly open-weight catalogue on its own
+    infrastructure; no closed third-party model routing identified.
+
+    '
+  subprocessors_disclosed: false
+  confidentiality: unknown
+  confidentiality_caveats: 'CORRECTION (2026-09-20, independent Cowork browser verification):
+    an earlier automated pass claimed to have downloaded and parsed the Terms of Service and DPA
+    as PDFs, citing a one-directional Sec 8 Confidential Information clause and coding
+    confidentiality as functional_only. A real browser session could NOT reach either document -
+    both fireworks.ai/terms-of-service and fireworks.ai/dpa are page-level noindexed and return
+    ROBOTS_DISALLOWED, and the Trust Center that also hosts the DPA is fully JS-gated. The
+    confidentiality-clause direction (one-directional vs mutual vs covers customer data) is
+    therefore NOT independently established, and per AOI''s evidence rules a classification must
+    not be asserted on unverifiable grounding. Coded unknown pending a rendered PDF or
+    authenticated access. Separately, the DPA''s prior claim of a full named sub-processor
+    Schedule (including Anthropic as an "AI services" sub-processor) is likewise unconfirmed -
+    subprocessors_disclosed corrected from true to false. The substance of no-training-by-default
+    is independently corroborated via the Privacy Policy, a different, readable document - see
+    trains_on_inputs.'
+compliance:
+  soc2: type_ii
+  iso_27001: 'yes'
+  iso_27701: 'yes'
+  hipaa_baa: "yes"
+  gdpr_dpa: "yes"
+  fedramp: ''
+  trust_center_url: https://trust.fireworks.ai/
+residency:
+  eu_region_available: "yes"
+  regions:
+  - United States (default)
+  - Europe (on-demand/dedicated deployments; region selection beyond default requires
+    a sales-granted quota)
+  - Asia-Pacific (on-demand/dedicated deployments, same sales-quota gating)
+  sovereign_option: 'Fireworks Virtual Cloud (BYOC): the inference engine runs inside the
+    customer''s own VPC so "data never leaves your secure environment" (GA June 2025); access
+    is enterprise/sales-negotiated, not self-serve.'
+  region_pinning: "yes"
+  cloud_act_exposure: true
+  provider_can_restrict_access: 'Fireworks is contractually domiciled in Delaware, USA (ToS
+    governing-law clause); standard US jurisdiction (CLOUD Act, export controls) applies even
+    to EU/APAC-hosted on-demand workloads.'
+reliability:
+  sla: ''
+  uptime_notes: 'A public status page (status.fireworks.ai) shows per-endpoint 90-day uptime
+    in the ~99.67-100% range across roughly 28 tracked serverless model endpoints; no SLA or
+    service-credit clause was found in the standard Terms of Service (an enterprise contract
+    may carry a separate, non-public SLA).
+
+    '
+  incidents: []
+lock_in:
+  openai_compatible_api: true
+  portability_notes: 'An OpenAI-compatible API (base URL api.fireworks.ai/inference/v1, Chat
+    Completions + Completions) over a predominantly open-weight catalogue keeps workloads
+    portable - independently browser-confirmed 2026-09-20. CORRECTED: a prior claim of a
+    Responses API with MCP support was not found on the compatibility docs page and is not
+    independently confirmed. A prior claim of a DPA Sec 11.2 30-day data-return right is also
+    unconfirmed - fireworks.ai/dpa is noindexed and unreachable to a real browser.
+
+    '
+dedicated_availability: self_serve
+dedicated_notes: 'Basic on-demand dedicated GPU deployments are self-serve (firectl / REST /
+  SDKs / console), billed per-GPU-second, with default/US region available without a sales
+  gate. The fuller isolation tiers - non-default regions (Europe/APAC) and the Virtual Cloud
+  (BYOC, full customer-VPC) option - are enterprise/sales-negotiated ("contact sales"), so the
+  strongest isolation guarantee is not itself self-serve.'
+trust_considerations:
+- 'CORRECTION (2026-09-20, independent Cowork browser verification): an earlier automated pass
+  claimed to have downloaded and parsed the Terms of Service and DPA as PDFs, citing a specific
+  ToS Sec 3.6 Zero Data Retention/never-train clause, a one-directional Sec 8 confidentiality
+  clause, and a DPA Schedule 4 sub-processor list naming Anthropic. A real browser session found
+  BOTH fireworks.ai/terms-of-service and fireworks.ai/dpa to be page-level noindexed, returning
+  ROBOTS_DISALLOWED, and the Trust Center that also hosts the DPA is fully JS-gated - none of
+  these three claims could be independently verified. They are not necessarily false (the code
+  session''s PDF read may be genuine and simply unreachable to a robots.txt-respecting browser),
+  but AOI''s evidence rules do not permit asserting a classification or a specific clause number
+  on unverifiable grounding, so confidentiality is now coded unknown (was functional_only) and
+  subprocessors_disclosed is now false (was true, with the Anthropic claim unconfirmed).'
+- The Response API is the one confirmed retention exception (docs.fireworks.ai/guides/security_
+  compliance/data_handling, independently browser-read) - conversation data is stored by default
+  (store=true) with 30-day auto-deletion; store=false disables it entirely. All other services
+  follow Zero Data Retention per the same readable page.
+- 'The Privacy Policy (independently browser-read, a different document from the unreadable ToS)
+  states: "We do not use your prompts, training data, or API inputs to train or improve our AI
+  models without your explicit opt-in." This corroborates the SUBSTANCE of no-training-by-default,
+  which is why trains_on_inputs is coded opt_in_only (not "never," since training can occur with
+  opt-in, and not "unclear," since the substance is independently confirmed via a readable
+  document) rather than resting on the unreadable ToS.'
+- SOC 2 Type II and triple ISO certification (27001 / 27701 / 42001) are corroborated only via
+  Fireworks' own blog announcements (exact dates now confirmed - SOC 2/HIPAA blog 2023-10-27, ISO
+  blog 2025-11-19; auditor not named in either) - the JS-rendered Trust Center portal and the
+  underlying audit reports were not independently read this pass. No compliance upgrade from this
+  finding.
+- Full VPC/BYOC deployment and non-default-region on-demand deployments are sales-gated, not
+  self-serve; the default self-serve product is the shared/regional-default serverless and
+  on-demand tiers (independently confirmed).
+- US (Delaware) domicile implies standing CLOUD Act exposure even for EU/APAC-hosted on-demand
+  workloads.
+score:
+  rubric_version: '1.2'
+  headline: 64.8
+  grade: C
+  hard_flags: []
+  dimensions:
+    data_governance:
+      score: 3
+      rationale: 'CORRECTED 2026-09-20 after independent Cowork browser verification could not
+        reach the Terms of Service or DPA (both page-level noindexed/ROBOTS_DISALLOWED; the Trust
+        Center hosting the DPA is JS-gated). What IS independently confirmed via readable docs
+        pages: Zero Data Retention for serverless/dedicated inference (with the Response API
+        default-store exception), and via the Privacy Policy, no training on inputs without the
+        customer''s explicit opt-in. What is NOT independently confirmed: the exact ToS-level ZDR
+        clause, the confidentiality-clause direction, and the DPA''s sub-processor Schedule
+        (including a prior claim that Anthropic is a named sub-processor). This matches the
+        anchor-3 pattern ("no training by default; ZDR available; retention documented; some
+        caveats") rather than anchor 4, which additionally requires sub-processors disclosed and
+        routing terms clear - neither is independently established here.
+
+        '
+      evidence_refs:
+      - ev-datahandling
+      - ev-privacy-verified
+      - ev-security-verified
+    compliance:
+      score: 4
+      rationale: 'Fireworks'' own docs certifications FAQ and blog announce SOC 2 Type II
+        (2023-10-27) plus HIPAA compliance, and a separate blog announces triple ISO
+        certification (27001/27701/42001, 2025-11-19) - both independently browser-read; a
+        trust centre exists at trust.fireworks.ai. Held below 5 because none of these claims
+        name an auditor or a certificate/report date, the trust-centre portal is fully
+        JS-gated and was not independently read this pass, and a prior claim that the DPA
+        references GDPR SCCs and a UK Addendum could not be independently verified (the DPA
+        itself is unreadable - see data_governance).
+
+        '
+      evidence_refs:
+      - ev-blog-soc2hipaa
+      - ev-blog-iso
+      - ev-trust
+    residency:
+      score: 3
+      rationale: 'On-demand/dedicated deployments offer a selectable Europe (and
+        Asia-Pacific) region with pinning, and a BYOC/Virtual-Cloud option keeps data
+        entirely in the customer''s own VPC. Held at 3, not higher, because the EU/APAC
+        region selection is gated behind a sales-granted quota rather than self-serve,
+        BYOC is enterprise-only, and the existence of a separate "US-only serverless"
+        residency tier implies default serverless residency is not itself EU-pinned.
+
+        '
+      evidence_refs:
+      - ev-ondemand
+      - ev-byoc
+    security:
+      score: 3
+      rationale: 'Dedicated workloads run in "logically isolated environments, preventing
+        cross-customer access or data leakage" per the data-security docs (independently
+        browser-confirmed verbatim), with TLS 1.2+ in transit and AES-256 at rest,
+        least-privilege access controls, and customer-managed keys (CMEK). "Regular
+        penetration testing validates controls" is now confirmed verbatim. Held at 3 rather
+        than 4 because no public bug-bounty programme was found, and the serverless
+        multi-tenancy isolation model was not documented in the sources read (only the
+        dedicated-tier isolation is described).
+
+        '
+      evidence_refs:
+      - ev-security-verified
+    reliability:
+      score: 3
+      rationale: 'A public status page (status.fireworks.ai) shows an operational track
+        record with per-endpoint 90-day uptime around 99.67-100% and documented incident
+        communication. Meets the score-3 anchor (operational track record, public status
+        page, informal/absent SLA) - no contractual SLA or service-credit clause was found
+        in the standard Terms.
+
+        '
+      evidence_refs:
+      - ev-status
+    transparency_lockin:
+      score: 3
+      rationale: 'CORRECTED 2026-09-20: an OpenAI-compatible API over a predominantly
+        open-weight catalogue keeps workloads portable - the base URL and chat/completions
+        support are independently browser-confirmed. Held at 3, not 4, because the two
+        supports for the prior 4 (a documented 30-day DPA data-return right, and sub-processors
+        disclosed in full) both traced to the DPA, which an independent browser pass could not
+        reach (page-level noindexed). Matches the anchor-3 bar (OpenAI-compatible, standard open
+        models, portable) without an independently confirmed documented exit path.
+
+        '
+      evidence_refs:
+      - ev-openai
+      - ev-models
+    cost:
+      score: 4
+      rationale: 'Per-token serverless pricing (with a discounted cached-input rate and a
+        50% batch discount) and per-GPU-second dedicated pricing are both public and
+        documented in detail, read directly from Fireworks'' own pricing docs, and are
+        broadly competitive for the class (e.g. DeepSeek V4.1 Flash $0.30/$1.20, GLM-5.3
+        Flash $0.15/$0.50). Held below 5 because of the added complexity of the
+        parameter-size generic-model tiers and the 1.5x "US-only serverless" premium.
+
+        '
+      evidence_refs:
+      - ev-pricing
+      - ev-ondemand
+
+documentation:
+  assess:
+    completeness: 65.4
+    originality: 0.0
+    items:
+      - key: data-governance
+        title: "Data governance - retention, ZDR & training"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-datahandling, ev-privacy-verified]
+        summary: "CORRECTED 2026-09-20: the ToS-level Zero Data Retention/never-train clause could not be independently verified (fireworks.ai/terms-of-service is noindexed, ROBOTS_DISALLOWED to a real browser). What is independently confirmed via readable pages: Zero Data Retention for serverless/dedicated inference except the Response API (stores by default, 30-day auto-delete, store=false opt-out), and via the Privacy Policy, no training on inputs without explicit opt-in."
+      - key: data-ownership
+        title: "Data & IP ownership"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-tos, ev-dpa]
+        summary: "CORRECTED 2026-09-20: a prior claim of a Terms Sec 3.2/7 ownership clause and a DPA Schedule 4 sub-processor list (naming Anthropic) rests on an unverified automated PDF read - fireworks.ai/terms-of-service and /dpa are both noindexed and unreachable to a real browser. Coded as a documented gap pending a rendered PDF or authenticated access; do not treat the prior claim as grounded."
+      - key: residency
+        title: "Data residency & jurisdiction"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-ondemand, ev-byoc]
+        summary: "Europe/APAC regions exist for on-demand/dedicated deployments (sales-gated quota beyond default), and a BYOC/Virtual-Cloud option keeps data in the customer's own VPC (enterprise, GA June 2025). US (Delaware) domicile carries standing CLOUD Act exposure."
+      - key: compliance
+        title: "Compliance & attestations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-blog-soc2hipaa, ev-blog-iso]
+        summary: "Company blog and docs FAQ (independently browser-confirmed) announce SOC 2 Type II (2023-10-27) and HIPAA compliance, plus triple ISO certification (27001/27701/42001, 2025-11-19) - no auditor named, no dates on the certificates themselves. The JS-rendered Trust Center portal and underlying audit reports were not independently read this pass; a prior claim that the DPA references GDPR SCCs/UK Addendum is unconfirmed (DPA unreachable)."
+      - key: security
+        title: "Security controls"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-security-verified]
+        summary: "Independently browser-confirmed verbatim: TLS 1.2+ in transit, AES-256 at rest, logically isolated dedicated workloads, least-privilege access controls, and regular penetration testing. No public bug-bounty programme found; serverless multi-tenancy isolation detail not documented."
+      - key: pricing
+        title: "Pricing & cost model"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-pricing]
+        summary: "Per-token serverless pricing (input / discounted cached-input / output) plus per-GPU-second dedicated pricing, read directly from Fireworks' pricing docs; batch inference is 50% off, and a 'US-only serverless' residency tier carries a 1.5x premium."
+      - key: reliability
+        title: "Reliability posture"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-status]
+        summary: "Public status page shows ~99.67-100% 90-day uptime across tracked endpoints; no SLA or service-credit clause found in the standard Terms of Service."
+  implement:
+    completeness: 43.8
+    originality: 0.0
+    items:
+      - key: integration
+        title: "API integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-openai]
+        summary: "OpenAI-compatible Chat Completions and Completions support at base URL api.fireworks.ai/inference/v1 - independently browser-confirmed 2026-09-20. CORRECTED: a prior claim of a Responses API with MCP support was not found on the compatibility docs page and has been removed."
+      - key: authentication
+        title: "Authentication & account setup"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Public docs confirm API-key-based access via the OpenAI-compatible client libraries, but org/project key-scoping granularity was not documented in the sources read; confirm in the Fireworks console."
+      - key: region-config
+        title: "Region & residency configuration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-ondemand, ev-byoc]
+        summary: "On-demand deployments default to GLOBAL routing; US/Europe/APAC single-region pinning requires a sales-granted quota. A 'US-only serverless' tier and the BYOC/Virtual-Cloud option are the two ends of the residency spectrum."
+      - key: rate-limits
+        title: "Rate limits, tiers & quotas"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Public docs describe pricing tiers in detail but did not surface a rate-limit/quota table for the serverless API in the sources read this pass."
+      - key: portability
+        title: "Portability & exit"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-openai]
+        summary: "CORRECTED 2026-09-20: a prior claim of a DPA Sec 11.2 30-day data-export/deletion right is unconfirmed (fireworks.ai/dpa is unreachable to a real browser). What remains structurally true and independently confirmed: an OpenAI-compatible API (base URL api.fireworks.ai/inference/v1) over a predominantly open-weight catalogue keeps workloads portable, even without a confirmed documented exit clause."
+  use:
+    completeness: 42.9
+    originality: 0.0
+    items:
+      - key: models-served
+        title: "Models served"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-models, ev-pricing]
+        summary: "A broad, fast-moving open-weight catalogue per fireworks.ai/models (read directly): Kimi K3/K2.7/K2.6, DeepSeek V4.1 Flash/V4 Pro/V4 Flash, GLM-5.3/5.2/4.5V, Qwen3.8 Max/Flash + VL + embeddings/reranker, Llama 3.x, Mistral Large 3/Ministral 3/Nemo, NVIDIA Nemotron 3 Ultra/3.5 Lightning, gpt-oss-120B, plus BGE-M3/Voyage embeddings and FLUX image models."
+      - key: features
+        title: "Inference features"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-openai]
+        summary: "OpenAI-compatible Chat Completions and Completions - independently browser-confirmed. Per-model tool-calling/structured-output support follows each served model and was not individually verified. CORRECTED: a prior claim of a Responses API with MCP support was not found and has been removed."
+      - key: fine-tuning
+        title: "Fine-tuning / custom models"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Fireworks documents on-demand dedicated deployment of custom/fine-tuned models, but the specific fine-tuning workflow (methods, supported base models) was not read in this pass."
+      - key: context-limits
+        title: "Context & token limits"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Fireworks does not publish a single per-model context-limit table in the sources read; limits track each served model's native window and should be confirmed on the model's Fireworks catalogue page."
+  support:
+    completeness: 57.1
+    originality: 0.0
+    items:
+      - key: status-uptime
+        title: "Status page & uptime history"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-status]
+        summary: "A public status page (status.fireworks.ai, read directly) tracks ~28 serverless model endpoints with per-endpoint 90-day uptime figures (~99.67-100% range observed at check time)."
+      - key: security-disclosure
+        title: "Security disclosure & trust centre"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-trust, ev-blog-soc2hipaa]
+        summary: "A trust centre exists at trust.fireworks.ai (JS-rendered, not independently read this pass); SOC 2 Type II / ISO / HIPAA compliance is corroborated via company blog announcements. No public vulnerability-disclosure programme (security.txt / bug bounty) was found."
+      - key: channels
+        title: "Support & community channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-openai]
+        summary: "Product/console documentation (docs.fireworks.ai) is the primary support surface; support-tier response commitments were not detailed in the sources read."
+      - key: deprecation
+        title: "Model deprecation policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published model-deprecation/EoL policy was found on Fireworks' public docs in the sources read this pass."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:   { level: strong,   rationale: "An OpenAI-compatible API (independently browser-confirmed) over a predominantly open-weight catalogue keeps workloads portable - the same checkpoints run elsewhere or self-hosted, independent of Fireworks' own contract terms." }
+    transparency: { level: moderate, rationale: "The Privacy Policy and several docs pages are legible and were independently browser-read - they state retention and training-opt-in terms clearly - but the Terms of Service and DPA, the two most contractually load-bearing documents, are page-level noindexed and could not be independently read, and the Trust Center's SOC 2/ISO/HIPAA certifications are corroborated only via company blog posts." }
+    reliability:  { level: moderate, rationale: "A public status page (independently browser-confirmed) shows a strong recent uptime record (~99.67-100% across 28 tracked endpoints), but no contractual SLA or service-credit clause was found, and no long multi-year track record was independently verified." }
+    data_control: { level: moderate, rationale: "CORRECTED 2026-09-20: Zero Data Retention (except the Response API) and training-only-with-opt-in are independently confirmed via readable docs and the Privacy Policy. But the ToS-level Zero Data Retention clause, the confidentiality-clause direction, and the DPA's sub-processor Schedule (including a prior claim naming Anthropic) could NOT be independently verified - the two governing documents are unreachable to a real browser. This is a genuine downgrade from a prior strong rating that rested on those unverifiable documents." }
+  verdict: "You partially own inference here: independently readable docs confirm Zero Data Retention (bar the Response API's 30-day exception) and that training only happens with your explicit opt-in - a decent baseline. But the two documents that would actually settle this - the Terms of Service and the DPA - are page-level noindexed and unreachable to a real browser, so the exact ZDR clause, the confidentiality-clause direction, and the sub-processor list (including a prior, now-unconfirmed claim that Anthropic is named) cannot be independently verified. This is a downgrade from an earlier draft that treated an automated agent's PDF read as equivalent grounding; it was not. Obtain a rendered PDF or authenticated Trust Center access before relying on the stronger claims, and set store=false on the Response API if you need genuine zero-retention there."
+
+evidence:
+- id: ev-tos
+  claim: "UNCONFIRMED as of 2026-09-20. An automated pass claimed to have downloaded and parsed
+    the Fireworks Terms of Service as a PDF, citing: Sec 3.2 customer ownership of Content, Sec
+    3.4 a purpose-limited licence to Fireworks, Sec 3.6 a Zero Data Retention + never-train
+    clause, Sec 8 a one-directional Confidential Information clause, and Sec 16.1 Delaware
+    governing law. An independent Cowork browser session (2026-09-20) found
+    fireworks.ai/terms-of-service to be page-level noindexed, returning ROBOTS_DISALLOWED - the
+    page could not be reached or read. This claim is NOT independently verified; do not treat it
+    as grounding for a specific clause number or the confidentiality classification. See
+    ev-privacy-verified for the independently-confirmed substance of the training claim."
+  source_type: publisher
+  doc_type: terms
+  retrieved: false
+  url: https://fireworks.ai/terms-of-service
+  date: '2026-09-20'
+- id: ev-privacy-verified
+  claim: "Fireworks Privacy Policy (independently browser-read 2026-09-20, lastmod 2026-08-11):
+    'We do not use your prompts, training data, or API inputs to train or improve our AI models
+    without your explicit opt-in.' 'We do not log or store prompt or generation data for any
+    open models without explicit user opt-in.' This is Privacy Policy language, not a
+    section-numbered ToS clause, but it independently corroborates the substance of
+    no-training-by-default via a readable document."
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://fireworks.ai/privacy-policy
+  date: '2026-09-20'
+- id: ev-datahandling
+  claim: "Fireworks data-handling docs (independently browser-read 2026-09-20): 'The Response
+    API operates under a different retention model when store=True (the default setting).'
+    'Stored conversation data automatically deletes after 30 days.' 'Users can prevent storage
+    by setting store=False in API requests.' 'The DELETE API endpoint enables immediate removal
+    of specific records by providing the response_id.' 'The Response API retention policy only
+    applies to conversation data when using the Response API endpoints. All other Fireworks
+    services follow the zero data retention policy described above.'"
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.fireworks.ai/guides/security_compliance/data_handling
+  date: '2026-09-20'
+- id: ev-dpa
+  claim: "UNCONFIRMED as of 2026-09-20. An automated pass claimed to have downloaded and parsed
+    the Fireworks DPA as a PDF, citing a Schedule 4 sub-processor list (naming AWS, GCP, OCI,
+    and notably Anthropic as a US 'AI services' sub-processor) and a Sec 11.2 30-day
+    post-termination data-return right. An independent Cowork browser session (2026-09-20) found
+    fireworks.ai/dpa to be noindexed and not in the sitemap, returning ROBOTS_DISALLOWED; the
+    Trust Center that also hosts the DPA is fully JS-gated. This claim is NOT independently
+    verified - the sub-processor list contents, including the Anthropic naming, remain
+    unconfirmed. subprocessors_disclosed is coded false pending independent verification."
+  source_type: publisher
+  doc_type: dpa
+  retrieved: false
+  url: https://fireworks.ai/dpa
+  date: '2026-09-20'
+- id: ev-security-verified
+  claim: "Fireworks data-security docs (independently browser-read 2026-09-20, verbatim):
+    'Data is encrypted in transit (TLS 1.2+) and at rest (AES-256).' 'Dedicated workloads run in
+    logically isolated environments, preventing cross-customer access or data leakage.'
+    'Fine-grained access controls are enforced across all Fireworks environments, following the
+    principle of least privilege.' 'Regular penetration testing validates controls.' No bug
+    bounty programme mentioned. A Customer-Managed Encryption Keys (CMEK) docs page exists."
+  source_type: publisher
+  doc_type: security
+  retrieved: true
+  url: https://docs.fireworks.ai/guides/security_compliance/data_security
+  date: '2026-09-20'
+- id: ev-blog-soc2hipaa
+  claim: "Fireworks blog post announcing SOC 2 Type II certification and HIPAA compliance."
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://fireworks.ai/blog/fireworks-ai-achieves-soc-2-type-ii-and-hipaa-compliance
+  date: '2026-09-20'
+- id: ev-blog-iso
+  claim: "Fireworks blog post announcing triple ISO certification: ISO 27001, ISO 27701, and
+    ISO 42001."
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://fireworks.ai/blog/fireworks-triple-iso-certification-enterprise-trust
+  date: '2026-09-20'
+- id: ev-trust
+  claim: "Fireworks' Trust Center portal exists at trust.fireworks.ai; it is a JS-rendered
+    SafeBase page whose certificate/report contents were not independently retrieved this pass."
+  source_type: publisher
+  doc_type: security
+  retrieved: false
+  url: https://trust.fireworks.ai/
+  date: '2026-09-20'
+- id: ev-pricing
+  claim: "Fireworks serverless pricing docs (read directly): per-token pricing (input / cached
+    input at a discount / output), batch inference at 50% of standard price, generic
+    (non-featured) models priced by parameter-size band, and a 'US-only serverless' residency
+    tier at a 1.5x premium (effective 2026-09-01)."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.fireworks.ai/serverless/pricing
+  date: '2026-09-20'
+- id: ev-ondemand
+  claim: "Fireworks on-demand/dedicated-deployment docs (read directly): self-serve deployment
+    via firectl/REST/SDKs/console, billed per GPU-second; regions are GLOBAL by default, with
+    US/Europe/APAC/single-region pinning available but requiring a sales-granted quota."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.fireworks.ai/guides/ondemand-deployments
+  date: '2026-09-20'
+- id: ev-byoc
+  claim: "Fireworks 'Virtual Cloud' (BYOC) blog post (read directly): the Fireworks inference
+    engine runs inside the customer's own VPC so 'data never leaves your secure environment';
+    GA announced 2025-06-16; access is enterprise/'contact us', not self-serve."
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://fireworks.ai/blog/virtual-cloud
+  date: '2026-09-20'
+- id: ev-status
+  claim: "Fireworks public status page (read directly): fully operational at check time, with
+    per-endpoint 90-day uptime figures (~99.67-100% range) across roughly 28 tracked serverless
+    model endpoints; no SLA/credit terms are published there."
+  source_type: publisher
+  doc_type: sla
+  retrieved: true
+  url: https://status.fireworks.ai/
+  date: '2026-09-20'
+- id: ev-models
+  claim: "Fireworks model catalogue page (read directly): current top models include Kimi
+    K3/K2.7/K2.6, DeepSeek V4.1 Flash/V4 Pro/V4 Flash, GLM-5.3/5.2/4.5V, Qwen3.8 Max/Flash + VL
+    + embeddings/reranker, Llama 3.x, Mistral Large 3/Ministral 3/Nemo, NVIDIA Nemotron 3
+    Ultra/3.5 Lightning, gpt-oss-120B, plus BGE-M3/Voyage embeddings and FLUX image models."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://fireworks.ai/models
+  date: '2026-09-20'
+- id: ev-openai
+  claim: "Fireworks OpenAI-compatibility docs (independently browser-read 2026-09-20): base URL
+    'https://api.fireworks.ai/inference/v1', confirmed OpenAI-compatible Chat Completions and
+    Completions support. CORRECTION: a prior claim of a Responses API with MCP support was NOT
+    found on this page and is not independently confirmed - do not assert it. Embeddings support
+    was also not confirmed on this specific page."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.fireworks.ai/tools-sdks/openai-compatibility
+  date: '2026-09-20'
+changelog:
+- date: '2026-09-20'
+  change: 'Initial entry. Primary-source research: downloaded and parsed the Terms of Service
+    and DPA PDFs directly for retention/training/ownership/confidentiality/sub-processor
+    clauses; read the data-handling, data-security, on-demand-deployment, pricing and models
+    pages directly; corroborated SOC 2/ISO/HIPAA certification via Fireworks'' own blog posts
+    (Trust Center portal itself is JS-rendered and was not independently read). Confidentiality
+    coded functional_only (one-directional Confidential Information clause; protection rests on
+    ownership + purpose-limitation + zero-retention terms instead). Dedicated availability coded
+    self_serve for on-demand deployments, with the fuller BYOC/non-default-region tiers flagged
+    as sales-gated in dedicated_notes.'
+- date: '2026-09-21'
+  change: 'CORRECTION - independent Cowork browser verification pass. The initial entry''s claim
+    of having downloaded and parsed the Terms of Service and DPA as PDFs could not be
+    independently reproduced: a real browser session found both fireworks.ai/terms-of-service and
+    fireworks.ai/dpa to be page-level noindexed, returning ROBOTS_DISALLOWED. Per AOI''s
+    evidence-first rule, an unverifiable classification is not asserted: confidentiality changed
+    from functional_only to unknown, subprocessors_disclosed changed from true to false (the
+    Anthropic sub-processor claim is unconfirmed), and trains_on_inputs changed from never to
+    opt_in_only (independently corroborated via the Privacy Policy instead of the unreadable
+    ToS). Also removed an unconfirmed "Responses API with MCP support" claim (not found on the
+    OpenAI-compatibility docs page, which the browser session DID independently confirm for base
+    Chat Completions/Completions support - upgraded that evidence to retrieved:true). Scores
+    changed: data_governance 4->3, transparency_lockin 4->3 (71.6 -> 64.8; grade B -> C).
+    Ownership level: substantial->partial. What survived independent
+    verification: the Response API retention exception, ZDR for other services, security posture
+    (encryption/isolation/pen-testing, now confirmed verbatim), and the publisher-grade
+    SOC2/ISO/HIPAA claims (still not independently certificate-verified). See
+    docs/primary-sources/fireworks-ai/browser-verified/ for the full capture.'
+last_verified: '2026-09-21'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

@@ -1,0 +1,616 @@
+# OneHill v2 INFERENCE-PROVIDER library entry for Baseten.
+# Validated against schema/inference-provider.v2.schema.json.
+#   scores  -> scripts/score.py --write        (provider AOI)
+#   meters  -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+
+schema_version: '2.0'
+id: baseten
+name: Baseten
+profile: inference
+hq_country: United States
+summary: 'A US-headquartered (San Francisco) inference platform combining a curated
+  serverless "Model Library" (Model APIs) with a bring-your-own-model deploy platform
+  on dedicated GPUs. A Cowork browser session (2026-09-21) independently confirmed, on
+  two separate live fetches, Baseten''s Zero Data Retention default (via the Security
+  Practices page), a contractual never-train clause, a MUTUAL confidentiality duty over
+  Customer Content (an unusually strong finding for this index), and a real, committed
+  99.9% SLA with service credits. The same pass RETRACTED an earlier ISO 27001 claim -
+  no trace of it was found on any retrievable page, and the Vanta Trust Center that
+  would carry such a certificate is fully JS-gated. The biggest caveats are that Async
+  Inference queues inputs for up to 72 hours, PCI DSS/FedRAMP/CSA STAR status and the
+  named sub-processor list remain unverified behind that same JS-gated portal, and no
+  published, named EU region exists for the managed service - EU residency is only
+  available via the enterprise self-hosted tier.
+
+  '
+models_served:
+- DeepSeek V4.1 Flash (552B MoE, multimodal, 1M-token context)
+- GLM-5 / GLM-5.3 / GLM-5.3 Fast
+- Kimi K3
+- Llama 3.3 70B Instruct
+- Qwen3.5 35B-A3B, Qwen3 TTS, Qwen3 8B Reranker/Embedding, Qwen Image
+- Whisper Large V3 (transcription)
+- Flux.2 [dev] (image generation)
+- EmbeddingGemma, Nomic Embed Code, BGE Embedding ICL
+- Plus a general bring-your-own/custom/fine-tuned-model deploy platform on dedicated
+  GPUs (not limited to the curated Model Library)
+hardware: NVIDIA GPU
+pricing:
+  model: mixed
+  notes: 'Per-token pricing for hosted Model APIs; per-GPU-minute pricing for dedicated
+    deployments. Read directly from Baseten''s own pricing page. Tiers: Basic
+    (pay-as-you-go), Pro (priority GPU access, volume discounts), Enterprise (custom
+    SLAs, self-host, volume discounts).
+
+    '
+  example_rates:
+  - 'GLM-5.3: $1.40/M in, $0.14/M cached-in, $4.40/M out'
+  - 'DeepSeek V4.1 Flash: $0.30/M in, $0.03/M cached-in, $1.20/M out'
+  - 'Kimi K3: $3.00/M in, $0.30/M cached-in, $15.00/M out'
+  - 'Dedicated GPU per minute: T4 16GB $0.01052, A100 80GB $0.06667, H100 80GB $0.10833
+    (~$6.50/hr), B200 180GB $0.16633'
+data_governance:
+  default_retention: 'CORRECTED 2026-09-21 (location, not substance): Zero Data Retention is the
+    default per the Security Practices page - "Unless a customer, acting through an authorized
+    representative, requests otherwise in writing, ZDR is the default configuration for the
+    customer''s use of the inference products" - which the Terms & Conditions Sec 2.5 merely
+    honours by reference ("Where the Services or a product are designated as operating under a
+    ''Zero Data Retention'' posture in the Security Practices, Baseten will not log, record, or
+    save Customer Content..."). A prior draft attributed the default to the Terms directly; the
+    default actually lives in the Security Practices page. Async Inference is the one exception -
+    inputs are queued for up to 72 hours before deletion, outputs are never stored.'
+  trains_on_inputs: never
+  zdr_available: yes_default
+  zdr_scope_caveats: 'ZDR is the default per the Security Practices page (independently
+    browser-confirmed verbatim, two fetches), incorporated by reference into Terms Sec 2.5 - not
+    an opt-in or enterprise-gated feature. The one carve-out is Async Inference''s 72-hour input
+    queue before deletion (outputs are never stored on that path either).
+
+    '
+  customer_data_ownership: customer_retains
+  outputs_used_to_improve_service: 'no'
+  third_party_routing_leakage: 'Serves an open-weight Model Library plus customer-supplied
+    models on Baseten''s own infrastructure; no closed third-party model routing identified.
+
+    '
+  subprocessors_disclosed: true
+  confidentiality: mutual
+  confidentiality_caveats: 'CONFIRMED 2026-09-21 by an independent Cowork browser session on TWO
+    separate live fetches of the Terms & Conditions: Sec 11.1 names Customer Content and Customer
+    Models as the Customer''s Confidential Information (symmetric with Baseten''s own); Sec 11.2 -
+    both parties must protect confidential information "with the same degree of care it uses for
+    its own (but no less than reasonable care)"; Sec 11.4 - obligations survive three years after
+    termination, and trade secrets survive indefinitely. This is independently verified as a
+    genuine mutual duty, not a one-directional clause - a legitimate, differentiating finding for
+    this index. Caveat: the sub-processor list (trust.baseten.co) exists and a 15-day
+    pre-notification commitment is documented (DPA Sec 7.1), but the list''s actual named
+    contents remain unread - the Trust Center is a JS-gated Vanta portal that returns only a meta
+    description on every path tried.'
+compliance:
+  soc2: type_ii
+  iso_27001: unknown
+  iso_27701: unknown
+  hipaa_baa: "yes"
+  gdpr_dpa: "yes"
+  fedramp: ''
+  trust_center_url: https://trust.baseten.co/
+residency:
+  eu_region_available: unknown
+  regions:
+  - United States (managed default)
+  - '"Regional environments" exist as a feature (routing a deployment exclusively to a
+    designated geographic region), but no published list of available region names -
+    including whether an EU region is among them - was found; the docs direct customers
+    to "contact support to confirm availability for the region you need."'
+  sovereign_option: 'Baseten Self-Hosted runs the entire workload plane inside the
+    customer''s own VPC/cloud, in any region the customer chooses (including the EU) -
+    "inference I/O never touching Baseten''s premises." This is the practical EU-residency
+    path, not a named managed-region offering.'
+  region_pinning: unknown
+  cloud_act_exposure: true
+  provider_can_restrict_access: 'US-headquartered (San Francisco); standard US jurisdiction
+    (CLOUD Act, export controls) applies to the managed service.'
+reliability:
+  sla: 'CORRECTED 2026-09-21: a real, committed SLA was found and independently browser-read at
+    baseten.co/service-level-agreement (a prior draft said none was located). Sec 2.0: "ninety-nine
+    point nine percent (99.9%)" committed uptime, applying to BOTH Dedicated Inference and Model
+    APIs on Baseten-managed infrastructure. Sec 4.2 caps monthly Service Credits at "forty percent
+    (40%)"; Sec 4.3 requires a claim within 24 hours with evidence. Enterprise plan offers "Custom
+    SLAs."'
+  uptime_notes: 'A public status page (status.baseten.co, independently browser-read) shows "All
+    Systems Operational" across 6 components (Dedicated Inference, Model APIs, Training, Model
+    Management API, Web Application, Homepage and Docs), measured against the SLA''s System
+    Availability definition (Sec 1.5). Three incidents in the current 90-day window, all
+    resolved same-day or next-day (see incidents below).
+
+    '
+  incidents:
+  - date: '2026-09-09'
+    summary: 'Nemotron Ultra partial degradation (Dedicated Inference unaffected); resolved
+      10:49 PDT same day.'
+  - date: '2026-09-14'
+    summary: 'India cluster elevated errors plus a Kimi K3 non-US partial issue; resolved same
+      day.'
+  - date: '2026-09-20'
+    summary: 'Kimi K3 US endpoint outage; restored 01:13 PDT.'
+lock_in:
+  openai_compatible_api: true
+  portability_notes: 'Hosted Model APIs support the OpenAI Chat Completions API and the
+    Anthropic Messages API (beta); the Model Library is predominantly open-weight, and custom
+    deploys use customer-authored Docker/Truss configs rather than a Baseten-proprietary format.
+    Terms & Conditions give a documented exit right: Customer Content may be exported for 30
+    days after the Term ends, and Baseten will delete Customer Content on written request.
+
+    '
+dedicated_availability: self_serve
+dedicated_notes: 'A genuine three-tier deployment spectrum: shared serverless Model APIs
+  (self-serve, multi-tenant); Dedicated Deployments - single-tenant GPU clusters priced
+  per-minute directly on the public pricing page, no sales gate found for that tier
+  ("Baseten never shares GPUs across users," per-customer Kubernetes namespace); and Baseten
+  Self-Hosted - the full workload plane inside the customer''s own VPC, marketed toward the
+  Enterprise tier and effectively enterprise-negotiated. Coded self_serve for the
+  broadly-available Dedicated Deployments tier, with true self-hosted/air-gapped isolation
+  remaining an enterprise-only path.'
+trust_considerations:
+- 'CONFIRMED 2026-09-21 by an independent Cowork browser session, on TWO separate live fetches of
+  the Terms & Conditions: Zero Data Retention is the default for Model APIs and Dedicated
+  Inference (via the Security Practices page, incorporated by reference into Terms Sec 2.5 -
+  a location correction from a prior draft that cited the Terms directly), with a documented
+  never-train clause (Sec 6.3) covering Customer Content, Customer Models (deployed weights),
+  and Model Outputs alike - a strong, binding baseline, now independently verified.'
+- Confidentiality is MUTUAL (Sec 11.1-11.2, same-care-as-own-information standard, surviving
+  three years post-termination, trade secrets indefinitely per Sec 11.4) - independently
+  confirmed on two separate fetches. A genuine positive, stronger than several peer providers'
+  one-directional or disclaimed clauses.
+- Async Inference is the one retention exception (72-hour input queue before deletion; outputs
+  never stored).
+- 'CORRECTION 2026-09-21: a prior ISO 27001 claim is RETRACTED - an independent browser pass
+  found no trace of it, or of ISO 27701/PCI DSS/FedRAMP/CSA STAR, on any retrievable Baseten
+  page; the Vanta Trust Center that would carry such certificates is fully JS-gated (every path
+  tried returns only a meta description). Compliance remains strong on what IS independently
+  confirmed: SOC 2 Type II with a named audit firm (Sensiba San Filippo LLP), HIPAA, and GDPR.'
+- 'CORRECTION 2026-09-21: a real, committed SLA was found and independently read - 99.9% uptime
+  for Dedicated Inference and Model APIs, service credits capped at 40% of monthly fees, a
+  24-hour claim window. A prior draft said no SLA document had been located.'
+- No published, named EU region exists for the managed service; "Regional environments" is a
+  real feature but region availability (including whether EU is offered) requires a sales
+  conversation. EU residency in practice means the enterprise Self-Hosted tier, not the managed
+  product.
+- US HQ implies standing CLOUD Act exposure for the managed service.
+- The three-tier deployment ladder (shared, dedicated, self-hosted) is a genuine strength for
+  exit/control, though true self-hosted isolation is enterprise-only.
+score:
+  rubric_version: '1.2'
+  headline: 73.6
+  grade: B
+  hard_flags: []
+  dimensions:
+    data_governance:
+      score: 4
+      rationale: 'Terms & Conditions and the security-practices/DPA pages together give a
+        strong, binding posture: Zero Data Retention by default for Model APIs and Dedicated
+        Inference, a contractual never-train clause covering Customer Content (including
+        deployed model weights and outputs), customer ownership of Customer Content, and a
+        MUTUAL confidentiality duty (same care as own information, three-year survival). Held
+        below 5 because Async Inference queues inputs for up to 72 hours before deletion (a
+        lifecycle exception), and the sub-processor list''s actual contents were not
+        independently read (the Trust Center portal is JS-gated).
+
+        '
+      evidence_refs:
+      - ev-tc
+      - ev-dpa
+      - ev-security
+    compliance:
+      score: 4
+      rationale: 'CORRECTED 2026-09-21: SOC 2 Type II is confirmed with a named audit firm
+        (Sensiba San Filippo LLP, clean opinion across Security/Availability/Processing
+        Integrity/Confidentiality/Privacy criteria); HIPAA and GDPR are independently confirmed
+        on the Security Practices and DPA pages. A prior claim of ISO 27001 certification is
+        RETRACTED - an independent Cowork browser pass found no trace of it (or of ISO 27701,
+        PCI DSS, FedRAMP, or CSA STAR) on any retrievable Baseten page; the Vanta Trust Center
+        that would carry such certificates is fully JS-gated and unreadable. Score held at 4
+        (not lower) because SOC 2 Type II + HIPAA already satisfy the anchor-4 "two of
+        {SOC2 II, ISO 27001, HIPAA/BAA}" bar on their own, plus GDPR documented; short of 5
+        pending independent verification of anything beyond these three.
+
+        '
+      evidence_refs:
+      - ev-soc2
+      - ev-dpa
+      - ev-security
+    residency:
+      score: 2
+      rationale: 'A "regional environments" feature exists, routing a deployment exclusively to
+        a designated geographic region, but no published list of available regions - including
+        whether an EU region is among them - was found; the docs direct customers to contact
+        support. The practical EU-residency path is the enterprise Baseten Self-Hosted tier
+        (workload plane inside the customer''s own VPC, any region), which is a real option but
+        not a documented, named managed-region boundary. Meets the score-2 anchor (an EU-capable
+        path exists for some workloads, without pinning guarantees or a documented data
+        boundary on the managed service).
+
+        '
+      evidence_refs:
+      - ev-regions
+      - ev-selfhosted
+    security:
+      score: 4
+      rationale: 'CORRECTED 2026-09-21 (description, not score): independently browser-confirmed
+        isolation is logical namespace separation for shared use (access controls, unique
+        customer identifiers, namespace isolation) plus single-tenant dedicated Kubernetes
+        namespaces with Calico/Cilium network policies ("GPUs never shared across users") and
+        self-hosted deployment inside the customer''s own VPC - not an explicit "three-tier"
+        model as an earlier draft described it, though the practical effect is similar. Plus TLS
+        1.2+ in transit, AES-256 at rest, enforced MFA for all personnel, and periodic
+        third-party penetration testing (independently confirmed verbatim). Held at 4, not 5,
+        because no public bug-bounty programme was found and the pen-testing attestation is a
+        general claim rather than a named, independently published report; the three logged
+        incidents this period were brief availability degradations, resolved same/next day, not
+        security breaches.
+
+        '
+      evidence_refs:
+      - ev-security
+    reliability:
+      score: 4
+      rationale: 'UPGRADED 2026-09-21: an independent Cowork browser session found and directly
+        read a real, committed SLA (baseten.co/service-level-agreement, Sec 2.0) - 99.9% uptime
+        for both Dedicated Inference and Model APIs, with a service-credit remedy (capped at 40%
+        of monthly fees, Sec 4.2) and a 24-hour claim window (Sec 4.3). A prior draft held this at
+        3 because no SLA document had been located; one now has been. The status page
+        (independently browser-read) shows all systems operational with three brief,
+        same/next-day-resolved incidents in the current window. Meets the score-4 anchor
+        (contractual SLA with credits, a solid public uptime record, documented incident
+        communication) - short of a long multi-year track record, which keeps it below 5.
+
+        '
+      evidence_refs:
+      - ev-sla-verified
+      - ev-status
+    transparency_lockin:
+      score: 4
+      rationale: 'An OpenAI-compatible API (plus a beta Anthropic-compatible API) over a
+        predominantly open-weight catalogue keeps workloads portable, and the Terms & Conditions
+        give a documented 30-day post-termination export window plus an on-request deletion
+        right. Held below 5 because the sub-processor list''s actual routing/vendor detail was
+        not independently confirmed this pass.
+
+        '
+      evidence_refs:
+      - ev-tc
+      - ev-docs
+    cost:
+      score: 4
+      rationale: 'Detailed, public per-token rates for Model APIs and per-GPU-minute rates
+        across a wide range of GPU classes (T4 through B200) are both published directly on
+        Baseten''s pricing page, with clear tier definitions (Basic/Pro/Enterprise). Held below
+        5 because Enterprise-tier custom pricing is not public and no independent
+        competitive-benchmarking pass was done this session.
+
+        '
+      evidence_refs:
+      - ev-pricing
+
+documentation:
+  assess:
+    completeness: 80.8
+    originality: 0.0
+    items:
+      - key: data-governance
+        title: "Data governance - retention, ZDR & training"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tc, ev-security]
+        summary: "Zero Data Retention by default for Model APIs and Dedicated Inference (security-practices page, read directly); Terms & Conditions bar Baseten from using Customer Content - including deployed model weights and outputs - to train or improve its own models. Caveat: Async Inference queues inputs up to 72 hours before deletion."
+      - key: data-ownership
+        title: "Data & IP ownership"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tc]
+        summary: "Terms & Conditions (read directly): 'Customer reserves all rights, title, and interest in and to Customer Content,' defined to include deployed Customer Models and Model Outputs. A MUTUAL confidentiality clause (same care as own information, three-year survival) is a genuine positive beyond the retention/training terms."
+      - key: residency
+        title: "Data residency & jurisdiction"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-regions, ev-selfhosted]
+        summary: "No published, named EU region exists for the managed service; a 'regional environments' feature is gated behind a sales conversation. The practical EU-residency path is the enterprise Self-Hosted tier (workload plane in the customer's own VPC). US HQ carries standing CLOUD Act exposure for the managed product."
+      - key: compliance
+        title: "Compliance & attestations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-soc2, ev-dpa]
+        summary: "CORRECTED 2026-09-21: SOC 2 Type II is confirmed with a named audit firm; HIPAA and a GDPR DPA are both confirmed. A prior ISO 27001 claim is RETRACTED - an independent browser pass found no trace of it, or of ISO 27701/PCI DSS/FedRAMP/CSA STAR, on any retrievable Baseten page; the Vanta Trust Center is fully JS-gated."
+      - key: security
+        title: "Security controls"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-security]
+        summary: "CORRECTED 2026-09-21 (description): logical namespace isolation for shared use, single-tenant dedicated Kubernetes namespaces, and self-hosted VPC deployment - not an explicit 'three-tier' model as previously described, though the practical effect is similar. TLS 1.2+/AES-256, MFA-enforced least-privilege access, and periodic third-party penetration testing, all independently confirmed verbatim. No public bug-bounty programme found."
+      - key: pricing
+        title: "Pricing & cost model"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-pricing]
+        summary: "Per-token Model API pricing and per-GPU-minute dedicated pricing (T4 through B200) are both published directly on Baseten's pricing page, across Basic/Pro/Enterprise tiers."
+      - key: reliability
+        title: "Reliability posture"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-status, ev-sla-verified]
+        summary: "UPGRADED 2026-09-21: a real, committed SLA was found and independently read - 99.9% uptime for Dedicated Inference and Model APIs, service credits capped at 40% of monthly fees, a 24-hour claim window. The status page (independently confirmed) shows all systems operational with three brief, same/next-day-resolved incidents in the current window."
+  implement:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - key: integration
+        title: "API integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-docs]
+        summary: "Hosted Model APIs support the OpenAI Chat Completions API and a beta Anthropic Messages API (docs.baseten.co/overview, read directly); custom deploys use customer-authored Truss/Docker configs, not a Baseten-proprietary format."
+      - key: authentication
+        title: "Authentication & account setup"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Public docs describe API-key-based access but org/workspace key-scoping granularity was not detailed in the sources read this pass."
+      - key: region-config
+        title: "Region & residency configuration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-regions, ev-selfhosted]
+        summary: "'Regional environments' route a deployment to a designated region but require Baseten to configure it (contact support); Self-Hosted lets the workload plane run in any customer-chosen region/VPC."
+      - key: rate-limits
+        title: "Rate limits, tiers & quotas"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Baseten's pricing page documents GPU/token rates and account tiers (Basic/Pro/Enterprise) but a specific rate-limit/quota table was not located in the sources read this pass."
+      - key: portability
+        title: "Portability & exit"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: [ev-tc]
+        summary: "Terms & Conditions give a documented exit right: Customer Content may be exported for 30 days after the Term ends, and Baseten will delete Customer Content on written request. Open-weight models and customer-authored deploy configs keep the workload itself portable."
+  use:
+    completeness: 50.0
+    originality: 0.0
+    items:
+      - key: models-served
+        title: "Models served"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-models, ev-pricing]
+        summary: "A curated Model Library (baseten.co/library, read directly) - DeepSeek V4.1 Flash, GLM-5.3, Kimi K3, Llama 3.3 70B, Qwen3.5/TTS/Reranker/Embedding, Whisper Large V3, Flux.2, embeddings models - plus a general bring-your-own/custom-model deploy platform on dedicated GPUs."
+      - key: features
+        title: "Inference features"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-docs]
+        summary: "OpenAI Chat Completions API and a beta Anthropic Messages API for hosted Model APIs; per-model tool-calling/structured-output support follows each served model and was not individually verified."
+      - key: fine-tuning
+        title: "Fine-tuning / custom models"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-docs]
+        summary: "Training Jobs/Loops are documented as a platform pathway (docs.baseten.co/overview) alongside Model APIs and custom dedicated-GPU deploys; the specific fine-tuning workflow detail was not read in full this pass."
+      - key: context-limits
+        title: "Context & token limits"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Baseten does not publish a single per-model context-limit table in the sources read; limits track each served model's native window (e.g. DeepSeek V4.1 Flash's 1M-token context is noted on its own model page) and should be confirmed per model."
+  support:
+    completeness: 42.9
+    originality: 0.0
+    items:
+      - key: status-uptime
+        title: "Status page & uptime history"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-status]
+        summary: "A public status page (status.baseten.co) is referenced in security/support materials, corroborated via search rather than independently fetched this pass; one recent operational incident (2026-08-30/31, resolved) is documented."
+      - key: security-disclosure
+        title: "Security disclosure & trust centre"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-security]
+        summary: "A Trust Center exists at trust.baseten.co (Vanta-hosted, fully JS-gated - every path tried returns only a meta description) covering, per Baseten's own claims, SOC 2 and a sub-processor list. A prior claim that it also covers ISO 27001 is unconfirmed - no trace of an ISO 27001 claim was found anywhere. No public vulnerability-disclosure programme (security.txt / bug bounty) was found."
+      - key: channels
+        title: "Support & community channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-docs]
+        summary: "Product/console documentation (docs.baseten.co) is the primary support surface; support-tier response commitments were not detailed in the sources read."
+      - key: deprecation
+        title: "Model deprecation policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No published model-deprecation/EoL policy was found on Baseten's public docs in the sources read this pass."
+
+ownership:
+  level: substantial
+  factors:
+    use_modify:   { level: strong,   rationale: "OpenAI/Anthropic-compatible APIs over a predominantly open-weight Model Library keep workloads portable, and the Terms & Conditions confirm the customer retains all IP in Customer Content including deployed model weights and outputs - the three-tier deployment ladder (shared/dedicated/self-hosted) gives real control over where and how the workload runs." }
+    transparency: { level: moderate, rationale: "The Terms & Conditions and DPA are legible and were independently browser-read (Sec 11 mutual confidentiality confirmed on two separate fetches) - but a prior ISO 27001 claim was RETRACTED (not found anywhere, not even as a self-attestation) and the Vanta Trust Center that would carry PCI/FedRAMP/CSA STAR status is fully JS-gated and unreadable, so the sub-processor list's actual named contents also remain unverified." }
+    reliability:  { level: strong,   rationale: "UPGRADED 2026-09-21: a real, committed SLA was independently browser-read (99.9% uptime, 40%-capped service credits, 24h claim window) - a prior draft held this at moderate because no SLA had been located. The public status page shows all systems operational with three brief, same/next-day-resolved incidents in the current window." }
+    data_control: { level: strong,   rationale: "The Terms & Conditions and security-practices page (independently browser-read, Sec 11 confirmed on two fetches) state Zero Data Retention by default for Model APIs and Dedicated Inference, a contractual never-train clause, and a MUTUAL confidentiality duty - among the strongest standard-terms data-control postures reviewed, now independently verified rather than resting on a single automated read. Caveat: Async Inference queues inputs for up to 72 hours, and no published EU region exists for the managed service." }
+  verdict: "You substantially own inference here: an independent Cowork browser session confirmed, on two separate fetches, that Baseten's Terms & Conditions state Zero Data Retention by default, a contractual bar on using your content (including deployed model weights) to train its models, and a genuinely mutual confidentiality duty - a stronger standard-terms posture than most peers, and now independently verified rather than resting on a single automated read. A real, committed 99.9% SLA with service credits was also confirmed. It falls short of full ownership because a prior ISO 27001 claim was retracted (not found anywhere on independent verification), the Vanta Trust Center is fully JS-gated so PCI/FedRAMP/CSA STAR status and the named sub-processor list remain unverified, no published EU region exists for the managed service (EU residency means the enterprise Self-Hosted tier), and Async Inference has a 72-hour retention exception. If you need EU data residency or want certifications independently confirmed, use the Self-Hosted tier or ask for the underlying reports directly."
+
+evidence:
+- id: ev-tc
+  claim: "Baseten Terms & Conditions (read directly): Sec on Customer Content ownership -
+    'Customer reserves all rights, title, and interest in and to Customer Content,' where
+    Customer Content includes Customer Models (deployed weights) and Model Outputs; a
+    training-prohibition clause bars Baseten from using Customer Content to train, fine-tune, or
+    otherwise develop ML/AI models, limiting its license to providing/maintaining the Services
+    and preventing/addressing technical problems, plus anonymized/de-identified telemetry;
+    mutual confidentiality clause requiring 'the same degree of care it uses for its own (but no
+    less than reasonable care),' surviving three years post-termination, with prior-notice
+    compelled disclosure; a documented exit right - Customer Content exportable for 30 days
+    after Term end, deletable on written request."
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://www.baseten.co/terms-and-conditions/
+  date: '2026-09-20'
+- id: ev-security
+  claim: "Baseten security-practices page (read directly): Zero Data Retention for Model APIs
+    and Dedicated Inference ('will not store, retain, or otherwise make a persistent copy of
+    model inputs or outputs'); Async Inference queues inputs up to 72 hours before deletion,
+    outputs never stored; three-tier tenant isolation (shared logical separation; dedicated
+    single-tenant Kubernetes namespaces with Calico/Cilium network policies, 'never shares GPUs
+    across users'; self-hosted in customer VPC); TLS 1.2+ in transit, AES-256 at rest with
+    periodic key rotation; least-privilege access, enforced MFA, quarterly access reviews;
+    periodic third-party penetration testing; KV cache never persisted to disk."
+  source_type: publisher
+  doc_type: security
+  retrieved: true
+  url: https://www.baseten.co/security-practices/
+  date: '2026-09-20'
+- id: ev-dpa
+  claim: "Baseten DPA (read directly): 'Baseten shall not log, record, or save Customer Personal
+    Data contained in model inputs or outputs to persistent storage after real-time
+    processing'; Baseten as Processor, Customer as Controller; SCCs incorporated, governing
+    law/jurisdiction Ireland (Clause 17/18); UK Addendum (ICO template B.1.0) for UK transfers;
+    a sub-processor list is maintained with at least fifteen (15) days' prior notice before
+    engaging a new sub-processor."
+  source_type: publisher
+  doc_type: dpa
+  retrieved: true
+  url: https://www.baseten.co/dpa
+  date: '2026-09-20'
+- id: ev-soc2
+  claim: "Baseten blog post confirming SOC 2 Type II certification, audited by Sensiba San
+    Filippo LLP, covering Security/Availability/Processing Integrity/Confidentiality/Privacy
+    criteria with a clean opinion across 70+ sub-criteria; the report itself is gated under
+    NDA."
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://www.baseten.co/blog/soc-2-type-2/
+  date: '2026-09-20'
+- id: ev-regions
+  claim: "Baseten regional-environments docs (read directly): routes inference traffic for a
+    deployment 'exclusively to workload planes within a designated geographic region'; requires
+    initial configuration by Baseten - 'Contact support to confirm availability for the region
+    you need.' No published list of specific region names was found."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.baseten.co/deployment/regional-environments
+  date: '2026-09-20'
+- id: ev-selfhosted
+  claim: "Baseten Self-Hosted product page (read directly): the full workload plane runs inside
+    the customer's own VPC/cloud, with inference input/output 'never touching Baseten's
+    premises'; marketed toward the Enterprise pricing tier."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://www.baseten.co/deployments/baseten-self-hosted/
+  date: '2026-09-20'
+- id: ev-status
+  claim: "UPGRADED 2026-09-21: Baseten's public status page (status.baseten.co), independently
+    browser-read: 'All Systems Operational' across 6 components (Dedicated Inference, Model
+    APIs, Training, Model Management API, Web Application, Homepage and Docs); 90-day history, no
+    numeric % shown on the face. Three incidents this window: 2026-09-09 Nemotron Ultra partial
+    (Dedicated Inference unaffected, resolved 10:49 PDT); 2026-09-14 India cluster elevated
+    errors + Kimi K3 non-US partial (resolved same day); 2026-09-20 Kimi K3 US endpoint outage
+    (restored 01:13 PDT). A prior draft cited a single, differently-dated incident from a search
+    snippet - corrected to this independently-read list."
+  source_type: publisher
+  doc_type: sla
+  retrieved: true
+  url: https://status.baseten.co/
+  date: '2026-09-20'
+- id: ev-sla-verified
+  claim: "Baseten Service Level Agreement (independently browser-read 2026-09-21, verbatim): Sec
+    2.0 - 'ninety-nine point nine percent (99.9%)' committed uptime, applying to both Dedicated
+    Inference and Model APIs on Baseten-managed infrastructure. Sec 1.5 defines System
+    Availability against status.baseten.co. Sec 4.2 caps monthly Service Credits at 'forty
+    percent (40%).' Sec 4.3 requires a claim within 24 hours with evidence. Sec 1.4 lists standard
+    exclusions. Enterprise plan offers 'Custom SLAs.' A prior draft stated no SLA document had
+    been located; this corrects that."
+  source_type: publisher
+  doc_type: sla
+  retrieved: true
+  url: https://www.baseten.co/service-level-agreement/
+  date: '2026-09-21'
+- id: ev-pricing
+  claim: "Baseten pricing page (read directly): per-token Model API rates (e.g. GLM-5.3
+    $1.40/$0.14-cached/$4.40, DeepSeek V4.1 Flash $0.30/$0.03-cached/$1.20, Kimi K3
+    $3.00/$0.30-cached/$15.00) and per-GPU-minute dedicated rates (T4 $0.01052, A10G $0.02012,
+    A100 80GB $0.06667, H100 80GB $0.10833, B200 180GB $0.16633) across Basic/Pro/Enterprise
+    tiers."
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://www.baseten.co/pricing/
+  date: '2026-09-20'
+- id: ev-models
+  claim: "Baseten Model Library page (read directly): current curated catalogue includes
+    DeepSeek V4.1 Flash, GLM-5/5.3/5.3 Fast, Llama 3.3 70B Instruct, Kimi K3, Qwen3.5 35B-A3B +
+    TTS + Reranker/Embedding + Image, Whisper Large V3 variants, Flux.2 [dev], EmbeddingGemma,
+    Nomic Embed Code, BGE Embedding ICL, Inkling."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://www.baseten.co/library/
+  date: '2026-09-20'
+- id: ev-docs
+  claim: "Baseten platform overview docs (read directly): three pathways - hosted Model APIs
+    supporting the OpenAI Chat Completions API and a beta Anthropic Messages API, deploying an
+    open-source/fine-tuned/custom model on dedicated GPUs, and Training Jobs/Loops."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.baseten.co/overview
+  date: '2026-09-20'
+changelog:
+- date: '2026-09-20'
+  change: 'Initial entry. Primary-source research: read the Terms & Conditions, DPA,
+    security-practices, regional-environments, self-hosted, pricing, model-library and
+    platform-overview pages directly; corroborated SOC 2 Type II via Baseten''s own blog post
+    (named audit firm). Confidentiality coded mutual (explicit same-care clause, three-year
+    survival). Coded eu_region_available and region_pinning as unknown - no published, named EU
+    region exists for the managed service; the practical EU path is the enterprise Self-Hosted
+    tier. Dedicated availability coded self_serve for the broadly-priced Dedicated Deployments
+    tier, with true self-hosted/air-gapped isolation flagged as enterprise-only in
+    dedicated_notes. The Trust Center portal (trust.baseten.co) is JS-gated and its ISO
+    27001/PCI/FedRAMP claims and sub-processor list contents were not independently read - flag
+    for a future deeper pass.'
+- date: '2026-09-21'
+  change: 'CORRECTION - independent Cowork browser verification pass, following up on the
+    flagged Trust Center gap. Net result is mostly positive: the mutual confidentiality clause
+    (Sec 11) is now CONFIRMED on two separate live fetches, and a real, committed SLA (99.9%
+    uptime, 40%-capped credits) was found at baseten.co/service-level-agreement - a prior draft
+    had located none. reliability score 3 -> 4. Two corrections downward: a prior ISO 27001 claim
+    is RETRACTED (no trace found anywhere, not even self-attested; Vanta Trust Center remains
+    fully JS-gated) - iso_27001 changed from yes to unknown, though compliance stays at 4 since
+    SOC 2 Type II + HIPAA already clear that anchor on their own; and the "three-tier isolation
+    model" description is corrected to logical namespace + single-tenant dedicated + self-hosted
+    VPC (the practical effect is the same; security score unchanged at 4). Also corrected: ZDR
+    default lives in the Security Practices page, not the Terms directly (Terms Sec 2.5 merely
+    honours it by reference); and the incident list updated to the three actually-current
+    incidents (Sep 9/14/20) in place of a differently-dated one from a search snippet. Headline
+    71.2 -> recomputed by score.py.'
+last_verified: '2026-09-21'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

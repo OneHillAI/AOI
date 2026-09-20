@@ -27,11 +27,14 @@ DPA rather than relying on the default terms.
 The **Terms of Service** settle ownership directly: *as between you and Company, you
 exclusively own all right, title and interest in Your Content and Output*, granting Together
 only a **limited license** to access, host and operate that content solely to provide the
-Services. Together separately owns its own Company IP and Usage Data. Combined with
-**ZDR-by-default** from the Privacy Policy - nothing retained to improve the service unless an
-org admin opts in - the practical posture is that **your data and the outputs derived from it
-stay yours**. The one gap is disclosure: the **sub-processor list is not published**, so for a
-regulated deployment pin sub-processor terms in the DPA.
+Services. Together separately owns its own Company IP and Usage Data. **Correction (2026-09-21,
+independently verbatim-confirmed):** Zero Data Retention is account-level **opt-in**, not the
+default - Privacy Policy Sec 2.6: *"By choosing 'No', you are enabling Zero Data Retention."*
+Absent ZDR, standard processing applies; training remains off by default regardless (a separate
+opt-in). The practical posture is still that **your data and the outputs derived from it stay
+yours** by ownership and training terms - just not by retention default. The DPA's Annex III
+sub-processor list (9 named entities, including OpenAI OpCo LLC) is a findable PDF, not a
+self-serve published page - pin sub-processor terms in the DPA for a regulated deployment.
 
 <!-- item: compliance -->
 ## Compliance & attestations

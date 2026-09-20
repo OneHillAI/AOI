@@ -9,42 +9,72 @@ id: together-ai
 name: Together AI
 profile: inference
 hq_country: United States
-summary: 'A US-headquartered inference provider serving a broad open-model catalogue
-  (Llama 3.x/4, DeepSeek V3/R1, Qwen3 incl. 235B, Mistral/Mixtral, gpt-oss 20B/120B,
-  plus embeddings and image models) over per-token serverless and dedicated GPU endpoints.
-  Its standout governance fact, stated in Together''s own Privacy Policy and Terms of
-  Service, is zero-data-retention by default with training opt-in and off by default, and
-  Terms that leave you owning your inputs and outputs; the biggest caveat is that EU data
-  centres and region pinning are gated to the higher Scale/Enterprise tiers, and it carries
-  standing US CLOUD Act exposure. The no-retention posture is stated in the binding terms
-  but not independently attested.
+summary: 'A US-headquartered inference provider serving a broad, fast-moving open-model
+  catalogue (Llama 3.3, DeepSeek V4-generation, Qwen3.5/3.7/3.8, GLM-5.3, Kimi K3, gpt-oss
+  120B, plus image/video/audio models including some wrapped third-party proprietary
+  APIs) over per-token serverless and dedicated GPU endpoints. It no longer serves
+  embedding models on serverless (removed since the prior pass). Its standout governance
+  fact, stated in Together''s own Privacy Policy and Terms of Service, is zero-data-retention
+  by default with training opt-in and off by default, and Terms that leave you owning your
+  inputs and outputs; the biggest caveat is that EU data centres and region pinning are
+  gated to the higher Scale/Enterprise tiers, and it carries standing US CLOUD Act exposure.
+  The no-retention posture is stated in the binding terms but not independently attested.
 
   '
 models_served:
-- Llama 3.x / Llama 4
-- DeepSeek V3 / R1
-- Qwen3 (incl. 235B)
-- Mistral / Mixtral
-- gpt-oss 20B / 120B
-- embeddings and image models
+- Llama 3.3 70B (Llama 4 Maverick/Scout appear only as fine-tuning base models, not
+  confirmed servable on serverless - re-check before relying on this)
+- DeepSeek V4 Pro 0813 / DeepSeek V4.1 Flash / DeepSeek V4 Flash 0731 (V3/R1 no longer
+  served)
+- Qwen3.5-397B-A17B / Qwen3.7-Max / Qwen3.6-Plus / Qwen3.8-2.4T-A95B, plus the legacy
+  Qwen3-235B-A22B throughput SKU
+- GLM-5.3 / GLM-5.3-Flash / GLM-5.2 (Z.ai, new since the prior pass)
+- Kimi K3 (Moonshot, new since the prior pass)
+- gpt-oss 120B (gpt-oss 20B not confirmed on the live serverless chat pricing table -
+  re-check)
+- MiniMax M3 / M2.7, Gemma 4 31B, Cogito v2.1 671B (new since the prior pass)
+- Mistral / Mixtral - REMOVED from serverless; Mixtral 8x7B now appears only as a
+  fine-tuning base model
+- 'image/video/audio: FLUX.2, Ideogram 4.0, Qwen Image 2.0, Seedream/Seedance/Seedance
+  2.5, Imagen 4.0, Sora 2, Kling 2.1, plus wrapped third-party proprietary APIs (GPT
+  Image 1.5/2, Gemini "Nano Banana" image variants)'
+- embeddings - NONE offered via serverless; docs.together.ai states this explicitly
+  ("There are currently no embedding models offered via serverless"), same for rerank
+  and moderation - contradicts the prior pass''s "embeddings" line, now corrected
 hardware: NVIDIA GPU
 pricing:
   model: mixed
   notes: 'Per-token serverless pricing plus dedicated GPU endpoints on Scale/Enterprise
-    tiers. Rates are approximate and move frequently (third-party research).
+    tiers. Rates are approximate and move frequently (third-party research); live-checked
+    against together.ai/pricing on 2026-09-20.
 
     '
   example_rates:
-  - 'gpt-oss-120B: ~$0.15/M in, ~$0.60/M out'
-  - 'Qwen3-235B: ~$0.20/M in, ~$0.60/M out'
-  - 'DeepSeek-V3: ~$1.25/M'
+  - 'gpt-oss-120B: $0.15/M in, $0.60/M out (unchanged)'
+  - 'Qwen3-235B-A22B (throughput SKU): $0.20/M in, $0.60/M out (unchanged)'
+  - 'DeepSeek V4 Pro 0813: $1.32/M in, $3.96/M out (supersedes DeepSeek-V3)'
+  - 'DeepSeek V4.1 Flash: $0.30/M in, $1.20/M out'
+  - 'Kimi K3: $3.00/M in, $15.00/M out'
+  - 'GLM-5.3: $1.40/M in, $4.40/M out'
 data_governance:
-  default_retention: none by default (inputs/outputs not stored); temporary caching
-    for performance
+  default_retention: 'CORRECTED 2026-09-21: an independent Cowork browser session re-read the
+    Privacy Policy verbatim and confirmed retention is NOT zero by default - Sec 2.6: "By
+    choosing ''No'', you are enabling Zero Data Retention (''ZDR'')... the content you submit ...
+    are not stored, retained, or used for model training, product improvements, or any secondary
+    purposes except as needed to provide the Services to you." ZDR is something the customer
+    actively enables, not the standing default; absent it, standard processing applies
+    (temporary caching for performance, and content used per the Terms'' purpose-limited
+    licence). A prior entry stated "none by default," conflating the training-opt-in default
+    (correctly off by default) with the retention default (not zero unless ZDR is turned on).'
   trains_on_inputs: opt_in_only
-  zdr_available: yes_default
-  zdr_scope_caveats: 'Temporary caching may occur for performance. The no-store default
-    is self-attested in Together''s own Privacy Policy and Terms of Service; it has not
+  zdr_available: yes_optional
+  zdr_scope_caveats: 'CORRECTED 2026-09-21: ZDR is account-level and OPT-IN (Privacy Policy Sec
+    2.6, independently re-read verbatim), not the default. Terms of Service Sec 3 ("Your
+    Content") corroborates: "Under ZDR, your data and outputs are not stored, retained, or used
+    for model training, product improvements, or any other purpose beyond the time required to
+    process the specific request or transaction" - a benefit of enabling ZDR, not the baseline
+    state. The no-training-without-opt-in default (separately) remains correctly coded as
+    opt_in_only. This posture is self-attested in Together''s own binding documents; it has not
     been independently audited.
 
     '
@@ -103,14 +133,23 @@ trust_considerations:
 - Deployment ladder is a genuine strength - serverless, dedicated endpoints, self-serve bare-metal
   GPU clusters, and VPC/on-prem enterprise deployment. But EU dedicated endpoints are gated to
   Scale/Enterprise tiers and single-tenancy is in the docs, not warranted in the contract.
-- ZDR-by-default and no-training-without-opt-in are stated in the binding Privacy Policy
-  and Terms of Service but are not independently audited.
+- 'CORRECTED 2026-09-21: ZDR is account-level OPT-IN, not the default - a prior version of this
+  entry said "ZDR-by-default." Confirmed via an independent verbatim re-read of Privacy Policy
+  Sec 2.6 ("By choosing ''No'', you are enabling Zero Data Retention"). No-training-without-opt-in
+  is correctly stated and remains grounded in the binding Privacy Policy and Terms of Service; none
+  of this is independently audited.'
 - EU residency and region pinning are gated to Scale/Enterprise tiers, per the support KB.
 - ISO 27001 is unconfirmed (the DPA aligns risk management to ISO 27005 / NIST 800-37, not
   27001 certification); HIPAA/BAA support is indicated in the security docs rather than shown
-  as a formal attestation, and the SOC 2 Type II report itself was not obtained - only the vendor announcement.
+  as a formal attestation, and the SOC 2 Type II report itself was not obtained - only the vendor
+  announcement (independently re-confirmed 2026-09-21 - published 2025-07-08, auditor not named).
 - US HQ implies standing CLOUD Act exposure even for EU-hosted workloads; the DPA confirms
   default routing through North America data centres with EU transfers under SCCs.
+- 'NEW FINDING 2026-09-21: the DPA''s Annex III sub-processor list (independently browser-read,
+  9 named entities) includes OpenAI OpCo, LLC (US) - an unusual entry for a peer inference
+  provider''s sub-processor list. This does not itself indicate served-model routing through
+  OpenAI (third_party_routing_leakage remains coded as none for served models), but is worth
+  independent follow-up if OpenAI''s role there matters to your use case.'
 score:
   rubric_version: '1.2'
   headline: 70.4
@@ -119,14 +158,17 @@ score:
   dimensions:
     data_governance:
       score: 3
-      rationale: 'ZDR by default, training opt-in and off by default, and customer-retained
-        ownership of Your Content and Output are all grounded in the binding Privacy Policy and
-        Terms of Service - a genuinely strong retention/training posture. But ToS Sec 9 expressly
-        DISCLAIMS confidentiality ("no confidentiality obligations ... unless otherwise agreed in
-        writing"), so on standard terms your data is not contractually kept in confidence - under
-        rubric 1.2 an express confidentiality disclaimer caps data_governance at 3. Also held down
-        by the self-attested (unaudited) no-retention behaviour, the undisclosed sub-processor list,
-        and access to Third-Party Models under their own terms.
+      rationale: 'CORRECTED 2026-09-21: ZDR is account-level OPT-IN (Privacy Policy Sec 2.6,
+        independently re-read verbatim), not the default - a prior rationale overstated this as
+        "ZDR by default." Training opt-in-and-off-by-default and customer-retained ownership of
+        Your Content and Output remain correctly grounded in the binding Privacy Policy and Terms
+        of Service. ToS Sec 9 expressly DISCLAIMS confidentiality ("no confidentiality
+        obligations ... unless otherwise agreed in writing"), confirmed unchanged on two
+        independent live fetches - so on standard terms your data is not contractually kept in
+        confidence, and under rubric 1.2 an express confidentiality disclaimer caps data_governance
+        at 3 regardless of the retention correction above. Also held down by the self-attested
+        (unaudited) posture, the undisclosed sub-processor list, and access to Third-Party Models
+        under their own terms.
 
         '
       evidence_refs:
@@ -460,12 +502,17 @@ evidence:
   claim: 'Data Processing Addendum: Together (US) Inc. is bound to the EU Commission Standard
     Contractual Clauses (and UK Addendum) for EU personal-data transfers, maintains a risk
     management program aligned to ISO 27005 / NIST 800-37, requires encryption of controller
-    data in transit and storage, and defaults to routing through North America data centres.'
+    data in transit and storage, and defaults to routing through North America data centres.
+    UPDATED 2026-09-21 (independent re-read, unchanged since 2026-07-25): Annex III names 9
+    sub-processors - Amazon Web Services (US), Mailgun Technologies (US), Amplitude (US),
+    Functional Software/Sentry (US), OpenAI OpCo LLC (US), Together Software Inc. (Canada),
+    Hotjar Ltd (Malta), Intercom (US), Absorb Software (Canada/US/UK/EU/Australia). No
+    effective/execution date is visible on the PDF itself.'
   source_type: publisher
   doc_type: dpa
   retrieved: true
   url: https://cdn.prod.website-files.com/5ce11396d0cadb55a02cabf7/696024ff5649fb30b125686c_Together%20DPA%20(Website).pdf
-  date: '2026-07-25'
+  date: '2026-09-21'
 changelog:
 - date: '2026-07-25'
   change: Initial entry.
@@ -491,7 +538,28 @@ changelog:
     (75.2 -> 70.4 headline): under rubric 1.2 an express confidentiality disclaimer caps D1 at 3 -
     the retention/training posture is strong but standard terms give no duty of confidence. Ownership
     verdict/level unchanged (still partial).'
-last_verified: '2026-08-06'
+- date: '2026-09-20'
+  change: 'Catalogue/pricing freshness pass (45 days past the fast-moving SLA). Live-verified via
+    browser DOM read of together.ai/pricing: the served catalogue moved a full generation
+    (DeepSeek V3/R1 -> V4-generation, Qwen3 -> 3.5/3.7/3.8, new GLM-5.3 + Kimi K3 entries),
+    Mistral/Mixtral dropped from serverless (fine-tuning-only now), and the prior "embeddings"
+    claim in models_served was corrected - Together''s own docs now state no embedding models are
+    offered via serverless at all. Updated models_served and example_rates; score and governance
+    fields left unchanged pending a deeper re-read.'
+- date: '2026-09-21'
+  change: 'CORRECTION - independent Cowork browser verification pass (full governance re-read,
+    not just catalogue). Sec 9''s express confidentiality disclaimer is CONFIRMED unchanged on
+    two independent live fetches - the data_governance cap at 3 stands, now independently
+    verified rather than resting on the 2026-08-06 pass alone. The 2026-09-20 catalogue findings
+    (no serverless embeddings/rerank, Mistral/Mixtral fine-tuning-only) are also independently
+    CONFIRMED real, not a rendering artefact. One real correction: `zdr_available` was coded
+    yes_default; an independent verbatim re-read of Privacy Policy Sec 2.6 ("By choosing
+    ''No'', you are enabling Zero Data Retention") confirms ZDR is account-level OPT-IN, not the
+    default - corrected to yes_optional. This does not change the score (already capped at 3 by
+    the confidentiality disclaimer) but corrects a real field-level inaccuracy. New finding: the
+    DPA''s Annex III sub-processor list names OpenAI OpCo, LLC - flagged in trust_considerations
+    for awareness, not scored. Headline unchanged at 70.4/B.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90
