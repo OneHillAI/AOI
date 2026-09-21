@@ -638,7 +638,9 @@ changelog:
     (still retrieved:false) to the formal Model Studio Service Agreement specifics only
     (exact retention, region, opt-out). Updated transparency + data_control rationales and
     the verdict; score and ownership level unchanged.'
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. The tracked Qwen3 weights remain Apache-2.0, not reverted or re-licensed. Flag (not folded): Qwen3 has been superseded by Qwen3.5/3.6/3.8 (also read as Apache-2.0) as the current head of the line - a future build-pass decision on new siblings vs updating this entry, not scored here.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

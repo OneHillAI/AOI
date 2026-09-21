@@ -17,8 +17,9 @@ summary: 'A US-headquartered inference provider running open models on custom LP
   Inputs/Outputs, Groq never accesses customer data for training, inference is not
   retained by default, and ZDR is available to all customers via Data Controls; the
   biggest caveats are that batch and fine-tuning features retain data (defaulting to
-  US GCP storage), the catalogue is narrower than GPU providers, and the EU footprint
-  is very recent.
+  US GCP storage), the catalogue is narrower than GPU providers, and the EU (Helsinki)
+  footprint - now with roughly 14 months of track record - still has no customer-selectable
+  region-pinning clause in the Services Agreement or DPA, which permits US processing.
 
   '
 models_served:
@@ -110,7 +111,9 @@ dedicated_notes: 'Dedicated options are enterprise, sales-negotiated: GroqMetal 
 trust_considerations:
 - Batch (30-day) and fine-tuning retention default to US GCP storage even though inference
   is not retained.
-- EU data centre (Helsinki) is very recent; default storage is otherwise US.
+- EU data centre (Helsinki) now has roughly 14 months of track record (launched 2025-07-06),
+  but still carries no customer-selectable region-pinning clause; default storage is otherwise
+  US and the DPA permits US processing.
 - Custom LPU hardware and a narrower catalogue limit model coverage relative to GPU
   providers.
 - Region pinning is unconfirmed.
@@ -159,10 +162,13 @@ score:
       - ev-baa
     residency:
       score: 3
-      rationale: 'A EU data centre exists (Helsinki, launched July 2025 with Equinix),
-        satisfying the "EU region available" anchor, but it is very recent, default storage
-        is otherwise US, region pinning is unconfirmed, and the DPA expressly permits US
-        processing - so residency guarantees are not yet mature.
+      rationale: 'CORRECTED 2026-09-21 (wording): a EU data centre exists (Helsinki, launched
+        July 2025 with Equinix, now with roughly 14 months of track record - independently
+        re-confirmed) satisfying the "EU region available" anchor. Held at 3, not for recency
+        (no longer accurate), but because no customer-selectable region-pinning clause exists
+        in the Services Agreement or DPA, default storage is otherwise US, and the DPA
+        expressly permits US processing - so residency guarantees are not yet contractually
+        mature regardless of the data centre''s age.
 
         '
       evidence_refs:
@@ -539,7 +545,9 @@ changelog:
     customers (docs) vs Eligible Customers (contract)" ZDR discrepancy. Added confidentiality: mutual
     and dedicated_availability: enterprise_only (GroqMetal/GroqRack). No dimension score changed - the
     Sec 10 confidentiality positive is offset by the ZDR-eligibility caveat; data_governance stays 4.'
-last_verified: '2026-08-06'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Sec 10.1 mutual confidentiality clause re-read verbatim, unchanged, on the same Services Agreement version (Last Modified 2026-06-22) underlying the prior grounding - still the entry''s differentiating strength. Sec 4.2 training prohibition re-confirmed unchanged. The "Eligible Customers" ZDR-eligibility gap persists: that term remains undefined in both the Services Agreement and the DPA (Effective 2025-10-15), so ZDR is not universally self-serve per the contract text. Trust Center (trust.groq.com) remains Vanta-gated; SOC 2 stays claim-grade (secondary corroboration only) pending a direct certificate read - no compliance upgrade. Residency wording corrected below: the Helsinki EU data centre now has an approximately 14-month track record (launched 2025-07-06), no longer accurately described as "very recent" - but no customer-selectable region-pinning clause exists in the Services Agreement or DPA (which still permits US transfer), so residency stays at 3 per the research''s own explicit caution against over-crediting D3 on track-record length alone. No incidents since Aug 2026. No score change; grade holds at B.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

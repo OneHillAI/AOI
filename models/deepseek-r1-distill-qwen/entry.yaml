@@ -360,7 +360,9 @@ evidence:
 changelog:
 - date: '2026-08-03'
   change: Initial entry - split from the aggregate `deepseek` entry on the licence axis. These are the R1-Distill checkpoints on Apache-2.0 Qwen2.5 bases (1.5B-32B); the Llama-base distils (Llama Community Licence) are the separate deepseek-r1-distill-llama entry. Apache-2.0 + small (non-systemic-risk) scale gives a cleaner legal profile (legal 3) and ownership substantial. Shared behavioural grounding carried from the deepseek family entry. Grounded 2026-08-03.
-last_verified: '2026-08-03'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Licence unchanged (MIT distillation over the Qwen-licensed base). No newer distill supersedes this entry; note the base Qwen family has itself moved to Qwen3.5/3.6/3.8 (see the qwen entry), not folded here.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

@@ -614,7 +614,9 @@ changelog:
   change: Initial v2 four-domain library entry.
 - date: '2026-07-25'
   change: Grounded evidence against primary sources (docs/primary-sources/eurollm) - Apache-2.0 licence (9B/1.7B/22B-Instruct-2512), the EuroLLM-9B technical report, and the 9B/1.7B/22B-Instruct-2512 model cards read verbatim; added doc_type + retrieved to all evidence and a docs item pinning the partial-openness nuance (SFT set released, ~4T pretraining corpus not); ownership factors and verdict grounded to clean Apache-2.0 + partial (not full) data openness.
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. EuroLLM-9B''s Apache-2.0 licence and gated access re-confirmed unchanged. Flag (not folded): a newer, larger EuroLLM-22B-2512 has shipped - a new sibling for a future build pass; its licence tag (expected Apache-2.0) needs confirming from its own raw repo file before scoring.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

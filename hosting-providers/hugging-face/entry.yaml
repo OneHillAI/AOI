@@ -401,7 +401,9 @@ changelog:
 - date: '2026-07-25'
   change: Migrated to v2 four-domain library format (added documentation block; score
     carried over unchanged).
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification (Cowork browser session). Malware/pickle scanning still active and unchanged, verbatim: ClamAV runs on every uploaded file; every pickled file (pytorch_model.bin etc.) runs through Pickle Import scan, flagging suspicious imports, with the unchanged disclaimer that this is not 100% foolproof and packages are not actively audited for safety. safetensors remains documented as an "experiment," not declared the platform default. No HF-native signing/provenance-attestation feature confirmed (still commit-level GPG signing only; third parties like Cohere/Red Hat/sigstore push model signing, not HF itself). No new security incident or typosquatting campaign surfaced since ~Aug 2026 (the July 2026 intrusion predates this window and was already reflected). Hard flag does not apply. No score change.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

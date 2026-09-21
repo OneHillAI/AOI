@@ -581,7 +581,9 @@ evidence:
 changelog:
 - date: '2026-08-03'
   change: Initial entry (NVIDIA Nemotron 3 Nano Omni, multimodal), split out of the former aggregate nemotron entry so each per-licence release is scored on its own. Governed by the NVIDIA Open Model Agreement (a third distinct family licence, near-identical to the Nemotron OML); the corrected reading records it as Apache-2.0-derived, perpetual, royalty-free and IRREVOCABLE with the Trustworthy-AI / acceptable-use / guardrail clauses confirmed absent. Classified open_weights (not open_weights_recipe) because the card carries a weaker open-data posture than the rest of the family, though a public-subset recipe exists in the NeMo repo. Safety scored 3, not the old aggregate 4, because there is no model-level safety evaluation over the multimodal input surface - only post-training data curation plus the downloadable, multimodal-capable family guard stack. AOI 60.0, grade C, ownership partial.
-last_verified: '2026-08-03'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Licence unchanged and re-confirmed. Flag (not folded): Nemotron 3.5 Lightning 30B-A3B sits in this compact footprint but carries a distinct licence (OpenMDW-1.1) - a new sibling for a future build pass.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

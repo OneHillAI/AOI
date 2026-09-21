@@ -701,7 +701,9 @@ changelog:
     LICENSE; legacy glm-4-9b custom PRC-law "glm-4" registration licence read verbatim)
     and the hosted Z.ai terms/privacy (Singapore law/SIAC vs the PRC weights licence);
     tightened ownership rationales/verdict with # grounded in comments. No score changes.
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. The tracked MIT-cluster licence is unchanged. Flag (not folded): Z.ai/Zhipu has shipped a GLM-5 generation (GLM-5/5.1/5.2/5.3/5.3-Flash) under a custom GLM-5.3 License with a Model-as-a-Service security-review gate reported at a $10B threshold - licence-divergent from this MIT entry and warrants a new glm-5 entity/family split in a future build pass, not a fold-in.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

@@ -597,7 +597,9 @@ evidence:
 changelog:
 - date: '2026-08-03'
   change: Initial entry (NVIDIA Nemotron 3 Super + Nano), split out of the former aggregate nemotron entry so each per-licence release is scored on its own. Governed by the NVIDIA Nemotron Open Model License (v. 2025-12-15); the corrected reading records it as Apache-2.0-derived, perpetual, royalty-free and IRREVOCABLE with no acceptable-use / field-of-use restriction and no guardrail clause (the earlier revocable / Trustworthy-AI reading was wrong and belonged to a different, generic NVIDIA licence). open_weights_recipe (tier 4, partial corpus). Safety scored 3, not the old aggregate 4, because there is no published model-level safety evaluation - only post-training data curation plus a downloadable family guard stack. AOI 66.0, grade C, ownership partial.
-last_verified: '2026-08-03'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Licence unchanged and re-confirmed distinct from the generic NVIDIA Open Model License (no Trustworthy-AI/revocable-guardrail clause). Safety strengthened, not weakened: a Nemotron 3.5 Content Safety guard model has been added to the family tooling. Flag (not folded): NVIDIA has shipped Nemotron 3.5 Lightning 30B-A3B (2026-08-11, OpenMDW-1.1) - a licence-divergent new sibling for a future build pass, not a fold into this entry.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

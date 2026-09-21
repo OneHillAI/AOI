@@ -583,7 +583,9 @@ evidence:
 changelog:
 - date: '2026-07-28'
   change: Initial entry (Kimi K3 - Moonshot AI). Classified open-weights (not closed-frontier); grounded against primary sources in docs/primary-sources/kimi-k3 - Kimi K3 License read verbatim (new $20M Model-as-a-Service separate-agreement gate), technical report PDF text-extracted (no training-token/FLOP figure published; section 6.2.2 offensive-cyber, no refusal), hosted platform terms + privacy (train-by-default, Singapore/SIAC).
-last_verified: '2026-07-28'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. The Kimi K3 License''s load-bearing $20M MaaS separate-agreement gate and branding thresholds re-read verbatim, unchanged - the K3 risk finding stands. No K4 or point release that alters the tracked terms.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

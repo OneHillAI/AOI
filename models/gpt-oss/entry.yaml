@@ -720,7 +720,9 @@ changelog:
   change: Initial v2 library entry for OpenAI gpt-oss (gpt-oss-120b / gpt-oss-20b).
 - date: '2026-07-25'
   change: Grounded evidence against primary sources (docs/primary-sources/gpt-oss) - added doc_type/retrieved to every item; read the Apache-2.0 LICENSE, the one-sentence USAGE_POLICY, the arXiv 2508.10925 model card, the OpenAI safety-report PDF and the METR third-party methodology review verbatim (retrieved:true); grounded ownership factors.
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. gpt-oss-20b and gpt-oss-120b''s Apache-2.0, ungated status re-confirmed unchanged. Optional note, not folded: OpenAI has published gpt-oss-safeguard variants (complementary safety/guardrail artefacts) that could be added as siblings later; they do not change this entry''s grade.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

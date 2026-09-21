@@ -605,7 +605,9 @@ changelog:
   change: Initial entry (Kimi K2 - Moonshot AI).
 - date: '2026-07-25'
   change: Grounded evidence against primary sources (docs/primary-sources/kimi-k2) - Modified-MIT 100M-MAU/$20M-revenue clause read verbatim; arXiv technical report and HF model card retrieved; added hosted platform.kimi.ai terms + privacy_policy evidence (trains-by-default, Singapore/SIAC); doc_type/retrieved added to every evidence item; ownership factors + verdict tightened around the attribution trigger and the weights-vs-hosted split.
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. The modified-MIT licence''s branding clause (100M-MAU / $20M-monthly-revenue threshold requiring prominent Kimi K2 display) re-read verbatim, unchanged. Flag (not folded): Moonshot has shipped K2.5, K2.6 and K2.7-Code - distinct newer releases for a future build pass to assess sibling-vs-update.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

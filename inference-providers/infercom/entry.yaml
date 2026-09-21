@@ -568,7 +568,9 @@ changelog:
     available. **transparency_lockin 4 -> 5** (76.0 headline): the shipped on-prem/air-gapped BYOC path
     is a top-tier control/exit signal - you can run the same open checkpoints in your own facility.
     Doc effective dates: ToS v2.1, PP v2.2 2026-03-09, DPA v1.3 2026-03-04.'
-last_verified: '2026-08-06'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. On-prem/air-gapped deployment - this entry''s load-bearing strength - re-confirmed still shipped and unchanged, verbatim: "we offer managed on-premises deployments," "SambaNova racks installed in your datacenter, deployed in 90 days," "Air-gap capable." Confidentiality (functional_only) re-confirmed - no dedicated mutual/business confidentiality clause in the Terms (v2.1, 2026-03-09), only an API-key user-responsibility clause. No-training (Sec 2.4) and EU-only data residency both re-confirmed verbatim, unchanged. ISO 27001:2022 re-confirmed as a genuinely dated, independently certified attestation (already correctly coded iso_27001: yes) - and the research specifically clarified that the SOC 2 badge seen elsewhere is facility-level (the Equinix MU4 colocation site''s own SOC 2, not Infercom''s), which this entry already correctly does NOT credit (soc2: unknown). DPA v1.3 full text remains gated (retrieved:false) - not load-bearing since functional_only already stands on the Terms, but flagged for a future pass. No incidents or SLA changes found. No score change; grade holds at B.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

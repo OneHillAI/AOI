@@ -372,7 +372,9 @@ evidence:
 changelog:
 - date: '2026-08-03'
   change: Initial entry - split from the aggregate `deepseek` entry on the licence axis. This is the ORIGINAL Dec-2024 V3 (Base + Chat), whose weights are the custom DeepSeek License Agreement v1.0 (RAIL-style use restrictions, non-OSI), NOT MIT; the V3-0324/V3.1 generations moved to MIT and are deepseek-v3-mit. The use restrictions drop use-and-modify to moderate and ownership to partial - the divergence that justifies the split. Shared safety/performance/operational/governance grounding carried from the deepseek family entry. Licence read verbatim from LICENSE-MODEL; grounded 2026-08-03.
-last_verified: '2026-08-03'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Licence unchanged - the MIT-code / DeepSeek-License-weights split re-confirmed still real from both LICENSE files. Flag (not folded): same V3.1/V3.2/V4 supersession as the MIT variant.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

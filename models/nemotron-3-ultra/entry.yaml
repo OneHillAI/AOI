@@ -583,7 +583,9 @@ evidence:
 changelog:
 - date: '2026-08-03'
   change: Initial entry (NVIDIA Nemotron 3 Ultra 550B), split out of the former aggregate nemotron entry so each per-licence release is scored on its own. Ultra is governed by OpenMDW-1.1 (Linux Foundation), whose "deal in the Model Materials without restriction" grant is the most permissive in the family and the reason Ultra is the one member whose ownership reaches substantial. open_weights_recipe (representative recipe; intermediate checkpoints and 1M-context data not open). Safety scored 3, not the old aggregate 4, because the white paper carries no model-level safety methodology - only post-training data curation plus the downloadable family guard stack. Training compute undisclosed, so the EU systemic-risk crossing is undeterminable. AOI 63.6, grade C, ownership substantial.
-last_verified: '2026-08-03'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Licence unchanged and re-confirmed. No newer Ultra-tier release supersedes this entry. Safety strengthened (Nemotron 3.5 Content Safety guard added to family tooling).'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

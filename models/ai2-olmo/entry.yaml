@@ -584,7 +584,9 @@ changelog:
     (ev-dolma, ev-apache, ev-integrity, ev-ops) from onehill_verified to publisher.
 - date: '2026-07-25'
   change: Grounded against primary sources (docs/primary-sources/ai2-olmo) - Apache-2.0 LICENSE, Dolma ODC-BY and OLMo 2/3 technical reports read verbatim; evidence retrieved:true, doc_type added.
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. OLMo 2''s Apache-2.0 fully-open licence and posture re-confirmed unchanged. Flag (not folded): AI2 has shipped OLMo 3 (also Apache-2.0, fully_open, trained on the refreshed Dolma 3 corpus) - a genuinely new generation continuing the same fully-open posture; recommended as a new sibling for a future build pass, not a replacement for this OLMo 2 entry.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90
