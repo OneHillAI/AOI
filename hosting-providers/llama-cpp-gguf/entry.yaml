@@ -357,7 +357,9 @@ changelog:
 - date: '2026-07-25'
   change: 'Migrated to v2 four-domain library format (added documentation block; score
     carried over unchanged).'
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. New in-window finding: CVE-2026-52131 (CVSS 7.5, published 2026-09-01) - a reachable assertion in gguf_reader::read, triggerable via a crafted GGUF file (DoS). This extends, but does not change the character of, the existing GGUF-parser memory-safety CVE cluster already reflected in this entry''s C rationale (oss-sec 2026-05-15 multi-vulnerability advisory, CVE-2026-27940, GHSA-96jg-mvhq-q7q7). No format-spec revision; no code-exec-on-load / trust_remote_code surface - the risk profile stays memory-safety parser bugs, an unchanged category. No score change; the new CVE reinforces rather than moves the existing C rationale.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

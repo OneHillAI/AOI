@@ -11,20 +11,20 @@ profile: inference
 hq_country: United Kingdom
 summary: 'An inference platform ("one API for all AI") that runs a large catalogue of open-weight
   Hugging Face models on its own custom stack, the Sonic Inference Engine, across pods in the US
-  and central Europe. Runware markets a US HQ (San Francisco), but the binding legal entity read in
-  its Terms and Privacy Policy is Runware Ltd (United Kingdom), under UK governing law and London
-  arbitration. The binding documents were read on 2026-07-26 and they contradict the marketing on
-  data handling. The Terms give the customer nominal ownership of outputs but grant Runware a
-  worldwide, perpetual, transferable licence over both inputs and outputs, and reference storing
-  training data; the Privacy Policy sets generic retention ("as long as necessary" / account life)
-  with no auto-purge or opt-in-storage clause, does not address training at all, names only Stripe
-  and Google Analytics as sub-processors, and cites GDPR/UK GDPR without naming SCCs or the EU-US
-  Data Privacy Framework. SOC 2 and ISO 27001 appear as badges only, with no readable report, and
-  no public DPA was found (both URLs 404). The models themselves are open weights, so use and exit
-  stay in your hands by self-hosting, but on a hosted basis the data terms are weak: a perpetual
-  licence over your inputs and outputs, generic retention, and no no-training commitment. Read the
-  binding text before sending sensitive data, and prefer self-hosting the same open checkpoints
-  where data control matters.
+  and central Europe. Runware markets a US HQ (San Francisco), but the binding legal entity is
+  Runware Ltd (United Kingdom), under UK governing law and London arbitration. CORRECTED 2026-09-21:
+  an independent re-verification found the current Terms of Service no longer contain the adverse,
+  non-confidentiality clause a 2026-08-06 pass had found - the current text instead has the customer
+  own Outputs outright, gives no broad licence to Runware over inputs/outputs, and a Private Model
+  Protection clause treats uploaded custom models as confidential. This removal is inferred from the
+  current text''s absence of the old clauses (web archives were proxy-blocked, so no verbatim
+  historical diff was possible) but is high-confidence given an evident deliberate rewrite. The
+  adverse-confidentiality hard flag is lifted. What has NOT improved: retention is still generic
+  (account-lifetime, no auto-purge, no ZDR), sub-processor disclosure beyond Stripe/Google Analytics
+  is still thin, and SOC 2/ISO 27001 remain self-asserted badges with no readable report or dated
+  certificate. The models themselves are open weights, so use and exit stay in your hands by
+  self-hosting; on a hosted basis the data terms are now considerably less hostile than previously
+  graded, but retention and compliance verification remain real gaps.
 
   '
 models_served:
@@ -41,36 +41,55 @@ pricing:
   example_rates:
   - 'Pay-as-you-go usage-based pricing (see provider pricing page for current per-model rates)'
 data_governance:
-  default_retention: 'generic, not zero - the Privacy Policy retains data "as long as necessary"
-    and for the life of the account, with no auto-purge or opt-in-storage clause. This contradicts
-    the marketing claim that generated content is auto-purged unless storage is opted into.'
-  trains_on_inputs: unclear
+  default_retention: 'CORRECTED 2026-09-21: retention is still generic, not zero - Privacy Policy
+    Sec 6 retains data for the account lifetime with no numeric window or auto-purge/opt-in-storage
+    clause. This specific weakness is UNCHANGED. What changed is everything around it - see
+    confidentiality_caveats.'
+  trains_on_inputs: never
   zdr_available: "no"
-  zdr_scope_caveats: 'No zero-retention posture is supported by the binding text. The Privacy
-    Policy sets generic retention ("as long as necessary" / account life) with no auto-purge, and
-    the Terms grant Runware a worldwide, perpetual, transferable licence over inputs and outputs
-    and reference storing training data. There is no no-training commitment in either document. The
-    marketing claims of no-training and default auto-purge are not supported by the documents read.
+  zdr_scope_caveats: 'No zero-retention posture is supported by the binding text (Privacy Policy
+    Sec 6, unchanged) - this remains the entry''s principal residual weakness. CORRECTED 2026-09-21:
+    the current Terms of Service Sec 3 "Model Training and Fine-Tuning" (near-verbatim, independently
+    browser-read, two fetches): "Runware will not use your Training Data or Trained Models to train,
+    fine-tune, or develop Runware''s own models or those of any third party." trains_on_inputs
+    resolved from unclear to never - the clause is defined-term-scoped to the fine-tuning product,
+    but Sec 2 (see confidentiality_caveats) grants Runware no rights over ordinary inputs/outputs
+    either, so nothing in the current text permits training on inputs by any reading. The Privacy
+    Policy is silent on training.
 
     '
-  customer_data_ownership: provider_may_use
-  outputs_used_to_improve_service: unclear
+  customer_data_ownership: customer_retains
+  outputs_used_to_improve_service: "no"
   third_party_routing_leakage: 'Runs open-weight models on its own inference pods rather than
     reselling a closed third-party model API. The Privacy Policy names only Stripe and Google
     Analytics as sub-processors, so the inference-infrastructure processors that actually handle
-    prompt content are not disclosed.
+    prompt content are not disclosed. Unchanged 2026-09-21.
 
     '
   subprocessors_disclosed: true
-  confidentiality: adverse
-  confidentiality_caveats: 'Actively adverse on the standard terms (read 2026-08-06): "any
-    Contributions you upload ... or Generations you create using the Services will be considered
-    non-confidential and non-proprietary", and you grant Runware "a worldwide, non-exclusive,
-    royalty-free, transferable license to use, reproduce, distribute, prepare derivative works of,
-    display, and otherwise utilize" them in connection with the Services. Express exception: privately
-    uploaded custom models (weights/architectures) are treated as confidential, with a separate NDA
-    available. The no-training commitment covers only uploaded Training Data / Trained Models, not
-    ordinary prompts and generations.'
+  confidentiality: functional_only
+  confidentiality_caveats: 'CORRECTED 2026-09-21 - the adverse finding is NO LONGER SUPPORTED by the
+    current Terms of Service (independently browser-read, two fetches including a targeted negative
+    search): the current 28-section ToS contains NO Submissions/Contributions section, NO
+    IP-assignment of user content to Runware, NO "unrestricted use/dissemination without
+    acknowledgment or compensation" clause, and NO non-confidentiality disclaimer - the Termly-style
+    boilerplate that drove the adverse classification is simply absent. The current text is
+    affirmatively protective instead: Sec 2 (near-verbatim) - "As between you and Runware, you own
+    your Outputs... Runware asserts no ownership of, and claims no intellectual property rights in,
+    your Outputs"; Sec 2 Private Model Protection - "We agree to treat all such materials as
+    confidential" and "not to disclose, distribute, or otherwise make available these models to any
+    third party without the explicit written consent of the user"; Sec 4 requires the user to
+    protect Runware''s own proprietary information. The only licence the user grants Runware is
+    name/logo for marketing (benign). Coded functional_only, not mutual or explicit: there is no
+    general confidentiality clause covering ordinary prompts/outputs broadly - only Private Model
+    Protection is expressly confidential - so protection for ordinary content rests on the absence
+    of any licence grant plus retained ownership, not a stated duty of confidence.
+    LOAD-BEARING CAVEAT: this removal is INFERRED from the current text''s absence of the old
+    clauses, not verbatim-diffed against the prior August snapshot - all web archives
+    (web.archive.org, archive.ph, timetravel.mementoweb) were proxy-blocked this pass. High
+    confidence (an evident deliberate rewrite: new defined terms Training Data/Trained
+    Models/Outputs/Generations, a new Sec 3), but flagged as inferred rather than a side-by-side
+    quote. Retry the archive diff if a verbatim historical comparison is later required.'
 compliance:
   soc2: unknown
   iso_27001: unknown
@@ -115,18 +134,25 @@ dedicated_notes: 'Enterprise plans advertise "dedicated capacity, custom SLAs" a
   any national border") point at sovereign/on-prem deployment but are a press-announcement claim, not
   a documented, generally-available offering.'
 trust_considerations:
-- The binding Terms (Runware Ltd, UK; read 2026-07-26) give the customer nominal ownership of
-  outputs but grant Runware a worldwide, perpetual, transferable licence over inputs and outputs
-  and reference storing training data. This is the central finding and it contradicts the marketing
-  line that your data belongs to you and is never reused. The ordinary prompt/generation path is
-  the concern; privately uploaded custom models are the exception.
-- Express exception (a genuine positive for that path) - privately uploaded custom models
-  (weights/architectures) ARE treated as confidential and a separate NDA is available - so the
-  private-model route is materially safer than ordinary prompts/generations, which the standard
-  Terms deem non-confidential. Prefer that route for anything sensitive.
-- The Privacy Policy sets generic retention ("as long as necessary" / account life) with no
-  auto-purge or opt-in-storage clause and does not address training. The marketed no-training and
-  auto-purge claims are not supported by the document read.
+- 'CORRECTED 2026-09-21, MATERIAL: a 2026-08-06 pass found the binding Terms (Runware Ltd, UK) gave
+  the customer nominal ownership of outputs but granted Runware a worldwide, perpetual, transferable
+  licence over inputs and outputs, deemed them non-confidential, and referenced storing training
+  data. An independent re-verification found this NO LONGER SUPPORTED by the current 28-section
+  Terms of Service (two fetches, targeted negative search): no Submissions/Contributions section, no
+  IP-assignment, no non-confidentiality disclaimer. The current text instead has the customer own
+  Outputs outright with no broad licence granted to Runware. LOAD-BEARING CAVEAT: this is inferred
+  from the current text''s absence of the old clauses - web archives were proxy-blocked, so no
+  verbatim old-vs-new diff was possible this pass. High confidence given an evident deliberate
+  rewrite (new defined terms, a new Sec 3), but flagged as inferred rather than side-by-side quoted.'
+- Private Model Protection (Sec 2) remains a genuine positive - privately uploaded custom models
+  (weights/architectures) are treated as confidential and a separate NDA is available. This was
+  already true before the rewrite and remains true now; it is no longer the ONLY confidentiality
+  protection available, since ordinary Outputs are now customer-owned with no licence grant either.
+- 'CORRECTED 2026-09-21: Sec 3 "Model Training and Fine-Tuning" now states verbatim "Runware will
+  not use your Training Data or Trained Models to train, fine-tune, or develop Runware''s own models
+  or those of any third party" - trains_on_inputs resolved from unclear to never. UNCHANGED: the
+  Privacy Policy still sets generic retention ("as long as necessary" / account life) with no
+  auto-purge or opt-in-storage clause - this remains the entry''s principal residual weakness.'
 - Sub-processors named are only Stripe and Google Analytics; the inference-infrastructure
   processors that handle prompt content are not disclosed. GDPR/UK GDPR is cited without naming
   SCCs or the EU-US Data Privacy Framework.
@@ -138,29 +164,35 @@ trust_considerations:
   the same checkpoints avoids the hosted data terms. Where data control matters, prefer that route.
 score:
   rubric_version: '1.2'
-  headline: 45.6
+  headline: 50.4
   grade: D
-  hard_flags:
-  - '🚩 Adverse confidentiality: the standard Terms deem your Contributions and Generations
-    "non-confidential and non-proprietary" and take a worldwide, transferable, derivative-works
-    licence over them (private uploaded models excepted). data_governance is capped at 3 (it already
-    sits at 2), and trade-secret / patent-sensitive material should not go through the standard
-    prompt/generation path - use the private-model route or self-host.'
+  hard_flags: []
+  # CORRECTED 2026-09-21: the adverse-confidentiality hard flag above is LIFTED. An independent
+  # re-verification found the current Terms of Service no longer contain the clauses that
+  # triggered it (see data_governance.confidentiality_caveats for the full finding and its
+  # load-bearing caveat: inferred from current-text absence, not a verbatim historical diff).
   dimensions:
     data_governance:
-      score: 2
-      rationale: 'Grounded in the read Terms and Privacy Policy, and the posture is weak. The Terms
-        grant Runware a worldwide, perpetual, transferable licence over inputs and outputs and
-        reference storing training data; the Privacy Policy sets generic retention with no
-        auto-purge and does not address training. There is no no-training commitment and no
-        zero-retention posture. Held at 2: the binding text actively works against customer data
-        control, and only the open-weight, self-hostable nature of the models keeps it off the
-        floor.
+      score: 3
+      rationale: 'CORRECTED 2026-09-21: the prior finding of a worldwide, perpetual, transferable
+        licence over inputs/outputs and a non-confidentiality declaration is no longer supported by
+        the current Terms of Service (independently browser-read, two fetches, targeted negative
+        search confirming the old clauses'' absence) - the current text instead has the customer own
+        Outputs outright, grants Runware no broad licence, and now-verbatim Sec 3 confirms no
+        training on Training Data/Trained Models, with nothing in the current text permitting
+        training on ordinary inputs either. Held at 3, not higher, because retention remains generic
+        (account-lifetime, no auto-purge, no numeric window - Privacy Policy Sec 6, unchanged) and
+        ZDR is unavailable - matching the anchor-2/3 boundary ("no training on inputs claimed, but
+        retention is the default with no bounded opt-out; ZDR unavailable") rather than anchor 4''s
+        "short bounded retention or ZDR by default" bar. Caveat: the confidentiality-clause removal
+        is inferred from current-text absence, not a verbatim historical diff (web archives were
+        proxy-blocked this pass).
 
         '
       evidence_refs:
       - ev-terms
       - ev-privacy
+      - ev-terms-2026-09
     compliance:
       score: 1
       rationale: 'SOC 2 and ISO 27001 appear as badges only, with no readable report, and no public
@@ -237,15 +269,15 @@ documentation:
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev-terms, ev-privacy]
-        summary: "Grounded in the read Terms and Privacy Policy. The Privacy Policy sets generic retention ('as long as necessary' / account life) with no auto-purge or opt-in-storage clause and does not address training. The Terms grant Runware a worldwide, perpetual, transferable licence over inputs and outputs and reference storing training data. There is no no-training commitment; the marketed no-training and auto-purge claims are not supported by the documents."
+        refs: [ev-terms-2026-09, ev-privacy]
+        summary: "CORRECTED 2026-09-21: the current Terms (independently re-read, two fetches) no longer grant Runware a licence over inputs/outputs and now include a verbatim Sec 3 no-train commitment - trains_on_inputs resolved unclear -> never. UNCHANGED weakness: the Privacy Policy still sets generic retention ('as long as necessary' / account life) with no auto-purge or opt-in-storage clause and does not address training."
       - key: data-ownership
         title: "Data & IP ownership"
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev-terms]
-        summary: "Per the read Terms, the customer owns the Generations (outputs) but grants Runware a worldwide, perpetual, transferable licence over inputs and outputs. Nominal ownership sits with the customer, but Runware holds a perpetual, transferable right to use both prompts and generated content. This is the opposite of the marketing line that your data stays yours; only self-hosting the open checkpoints avoids it."
+        refs: [ev-terms-2026-09]
+        summary: "CORRECTED 2026-09-21: per the current Terms (independently re-read), the customer owns the Generations (outputs) outright with NO licence granted to Runware over inputs or outputs - reversing a 2026-08-06 finding that Runware held a worldwide, perpetual, transferable licence. Caveat: this correction is inferred from the current text's absence of the old clauses, not a verbatim historical diff (web archives were proxy-blocked)."
       - key: residency
         title: "Data residency & jurisdiction"
         doc_type: reference
@@ -378,13 +410,13 @@ ownership:
   factors:
     use_modify:   { level: strong,   rationale: "The catalogue is open-weight Hugging Face models, so you can run and adapt the same checkpoints elsewhere or self-hosted; the models themselves are fully portable, and self-hosting sidesteps the hosted data terms entirely." }
       # grounded in: ev-series-a, ev-home (open-model catalogue)
-    transparency: { level: moderate, rationale: "The binding Terms and Privacy Policy are legible, and what they show is unfavourable. Held at moderate rather than strong: the DPA returned 404 and the SOC 2 / ISO 27001 reports are badges with no readable report." }
-      # grounded in: ev-terms, ev-privacy (retrieved:true); ev-trust (partial)
+    transparency: { level: moderate, rationale: "The binding Terms and Privacy Policy are legible and independently re-read 2026-09-21. Held at moderate rather than strong: the DPA still returns 404, the SOC 2 / ISO 27001 reports remain badges with no readable report or dated certificate, and the confidentiality-clause correction below rests on inferred current-text absence rather than a verbatim historical diff (archives were proxy-blocked)." }
+      # grounded in: ev-terms, ev-privacy (retrieved:true); ev-trust (partial); ev-terms-2026-09 (retrieved:true, current)
     reliability:  { level: moderate, rationale: "A USD 50M Series A and advertised enterprise custom SLAs indicate scale, but there is no public uptime SLA, status page or independent attestation, so reliability is asserted, not observable." }
       # grounded in: ev-series-a (third_party)
-    data_control: { level: weak,     rationale: "The read Terms grant Runware a worldwide, perpetual, transferable licence over inputs and outputs and reference storing training data; the Privacy Policy sets generic retention with no auto-purge and does not address training; inference sub-processors are undisclosed. On a hosted basis your data and derived content are not kept proprietary." }
-      # grounded in: ev-terms, ev-privacy (retrieved:true, binding)
-  verdict: "You partly own workloads here, and the split is sharp. The models are open weights, so use, modification and exit stay fully in your hands, and self-hosting the same checkpoints avoids the hosted data terms entirely. But on a hosted basis the binding documents, now read, are weak: the Terms grant Runware a worldwide, perpetual, transferable licence over your inputs and outputs and reference storing training data, the Privacy Policy sets generic retention with no auto-purge and no no-training commitment, and no DPA or readable attestation was reachable. That is the opposite of the marketed 'your data stays yours, never trained on'. Use Runware as a fast, low-cost open-model gateway for non-sensitive work, but self-host the same open checkpoints, or get a negotiated DPA that overrides the standard licence, before putting proprietary or regulated data through it."
+    data_control: { level: moderate, rationale: "CORRECTED 2026-09-21: the prior worldwide, perpetual, transferable licence over inputs/outputs and non-confidentiality declaration is no longer supported by the current Terms - the customer now owns Outputs outright with no broad licence granted to Runware, and Sec 3 confirms no training on Training Data/Trained Models. Held at moderate, not strong: retention remains generic with no auto-purge (Privacy Policy Sec 6, unchanged), inference sub-processors beyond Stripe/Google Analytics are undisclosed, and the confidentiality-removal finding is inferred rather than verbatim-diffed against the prior snapshot." }
+      # grounded in: ev-terms-2026-09 (terms, retrieved:true, current); ev-privacy (retained retention weakness)
+  verdict: "You partly own workloads here, but this picture improved materially on independent re-verification (2026-09-21). The models are open weights, so use, modification and exit stay fully in your hands, and self-hosting the same checkpoints avoids the hosted data terms entirely. On a hosted basis, the current binding Terms no longer grant Runware a broad licence over your inputs and outputs or deem them non-confidential - a 2026-08-06 pass found exactly that, but the current text (independently re-read) shows the customer owns Outputs outright and Runware commits not to train on your data. Load-bearing caveat: this correction is inferred from the current text's absence of the old clauses, not a verbatim old-vs-new diff (web archives were proxy-blocked). What has not improved: retention is still generic with no auto-purge or numeric window, and SOC 2/ISO 27001 remain self-asserted badges with no readable report. Use Runware with more confidence than before for ordinary workloads, but still confirm retention terms directly and request the underlying compliance reports before regulated use."
 
 evidence:
 - id: ev-terms
@@ -448,6 +480,28 @@ evidence:
   retrieved: true
   url: https://siliconangle.com/2025/12/11/ai-inference-startup-runware-raises-50m-make-ai-run-faster/
   date: '2026-07-26'
+- id: ev-terms-2026-09
+  claim: 'Runware Terms of Service, current version (independently browser-read 2026-09-21, two
+    fetches including a targeted negative search for the prior adverse clauses). The current 28-section
+    text contains NO Submissions/Contributions section, NO IP-assignment of user content to Runware,
+    NO "unrestricted use/dissemination without acknowledgment or compensation" clause, and NO
+    non-confidentiality disclaimer. Instead, near-verbatim: Sec 2 - "As between you and Runware, you
+    own your Outputs... Runware asserts no ownership of, and claims no intellectual property rights
+    in, your Outputs"; Sec 2 Private Model Protection - "We agree to treat all such materials as
+    confidential" and "not to disclose, distribute, or otherwise make available these models to any
+    third party without the explicit written consent of the user"; Sec 4 requires the user to protect
+    Runware''s own proprietary information; Sec 3 "Model Training and Fine-Tuning" - "Runware will not
+    use your Training Data or Trained Models to train, fine-tune, or develop Runware''s own models or
+    those of any third party." The only user-granted licence (Sec 2) is name/logo for marketing
+    (benign). LOAD-BEARING CAVEAT: web.archive.org, archive.ph and timetravel.mementoweb were all
+    proxy-blocked this pass, so the August-2026 snapshot could not be read - the removal of the old
+    adverse clauses is inferred from their absence in the current text plus an evident deliberate
+    rewrite (new defined terms, a new Sec 3), not a verbatim side-by-side quote.'
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://runware.ai/terms
+  date: '2026-09-21'
 changelog:
 - date: '2026-07-26'
   change: 'Initial v2 entry created from public/marketing claims (binding docs were 403 to the code
@@ -471,7 +525,23 @@ changelog:
     Added confidentiality: adverse (+ hard flag) and dedicated_availability: enterprise_only (Sonic
     Pods announced, not GA). No dimension score changed - data_governance already sits at 2 (below the
     adverse cap of 3); added the private-model exception as a genuine positive for that path.'
-last_verified: '2026-08-06'
+- date: '2026-09-21'
+  change: 'Freshness re-verification (Cowork browser session, two fetches with a targeted negative
+    search) found the adverse-confidentiality finding is NO LONGER SUPPORTED by the current Terms of
+    Service: the Termly-style boilerplate that drove it (non-confidentiality declaration, broad
+    transferable licence over inputs/outputs) is absent from the current 28-section text, which
+    instead has the customer own Outputs outright with no broad licence granted to Runware, and a
+    verbatim Sec 3 no-train commitment. LOAD-BEARING CAVEAT: this is inferred from current-text
+    absence, not a verbatim diff against the prior snapshot - all web archives were proxy-blocked this
+    pass. Lifted the adverse hard flag; confidentiality: adverse -> functional_only;
+    customer_data_ownership: provider_may_use -> customer_retains; outputs_used_to_improve_service:
+    unclear -> no; trains_on_inputs: unclear -> never (Sec 3, scoped to the fine-tuning product but
+    nothing in the current text permits training on inputs either). **data_governance 2 -> 3**
+    (45.6 -> 50.4; grade D unchanged - other dimensions were not re-examined this pass). Ownership
+    data_control weak -> moderate. What did NOT improve:
+    retention remains generic with no auto-purge (Privacy Policy Sec 6, unchanged) and SOC 2/ISO 27001
+    remain self-asserted badges with no readable report - compliance and residency scores unchanged.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

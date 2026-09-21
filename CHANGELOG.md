@@ -90,6 +90,23 @@ Initial public foundation (v0.1).
   held at the open_weights ceiling, ownership already partial), so no further downgrade was
   warranted. Full research pack archived under
   `docs/freshness-sweeps/2026-09-21/`.
+- Second freshness re-verification sweep, covering the remaining 8 stale entries (3 hosting
+  providers, 5 inference providers) - the same daily cron finding, out of scope for the model
+  sweep above. Six re-verified clean with no score change (Hugging Face, Berget, Groq, Infercom,
+  plus two hosting providers - llama.cpp/GGUF and Ollama - where a fresh in-window CVE each
+  (CVE-2026-52131, CVE-2026-85180) reinforced rather than moved their existing grade). Two needed
+  real re-grades: DeepInfra's Terms of Service was rewritten (effective 2026-08-17) to add a
+  genuine mutual confidentiality clause and make Zero Data Retention contractual and controlling
+  with a bounded exception, lifting it from 52.0 D to 56.8 C; Runware's current Terms no longer
+  contain the adverse, non-confidentiality clause a prior pass had found - the customer now owns
+  Outputs outright with no broad licence granted to Runware - lifting the adverse hard flag and
+  moving data_governance from 2 to 3 (45.6 D to 50.4 D; the grade itself did not cross into C
+  because compliance and residency, unrelated to this finding, were not re-examined). Runware's
+  correction carries a load-bearing caveat: the removal is inferred from the current text's
+  absence of the old clauses, since web archives were proxy-blocked and no verbatim historical
+  diff was possible. `python scripts/validate.py` now reports 0 errors registry-wide for the
+  first time this session. Research pack archived under
+  `docs/freshness-sweeps/2026-09-21-providers/`.
 
 ### The index
 

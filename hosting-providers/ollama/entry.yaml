@@ -329,7 +329,9 @@ changelog:
 - date: '2026-07-25'
   change: Migrated to v2 four-domain library format (added documentation block; score
     carried over unchanged).
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. New in-window finding: CVE-2026-85180 (published 2026-09-03) - a tensor-blob-redirect SSRF, where an attacker-controlled registry can return a manifest whose blob request redirects to a private address including a cloud metadata endpoint; a separate code path from the earlier-patched non-tensor downloader. Offsetting positive, NOT yet shipped: GitHub PR #11573 implements OpenSSF Model Signing (ed25519 signatures, `ollama sign`/`ollama verify`, automatic verification during pull/push) - merge status/date unconfirmed, treated as proposed/in-progress. Ollama distributes GGUF, not pickle, so the pickle hard-flag does not apply on format grounds. No score change: the fresh SSRF advisory offsets the still-unmerged signing PR; revisit for a possible upgrade only once signed-pull verification lands in a stable release.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

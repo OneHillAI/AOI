@@ -1,9 +1,9 @@
 # DeepInfra - OneHill Inference-Provider Dossier
 
-> **Score: 60.4/100 · Grade C** · HQ: United States · EU residency: no · Trains on inputs: never
-> Last verified: 2026-07-25
+> **Score: 56.8/100 · Grade C** · HQ: United States · EU residency: no · Trains on inputs: never
+> Last verified: 2026-09-21
 >
-> _Right for cost-sensitive open-model serving; the biggest caveat is that its zero-retention covers only its own open models - closed models routed through it fall under those vendors' terms - and there is no EU residency._
+> _A rewritten Terms of Service (effective 2026-08-17, independently re-verified 2026-09-21) added a genuine mutual confidentiality clause and made Zero Data Retention contractual and controlling with a bounded exception - correcting an earlier D grade. The biggest caveats are that zero-retention still covers only its own open models - closed models routed through it fall under those vendors' terms - no EU residency, and compliance (SOC 2/ISO dated status, DPA/SCCs) was not re-examined this pass._
 
 **Hard flags:** none
 
@@ -13,7 +13,7 @@
 
 | Dimension | Score | One-line reason |
 |---|---|---|
-| Data Governance & Privacy | 4/5 | Zero-retention, no training, scoped to its own open-model serving |
+| Data Governance & Privacy | 4/5 | Mutual confidentiality (Sec 17) + contractual, bounded ZDR (Sec 7(b)) - scoped to its own open-model serving |
 | Compliance & Certifications | 3/5 | ISO 27001 + SOC 2 Type 1 only (not Type II); HIPAA unattested |
 | Data Residency & Sovereignty | 1/5 | US-only data centres; no EU residency surfaced |
 | Security Posture | 3/5 | ISO 27001 + Type 1 SOC 2; no independent pen-test surfaced |
