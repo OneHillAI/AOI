@@ -353,7 +353,9 @@ evidence:
 changelog:
 - date: '2026-08-03'
   change: Initial entry - split from the aggregate `deepseek` entry. This is the pure-MIT reasoning line (R1, R1-0528). MIT (commercial + distillation expressly permitted) makes use-and-modify strong and lifts ownership to substantial; shared safety/performance/operational/governance grounding carried from the deepseek family entry. Grounded 2026-08-03 (licence read verbatim from the R1 README).
-last_verified: '2026-08-03'
+- date: '2026-09-21'
+  change: 'Freshness re-verification (Cowork browser session). Licence unchanged (MIT, verbatim re-read). No newer R1 point release supersedes this entry. Flag (not folded): DeepSeek has since shipped a materially newer generation - the V4 line (V4.1-Flash, V4-Flash-Vision-Exp, V4-Pro-0813, V4-Flash-0731) and V3.1/V3.2 - as separate new entities for a future build pass, not an update to R1.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

@@ -355,7 +355,9 @@ evidence:
 changelog:
 - date: '2026-08-03'
   change: Initial entry - split from the aggregate `deepseek` entry. This is the MIT-licensed V3 line (V3-0324, V3.1); the original Dec-2024 V3 weights (DeepSeek License Agreement v1.0) are the separate deepseek-v3-original entry - the licence change is the split axis. MIT makes use-and-modify strong and ownership substantial; shared safety/performance/operational/governance grounding carried from the deepseek family entry. Grounded 2026-08-03.
-last_verified: '2026-08-03'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Licence unchanged (MIT). Flag (not folded): superseded by V3.1/V3.2 (also MIT) and the V4 line - new entities for a future build pass.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

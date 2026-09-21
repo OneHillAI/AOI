@@ -650,7 +650,9 @@ changelog:
     the score block over unchanged).
 - date: '2026-07-25'
   change: Grounded licence + AUP evidence against primary sources (docs/primary-sources/meta-llama) - 700M-MAU and EU-multimodal clauses read verbatim; evidence retrieved:true, doc_type added.
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. Llama 3.x Community License 700M-MAU threshold clause re-read verbatim, unchanged. No new Llama 3.x release; Llama 4 remains tracked separately.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90

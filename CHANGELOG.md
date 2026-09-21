@@ -76,6 +76,20 @@ Initial public foundation (v0.1).
   was corrected from `yes_default` to `yes_optional` (Zero Data Retention is account-level opt-in,
   not the default) - a real field-level fix with no score impact, since data_governance was
   already capped at 3 by the confidentiality disclaimer.
+- Freshness re-verification sweep across the 21 model entries the daily freshness cron flagged as
+  49-58 days past the 30-day fast SLA (surfaced when PR #22's CI ran `validate.py` with the
+  freshness check active). A Cowork browser session re-checked each entry's licence, safety
+  posture, and availability against current primary sources - not a bulk date-bump. 20 of 21
+  re-verified clean with no score change; several flag newer-generation releases (DeepSeek V4
+  line and V3.1/V3.2, a licence-divergent GLM-5 generation, Nemotron 3.5 Lightning 30B-A3B, OLMo 3,
+  EuroLLM-22B-2512, Qwen3.5/3.6/3.8, Kimi K2.5/K2.6/K2.7-Code) as new entities for a future build
+  pass, deliberately not folded into the existing entries' scores. The one entry that needed real
+  judgment, not just a re-check, was `soofi`: the research surfaced that Soofi-S-Base's model card
+  reads "closed-beta" and the repo is gated, in tension with the project's own "open-source"
+  marketing - but the entry's 2026-07-25 correction already accounts for exactly this (openness
+  held at the open_weights ceiling, ownership already partial), so no further downgrade was
+  warranted. Full research pack archived under
+  `docs/freshness-sweeps/2026-09-21/`.
 
 ### The index
 

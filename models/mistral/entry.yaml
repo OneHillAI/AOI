@@ -722,7 +722,9 @@ changelog:
     marked retrieved:false pending the Cowork hand-off.'
 - date: '2026-07-25'
   change: Flipped licence/DPA evidence to retrieved:true from primary sources (docs/primary-sources/mistral) - weights-page per-model licences, MRL-0.1, MNPL-0.1 and DPA clauses read verbatim.
-last_verified: '2026-07-25'
+- date: '2026-09-21'
+  change: 'Freshness re-verification. The tracked Apache-2.0 arm is unchanged and has expanded with new-generation releases (Mistral-Small-4-119B, Devstral-2, Voxtral, all Apache-2.0). Codestral-22B-v0.1 remains mnpl, unchanged. Flagged for a future build pass, not scored here: Mistral-Large-3-675B and Ministral-3 were read as Apache-2.0 via a summariser, not a raw LICENSE-tag read - if a genuine MRL-to-Apache reclassification, that is score-moving and needs a manual raw-tag confirmation before any re-score.'
+last_verified: '2026-09-21'
 freshness_sla:
   fast_days: 30
   score_days: 90
