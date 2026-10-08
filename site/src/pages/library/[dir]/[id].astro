@@ -21,7 +21,7 @@ const crumbs = [
 ];
 const href = (r) => `${base}/library/${r.dir}/${r.id}/`;
 ---
-<AppShell title={`${record.title} - AI Ownership Index`} crumbs={crumbs} browseActive="Library" reviewed="Reviewed 2026-07-25" canvas="entry">
+<AppShell title={`${record.title} - AI Ownership Index`} description={(record.summary || undefined)?.replace(/\s+/g, ' ').slice(0, 280)} crumbs={crumbs} browseActive="Library" reviewed="Reviewed 2026-07-25" canvas="entry">
   <nav slot="sidebar" class="navgroup" aria-label="This entry">
     <div class="lbl">This {record.type}</div>
     <a href="#verdict">Verdict</a>

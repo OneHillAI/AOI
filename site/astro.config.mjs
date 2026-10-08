@@ -8,8 +8,11 @@ import starlight from '@astrojs/starlight';
 // onehillai.github.io/AOI), set SITE_BASE=/AOI (and SITE_URL) at build time; every
 // internal link is built through import.meta.env.BASE_URL, so both resolve correctly.
 const SITE_BASE = process.env.SITE_BASE || undefined;
+const SITE_URL = process.env.SITE_URL || 'https://ownershipindex.ai';
+const OG_IMAGE = `${SITE_URL}${SITE_BASE || ''}/og/aoi-share.png`;
+const OG_ALT = 'AI Ownership Index: who really owns the AI you use?';
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://ownershipindex.ai',
+  site: SITE_URL,
   ...(SITE_BASE ? { base: SITE_BASE } : {}),
   trailingSlash: 'ignore',
   integrations: [
@@ -18,6 +21,14 @@ export default defineConfig({
       description:
         'Independent, continuously-updated documentation for open-source AI models and the providers that serve them: assess, implement, use, and support, with sourced provenance and completeness on every entry.',
       customCss: ['./src/styles/custom.css'],
+      head: [
+        { tag: 'meta', attrs: { property: 'og:image', content: OG_IMAGE } },
+        { tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
+        { tag: 'meta', attrs: { property: 'og:image:height', content: '630' } },
+        { tag: 'meta', attrs: { property: 'og:image:alt', content: OG_ALT } },
+        { tag: 'meta', attrs: { name: 'twitter:image', content: OG_IMAGE } },
+        { tag: 'meta', attrs: { name: 'twitter:image:alt', content: OG_ALT } },
+      ],
       components: {
         Footer: './src/components/StarlightFooter.astro',
         SiteTitle: './src/components/StarlightSiteTitle.astro',
