@@ -26,8 +26,9 @@ field-of-use restriction.
   multimodal misuse surface.
 - **Recipe surfaces only the public subset.** A recipe exists in the NeMo repo, but it surfaces only
   the public subset of the alignment corpus, so full reproduction is not possible.
-- **Licence date inconsistency.** The NVIDIA Open Model Agreement's on-document date (v. 2026-03-09)
-  is inconsistent with a later HTML date and is unverified against the PDF.
+- **Licence date mismatch.** The NVIDIA Open Model Agreement's version line is "v. March 9, 2026" in both
+  the HTML and the PDF, but the web page header shows a release date of April 2, 2026. The operative
+  text is the same either way.
 
 The offsetting advantage is a small, portable, natively multimodal model under a clean irrevocable
 licence.
@@ -45,15 +46,19 @@ open_weights, not open_weights_recipe: the openness tier is not forced up on the
 <!-- item: license -->
 ## License terms & permitted use
 
-Nano Omni is governed by the **NVIDIA Open Model Agreement (v. 2026-03-09)**, a third distinct family
+Nano Omni is governed by the **NVIDIA Open Model Agreement (v. March 9, 2026)**, a third distinct family
 licence whose text is near-identical to the NVIDIA Nemotron Open Model License. On the corrected reading
 it is Apache-2.0-derived and permissive: a "perpetual, worldwide, non-exclusive, no-charge,
 royalty-free, irrevocable license to reproduce, prepare Derivative Works of ... sublicense, and
 distribute the Work ... in source or object form", with commercial use allowed and the **Trustworthy-AI,
 acceptable-use and guardrail clauses confirmed absent**. It terminates **only** on the licensee bringing
 patent or copyright litigation over the Work or an output from it. It is source-available and **not
-OSI**. The on-document date is inconsistent with the HTML date and unverified against the PDF, so confirm
-the version before relying on it. These are the load-bearing inputs to the legal (3) score.
+OSI**. Re-read on 2026-11-19 from both the HTML and the PDF: the text is unchanged and identical to the
+Nemotron Open Model License apart from the attribution notice. Both formats end "(v. March 9, 2026)";
+the April 2, 2026 date appears only in the HTML header and the PDF file name. Section 7 ends with a
+general indemnity ("You will indemnify and hold harmless NVIDIA from and against any claim by any
+third party arising out of or related to your use or distribution of the Works"), a liability term and
+not a use restriction. These are the load-bearing inputs to the legal (3) score.
 
 <!-- item: provenance -->
 ## Supply-chain & provenance
@@ -92,3 +97,10 @@ and images) and so is partly attributable, and NeMo Guardrails and garak are Apa
 downloadable stack is what holds the safety dimension at 3 rather than 2, while the missing model-level
 evaluation over the wider surface holds it below 4. The guard-classifier scores are NVIDIA
 self-reported.
+
+Re-checked on 2026-11-19: the model's `safety.md` subcard now says safety evaluations were run with
+AEGIS v2, Garak, RTVLM and VLGuard plus custom child-safety and dehumanization datasets, gated on an
+AEGIS 1.0 score of at least 95 percent with zero sexual-minor items, run with reasoning on and off,
+with an over-refusal evaluation. It publishes no scores, per-category results or residual-risk
+disclosure, and NVIDIA ran it, so this is a self-reported process statement and not a published
+evaluation. The safety score stays at 3; a published result table would justify revisiting it.

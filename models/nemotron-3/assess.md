@@ -57,6 +57,16 @@ Redistribution must carry the notice "Licensed by NVIDIA Corporation under the N
 License". It is source-available and **not OSI** (the termination reaching an output from the Work is
 broader than Apache-2.0). These are the load-bearing inputs to the legal (3) score.
 
+Re-read on 2026-11-19: the text is unchanged (Last Modified December 15, 2025). Two details are
+worth knowing. Section 7 ends with a general indemnity: "You will indemnify and hold harmless NVIDIA
+from and against any claim by any third party arising out of or related to your use or distribution of
+the Works". That is a liability term, not a use restriction. And the Nano repo's `safety.md` subcard
+links the generic NVIDIA Open Model License (the one that is revocable and carries a guardrail
+termination) under "Use Case Restrictions", while the Nano README, the Hugging Face licence tag and the
+licence link all name the Nemotron Open Model License. We treat the README and tag as governing and
+record the subcard link as a probable error on NVIDIA's side; pin the licence text you downloaded with
+the weights.
+
 <!-- item: provenance -->
 ## Supply-chain & provenance
 
@@ -96,3 +106,9 @@ categories / 12 languages), the Apache-2.0 **NeMo Guardrails** toolkit, and the 
 red-team scanner. That downloadable stack is what holds the safety dimension at 3 rather than 2; the
 missing model-level evaluation is what holds it below 4. The guard-classifier scores are NVIDIA
 self-reported.
+
+Re-checked on 2026-11-19: the Super and Nano `safety.md` subcards still publish no scores. They say a
+guard model filtered the training data and that content-safety evaluation uses Nemotron Content Safety
+Dataset V2 plus an internal dataset, and that is all. A newer 4B guard, Nemotron-3.5-Content-Safety
+(OpenMDW licence, created 2026-05-22), is also downloadable; it is a companion classifier, not an
+evaluation of these two models.

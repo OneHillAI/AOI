@@ -1,4 +1,4 @@
-# Support - Meta Llama (Llama 3.x / Llama 4)
+# Support - Meta Llama 3.x (Llama 3.1 / 3.3 text line)
 
 _How do we keep it running and get help? Troubleshooting, versions/changelog, security
 disclosure, community channels, deprecation._

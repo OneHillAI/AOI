@@ -114,7 +114,7 @@ that an **MRL** model may not be fine-tuned for commercial deployment without a 
 ## API / OpenAI-compatible integration
 
 Serve Mistral behind **vLLM's OpenAI-compatible `/v1` server** (or TGI/Ollama endpoints) for a
-drop-in integration with existing OpenAI-client code, or use Mistral's own **La Plateforme** API:
+drop-in integration with existing OpenAI-client code, or use Mistral's own hosted API (**Mistral Studio**, formerly La Plateforme):
 
 ```bash
 vllm serve mistralai/Mistral-Small-3.2-24B-Instruct-2506 --revision <sha> --port 8000
@@ -126,15 +126,24 @@ behaves like any other OpenAI-compatible endpoint, so routing, retries and gatew
 unchanged.
 
 **If you use Mistral's hosted API instead of self-hosting, its data terms differ and you should
-read them.** Per Mistral's Privacy Policy and help centre:
+read them.** Re-read on 2026-11-19 from Mistral's Privacy Policy (3 Sep 2026), help centre,
+Commercial Terms (25 Sep 2026) and DPA (27 Jul 2026):
 
-- **Training on your inputs is on by default** on Le Chat and the API unless you opt out (the
-  "allow your interactions to be used to train our models" control); training does **not** apply
-  to **Team and Enterprise** plans.
+- **Training depends on the product.** Vibe Free, Pro, **Teams** and Student plans train on your
+  inputs by default unless you opt out; Vibe Enterprise is opted out by default. Mistral Studio
+  Free mode may train, and pay-as-you-go customers can opt out (the page does not state the
+  default). **Labs and Public Preview models may always train**, whatever you opted out of. The
+  Commercial Terms (4.2) allow training only on an opt-in, on feedback, as an Order Form allows,
+  or on Labs and Preview models. DPA clause 2.3 lets Mistral train as controller unless you have
+  opted out.
 - **Retention:** the API keeps input/output for the time needed to generate the output and then
-  **~30 rolling days**; Le Chat keeps them until you delete the conversation or your account.
-- **Residency:** EU hosting by default (servers in the EU); an explicit **US API endpoint** hosts
-  data in the US, with GDPR Article 46 Standard Contractual Clauses for non-EU processors.
-- **Zero Data Retention (ZDR)** can be activated for eligible accounts.
+  **30 rolling days** to monitor abuse (unless ZDR is active); the Agents API keeps them until
+  you terminate your account; Vibe keeps them until you delete the conversation or your account.
+- **Residency:** EEA hosting by default; an explicit **US API endpoint** processes requests in
+  the US, with GDPR Article 46 safeguards (Standard Contractual Clauses) for non-EU
+  sub-processors. The Module 4 SCCs in the DPA apply only to customers outside the EEA.
+- **Zero Data Retention (ZDR)** is available **only on pay-as-you-go, for stateless API
+  endpoints**, is approved by Mistral at its discretion, and does not cover Vibe, agents,
+  conversations, libraries, batch files or Labs and Preview models.
 
 Self-hosting the open weights avoids all of the above - the data never leaves your infrastructure.

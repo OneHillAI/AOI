@@ -9,7 +9,7 @@ AOI score (67.6/100 · Grade C) - live here._
 Qwen3 is Alibaba's general-purpose open-weight family with a standout strength in
 **coding and agentic** workloads (Qwen3-Coder-480B-A35B is among the strongest open coding
 models). Its intended use spans assistant, coding and tool-using applications across an
-unusually wide size ladder - from 0.5B laptop models to a 480B coder.
+unusually wide size ladder - from 0.6B laptop models to a 480B coder.
 
 Two things push parts of the family out of scope. First, deploy behind **your own
 guardrails**: built-in alignment is lighter than Western frontier labs. Second, the

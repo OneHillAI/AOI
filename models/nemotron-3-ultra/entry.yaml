@@ -207,6 +207,7 @@ score:
       evidence_refs:
       - ev-ultra-safety
       - ev-ultra-report
+      - ev-ultra-trep
     performance:
       score: 3
       rationale: 'A frontier-scale open model (550B / 55B active Mamba2-Transformer LatentMoE, up to
@@ -304,7 +305,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-ultra-openmdw]
-        summary: "OpenMDW License Agreement v1.1: permission to 'deal in the Model Materials without restriction' (weights, data, documentation, software), the most permissive of the three Nemotron 3 licences, commercial use allowed, with only a defensive patent/copyright-litigation termination; not OSI-approved (v1.1)."
+        summary: "OpenMDW License Agreement v1.1: permission to 'deal in the Model Materials without restriction' (weights, data, documentation, software), the most permissive of the three Nemotron 3 licences, commercial use allowed, with only a defensive patent/copyright-litigation termination; not OSI-approved (v1.1; submitted for OSI review August 2026, no approval found). Re-read raw 2026-11-19, unchanged."
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
@@ -332,7 +333,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-ultra-safety]
-        summary: "No dedicated model-level safety evaluation for Ultra: the white paper's evaluation-and-safety section is a contributor list. The downloadable family guard stack (Nemotron-3-Content-Safety, NeMo Guardrails, garak) is attributable, but its scores are NVIDIA self-reported."
+        summary: "No dedicated model-level safety evaluation for Ultra: the white paper's evaluation-and-safety section is a contributor list. The downloadable family guard stack (Nemotron-3-Content-Safety, NeMo Guardrails, garak) is attributable, but its scores are NVIDIA self-reported. Re-checked 2026-11-19: the safety.md subcard and the dedicated Ultra technical report (arXiv 2606.15007) publish training-side safety work only, no evaluation results."
   implement:
     completeness: 90.9
     originality: 0.0
@@ -501,12 +502,13 @@ evidence:
   claim: 'Nemotron 3 Ultra model card on the verified nvidia HF org: 550B total / 55B active;
     Mamba2-Transformer hybrid LatentMoE + MTP; up to 1M context; ~20T training tokens; ungated
     safetensors with BF16/NVFP4 variants; card states "open models with open weights, training data,
-    and recipes"; licence tag openmdw-1.1.'
+    and recipes"; licence tag openmdw-1.1. Re-read 2026-11-19: unchanged (repo last modified
+    2026-08-24, README edit only); still ungated; hub variants are BF16, NVFP4, Base-BF16 and GenRM.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-ultra-openmdw
   claim: 'OpenMDW License Agreement v1.1, read: "permission is hereby granted, free of charge, to
     deal in the Model Materials without restriction, including under all copyright, patent, database,
@@ -514,12 +516,16 @@ evidence:
     Terminates only if the licensee files, maintains or voluntarily joins a patent/copyright
     infringement lawsuit over the Model Materials, unless it answered a suit brought first against
     them. Authored by the OpenMDW project under the Linux Foundation; adopted by NVIDIA. NOT OSI
-    (v1.1). Commercial use allowed.'
+    (v1.1). Commercial use allowed. Raw file re-read in full 2026-11-19: text unchanged, no
+    acceptable-use, guardrail or revocation clause, and the only termination is the litigation trigger;
+    NVIDIA''s own LICENSE file in its Nemotron 3.5 Lightning repo is the same text plus a copyright
+    header. OSI status: OpenMDW-1.1 was submitted for OSI review in August 2026 and no approval was
+    found (no OpenMDW entry on the OSI licences page; no October or November list thread).'
   source_type: third_party
   doc_type: license
   retrieved: true
   url: https://raw.githubusercontent.com/OpenMDW/OpenMDW/refs/heads/main/1.1/LICENSE.OpenMDW-1.1
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-ultra-recipe
   claim: 'Ultra training recipe at github.com/NVIDIA-NeMo/Nemotron (docs/nemotron/ultra3, Pretrain ->
     SFT -> MOPD -> Quant), read: described as "a representative single pass"; the "intermediate
@@ -541,17 +547,34 @@ evidence:
   retrieved: true
   url: https://arxiv.org/abs/2512.20856
   date: '2026-08-03'
+- id: ev-ultra-trep
+  claim: 'Dedicated Nemotron 3 Ultra technical report (arXiv 2606.15007, v1 2026-06-12), read 2026-11-19
+    (HTML): 550B / 55B active, 20T pretraining tokens, 1M context, post-trained with SFT, RL and
+    multi-teacher on-policy distillation. Safety content is training-side only: a safety SFT blend
+    (translated into six languages) and an agentic safety teacher against indirect prompt injection
+    built with an automated red-teaming loop and a deterministic verifier. It contains no safety
+    benchmark results, no jailbreak or red-team result on Ultra and no residual-risk disclosure. No
+    GPU-hour or FLOP figure is given, so the 1e25 question stays undeterminable.'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2606.15007
+  date: '2026-11-19'
 - id: ev-ultra-safety
   claim: 'Safety, read: no dedicated model-level safety evaluation for Ultra (white paper safety
     section is a contributor list; safety appears only as post-training data curation - Nemotron
     Content Safety v2 + Gretel refusal data + keyword/regex filtering). The downloadable family guard
     stack (Nemotron-3-Content-Safety classifier, Apache-2.0 NeMo Guardrails, Apache-2.0 garak) is
-    attributable; classifier scores are NVIDIA self-reported.'
+    attributable; classifier scores are NVIDIA self-reported. Re-checked 2026-11-19: the Ultra
+    safety.md subcard states only that a guard model filtered training data and that content-safety
+    evaluation uses Nemotron Content Safety Dataset V2 and an internal dataset, with no scores, and the
+    dedicated Ultra technical report (ev-ultra-trep) adds safety training (an agentic prompt-injection
+    teacher) but no evaluation results. Still no published model-level safety evaluation.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/nvidia/Nemotron-3-Content-Safety
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-ultra-provenance
   claim: 'Verified nvidia org on Hugging Face; the Ultra weight repo is ungated safetensors with
     published BF16/NVFP4 quantization variants. Published checksums / signing / attestation not
@@ -585,7 +608,9 @@ changelog:
   change: Initial entry (NVIDIA Nemotron 3 Ultra 550B), split out of the former aggregate nemotron entry so each per-licence release is scored on its own. Ultra is governed by OpenMDW-1.1 (Linux Foundation), whose "deal in the Model Materials without restriction" grant is the most permissive in the family and the reason Ultra is the one member whose ownership reaches substantial. open_weights_recipe (representative recipe; intermediate checkpoints and 1M-context data not open). Safety scored 3, not the old aggregate 4, because the white paper carries no model-level safety methodology - only post-training data curation plus the downloadable family guard stack. Training compute undisclosed, so the EU systemic-risk crossing is undeterminable. AOI 63.6, grade C, ownership substantial.
 - date: '2026-09-21'
   change: 'Freshness re-verification. Licence unchanged and re-confirmed. No newer Ultra-tier release supersedes this entry. Safety strengthened (Nemotron 3.5 Content Safety guard added to family tooling).'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against primary sources. Re-read the raw OpenMDW-1.1 text: unchanged, grant still "deal in the Model Materials without restriction", only termination is the litigation trigger, no acceptable-use, guardrail or revocation clause; NVIDIA''s Lightning LICENSE file is the same text. OSI status checked: OpenMDW-1.1 was submitted for OSI review in August 2026, no approval found, so still recorded as not OSI-approved. Ultra card and safety.md re-read (repo last modified 2026-08-24, specs and licence tag unchanged, ungated). Newly found and recorded: a dedicated Ultra technical report (arXiv 2606.15007, 2026-06-12) whose safety content is a safety SFT blend and an agentic prompt-injection teacher, with no safety evaluation results and no compute figure. Safety stays 3: no published model-level safety evaluation exists. No newer Ultra-tier release; the Nemotron 3.5 line (Lightning, Bolt, Super VL, all OpenMDW-1.1) is listed in the sweep report as new entities, not folded in. No score, factor or ownership change (63.6, grade C, substantial).'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

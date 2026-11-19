@@ -4,7 +4,7 @@
 # Qwen (Qwen3 family) - OneHill Dossier
 
 > **Score: 67.6/100 · Grade C** · Openness tier: `open_weights` · Deployment Ceiling: **T3**
-> Publisher: Alibaba (Qwen team) (China) · License: `osi` · Last verified: 2026-07-25
+> Publisher: Alibaba (Qwen team) (China) · License: `osi` · Last verified: 2026-11-19
 >
 > _A best-in-class open coding family with a huge ecosystem, held back by an EU systemic-risk documentation gap on its largest variants._
 
@@ -27,7 +27,7 @@
 ## 1. What it is
 
 Qwen is Alibaba's open-weight LLM family, and the Qwen3 generation is one of the most
-widely used open model lineages in production. It spans dense models from ~0.5B to 32B,
+widely used open model lineages in production. It spans dense models from 0.6B to 32B,
 Mixture-of-Experts variants up to 235B, and the standout **Qwen3-Coder-480B-A35B**, a
 top-tier open coding model. The realistic sweet spot is internal coding and agentic
 tooling, where its capability-per-dollar and ecosystem breadth are hard to beat - provided
@@ -104,7 +104,7 @@ publisher does not close for you.
 
 1. Verified Qwen org on Hugging Face (safetensors, checksums) - `publisher` - https://huggingface.co/Qwen
 2. Mainstream Qwen3 sizes under Apache-2.0 (verify per checkpoint) - `onehill_verified` - https://huggingface.co/Qwen
-3. Official ModelScope publication (dual distribution) - `publisher` - https://modelscope.cn/organisation/qwen
+3. Official ModelScope publication (dual distribution) - `publisher` - https://www.modelscope.cn/api/v1/models/Qwen/Qwen3-32B
 4. No public training-content summary / copyright policy / Article 55 docs - `onehill_verified` - https://huggingface.co/Qwen
 5. China-aligned topic censorship (behavioural) - `third_party` - https://huggingface.co/Qwen
 6. Qwen3-Coder among the strongest open coding models - `third_party` - https://huggingface.co/Qwen/Qwen3-Coder-480B-A35B-Instruct

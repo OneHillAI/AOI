@@ -320,7 +320,7 @@ evidence:
   doc_type: license
   retrieved: true
   url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsrl-card
   claim: 'R1-Distill-Llama model cards on the verified deepseek-ai HF org: dense 8B/70B models distilled
     from R1, 128K context, safetensors; widely mirrored/quantized through the Llama ecosystem, serving
@@ -329,7 +329,7 @@ evidence:
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsrl-perf
   claim: On public leaderboards the R1-Distill-Llama-70B is a notably strong reasoning model for its
     size; the 8B is modest. Not OneHill-reproduced this session.
@@ -360,7 +360,9 @@ changelog:
   change: Initial entry - split from the aggregate `deepseek` entry on the licence axis. These are the R1-Distill checkpoints on Meta Llama bases (8B=Llama 3.1, 70B=Llama 3.3), carrying the Llama Community Licence (AUP, 700M-MAU, naming/attribution); the Apache-2.0 Qwen-base distils are the separate deepseek-r1-distill-qwen entry. The use restrictions drop use-and-modify to moderate and ownership to partial. Shared behavioural grounding carried from the deepseek family entry. Grounded 2026-08-03.
 - date: '2026-09-21'
   change: 'Freshness re-verification. Licence unchanged (MIT distillation over the Llama-licensed base). No newer distill supersedes this entry; DeepSeek has not re-cut this distill line under V4.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Refresh re-verification 2026-11-19, no change. Re-read the distil repos (MIT LICENSE, card metadata mit, HF gated false) and card section 7 (8B derived from Llama 3.1, 70B from Llama 3.3 per the llama3.1 and llama3.3 licences). Re-read Meta''s public Llama 3.1 and 3.3 licence pages: ''Built with Llama'' and the 700 million monthly active users clause are unchanged; the HF raw LICENSE of the gated Meta repos returns 401, so the public Meta pages were used. DeepSeek has not re-cut the distil line under V3.2 or V4.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

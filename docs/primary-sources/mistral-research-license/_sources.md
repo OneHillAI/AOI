@@ -29,3 +29,12 @@ source_url: mistral.ai/licenses/MNPL-0.1.md | exists: yes | retrieved: true
 
 ## boundary
 The Apache-2.0 flagship models (Mistral 7B, Mixtral, Nemo, Mistral Small, Codestral Mamba, Mathstral, Devstral Small, Pixtral 12B) are the `mistral` entry - NOT this one. Verify the per-model tier against Mistral's weights doc.
+
+## Re-verification 2026-11-19 (index additions)
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://mistral.ai/licenses/MRL-0.1.md ; https://mistral.ai/licenses/MNPL-0.1.md | 2026-11-19 | yes | true | texts unchanged, MRL "Research Purposes" definition read in full; file: license__mrl-mnpl-reread__2026-11-19.md
+model_card | https://huggingface.co/mistralai/<repo>/raw/main/README.md (+ HF API) | 2026-11-19 | yes | true | Ministral-8B-2410, Large-2411, Pixtral-Large-2411 = mrl; Codestral-22B-v0.1 = mnpl; Large-2407 gated auto (README HTTP 401, tag via API); no new MRL repo since 2024-11-14; file: model_card__hf-licence-tags-and-cards__2026-11-19.md
+docs | https://docs.mistral.ai/models/overview | 2026-11-19 | yes | true | no model carries an MRL or MNPL label; Large 2.x, Pixtral Large, Ministral 8B hosted API models retired; Codestral 25.08 is Premier API-only; file: docs__models-overview__2026-11-19.md
+docs | https://docs.mistral.ai/getting-started/models/weights | 2026-11-19 | no | false | HTTP 404 (removed or moved); the 2026-07-25 verbatim per-model licence sentences stay as a dated record
+```

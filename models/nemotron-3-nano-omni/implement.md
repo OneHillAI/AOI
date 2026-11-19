@@ -14,9 +14,10 @@ verify checksums before loading.
 <!-- item: hardware -->
 ## Hardware & VRAM requirements
 
-Small and portable: **31B total / ~3B active** runs on modest single-GPU hardware, and an official BF16
-variant is published. Budget additionally for the multimodal input pipeline (image/audio/video
-preprocessing). Exact per-GPU VRAM is not restated here.
+Small and portable: **31B total / ~3B active** runs on modest single-GPU hardware. Official BF16 (62 GB),
+FP8 (33 GB) and NVFP4 (21 GB) variants are published, and the card gives minimum GPUs per precision:
+one H100 80GB for BF16, one L40S 48GB for FP8, one RTX 5090 32GB (or DGX Spark, Jetson Thor) for
+NVFP4. Budget additionally for the multimodal input pipeline (image/audio/video preprocessing).
 
 <!-- item: serving -->
 ## Serving stacks
@@ -39,9 +40,10 @@ restriction. Complete the pre-deployment gate in the
 <!-- item: quantization -->
 ## Available quantizations
 
-An official NVIDIA **BF16** variant is published. A broader official FP8/NVFP4 program like the text
-models' was not confirmed for Nano Omni this pass, so treat lower-precision paths as community or
-runtime options until verified.
+Official NVIDIA **BF16** (62 GB), **FP8** (33 GB) and **NVFP4** (21 GB) variants are published; the FP8
+and NVFP4 repos date from 2026-04-24. Check engine support per precision: the card's SGLang section
+covers the BF16 variant only ("NVFP4 and FP8 support to come"), while its vLLM examples use the NVFP4
+and FP8 repos.
 
 <!-- item: fine-tuning -->
 ## Fine-tuning & adaptation

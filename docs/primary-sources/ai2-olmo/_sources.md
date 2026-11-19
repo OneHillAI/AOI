@@ -1,4 +1,4 @@
-# ai2-olmo - primary-source clauses (2026-07-25)
+# ai2-olmo - primary-source clauses (2026-07-25, re-verified 2026-11-19)
 
 ## _sources.md (index)
 ```
@@ -10,6 +10,15 @@ license | https://huggingface.co/datasets/allenai/dolma | 2026-07-25 | yes | tru
 technical_report | https://arxiv.org/abs/2501.00656 | 2026-07-25 | yes | true | "2 OLMo 2 Furious"
 technical_report | https://arxiv.org/abs/2512.13961 | 2026-07-25 | yes | true | "Olmo 3"; abstract verbatim (recovered after allenai.org 429)
 docs | https://github.com/allenai/OLMo | 2026-07-25 | yes | true | repo marked out-of-date/no longer active
+model_card | https://huggingface.co/allenai/Olmo-3-1025-7B | 2026-11-19 | yes | true | per-card read: Apache-2.0, ungated, 65,536 context; Responsible Use Guidelines wording; see model_card__olmo-3-family__2026-11-19.md (also 1125-32B, 3-7B-Instruct, 3.1-32B-Think, Hybrid-7B)
+model_card | https://huggingface.co/api/models?author=allenai&sort=createdAt&direction=-1 | 2026-11-19 | yes | true | org listing; see model_card__ai2-other-releases__2026-11-19.md
+terms | https://allenai.org/responsible-use | 2026-11-19 | yes | true | page dated June 2024; disallowed-use list outside Research Use; see terms__ai2-responsible-use-guidelines__2026-11-19.md
+license | https://huggingface.co/datasets/allenai/dolma3_mix-6T | 2026-11-19 | yes | true | Dolma 3 mix ODC-By v1.0; Dolci sets ODC-By, Tool-Use-SA cc-by-sa-4.0
+license | https://raw.githubusercontent.com/allenai/OLMo-core/main/LICENSE | 2026-11-19 | yes | true | Apache-2.0; same for open-instruct, olmes, OLMo-Eval, dolma, datamap-rs, duplodocus, decon, olmo-cookbook
+license | https://huggingface.co/allenai/OlmoEarth-v1_3-Base/raw/main/LICENSE.txt | 2026-11-19 | yes | true | OlmoEarth Artifact License, bans military/defence and extractive uses; see license__olmoearth-artifact-license__2026-11-19.md
+technical_report | https://arxiv.org/abs/2512.13961 | 2026-11-19 | yes | true | Olmo 3 abstract re-read via arXiv API
+marketing | https://allenai.org/blog/olmo3 | 2026-11-19 | yes | true | says datasets are available "without any license restrictions"; dataset cards say ODC-By, one CC-BY-SA-4.0 subset
+marketing | https://huggingface.co/spaces/allenai/olmo-eval | 2026-11-19 | unknown | false | HTTP 401; not re-read; evidence ev-perf stays retrieved:false
 ```
 
 ## license Apache-2.0 (code + weights)

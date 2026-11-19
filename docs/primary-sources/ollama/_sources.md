@@ -1,0 +1,19 @@
+# ollama - primary-source clauses
+
+Hosting-provider entry (local runner, model registry and cloud offering). First primary-source folder for this
+entry: the 2026-07-25 and 2026-09-21 evidence in entry.yaml was all third-party commentary and no primary
+document was stored. Everything below was read on 2026-11-19 by a code session (curl, GitHub and NVD APIs,
+registry manifests). No model weights were downloaded. No contact was made with Ollama or anyone else.
+
+```
+doc_type       | source_url                                                        | retrieval_date | exists | retrieved | notes
+license        | https://raw.githubusercontent.com/ollama/ollama/main/LICENSE      | 2026-11-19     | yes    | yes       | MIT, "Copyright (c) Ollama"; GitHub API spdx MIT. Software licence only. See license__repo__2026-11-19.md
+terms          | https://ollama.com/terms                                          | 2026-11-19     | yes    | yes       | Last updated August 2026; Ollama Inc; no training on inputs/outputs (Sec 5); limited licence to process content (Sec 7); California law, AAA arbitration; silent on cloud models, registry uploads and model licences. See terms__2026-11-19.md
+privacy_policy | https://ollama.com/privacy                                        | 2026-11-19     | yes    | yes       | Last updated March 2026; cloud prompts "not stored beyond the time required to fulfill the request"; "technical measures designed to minimize retention"; no training; US processing; no numeric retention windows. See privacy_policy__2026-11-19.md
+docs           | https://docs.ollama.com/cloud ; /cloud/faq.md ; /cloud/models.md ; /cloud/model-lifecycle.md ; https://ollama.com/pricing | 2026-11-19 | yes | yes | :cloud models run on Ollama's servers; ZDR wording stronger than Privacy Policy; NVIDIA Cloud Providers; US primarily, Europe overflow; plans and per-token prices; retirements list. See docs__cloud-faq-and-pricing__2026-11-19.md
+docs           | https://registry.ollama.ai (manifests) ; https://raw.githubusercontent.com/ollama/ollama/main/manifest/manifest.go ; https://docs.ollama.com/import.md ; https://docs.ollama.com/api/pull.md | 2026-11-19 | yes | yes | Manifest lists (mlx/safetensors and llamacpp/gguf children), runner preference order, licence layers (Apache-2.0, Llama community licences), no click-through, push by any user. See docs__registry-manifests-and-library-licences__2026-11-19.md
+docs           | https://github.com/ollama/ollama/releases (GitHub API)            | 2026-11-19     | yes    | yes       | Latest stable v0.40.16 (2026-11-09), v0.40.17-rc1 pre-release; v0.40.0 2026-09-25 MLX default; v0.40.2 background model upgrade. See docs__release-notes-v0.40-line__2026-11-19.md
+security       | NVD records CVE-2026-7482, -5757, -85180, -5530, -42248, -42249, -5760; https://kb.cert.org/vuls/id/518910 ; https://kb.cert.org/vuls/id/915947 ; https://www.vulncheck.com/advisories/ollama-0.30.0-through-0.33.2-ssrf-via-cross-host-tensor-blob-redirect ; https://raw.githubusercontent.com/ollama/ollama/main/SECURITY.md ; https://github.com/ollama/ollama/pull/11573 | 2026-11-19 | yes | yes | Ollama's own GGUF loader CVE-2026-7482 (fixed 0.17.1), CVE-2026-5757 unresolved, SSRF CVE-2026-85180 (code now restricts redirects, issue open), Windows updater CVEs (signature check now in code), CVE-2026-5760 is SGLang not Ollama, signing PR #11573 still open. See security__cve-record__2026-11-19.md
+security       | https://ollama.com/security                                       | 2026-11-19     | no (404) | no      | No security page, trust centre, SOC 2 or ISO 27001 report published
+dpa            | none found                                                        | 2026-11-19     | no     | no        | No DPA, sub-processor list or SCC/DPF reference in Terms, Privacy Policy, docs or pricing page. Enterprise tier mentions "Custom security questionnaires" only
+```

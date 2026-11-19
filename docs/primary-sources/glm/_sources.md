@@ -34,3 +34,14 @@ source_url: chat.z.ai/legal-agreement/privacy-policy | exists: yes | retrieved: 
 ## model_card - zai-org org page (low confidence)
 source_url: huggingface.co/zai-org | exists: yes | retrieved: true(low-confidence)
 Org listing render conflicted with verified per-model pages; treat per-model findings (4.5/4.6/0414 = MIT; glm-4-9b = custom) as the reliable data.
+
+## Re-verification 2026-11-19 (freshness refresh)
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://huggingface.co/zai-org/GLM-5.3/raw/main/LICENSE | 2026-11-19 | yes | true | custom "GLM-5.3 License": security review for MaaS operators whose Licensee-plus-affiliates revenue exceeds 10 billion USD over any 12 months; outside the tracked MIT cluster; see license__glm-5.3__2026-11-19.md
+license | https://huggingface.co/zai-org (per-repo API tags and raw LICENSE files, matrix) | 2026-11-19 | yes | true | MIT cluster still uniform; 0414 repos now ship an MIT LICENSE; GLM-5, 5.1, 5.2, 5.3-Flash are MIT; only GLM-5.3 and GLM-5.3-BF16 are custom; see license__glm-5-family-and-mit-cluster__2026-11-19.md
+terms | https://chat.z.ai/legal-agreement/terms-of-service | 2026-11-19 | yes | true | Last Update April 14, 2026; API no-training default and Singapore law/SIAC unchanged; see terms__hosted-platform__2026-11-19.md
+privacy_policy | https://chat.z.ai/legal-agreement/privacy-policy | 2026-11-19 | yes | true | Last Update September 29, 2025; Singapore processing and API not-saved clause unchanged; see privacy_policy__hosted-platform__2026-11-19.md
+model_card | https://huggingface.co/zai-org/GLM-5.3 and https://huggingface.co/zai-org/GLM-5.3-Flash | 2026-11-19 | yes | true | sizes, dates and context read for the new-entity report; not scored in this entry
+docs | https://docs.z.ai/release-notes.md | 2026-11-19 | yes | true | newest model listed is GLM-5.3-Flash (2026-08-26); nothing newer
+```

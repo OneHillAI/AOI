@@ -15,7 +15,7 @@ Aggregated common pitfalls (not an exhaustive catalogue):
   variant, quantize (GGUF/AWQ/FP8/4-bit), or move to multi-GPU; reduce max context to shrink the KV
   cache.
 - **Unexpected licence blocker.** You assumed Apache but picked an **MRL** model (Ministral 8B,
-  Mistral Large, Pixtral Large) - check the model card before committing to commercial use.
+  Mistral Large 2, Pixtral Large) - check the model card before committing to commercial use.
 - **Non-reproducible results / silent updates.** You floated on `main`; pin an exact HF revision and
   verify checksums.
 
@@ -40,7 +40,7 @@ licence in force.
 - **GitHub issues** on `mistralai/mistral-inference` and the `mistralai/cookbook` (`ev-inference`)
   for inference and templating problems.
 - **Mistral Discord** and the platform documentation for announcements and how-tos.
-- **La Plateforme** offers a paid/commercial support path (and is where MRL commercial licences are
+- **Mistral Studio** (formerly La Plateforme) offers a paid/commercial support path (and is where MRL commercial licences are
   arranged).
 
 <!-- item: deprecation -->

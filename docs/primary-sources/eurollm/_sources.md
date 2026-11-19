@@ -25,3 +25,14 @@ source_url: huggingface.co/utter-project/EuroLLM-9B-Instruct ; -1.7B-Instruct | 
 ## docs - openness (22B-Instruct-2512)
 source_url: huggingface.co/utter-project/EuroLLM-22B-Instruct-2512 | exists: yes | retrieved: true
 [Released dataset - CONFIRMED] links "EuroBlocks-SFT-2512" (utter-project/EuroBlocks-SFT-2512). [Pretraining corpus - NOT fully released] ~4T tokens described (web, parallel, Wikipedia, Arxiv, books, math, code, Apollo) but not released as one dataset. POSITION: partial openness - stronger than weights-only, weaker than fully-open (cf. OLMo/Soofi).
+
+## Refresh 2026-11-19
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://huggingface.co/api/models/utter-project/EuroLLM-9B-Instruct (+ rendered page, 1.7B raw card) | 2026-11-19 | yes | true | apache-2.0 unchanged; no LICENSE file in repos; 9B repos gated:auto (contact sharing), 1.7B ungated; see license__eurollm-hf-licence-and-gating__2026-11-19.md
+model_card | https://huggingface.co/utter-project/EuroLLM-22B-2512 | 2026-11-19 | yes | true | NEW sibling, apache-2.0, ungated, 32k context; see model_card__eurollm-22b-2512__2026-11-19.md
+technical_report | https://arxiv.org/abs/2602.05879 | 2026-11-19 | yes | true | EuroLLM-22B report; releases web pretraining data and pretraining and eval code; see technical_report__eurollm-22b__2026-11-19.md
+technical_report | https://arxiv.org/abs/2506.04079 | 2026-11-19 | yes | true | 9B report abstract re-read (API); release of models, EuroFilter, synthetic post-training set
+docs | https://huggingface.co/utter-project/EuroLLM-22B-2512/blob/main/EuroLLM_Public_Summary.pdf | 2026-11-19 | yes | false | PDF fetched (234 KB) but text not extractable with available tools; not read
+marketing | https://eurollm.io/ | 2026-11-19 | yes | true | lists 22B flagship (32K), 9B, 1.7B; no licence statement, no dates, no news after Sept 2026
+```

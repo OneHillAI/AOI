@@ -24,6 +24,6 @@ avoid untrusted pickle files or repo-shipped Python from unverified authors.
 
 First-class client tooling - **`huggingface_hub` and `transformers` `from_pretrained()`** -
 makes the Hub the default source most downstream stacks pull from, by convention rather than
-contractual lock-in. Because artifacts are plain git + LFS, they remain portable to any
+contractual lock-in. Because artifacts are plain git with LFS-format pointers, they remain portable to any
 mirror or local store; the per-stack integration specifics were not individually catalogued
 here.

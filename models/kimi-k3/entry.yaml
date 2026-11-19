@@ -59,9 +59,12 @@ openness:
     classification: open_weight
     commercial_use: allowed_with_conditions
     notable_restrictions:
-    - A Model-as-a-Service business with more than $20M USD aggregate revenue over any
-      consecutive 12 months must secure a separate agreement with Moonshot AI before
-      commercial deployment (new vs Kimi K2)
+    - A Model-as-a-Service business (third-party inference or fine-tuning access with
+      meaningful control over inputs, parameters or training data; not end-user products with
+      embedded features, not mere relaying) with more than $20M USD aggregate revenue over any
+      consecutive 12 months must enter into a separate agreement with Moonshot AI before using
+      the Software for any commercial purpose (new vs Kimi K2); internal use and use through
+      Moonshot's official products or certified inference partners are exempt
     - Products/services with more than 100M monthly active users OR more than $20M USD
       monthly revenue must prominently display "Kimi K3" on the product user interface
     - Custom "Kimi K3 License" is not OSI-certified - verify the LICENSE file per checkpoint
@@ -455,8 +458,8 @@ documentation:
         doc_type: release_notes
         source_type: aggregated
         coverage: full
-        refs: [ev-k3-card, ev-k3-coverage]
-        summary: "Kimi K3 ships as a single checkpoint on the verified moonshotai org (announced ~2026-07-17, open weights ~2026-07-27); the Hugging Face revision hash is the changelog anchor."
+        refs: [ev-k3-card, ev-k3-coverage, ev-k3-models]
+        summary: "Kimi K3 ships as a single checkpoint on the verified moonshotai org (announced ~2026-07-17, open weights ~2026-07-27); the Hugging Face revision hash is the changelog anchor. A post-trained successor, Kimi K3.1 Pro (HF 2026-11-02, own licence file), now exists and is not covered by this entry; the hosted platform calls K3 the previous-generation flagship."
       - key: security-disclosure
         title: "Security / vulnerability disclosure"
         doc_type: reference
@@ -514,44 +517,52 @@ evidence:
   claim: 'Kimi K3 model card on the verified moonshotai Hugging Face org: 2.8T total / 104B
     active MoE (16 of 896 experts), 1M context, MXFP4 weights / MXFP8 activations, native
     text+image+video, serving on vLLM/SGLang/TokenSpeed; no training data/code/tokens or
-    safety tuning disclosed.'
+    safety tuning disclosed. Re-read 2026-11-19: facts unchanged, still no safety text;
+    Kimi K3.1 Pro (post-trained from K3) now exists as a separate release.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/moonshotai/Kimi-K3
-  date: '2026-07-28'
+  date: '2026-11-19'
 - id: ev-k3-license
-  claim: 'Kimi K3 License, read verbatim via the raw mirror: grant to use/copy/modify/merge/
-    publish/distribute/sublicense/sell, plus a Model-as-a-Service separate-agreement requirement
-    over $20M aggregate revenue in any consecutive 12 months, plus a 100M-MAU or $20M-monthly-
-    revenue "display Kimi K3" branding clause; internal-use and official/certified-partner
-    exemptions; not OSI-certified.'
+  claim: 'Kimi K3 License, read verbatim via the raw mirror and re-read 2026-11-19 (byte-identical
+    to the initial commit): grant to use/copy/modify/merge/publish/distribute/sublicense/sell;
+    a Licensee that operates a Model as a Service business with aggregate revenue over $20M in
+    any consecutive 12 months "must enter into a separate agreement with Moonshot AI before using
+    the Software or its derivative works for any commercial purpose" (Model as a Service means
+    giving a third party inference or fine-tuning access with meaningful control over inputs,
+    parameters or training data, and excludes end-user products with embedded model features and
+    mere relaying to models hosted by others); a 100M-MAU or $20M-monthly-revenue "display Kimi K3"
+    branding clause; internal-use and official/certified-partner exemptions from both; not
+    OSI-certified.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/moonshotai/Kimi-K3/raw/main/LICENSE
-  date: '2026-07-28'
+  date: '2026-11-19'
 - id: ev-k3-report
   claim: 'Moonshot''s technical report "Kimi K3: Open Frontier Intelligence" (GitHub PDF), read:
     2.8T/104B MoE with Kimi Delta Attention and Per-Head Muon; context curriculum 8K to 64K
     (pretrain) and 256K to 1M (cooldown); no total training-token count and no absolute
     pretraining-FLOP figure stated; section 6.2.2 documents offensive-cyber capability (Tier-1
     vulnerability discovery, Tier-2 exploit development) and notes Anthropic/OpenAI models refuse
-    such tasks while K3 does not.'
+    such tasks while K3 does not. Re-downloaded and re-read 2026-11-19, unchanged; the report also
+    cites a UK AI Security Institute / NIST CAISI assessment it calls consistent (not read).'
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://github.com/MoonshotAI/Kimi-K3/blob/main/k3_tech_report.pdf
-  date: '2026-07-28'
+  date: '2026-11-19'
 - id: ev-k3-terms
   claim: 'platform.kimi.ai model-use agreement, read: user Content may be used to develop and
     improve the Services, with opt-out only via an enterprise arrangement on request; governed by
-    the laws of Singapore with SIAC arbitration.'
+    the laws of Singapore with SIAC arbitration. Re-read 2026-11-19: page now dated "Last Updated:
+    July 30th, 2026", same clauses.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://platform.kimi.ai/docs/agreement/modeluse.md
-  date: '2026-07-28'
+  date: '2026-11-19'
 - id: ev-k3-privacy
   claim: 'platform.kimi.ai privacy policy, read: the hosted service trains on user prompts,
     audio, images, videos and files by default ("helps us optimize our models"); controller
@@ -560,7 +571,18 @@ evidence:
   doc_type: privacy_policy
   retrieved: true
   url: https://platform.kimi.ai/docs/agreement/userprivacy
-  date: '2026-07-28'
+  date: '2026-11-19'
+- id: ev-k3-models
+  claim: 'Hosted Kimi API Platform model list, read 2026-11-19: kimi-k3.1-pro is "the first model
+    of the new K3.1 series and Kimi''s most capable flagship to date" and kimi-k3 is "Kimi''s
+    previous-generation flagship"; both are live. Moonshot''s Kimi K3.1 Pro model card says it is
+    post-trained from Kimi K3 (HF repo created 2026-11-02, own licence file, see
+    docs/primary-sources/kimi-k3/_sources.md).'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://platform.kimi.ai/docs/models.md
+  date: '2026-11-19'
 - id: ev-k3-coverage
   claim: 'Reputable coverage (Tom''s Hardware) of the 2.8T Kimi K3 release: architecture
     (16/896 experts), MXFP4/MXFP8 QAT, K2 comparison, 1st place on the Frontend Code Arena, and
@@ -585,7 +607,9 @@ changelog:
   change: Initial entry (Kimi K3 - Moonshot AI). Classified open-weights (not closed-frontier); grounded against primary sources in docs/primary-sources/kimi-k3 - Kimi K3 License read verbatim (new $20M Model-as-a-Service separate-agreement gate), technical report PDF text-extracted (no training-token/FLOP figure published; section 6.2.2 offensive-cyber, no refusal), hosted platform terms + privacy (train-by-default, Singapore/SIAC).
 - date: '2026-09-21'
   change: 'Freshness re-verification. The Kimi K3 License''s load-bearing $20M MaaS separate-agreement gate and branding thresholds re-read verbatim, unchanged - the K3 risk finding stands. No K4 or point release that alters the tracked terms.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against primary sources. Kimi K3 License re-read raw: byte-identical to the 2026-07-27 initial commit, so the $20M / 12-month Model-as-a-Service separate-agreement gate and the 100M-MAU / $20M-monthly-revenue branding clause stand unchanged, repo ungated. Evidence wording corrected: the earlier extract quoted a paraphrase as verbatim; the clause reads "must enter into a separate agreement with Moonshot AI before using the Software or its derivative works for any commercial purpose", and the gate applies only to a Model as a Service business as the licence defines it, with internal-use and official-partner exemptions. Technical report re-downloaded and re-read: section 6.2.2 offensive-cyber and no-refusal finding unchanged, no safety-tuning section, so the safety score of 1 and the reliability factor stand. Model card unchanged apart from eval results. Hosted platform.kimi.ai terms re-read (dated July 30th 2026, same train-by-default and enterprise-only opt-out clauses) and privacy policy re-read (dated April 30 2025, unchanged). New: Kimi K3.1 Pro (moonshotai, HF 2026-11-02, post-trained from K3, same licence text under a K3.1-Pro title) exists as a separate release; not folded in here. No score, factor or level change.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

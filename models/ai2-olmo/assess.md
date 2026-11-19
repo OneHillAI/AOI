@@ -1,13 +1,13 @@
 # Assess - Ai2 OLMo (OLMo 2 / OLMo 3)
 
 _Should we adopt this? Openness, license, provenance, EU AI Act, safety, evaluation, and
-the AOI score (80.8/100 · Grade B) live here._
+the AOI score (77.6/100 · Grade B) live here._
 
 <!-- item: intended-use -->
 ## Intended & out-of-scope use
 
-OLMo is Ai2's "open science" language-model family, spanning OLMo 2 (roughly 7B-13B) and
-OLMo 3 (up to a 32B), each shipping base and instruction-tuned checkpoints. Its intended
+OLMo is Ai2's "open science" language-model family, spanning OLMo 2 (1B, 7B, 13B and 32B) and
+OLMo 3 (7B and 32B, with base, instruct and reasoning "Think" checkpoints). Its intended
 use is research and general-purpose assistant workloads; its *realistic* differentiator is
 any setting where an organisation must be able to explain and audit exactly what went into
 the model; auditability rather than raw capability is the product.
@@ -48,11 +48,24 @@ third-party classification (`ev-mof`) rather than publisher marketing.
 <!-- item: license -->
 ## License terms & permitted use
 
-Apache-2.0 across weights, training code, and the Dolma data. It is **OSI-approved**, with
-no field-of-use restriction and unconditional commercial use - there is no "community
+Apache-2.0 covers the weights and the training code; the published data (Dolma, Dolma 3,
+Dolci) is ODC-By, and one Dolci subset is CC-BY-SA-4.0. Apache-2.0 is **OSI-approved**; its text has no
+field-of-use restriction and allows unconditional commercial use, so there is no "community
 license" sleight of hand. You may use, modify, redistribute, and commercialize derivatives,
-subject only to the standard Apache attribution/notice terms. This clean license is a
-load-bearing input to both the openness (5) and legal (5) scores.
+subject only to the standard Apache attribution/notice terms.
+
+One caveat, read on 2026-11-19: the OLMo 3 cards, and the OLMo 2 Instruct cards, say the model
+is "intended for research and educational use in accordance with Ai2's Responsible Use
+Guidelines" (`ev-resp-use`). Those guidelines list disallowed uses outside "Research Use",
+including political campaigning, automated social-media posting and classifying people by
+protected characteristics. They are a separate Ai2 document, not part of the Apache-2.0 text,
+and the page does not say whether it binds someone who only downloaded the weights. Ai2's blog
+says the datasets carry no licence restrictions; the dataset cards say otherwise (`ev-dolma3`).
+Have counsel read the guidelines before a use case close to that list. The caveat is scored: it
+lowers Legal from 5 to 4 and the use-and-modify factor from strong to moderate, which moves the
+ownership level from substantial to partial. Openness (5) is unchanged, because it measures what
+is released and the Apache-2.0 text itself has no field-of-use limit. The level returns to
+substantial if Ai2 states that the guidelines are guidance and not a licence condition.
 
 <!-- item: provenance -->
 ## Supply-chain & provenance

@@ -1,4 +1,4 @@
-# Implement - Meta Llama (Llama 3.x / Llama 4)
+# Implement - Meta Llama 3.x (Llama 3.1 / 3.3 text line)
 
 _How do we deploy and run it? Install, hardware, serving, quantization, fine-tuning, and
 the safe-deployment controls & Deployment Ceiling._
@@ -56,7 +56,7 @@ is effectively nothing to unlock.
 
 Applying the safe-deployment playbook, the model-specific gate rows are: pin the revision
 from `meta-llama` and verify the checksum (supply chain); confirm the license permits your
-use and that you are **not** using multimodal variants in the EU (legal); deploy the
+use, including the 700M-MAU trigger and attribution terms (legal); deploy the
 **Instruct** variant with **Llama Guard** on both input and output plus prompt-injection
 defences (safety); and add a deterministic **action-policy engine with a kill switch**
 before granting any autonomy (action layer).
@@ -66,7 +66,7 @@ the Instruct variant, Llama Guard input/output classification, and prompt-inject
 defences - all available. T3 additionally requires a deterministic action-policy engine,
 per-action human approval for irreversible operations, a kill switch, and scheduled
 red-teaming. **T4 (regulated high-stakes autonomous) is not recommended**: the community
-license, the EU multimodal restriction, and the unmet Article 55 documentation burden do
+license, the acceptable-use terms, and the unmet Article 55 documentation burden do
 not comfortably support high-stakes regulated use.
 
 <!-- item: quantization -->

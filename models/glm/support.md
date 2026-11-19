@@ -28,8 +28,10 @@ Face / ModelScope revisions** on the verified `zai-org` org, so the revision has
 changelog anchor: pin it, and diff against a newer revision when you choose to upgrade. GitHub
 repositories (`zai-org/GLM-4`, `zai-org/GLM-4.5`) and technical reports accompany the releases.
 
-Newer variants occasionally referenced elsewhere (GLM-5, GLM-4.7, GLM-4.6V) are **not verified**
-in this entry and are deliberately omitted; anchor to GLM-4.6 as the current confirmed flagship.
+Newer releases exist outside this entry's scope: GLM-4.7 (2025-12), GLM-5 (2026-02), GLM-5.1
+(2026-04), GLM-5.2 (2026-06), GLM-5.3 and GLM-5.3-Flash (2026-08). They are not scored here;
+anchor this entry to GLM-4.6 as the newest tracked checkpoint. GLM-5.3 carries a custom licence
+(`ev-license-glm53`).
 
 <!-- security-disclosure is a `gap` item - no formal published vulnerability-disclosure or
      security policy (SECURITY.md / advisory process) exists; contact is only the general

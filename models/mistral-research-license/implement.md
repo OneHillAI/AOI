@@ -47,5 +47,7 @@ code are closed, so there is no from-scratch reproduction.
 <!-- item: integration -->
 ## API / OpenAI-compatible integration
 
-Serve behind vLLM's OpenAI-compatible endpoint for research. Mistral also offers these models on
-its own commercial API/platform, which is the **licensed commercial path** for production use.
+Serve behind vLLM's OpenAI-compatible endpoint for research. The hosted API versions of Mistral
+Large 2.x, Pixtral Large and Ministral 8B are retired (Mistral docs, 2026-11-19), so the **licensed
+commercial path** is a negotiated commercial licence from Mistral or a current hosted model, not
+these checkpoints on the API.

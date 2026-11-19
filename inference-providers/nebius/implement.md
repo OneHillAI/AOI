@@ -1,13 +1,14 @@
 # Implement - Nebius (Token Factory)
 
-_How do we integrate it? API integration and region/ZDR configuration live here; authentication
-and rate limits are documented gaps below._
+_How do we integrate it? API integration, region/ZDR configuration, rate limits and portability
+live here; authentication is a documented gap below._
 
 <!-- item: integration -->
 ## API integration
 
-Nebius Token Factory exposes **"a simple, OpenAI-compatible API"** usable with standard OpenAI
-client libraries (product page and docs, read directly).
+Nebius Token Factory is called with the standard OpenAI client libraries; the quickstart points
+the OpenAI SDK at `https://api.tokenfactory.nebius.com/v1/` (docs and product page, re-read
+2026-11-19).
 
 <!-- item: authentication -->
 ## Authentication & account setup
@@ -19,26 +20,29 @@ exact setup in the Nebius console.
 <!-- item: region-config -->
 ## Region & ZDR configuration
 
-Region selection is documented for **AI Cloud** and **dedicated Token Factory endpoints**
-(docs.nebius.com/overview/regions, independently re-read): **two** public self-serve EU regions
-(Finland, France), plus US, Israel, and UK. **Correction:** Spain and Iceland are private,
-existing-deployment-only regions, not self-serve - a prior draft counted them as public. **Zero
-Data Retention is enabled per-account in settings**, not by default, with a documented latency
-trade-off. Shared/public endpoints do not carry the same region-pinning guarantee as dedicated
-endpoints - confirm which applies to your workload before relying on a residency claim.
+A dedicated endpoint takes its region from the templates API at deployment; the Token Factory
+data-plane page documents base URLs for eu-north1 (Finland), eu-west1 (France) and us-central1,
+and the DPA pins dedicated endpoints to that region. **Public endpoints show Region "Global"**,
+and the processing location can change without notice, so a region-specific base URL may stop
+working. **Zero Data Retention is enabled per organisation in account settings**, not by default,
+with a documented speed trade-off, and it also opts you out of Speculative Decoding.
 
 <!-- item: rate-limits -->
 ## Rate limits, tiers & quotas
 
-Public docs describe dedicated-endpoint autoscaling and pay-as-you-go-by-replica billing, but a
-serverless rate-limit/quota table was not located in the sources read this pass - confirm current
-throughput limits for your account before sizing a production workload.
+Limits are dynamic and visible only in the console. The docs give an illustrative baseline of 60
+requests and 400,000 tokens per minute, raise the limit by 20 percent when average use over a
+rolling 15-minute window reaches 80 percent, cut it by a third at 50 percent or less, and cap it
+at 4x the base allocation, beyond which an Enterprise plan is required. Over the limit you get
+HTTP 429, though requests may still be served at lower priority (header
+`x-ratelimit-over-limit: yes`); busy endpoints return HTTP 529. Dedicated endpoints have no rate
+limits.
 
 <!-- item: portability -->
 ## Portability & exit
 
 The DPA commits to **deleting or returning Customer Personal Data** on termination, at the
 customer's choice. An OpenAI-compatible API over a predominantly open-weight catalogue keeps
-served checkpoints portable. **Correction:** a prior claim that many flagship models are
-dedicated-endpoint-only is not supported - they are publicly served per-token, simply superseded
-by newer catalogue entries.
+served checkpoints portable. Serverless models are removed on dated notices with no automatic
+rerouting, and dedicated endpoints for removed models stay available. Fine-tuned and distilled
+models can be deleted by Nebius on three days' notice (Supplemental Terms 2.10).

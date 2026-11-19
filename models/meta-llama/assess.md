@@ -1,4 +1,4 @@
-# Assess - Meta Llama (Llama 3.x / Llama 4)
+# Assess - Meta Llama 3.x (Llama 3.1 / 3.3 text line)
 
 _Should we adopt this? Openness, license, provenance, EU AI Act, safety, evaluation, and
 the AOI score live here._
@@ -8,7 +8,7 @@ the AOI score live here._
 
 Llama is intended as a broad, general-purpose assistant lineage: text generation,
 summarisation, retrieval-augmented question answering, coding help, and multilingual
-chat, with the Llama 4 generation adding image understanding. Meta positions the
+chat. Meta positions the
 **Instruct** checkpoints for assistant use and the **base** checkpoints as starting
 points for further fine-tuning. In practice Llama is the default self-hosted base for
 internal assistants, RAG systems, and agentic prototypes.
@@ -49,9 +49,8 @@ OSI-approved** and should not be described as open source. It permits commercial
 *with conditions*: any deployer crossing **700 million monthly active users** must obtain
 a separate license from Meta; an **Acceptable Use Policy** governs permitted applications;
 and **"Built with Llama"** attribution plus naming requirements attach to derivatives.
-Most consequentially for European adopters, Meta does **not** license the **multimodal**
-Llama models to **EU-domiciled entities** - a field-of-use restriction with no analogue
-in a true open-source license. Branding Llama as "open source" is, on these terms,
+The text-only models in this entry carry no EU-domicile restriction (the multimodal
+carve-out is tracked in the separate llama-4 entry). Branding Llama as "open source" is, on these terms,
 inaccurate; it is open-weight with real strings attached.
 
 <!-- item: provenance -->
@@ -72,11 +71,11 @@ revision from the canonical org and verify the checksum before deploying.
 <!-- item: eu-ai-act -->
 ## EU AI Act posture
 
-Llama is a **GPAI model**, and the largest checkpoints (Llama 3.1 405B and the large
-Llama 4 models) exceed the **1e25-FLOP** training-compute threshold, triggering the
+Llama is a **GPAI model**, and the largest checkpoints (Llama 3.1 405B; the large
+Llama 4 models are in the llama-4 entry) exceed the **1e25-FLOP** training-compute threshold, triggering the
 **systemic-risk** presumption. Two independent facts collapse the open-source exemption.
-First, the community license - with its acceptable-use policy, MAU threshold, and EU
-multimodal ban - likely fails the Act's "free and open-source" test in the first place.
+First, the community license - with its acceptable-use policy, MAU threshold and access
+gate - likely fails the Act's "free and open-source" test in the first place.
 Second, and decisively, systemic-risk models receive **no** open-source exemption
 regardless of license: the full Article 53 + 55 obligation set applies. Meta's provider
 package is only **partial** against that bar - detailed model cards and safety evaluations
@@ -84,7 +83,7 @@ package is only **partial** against that bar - detailed model cards and safety e
 package, and only partial copyright-policy and training-content-summary coverage.
 Compounding the governance signal, Meta publicly **declined to sign the EU GPAI Code of
 Practice** in 2025. A downstream EU deployer inherits an incomplete compliance file, must
-not touch the multimodal variants, and - if fine-tuning and placing a derivative on the
+treat any multimodal Llama model separately, and - if fine-tuning and placing a derivative on the
 EU market under its own name - likely becomes a provider itself with its own Annex XI/XII
 duties.
 

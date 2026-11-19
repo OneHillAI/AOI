@@ -7,15 +7,17 @@ and tool use live here._
 ## Capabilities & modalities
 
 Qwen3 is a **strong general text model with class-leading open coding and agentic**
-performance. The family is text-focused and spans an unusually wide ladder - from a 0.5B
+performance. The family is text-focused and spans an unusually wide ladder - from a 0.6B
 dense model up to a 480B coder - so you can match capability to budget without leaving the
 family or changing integration.
 
 <!-- item: context-window -->
 ## Context window & long-context behaviour
 
-Mainstream Qwen3 checkpoints support **up to 128k** context. Exact per-variant limits
-differ, so confirm the window on each model card rather than assuming 128k everywhere.
+Qwen3 dense and MoE checkpoints support **32,768 tokens natively and 131,072 with YaRN**
+scaling (per the Qwen3-235B-A22B card); Qwen3-Coder-480B-A35B-Instruct supports **262,144
+natively**. Exact per-variant limits differ, so confirm the window on each model card rather
+than assuming 128k everywhere.
 
 <!-- item: chat-template -->
 ## Prompt format & chat template

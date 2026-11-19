@@ -328,12 +328,12 @@ evidence:
     patent litigation against DeepSeek; Section 5 / Attachment A use restrictions (no unlawful or
     military use, no harm to minors, no verifiably false content to harm others, no unauthorised PII
     distribution, no defamation/harassment/discrimination, no automated decisions affecting legal
-    rights); "DeepSeek claims no rights in the Output You generate"; provided "AS IS".'
+    rights); "DeepSeek claims no rights in the Output You generate"; provided "AS IS". Re-read 2026-11-19: Section 7 lets DeepSeek restrict, remotely or otherwise, use in violation of the licence; Section 14 sets PRC governing law and Hangzhou courts; Derivatives of the Model include distillation and synthetic-data training.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://github.com/deepseek-ai/DeepSeek-V3/blob/main/LICENSE-MODEL
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsv3o-card
   claim: 'DeepSeek-V3 model card on the verified deepseek-ai HF org: 671B total / 37B active MoE, 128K
     context, safetensors, Base + Chat variants; first-class serving (vLLM, SGLang, llama.cpp, Ollama)
@@ -342,7 +342,7 @@ evidence:
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/deepseek-ai/DeepSeek-V3
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsv3o-perf
   claim: On independent public leaderboards the original DeepSeek-V3 was competitive among large
     open-weight models at release (coding, maths, analysis); not OneHill-reproduced this session.
@@ -374,7 +374,9 @@ changelog:
   change: Initial entry - split from the aggregate `deepseek` entry on the licence axis. This is the ORIGINAL Dec-2024 V3 (Base + Chat), whose weights are the custom DeepSeek License Agreement v1.0 (RAIL-style use restrictions, non-OSI), NOT MIT; the V3-0324/V3.1 generations moved to MIT and are deepseek-v3-mit. The use restrictions drop use-and-modify to moderate and ownership to partial - the divergence that justifies the split. Shared safety/performance/operational/governance grounding carried from the deepseek family entry. Licence read verbatim from LICENSE-MODEL; grounded 2026-08-03.
 - date: '2026-09-21'
   change: 'Freshness re-verification. Licence unchanged - the MIT-code / DeepSeek-License-weights split re-confirmed still real from both LICENSE files. Flag (not folded): same V3.1/V3.2/V4 supersession as the MIT variant.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Refresh re-verification 2026-11-19, no change to scores. Re-read LICENSE-MODEL (byte-identical on Hugging Face and GitHub) and LICENSE-CODE: the MIT-code / DeepSeek-License-Agreement-v1.0-weights split is still real, and neither DeepSeek-V3 nor DeepSeek-V3-Base has a plain LICENSE file or an HF licence tag. Extracted two clauses the entry did not yet record: Section 7 (DeepSeek may restrict, remotely or otherwise, use in violation of the licence; the Section 2 grant stays irrevocable) and Section 14 (PRC governing law, exclusive jurisdiction of the Hangzhou DeepSeek court); also that Derivatives of the Model include distillation and synthetic-data training, so Attachment A follows derived models. Hosted-service terms re-read; unchanged and not applicable to self-hosted weights.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

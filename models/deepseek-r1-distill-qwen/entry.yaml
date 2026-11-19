@@ -321,7 +321,7 @@ evidence:
   doc_type: license
   retrieved: true
   url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsrq-card
   claim: 'R1-Distill-Qwen model cards on the verified deepseek-ai HF org: dense 1.5B/7B/14B/32B models
     distilled from R1, 128K context (from the Qwen2.5 bases), safetensors; the most widely
@@ -331,7 +331,7 @@ evidence:
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsrq-perf
   claim: On public leaderboards the R1-Distill-Qwen-14B/32B are notably strong reasoning models for
     their size; the 1.5B is modest. Not OneHill-reproduced this session.
@@ -362,7 +362,9 @@ changelog:
   change: Initial entry - split from the aggregate `deepseek` entry on the licence axis. These are the R1-Distill checkpoints on Apache-2.0 Qwen2.5 bases (1.5B-32B); the Llama-base distils (Llama Community Licence) are the separate deepseek-r1-distill-llama entry. Apache-2.0 + small (non-systemic-risk) scale gives a cleaner legal profile (legal 3) and ownership substantial. Shared behavioural grounding carried from the deepseek family entry. Grounded 2026-08-03.
 - date: '2026-09-21'
   change: 'Freshness re-verification. Licence unchanged (MIT distillation over the Qwen-licensed base). No newer distill supersedes this entry; note the base Qwen family has itself moved to Qwen3.5/3.6/3.8 (see the qwen entry), not folded here.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Refresh re-verification 2026-11-19, no change. Re-read the four distil repos (MIT LICENSE, card metadata mit, HF gated false) and card section 7 (derived from Qwen 2.5, originally Apache 2.0). Re-read the raw LICENSE and HF licence field of Qwen2.5-Math-1.5B, Qwen2.5-Math-7B, Qwen2.5-14B and Qwen2.5-32B: all Apache-2.0, not gated. Note the 1.5B and 7B sit on the Math variants of Qwen2.5. DeepSeek has not re-cut the distil line under V3.2 or V4.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

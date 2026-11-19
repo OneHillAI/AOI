@@ -1,0 +1,11 @@
+# Llama 4 Acceptable Use Policy - clause extracts (read 2026-11-19)
+
+source_url: https://raw.githubusercontent.com/meta-llama/llama-models/main/models/llama4/USE_POLICY.md (Meta's own repository, verbatim, 5824 bytes)
+cross-check: https://dev.meta.ai/llama/llama4/use-policy/ (live page, reached by redirect from https://www.llama.com/llama4/use-policy/ via https://developer.meta.com/ai/llama4/use-policy/; read through the fetch summariser, same four-part wording; the page has no section titled "Additional Terms" and shows no date or version)
+exists: yes | retrieved: true
+
+[EU multimodal carve-out - VERBATIM, final paragraph of the Prohibited Uses text, before the reporting paths] "With respect to any multimodal models included in Llama 4, the rights granted under Section 1(a) of the Llama 4 Community License Agreement are not being granted to you if you are an individual domiciled in, or a company with a principal place of business in, the European Union. This restriction does not apply to end users of a product or service that incorporates any such multimodal models."
+
+Prohibited-use categories: (1) violate the law or others' rights, including illegal activity, harassment, discrimination, unlicensed professional practice, privacy, IP infringement, malware, circumventing safety measures; (2) activities presenting a risk of death or bodily harm (military, warfare, nuclear, espionage, ITAR, weapons, illegal drugs, critical infrastructure, self-harm); (3) intentional deception (fraud, disinformation, defamation, spam, impersonation, representing outputs as human generated, fake engagement); (4) failing to disclose to end users any known dangers of your AI system; (5) interacting with third-party tools, models or software designed to generate unlawful content. The Markdown source numbers these 1, 3, 4, 5, 6 (the numeral 2 is skipped), so there are five prohibited-use items in the file, not six; the September wording "six" was a miscount of the numbering.
+
+Reporting paths listed: github.com/meta-llama/llama-models/issues (model issues); developers.facebook.com/llama_output_feedback (risky output); facebook.com/whitehat/info (bugs and security concerns); LlamaUseReport@meta.com (AUP violations or unlicensed uses of Llama 4).

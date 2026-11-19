@@ -5,72 +5,100 @@
 #   prose   -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
 
 schema_version: '2.0'
+
 id: berget
+
 name: Berget AI
+
 profile: inference
+
 hq_country: Sweden
-summary: 'A Stockholm-based, Swedish-owned EU-sovereign inference provider serving
-  open-weight models (Llama, Mistral-Small, Gemma, gpt-oss, GLM, plus embedding/reranking
-  models) over an OpenAI-compatible API. Its standout facts are jurisdictional and are
-  confirmed against binding documents: the Terms of Service state Berget never stores
-  prompt input or model output content (zero data retention), the customer retains all
-  title and IP in its data under a licence scoped only to providing the Service, and a
-  30-day post-termination export window precedes irreversible deletion; the Privacy and
-  Security pages place all processing on EU/Sweden-only servers, and Swedish ownership
-  puts Berget outside the US CLOUD Act. The GDPR DPA has now been read (2026-08-06) and
-  names an entirely-EEA sub-processor list, and the Terms carry a mutual confidentiality
-  clause (Sec 18). The main caveat is verification depth: there is no independent
-  attestation of the data-handling guarantees (no SOC 2 / ISO 27001), the never-train
-  commitment rests on the service-scoped licence plus the DPA purpose-limitation rather than
-  an express anti-training clause, and the Terms reserve a right to aggregated, anonymised,
-  non-identifying usage data. This is a strong, document-grounded governance posture that
-  stops short of audited assurance.
 
-  '
+summary: >-
+  A Stockholm-based, Swedish-owned inference provider serving open-weight models (Gemma 4,
+  Mistral-Small 3.2, GLM-5.3-Flash, Kimi K3.1 Pro, Swedish-tuned Whisper, multilingual E5
+  embeddings and a BGE reranker) over an OpenAI-compatible API. Its strongest facts are in the
+  binding documents, which take precedence over the marketing: the DPA (updated 2026-10-22,
+  first in the order of precedence) states a true Zero Data Retention policy for serverless
+  inference with prompts, files and outputs not written to persisted disk even during
+  inference, and an express sentence that Berget does not train any models on inference input
+  or output; the Terms keep customer ownership of Customer Data, a mutual confidentiality
+  clause naming Customer Data (Sec 18) and a 30-day post-termination export window. Residency
+  is narrower than the marketing: the binding text promises that all data centres are in the
+  EEA and that nothing leaves the EEA without written instruction (DPA Sec 10), not Sweden-only
+  processing, and the customer can choose a data centre only for compute and storage, not for
+  serverless inference. A new SLA gives serverless inference a best-effort level with no
+  compensation, and a 99.5% commitment with credits only for sales-contracted Dedicated
+  Inference. The main caveat is verification depth: no SOC 2 or ISO 27001 attestation exists
+  (the Terms say ISO 27001 is being worked toward), and the status page could not be read.
+
 models_served:
-- Llama 3.1-8B / Llama 3.3-70B
+- Gemma 4 31B
 - Mistral-Small-3.2-24B
-- Gemma
-- gpt-oss-120B
-- GLM-4.7
-- embedding & reranking models
-hardware: NVIDIA GPU (EU/Sweden datacenters)
-pricing:
-  model: per-token
-  notes: 'Pay-as-you-go per-token pricing plus prepaid token packs. Zero data retention
-    is the default on pay-as-you-go. Per-model rates are not published here; confirm
-    live on the provider pricing page.
+- GLM-5.3-Flash
+- Kimi K3.1 Pro
+- Whisper speech-to-text (kb-whisper, nb-whisper, faster-whisper, pianissimo)
+- multilingual-e5 embeddings
+- bge-reranker-v2-m3
+- Preview models (Qwen3.5-2B, laya, clef-flash)
 
-    '
+hardware: 'GPU bare metal in EEA data centres (sub-processor AI Iron AB, DPA Appendix 1); the only GPU model named on a Berget page is AMD MI300X (Dedicated Inference page); NVIDIA is not confirmed'
+
+pricing:
+  model: mixed
+  notes: >-
+    Per-token serverless pricing is published per model through the API listing (EUR per
+    million tokens, for example Mistral-Small-3.2 0.30 in and 0.30 out, Gemma 4 31B 0.25 and
+    0.50, Kimi K3.1 Pro 3.00 and 10.00 with cached input 0.90), but API access needs an active
+    plan: the pricing FAQ says "we don't offer pure pay-as-you-go without a plan". Plans are
+    Trial (EUR 5 free credits), Starter EUR 25, Team EUR 50 and Enterprise EUR 500 per month,
+    each a prepaid top-up. Credits are non-refundable and expire after 12 months. Berget Code is
+    per seat (EUR 150 to 500 per month). Dedicated Inference is quoted, with small models from
+    about EUR 2,500 per GPU per month. Numeric rate limits are not published.
   example_rates:
-  - 'Pay-as-you-go per-token; prepaid token packs also offered (see provider pricing page)'
+  - 'Mistral-Small-3.2-24B: EUR 0.30 / 0.30 per M tokens (in / out)'
+  - 'Gemma 4 31B and GLM-5.3-Flash: EUR 0.25 / 0.50 (GLM) per M tokens'
+  - 'Kimi K3.1 Pro: EUR 3.00 / 10.00 per M tokens, cached input 0.90'
+  - 'Whisper models: EUR 0.000033 per second'
+  - 'Plans: Trial EUR 0 (EUR 5 credit), Starter EUR 25, Team EUR 50, Enterprise EUR 500 per month'
+
 data_governance:
-  default_retention: 'none by default - the Terms state Berget never stores prompt input
-    content or model output content (zero data retention on pay-as-you-go)'
+  default_retention: >-
+    none by default for serverless inference. DPA Appendix 2: "Berget AI applies a true Zero
+    Data Retention policy on its serverless inference services, including Berget Code" and does
+    not store prompts, uploaded files or outputs "after completed inference calls, and none of it
+    is stored on persisted disks even during inference processing". ToS Sec 7 says the same for
+    prompt and output content. Metadata is kept: service admin logs, API request metadata and
+    token counts with API key and subscription ID for billing.
   trains_on_inputs: never
   zdr_available: yes_default
-  zdr_scope_caveats: 'ZDR is the default on pay-as-you-go, with no action required, and
-    is stated in the Terms of Service (never store prompt input or model output content).
-    Distinct from inference retention: on account termination, Customer Data is retained
-    for 30 days to allow export/recovery and then irreversibly deleted. The Terms also
-    reserve a right to process aggregated, anonymised data that does not identify the
-    customer or any natural person. No independent attestation corroborates the data-handling
-    guarantees; the DPA (read 2026-08-06) does disclose an entirely-EEA sub-processor list.
-
-    '
+  zdr_scope_caveats: >-
+    ZDR is the default for serverless inference (including Berget Code), with no action
+    required, and is stated in both the DPA (Appendix 2) and the ToS (Sec 7). It is a contractual
+    statement with no independent audit or attestation behind it. Distinct from inference
+    retention: on account termination Customer Data is kept 30 days for export or recovery and
+    then irreversibly deleted (ToS Sec 12; DPA Sec 13.2). The ToS also reserves a right to
+    aggregated, anonymised data that identifies neither the customer nor any natural person
+    (Sec 19.1). The DPA purpose clause (Sec 3.1(c)) lists "improving the contracted
+    infrastructure services" but Appendix 2 limits what is collected to logs, request metadata
+    and token counts. The Trial plan and Preview models are outside the SLA, but no document
+    read gives them different data terms.
   customer_data_ownership: customer_retains
   outputs_used_to_improve_service: "no"
-  third_party_routing_leakage: 'Serves open-weight models only; no closed third-party
-    model routing, so no other vendor''s data terms attach to routed inference.
-
-    '
+  third_party_routing_leakage: >-
+    Serves open-weight models only; no closed third-party model routing, so no other vendor's
+    data terms attach to routed inference. DPA Appendix 2 adds that Berget does not "share the
+    data with any model providers for model training".
   subprocessors_disclosed: true
   confidentiality: explicit
-  confidentiality_caveats: 'Terms Sec 18 is a mutual confidentiality clause covering each
-    party''s non-public information, expressly "including in particular Customer Data", with a
-    keep-confidential and purpose-limitation duty and standard carve-outs. Weaknesses versus a
-    dedicated NDA: no express post-termination survival term, and the Sec 19.1 aggregated,
-    anonymised usage-data reservation sits outside the confidentiality perimeter.'
+  confidentiality_caveats: >-
+    ToS Sec 18 is a mutual confidentiality clause covering each party's non-public information,
+    "including in particular Customer Data", with a keep-confidential and purpose-limitation duty
+    (Sec 18.2), standard carve-outs (Sec 18.3), and on termination a duty to cease use and destroy
+    (Sec 18.5, with carve-outs for legally required copies and routine backups). It has no express
+    survival period. The Sec 19.1 aggregated, anonymised usage-data reservation sits outside the
+    confidentiality perimeter.
+
 compliance:
   soc2: unknown
   iso_27001: unknown
@@ -79,24 +107,42 @@ compliance:
   gdpr_dpa: "yes"
   fedramp: ''
   trust_center_url: https://berget.ai/en/security
+
 residency:
   eu_region_available: "yes"
   regions:
-  - Sweden
-  - European Union
-  sovereign_option: 'EU-sovereign by design: Swedish-owned, infrastructure entirely
-    in Sweden/EU per the Privacy and Security pages, no US data transfers.'
-  region_pinning: "yes"
+  - 'European Economic Area (binding, DPA Sec 10.1, all Berget data centres)'
+  - 'Sweden (marketing, Dedicated Inference page and Berget Code post; not stated in the DPA or Terms)'
+  sovereign_option: >-
+    Swedish-owned with EEA-only data centres. The binding position is DPA Sec 10.1 ("All Berget
+    AI data centres are within the European Economic Area") and Sec 10.2 (no transfer outside
+    the EEA without the customer's written instruction, then only under a Chapter V transfer
+    mechanism such as the EU SCCs). Sweden-only processing, "Your data never crosses borders" and
+    "no US entity involvement" are marketing statements; no clause read promises them. The
+    payment sub-processor Stripe Payments Europe, Limited is in Ireland and is used only for card
+    payments.
+  region_pinning: "no"
   cloud_act_exposure: false
-  provider_can_restrict_access: 'Low switch-off risk: Swedish/EU jurisdiction with
-    no US reach, so no CLOUD Act / US export-control exposure. Standard commercial
-    termination applies, with a 30-day post-termination export window per the Terms.'
+  provider_can_restrict_access: >-
+    Low switch-off risk: Swedish and EU jurisdiction with no US parent. Standard commercial
+    terms apply: either party can end the Agreement for convenience (customer on 5 days' notice,
+    Berget on 30 days'), and Berget may suspend or remove content under the Illegal Content
+    clause (ToS Sec 14). Customer Data is retained 30 days after termination for export.
+
 reliability:
-  sla: ''
-  uptime_notes: No public uptime SLA or status page surfaced; independent press reports
-    production customers (Riksbanken, 300+ pilot/commercial customers) but availability
-    is not independently observable.
+  sla: >-
+    SLA page dated 2026-10-23, part of the Agreement. Serverless Inference (including Berget
+    Code): best effort, "no compensation is payable for interruptions". Dedicated Inference with
+    an HA setup: 99.5% monthly uptime with credits of 10% (below 99.5%) or 25% (below 99.0%) of
+    the impacted service fees, claimed within 30 days. Single-instance dedicated: best effort
+    with a 99.5% SLO. The SLA excludes Trial plan and Preview models.
+  uptime_notes: >-
+    The SLA names https://status.berget.ai as the place incidents are published, but that page is
+    a JavaScript shell that this session could not read, so no incident history or uptime figure
+    was verified. The tech.eu article cited for production use says the first service launched
+    before summer 2025 with strong customer interest; it does not name customers.
   incidents: []
+
 lock_in:
   openai_compatible_api: true
   portability_notes: 'OpenAI-compatible API (api.berget.ai/v1) serving portable open-weight
@@ -105,128 +151,154 @@ lock_in:
     or self-hosted.
 
     '
-dedicated_availability: coming_soon
-dedicated_notes: 'The advertised "Dedicated Inference" product ("run your own fine-tuned models
-  on dedicated capacity") is marked Coming Soon, with no contract language, docs or pricing. The
-  only shipped dedicated pool is Berget Code, which is dedicated to that product, not reserved
-  per customer. Treat per-customer single-tenancy and first-party fine-tuning as not yet generally
-  available (as of 2026-08).'
+
+dedicated_availability: available
+
+dedicated_notes: >-
+  Dedicated Inference is now offered, sales-led ("Talk to us"): reserved GPUs in Swedish data
+  centres running a chosen or customer-supplied model, with a published SLA (99.5% monthly uptime
+  for an HA setup, SLA Sec 4) and an indicative price of about EUR 2,500 per GPU per month for
+  smaller models. The 2026-08 entry recorded it as Coming Soon; that is out of date. There are no
+  self-serve provisioning terms or price list, so it counts as available, not self-serve. The
+  Kubernetes Cluster product (managed cluster on Berget hardware) is also priced on the pricing
+  page.
+
 trust_considerations:
-- ZDR-by-default, no-training, customer-retained ownership and a 30-day export window
-  are confirmed in Berget''s binding Terms of Service, a real upgrade from a
-  marketing-only basis, but no SOC 2 / ISO 27001 attestation and no independent audit
-  of the data-handling guarantees exists.
-- Swedish ownership and EU-only infrastructure mean no US CLOUD Act exposure - a genuine
-  sovereignty advantage over US-headquartered providers, independently reported by EU
-  tech press.
-- The GDPR DPA (read 2026-08-06) names an entirely-EEA sub-processor list - 6G AI Sweden,
-  Acebit, Toriv, Obenet (Swedish) and Stripe Payments Europe (Ireland) - with all data
-  centres in the EEA (Sec 10.1); still no SOC 2 / ISO 27001 attestation, so contractualise
-  the data terms and request current attestation status for regulated procurement.
-- Terms Sec 18 is a mutual confidentiality clause covering each party's non-public
-  information (customer data included) - a real contractual protection beyond the
-  retention and ownership terms.
-- The never-train commitment rests on the service-scoped licence plus the DPA
-  purpose-limitation ("not... for any other purposes other than providing the Service"),
-  not an express anti-training sentence - a slightly weaker evidence tier than an explicit clause.
-- A dedicated / reserved-capacity ("Dedicated Inference") product is signalled but not yet
-  shipped - the Terms describe only serverless per-token inference, with no dedicated pricing
-  or terms.
-- The Terms reserve a right to process aggregated, anonymised, non-identifying usage
-  data - standard, but note it alongside the zero-retention-of-content guarantee.
-- No public uptime SLA or status history is published.
+- 'The DPA (updated 2026-10-22, first in precedence under ToS Sec 3.2) now contains an express
+  no-training sentence for serverless inference and states that prompts, files and outputs are
+  not stored on persisted disks even during inference. This resolves the earlier caveat that the
+  never-train commitment rested only on the service-scoped licence. It remains a contractual
+  statement: no SOC 2 or ISO 27001 attestation and no independent audit corroborates it.'
+- 'Residency in the binding text is EEA-wide, not Sweden-only. DPA Sec 10.1 lets the customer
+  choose a data centre for compute and storage but expressly excludes serverless inference, so a
+  serverless customer cannot pin a data centre. The Sweden-only and "never crosses borders" claims
+  are on the landing page, the docs and the Berget Code post, not in any clause read. Swedish
+  ownership keeps Berget outside US CLOUD Act reach, but that is a jurisdiction argument from
+  ownership, not a contractual guarantee.'
+- 'The Privacy page is a website privacy policy dated 2025-03-10. It does not state EU-only
+  inference servers or zero retention; those statements are in the DPA and Terms.'
+- 'Sub-processors are named in DPA Appendix 1: AI Iron AB (GPU bare metal), Acebit AB (network
+  and operations), Obenet AB (colocation) and Stripe Payments Europe, Limited (payments), with 30
+  days advance notice and an objection and termination right (Sec 9.3). Toriv AB, listed on
+  2026-09-21, is no longer named.'
+- 'Terms Sec 18 is a mutual confidentiality clause naming Customer Data, with a cease-use and
+  destroy duty on termination (Sec 18.5). Sec 19.1 still reserves aggregated, anonymised
+  usage data.'
+- 'There is no SOC 2, ISO 27001 or ISO 27701 attestation. ToS Sec 6.7 says Berget "is actively
+  working toward ISO 27001 certification". The Security page is a responsible-disclosure page
+  (PGP key, Signal, safe harbour), not a trust centre.'
+- 'Reliability: serverless inference is best effort with no compensation under the new SLA; the
+  99.5% commitment with credits applies only to sales-contracted Dedicated Inference with an HA
+  setup. The status page could not be read.'
+- 'Pricing is not pure pay-as-you-go: API access needs an active plan (from EUR 25 per month in
+  prepaid credits), credits are non-refundable and expire after 12 months. Per-model rates are
+  published through the API listing.'
+- 'Catalogue churn is real: Llama 3.1 8B, Llama 3.3 70B, gpt-oss-120B and GLM-4.7 have all been
+  retired since June 2026, with 2 to 3 weeks notice for Active models and none for Preview models.
+  Pin to checkpoints you can also run elsewhere.'
+
 score:
   rubric_version: '1.2'
-  headline: 70.4
-  grade: B
+  headline: 67.2
+  grade: C
   hard_flags: []
   dimensions:
     data_governance:
       score: 4
-      rationale: 'Zero data retention (Berget never stores prompt input or model output
-        content), customer retains all title and IP under a service-scoped licence, a
-        30-day post-termination export window, a mutual confidentiality clause (Terms Sec 18)
-        and open-weight-only routing are all confirmed in the Terms of Service, and the DPA
-        (read 2026-08-06) names an entirely-EEA sub-processor list - a strong, document-grounded
-        posture. Held to 4 rather than 5 because no independent third-party attestation or audit
-        (SOC 2 / ISO 27001) corroborates the data-handling guarantees, the never-train commitment
-        rests on the service-scoped licence and DPA purpose-limitation rather than an express
-        anti-training clause, and the Terms reserve an aggregated/anonymised usage-data right.
-
-        '
+      rationale: >-
+        Zero data retention for serverless inference (DPA Appendix 2: no storage after completed
+        calls and no persisted disk even during inference; ToS Sec 7), an express no-training
+        sentence in the DPA (Appendix 2), customer-retained title and IP under a service-scoped
+        licence (ToS Sec 17.1), a 30-day export window, a mutual confidentiality clause naming
+        Customer Data (ToS Sec 18), named sub-processors with notice and objection rights (DPA
+        Sec 9) and open-weight-only routing. This meets every written element of the anchor 5.
+        Held at 4 because the shared evidence rules require a 5 to rest on onehill_verified or
+        third_party support, and the zero-retention guarantee has no independent attestation or
+        audit behind it (it is a publisher statement in a binding contract, not verified), and the
+        Sec 19.1 aggregated usage-data right remains. Moves to 5 when an independent attestation
+        of the retention controls exists.
       evidence_refs:
       - ev-terms
+      - ev-dpa
       - ev-code
-      - ev-privacy
     compliance:
       score: 2
-      rationale: 'A GDPR DPA is published and now read (Art. 28(3); an entirely-EEA
-        sub-processor list in Appendix 1; personnel confidentiality in Sec 7.1(iii); all data
-        centres within the EEA per Sec 10.1), but SOC 2 / ISO 27001 / ISO 27701 / HIPAA
-        attestations are not confirmed. Meets the score-2 anchor: a DPA/GDPR basis is in place,
-        but no completed independent audit (SOC 2 Type II or ISO 27001) is confirmed, so it
-        falls short of the score-3 "SOC 2 Type II or ISO 27001" bar.
-
-        '
+      rationale: >-
+        A GDPR DPA is published and read (Art. 28(3) controller-processor terms, named
+        sub-processors, 24-hour breach notice, audit right, EEA-only transfer clause), and the
+        Terms say ISO 27001 is being worked toward (Sec 6.7). No SOC 2, ISO 27001, ISO 27701 or
+        HIPAA attestation exists on any page read, and the Security page is a disclosure policy.
+        Meets the score-2 anchor (a DPA plus one certification in progress, no completed
+        independent audit) and falls short of the score-3 bar.
       evidence_refs:
       - ev-dpa
+      - ev-terms
       - ev-security
     residency:
-      score: 5
-      rationale: 'Infrastructure entirely on EU/Sweden-only servers with no US data
-        transfers per the Privacy and Security pages, Swedish ownership (a public-record
-        jurisdictional fact) placing Berget outside the US CLOUD Act, and independent
-        EU tech-press corroboration of the sovereign-infrastructure positioning. Full
-        EU data sovereignty with no extraterritorial exposure.
-
-        '
+      score: 4
+      rationale: >-
+        The binding position is an EEA boundary: all Berget data centres are in the EEA and no
+        transfer leaves the EEA without the customer's written instruction (DPA Sec 10.1, 10.2),
+        and Swedish ownership puts Berget outside US CLOUD Act reach. Lowered from 5 because the
+        2026-10-22 DPA states that customer data-centre choice covers compute and storage "not
+        including serverless inference", so the main workload has no region pinning, and because
+        the Sweden-only and "never crosses borders" statements are marketing (landing page, docs,
+        Berget Code post) rather than clauses. Anchor 4 fits: an EU boundary with pinning for
+        some services, short of guarantees across all services.
       evidence_refs:
-      - ev-privacy
-      - ev-security
+      - ev-dpa
+      - ev-landing
       - ev-techeu
     security:
       score: 3
-      rationale: 'The Security page documents industry-standard technical/organisational
-        measures - encryption in transit, network isolation, access controls, monitoring -
-        and a PGP-based vulnerability-reporting channel; inference runs inside a secure
-        Swedish network and content is not retained. Held to 3 absent an independent
-        pen-test or a SOC 2 / ISO 27001 attestation.
-
-        '
+      rationale: >-
+        ToS Sec 6.7 states encryption in transit, network isolation, access controls and system
+        monitoring, and DPA Sec 8 lists access controls, pseudonymisation and encryption,
+        resilience, restore capability and regular testing of measures; the Security page itself
+        is a responsible-disclosure policy (PGP key, Signal, safe harbour, 48-hour response). No
+        independent pen-test report or ISO 27001 or SOC 2 attestation exists. Held to 3 on
+        stated measures without independent testing.
       evidence_refs:
+      - ev-terms
+      - ev-dpa
       - ev-security
     reliability:
       score: 2
-      rationale: 'Independent press reports production customers (the Swedish central bank
-        Riksbanken as flagship, 300+ pilot/commercial customers), but no public uptime
-        SLA, status page or failover documentation is available, so availability is not
-        independently observable. Meets the score-2 anchor (serving in production, but no
-        status page or published uptime history); a public status page would reach 3.
-
-        '
+      rationale: >-
+        A published SLA now exists (2026-10-23) but gives serverless inference best effort with no
+        compensation; the 99.5% commitment with credits covers only sales-contracted Dedicated
+        Inference with an HA setup. The SLA points to status.berget.ai, which is a JavaScript
+        shell this session could not read, so no uptime history or incident record is verified.
+        The tech.eu article supports production use since 2025 but names no customers. Meets
+        the score-2 anchor; a readable status page with history would reach 3, which is not scored
+        on an unread page.
       evidence_refs:
+      - ev-sla
       - ev-techeu
     transparency_lockin:
       score: 5
-      rationale: 'OpenAI-compatible API over portable open-weight models (Llama, Mistral,
-        Gemma, gpt-oss, GLM), independently listed by the Mastra model directory as an
-        OpenAI-compatible /chat/completions provider at api.berget.ai/v1; the same
-        checkpoints run elsewhere or self-hosted, giving a clean exit at minimal switching
-        cost.
-
-        '
+      rationale: >-
+        OpenAI-compatible API over open-weight models with published licences and a published
+        lifecycle policy (docs.berget.ai: 2 to 3 weeks notice for Active models, named successor,
+        retired-model list), independently listed by the Mastra model directory as an
+        OpenAI-compatible /chat/completions provider at api.berget.ai/v1. The same checkpoints run
+        elsewhere or self-hosted, and Dedicated Inference is now offered for customer-supplied
+        models. Kimi K3.1 Pro carries a licence listed only as "Other" in the API, which is the
+        one non-standard entry.
       evidence_refs:
       - ev-mastra
-      - ev-docs
+      - ev-catalogue
+      - ev-dedicated
     cost:
       score: 4
-      rationale: 'Transparent pay-as-you-go per-token pricing plus prepaid token packs,
-        with ZDR the default. Held below 5 because per-model rates are not published
-        and no independent cost benchmark was run.
-
-        '
+      rationale: >-
+        Per-model per-token rates are published through the API listing, plans are public (EUR 0
+        to 500 per month) and Dedicated Inference has an indicative starting price. Held below 5
+        because API access needs a paid plan with non-refundable prepaid credits that expire after
+        12 months, numeric rate limits are not published, and no independent cost benchmark was run.
       evidence_refs:
       - ev-pricing
+      - ev-catalogue
 
 documentation:
   assess:
@@ -238,50 +310,50 @@ documentation:
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev-terms, ev-code, ev-privacy]
-        summary: "The Terms of Service state Berget never stores prompt input or model output content (zero data retention on pay-as-you-go); Berget Code confirms no training on customer code. Distinct from inference retention: Customer Data is kept 30 days post-termination for export, then irreversibly deleted. The Terms reserve a right to aggregated, anonymised, non-identifying usage data."
+        refs: [ev-terms, ev-dpa, ev-code]
+        summary: "The DPA (first in precedence) states a true Zero Data Retention policy for serverless inference, with prompts, files and outputs not stored after completed calls or on persisted disks during inference, and an express sentence that Berget does not train any models on inference input or output (Appendix 2). The ToS Sec 7 says Berget never stores prompt or output content. Distinct from inference retention: Customer Data is kept 30 days post-termination for export, then irreversibly deleted. The ToS reserve aggregated, anonymised usage data (Sec 19.1). No independent audit corroborates the retention controls."
       - key: data-ownership
         title: "Data & IP ownership"
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev-terms]
-        summary: "Per the Terms, the Customer retains all title and intellectual property rights in its Customer Data, and Berget's licence is limited to hosting, processing and transmitting that data to provide the Service - no training right is granted. Zero retention of content and open-weight-only serving mean nothing is captured to improve the service beyond aggregated, anonymised, non-identifying usage data; the DPA discloses an entirely-EEA sub-processor list."
+        refs: [ev-terms, ev-dpa]
+        summary: "Per ToS Sec 17.1 the Customer retains all title and intellectual property rights in its Customer Data and Berget's licence is limited to hosting, processing and transmitting it to provide the Service. Sec 18 is a mutual confidentiality clause naming Customer Data, with a cease-use and destroy duty on termination (Sec 18.5). The DPA names four sub-processors, with 30 days notice and an objection right. The customer feedback licence (Sec 19.2) covers suggestions only."
       - key: residency
         title: "Data residency & jurisdiction"
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev-privacy, ev-security, ev-techeu, ev-landing]
-        summary: "The Privacy and Security pages place all processing on EU/Sweden-only servers with no US data transfers; Swedish ownership puts Berget outside the US CLOUD Act, and EU tech press independently reports the Sweden-based sovereign infrastructure. Full EU data sovereignty with no extraterritorial switch-off exposure."
+        refs: [ev-dpa, ev-landing, ev-techeu]
+        summary: "Binding text: all Berget data centres are in the EEA and nothing leaves the EEA without the customer's written instruction (DPA Sec 10.1, 10.2). The customer can choose a data centre for compute and storage but the DPA excludes serverless inference, so serverless has no region pinning. Sweden-only and 'never crosses borders' statements are marketing, not clauses. Swedish ownership puts Berget outside US CLOUD Act reach."
       - key: compliance
         title: "Compliance & attestations"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev-dpa, ev-security]
-        summary: "A GDPR DPA is published at berget.ai/dpa and now read (Art. 28(3); entirely-EEA sub-processor list in Appendix 1; personnel confidentiality Sec 7.1; EEA-only data centres Sec 10.1). SOC 2 / ISO 27001 / ISO 27701 / HIPAA-BAA are not confirmed - request current attestation status directly for regulated procurement."
+        refs: [ev-dpa, ev-terms, ev-security]
+        summary: "A GDPR DPA is published at berget.ai/en/dpa and read (Art. 28(3); four named sub-processors in Appendix 1; personnel confidentiality Sec 7.1; EEA-only data centres Sec 10.1; 24-hour breach notice Sec 12.1; audit right Sec 11). No SOC 2, ISO 27001, ISO 27701 or HIPAA-BAA attestation exists on any page read; ToS Sec 6.7 says Berget is actively working toward ISO 27001. Request current attestation status directly for regulated procurement."
       - key: security
         title: "Security controls"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev-security]
-        summary: "The Security page documents encryption in transit, network isolation, access controls and system monitoring, plus a PGP-based vulnerability-reporting channel; inference runs inside a secure Swedish network and content is not retained. No independent pen-test or SOC 2 / ISO 27001 attestation surfaced."
+        refs: [ev-terms, ev-dpa, ev-security]
+        summary: "ToS Sec 6.7 states encryption in transit, network isolation, access controls and system monitoring; DPA Sec 8 adds pseudonymisation and encryption, restore capability and regular testing of measures. The Security page is a responsible-disclosure policy (PGP key, Signal, safe harbour). No independent pen-test or SOC 2 / ISO 27001 attestation surfaced."
       - key: pricing
         title: "Pricing & cost model"
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev-pricing]
-        summary: "Pay-as-you-go per-token pricing plus prepaid token packs; zero data retention is the default. Per-model rates are not published - confirm live on the provider pricing page."
+        refs: [ev-pricing, ev-catalogue]
+        summary: "Per-model per-token rates are published through the API (for example Mistral-Small-3.2 EUR 0.30 / 0.30, Kimi K3.1 Pro EUR 3.00 / 10.00 per million tokens). API access needs an active plan (Trial EUR 5 credits, Starter EUR 25, Team EUR 50, Enterprise EUR 500 per month); there is no pure pay-as-you-go, and prepaid credits are non-refundable and expire after 12 months. Dedicated Inference is quoted from about EUR 2,500 per GPU per month."
       - key: reliability
         title: "Reliability posture"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev-techeu]
-        summary: "Independent press reports production customers (Riksbanken as flagship, 300+ pilot/commercial customers), but no public uptime SLA, status page or failover documentation was found."
+        refs: [ev-sla, ev-techeu]
+        summary: "A published SLA (2026-10-23) gives serverless inference best effort with no compensation; 99.5% monthly uptime with 10% or 25% fee credits applies only to Dedicated Inference with an HA setup. The status page named in the SLA is an unreadable JavaScript shell, so no incident history or uptime record is verified."
   implement:
     completeness: 75.0
     originality: 0.0
@@ -312,8 +384,8 @@ documentation:
         doc_type: explanation
         source_type: aggregated
         coverage: full
-        refs: [ev-mastra, ev-terms]
-        summary: "OpenAI-compatible endpoint over portable open-weight checkpoints (Llama, Mistral, Gemma, gpt-oss, GLM) - the same models run on other providers or self-hosted, so switching cost is low. On exit, the Terms give a 30-day post-termination export window for Customer Data before irreversible deletion."
+        refs: [ev-mastra, ev-terms, ev-catalogue]
+        summary: "OpenAI-compatible endpoint over open-weight checkpoints (Gemma 4, Mistral-Small, GLM-5.3-Flash, Kimi K3.1 Pro) - the same models run on other providers or self-hosted, so switching cost is low. On exit, the Terms give a 30-day post-termination export window for Customer Data before irreversible deletion; the lifecycle policy retires Active models with 2 to 3 weeks notice, so pin to checkpoints you can run elsewhere."
       - key: rate-limits
         title: "Rate limits, tiers & quotas"
         doc_type: reference
@@ -328,15 +400,15 @@ documentation:
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev-mastra, ev-landing]
-        summary: "Open-weight catalogue: Llama 3.1-8B and 3.3-70B, Mistral-Small-3.2-24B, Gemma, gpt-oss-120B, GLM-4.7, plus multilingual embedding and reranking models; independently listed as a multi-model OpenAI-compatible provider by the Mastra directory."
+        refs: [ev-catalogue, ev-mastra]
+        summary: "15 listed entries (2026-11-19): Gemma 4 31B, Mistral-Small-3.2-24B, GLM-5.3-Flash and Kimi K3.1 Pro for text, bge-reranker-v2-m3, two multilingual-e5 embedding models, four Whisper-family speech-to-text models and three Preview models. Llama 3.1 8B, Llama 3.3 70B, gpt-oss-120B and GLM-4.7 have been retired."
       - key: features
         title: "Inference features"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev-docs, ev-code]
-        summary: "OpenAI-compatible chat/completions plus embedding and reranking endpoints; Berget also offers 'Berget Code' coding assistants that keep code in Sweden and do not train on it. Per-model tool-calling / structured-output support follows each served model and is not independently verified on Berget's endpoints."
+        refs: [ev-catalogue, ev-code]
+        summary: "OpenAI-compatible chat completions plus embedding, reranking and speech-to-text endpoints. The API listing flags per model whether function calling, JSON mode, streaming and vision are supported (for example Kimi K3.1 Pro and Gemma 4 have function calling and vision). Berget Code is a seat-priced coding-assistant product under the same zero-retention terms."
       - key: context-limits
         title: "Context & token limits"
         doc_type: reference
@@ -348,7 +420,7 @@ documentation:
         source_type: gap
         gap_reason: "No first-party fine-tuning / custom-model-hosting documentation is published, so its availability and scope are not verified here."
   support:
-    completeness: 28.6
+    completeness: 42.9
     originality: 0.0
     items:
       - key: security-disclosure
@@ -357,143 +429,228 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-security]
-        summary: "The Security page is the trust surface (EU-only processing, no-training, zero retention) and documents a PGP-based vulnerability-reporting channel; a published security.txt / bug-bounty programme does not exist."
+        summary: "The Security page is a responsible-disclosure policy: GitHub private vulnerability reporting, security@berget.ai with a PGP key and a Signal number, a typical 48-hour response and a safe-harbour statement. It is not a trust centre and states no technical controls or attestations; a bug-bounty programme is not stated."
       - key: channels
         title: "Support & community channels"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev-docs]
-        summary: "Developer documentation at docs.berget.ai plus a developer portal; the breadth of community channels and paid-tier support commitments is not documented."
+        refs: [ev-docs, ev-pricing]
+        summary: "Developer documentation at docs.berget.ai (with llms.txt and Markdown pages) and a community link; support level follows the plan (community on Trial, email on Starter, priority on Team, dedicated on Enterprise). Response-time commitments are not published."
       - key: status-uptime
         title: "Status page & uptime history"
         doc_type: reference
         source_type: gap
-        gap_reason: "No public status page or verified uptime/SLA history exists for Berget AI; reliability is asserted but not independently observable."
+        gap_reason: "The SLA names https://status.berget.ai for incident information, but the page is a JavaScript shell that could not be read, so no incident history or uptime figure is verified."
       - key: deprecation
         title: "Model deprecation policy"
         doc_type: reference
-        source_type: gap
-        gap_reason: "No published model-deprecation or end-of-life policy was surfaced; because the catalogue is open-weight, a removed model can generally be self-hosted, but no formal notice window is documented."
+        source_type: aggregated
+        coverage: full
+        refs: [ev-docs, ev-catalogue]
+        summary: "docs.berget.ai publishes a lifecycle policy: Preview models may be removed without notice; Active models pass through Upgrading or Deprecated with 2 or 3 weeks notice depending on usage, and the API exposes lifecycle_status, upgrade_to and end_of_life. Seven models are listed as retired between 2026-06-24 and 2026-09-18."
 
 ownership:
   level: substantial
   factors:
-    use_modify:   { level: strong,   rationale: "OpenAI-compatible API (api.berget.ai/v1) over portable open-weight models (Llama, Mistral, Gemma, gpt-oss, GLM) - migrate by switching base URL and key, and the same checkpoints run elsewhere or self-hosted." }
-      # grounded in: ev-mastra (third_party directory, OpenAI-compatible), ev-terms
-    transparency: { level: moderate, rationale: "The binding Terms, Privacy and Security pages and now the DPA confirm ZDR, customer-retained ownership, the 30-day export window, EU-only processing, a Sec 18 mutual confidentiality clause and an entirely-EEA sub-processor list - all in-clause and read. Held below strong because no SOC 2 / ISO 27001 attestation independently corroborates the data-handling guarantees." }
-      # grounded in: ev-terms, ev-privacy, ev-security, ev-dpa (all retrieved:true 2026-08-06)
-    reliability:  { level: moderate, rationale: "Independent press reports production customers (Riksbanken, 300+ pilots), but there is no public uptime SLA, status page or independent pen-test, and no SOC 2 / ISO 27001 attestation is confirmed." }
-      # grounded in: ev-techeu (third_party)
-    data_control: { level: strong,   rationale: "The Terms of Service state Berget never stores prompt input or model output content, the Customer retains all title and IP under a licence scoped only to providing the Service, and Customer Data is exportable for 30 days post-termination then deleted; EU-only infrastructure with no US transfers puts it outside US CLOUD Act reach." }
-      # grounded in: ev-terms (retrieved:true, doc_type terms), ev-privacy
-  verdict: "You substantially own workloads here: the binding Terms confirm zero retention of prompt/output content, customer-retained ownership under a service-scoped licence, and a 30-day export window, while EU-only residency and Swedish ownership keep you outside US CLOUD Act reach and a portable open-weight exit keeps switching cheap. What holds it below full is verification depth - no independent audit or SOC 2 / ISO 27001 attests the data-handling guarantees (the DPA is now read: an entirely-EEA sub-processor list and a Sec 18 mutual confidentiality clause). Adopt as an EU-sovereign default, and request current attestation status for regulated procurement."
+    use_modify:   { level: strong,   rationale: "OpenAI-compatible API (api.berget.ai/v1) over open-weight models (Gemma 4, Mistral-Small, GLM-5.3-Flash, Kimi K3.1 Pro) - migrate by switching base URL and key, and the same checkpoints run elsewhere or self-hosted; the lifecycle policy retires Active models with 2 to 3 weeks notice." }
+      # grounded in: ev-mastra (third_party directory, OpenAI-compatible), ev-catalogue
+    transparency: { level: moderate, rationale: "The binding ToS, DPA, SLA and the Privacy page are published and legible, and the DPA (first in precedence) states ZDR, no training, EEA data centres and four named sub-processors. Held below strong because no SOC 2 or ISO 27001 attestation independently corroborates the guarantees, and the marketing overstates the binding text (Sweden-only, 'never crosses borders')." }
+      # grounded in: ev-terms, ev-dpa, ev-sla, ev-privacy (all retrieved:true 2026-11-19)
+    reliability:  { level: moderate, rationale: "Serverless inference is best effort with no compensation under the SLA; only sales-contracted Dedicated Inference with an HA setup carries 99.5% with credits. The status page is unreadable here, and there is no independent pen-test or attestation." }
+      # grounded in: ev-sla (retrieved:true), ev-techeu (third_party)
+    data_control: { level: strong,   rationale: "The DPA states true Zero Data Retention with no persisted disk during inference and an express no-training sentence, the ToS keep title and IP with the customer under a licence scoped to providing the Service, and Customer Data is exportable for 30 days after termination then deleted; all data centres are in the EEA and Berget has no US parent. Pinning is not available for serverless inference." }
+      # grounded in: ev-terms (retrieved:true, doc_type terms), ev-dpa (retrieved:true, doc_type dpa)
+  verdict: "You substantially own workloads here: the binding DPA and Terms state zero retention of prompts and outputs, an express no-training sentence, customer-retained ownership under a service-scoped licence, a mutual confidentiality clause and a 30-day export window, while an EEA-only data-centre boundary and Swedish ownership keep you outside US CLOUD Act reach and a portable open-weight exit keeps switching cheap. What holds it below full is verification depth and operating terms: no independent audit or SOC 2 or ISO 27001 attests the guarantees, serverless inference is best effort with no SLA credits, and the Sweden-only marketing is not what the contract promises (the binding boundary is the EEA, with no data-centre choice for serverless). Adopt as an EU-based default for non-critical availability, and contractualise Dedicated Inference if you need an uptime commitment."
 
 evidence:
 - id: ev-terms
-  claim: 'Berget AI Terms of Service (re-read 2026-08-06): Berget will never store any of the
-    actual prompt content used as model input or any of the output content generated by the
-    LLMs it hosts (zero data retention); as between Berget and the Customer, the Customer
-    retains all title and intellectual property rights in the Customer Data and grants Berget
-    a licence limited to hosting, processing and transmitting it to provide the Service;
-    Customer Data is retained for 30 days after termination for export/recovery then
-    irreversibly deleted; Berget may process aggregated, anonymised data that does not
-    identify the Customer or any natural person. Sec 18 is a mutual confidentiality clause:
-    each party must keep the other''s non-public information confidential and use it only for
-    the Agreement''s purposes (standard carve-outs for public / pre-known / independently
-    developed information). Note Sec 7 addresses storage ("never store... prompt... or output
-    content"), not training - the anti-training basis is the service-scoped licence plus the
-    DPA purpose-limitation, not an express "will not train" sentence.'
+  claim: >-
+    Berget AI Terms of Service (page stamp 2026-10-16, re-read 2026-11-19). Sec 7: "Berget will
+    never store any of the actual prompt content used as model input, or any of the output
+    content generated by the LLMs we host" (metadata such as logs, request metadata and token
+    counts may be collected). Sec 17.1: the Customer retains all title and intellectual property
+    rights in Customer Data and grants Berget the right to host, use, process, display and
+    transmit it "to provide the Service". Sec 12: Customer Data is kept 30 days after termination
+    for export or recovery, then irreversibly deleted. Sec 18 is a mutual confidentiality clause
+    whose definition includes "in particular Customer Data", with a cease-use and destroy duty on
+    termination (Sec 18.5). Sec 19.1 reserves aggregated, anonymised data that does not identify
+    the Customer or any natural person. Sec 6.7 states encryption in transit, network
+    isolation, access controls and monitoring and that Berget "is actively working toward ISO
+    27001 certification". Sec 3.2 puts the DPA first in the order of precedence. The Terms
+    contain no express no-training sentence and no residency clause.
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://berget.ai/en/terms
-  date: '2026-08-06'
+  date: '2026-11-19'
 - id: ev-privacy
-  claim: 'Berget AI Data Privacy Policy: all data stays within EU-based servers in Sweden
-    and never leaves Berget''s infrastructure; zero retention; GDPR-compliant by design.'
+  claim: >-
+    Berget AI Data Privacy Policy (last updated 2025-03-10, re-read 2026-11-19): a website
+    privacy policy for visitors, listing website data, cookies and website retention periods.
+    Sec 10 says Berget sees "no reason whatsoever to transfer data outside of the EEA" and would
+    use SCCs or adequacy decisions if a customer ordered a transfer. It does not state Sweden-only
+    servers or zero retention of prompts; the 2026-07-25 claim to that effect was not supported
+    by this page and has been removed.
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
-  url: https://berget.ai/privacy
-  date: '2026-07-25'
+  url: https://berget.ai/en/privacy
+  date: '2026-11-19'
 - id: ev-security
-  claim: 'Berget AI Security page: industry-standard technical and organisational measures
-    including encryption in transit, network isolation, access controls and system
-    monitoring, plus a PGP key for encrypted vulnerability reporting; no SOC 2 / ISO 27001
-    certification is stated.'
+  claim: >-
+    Berget AI Security page (re-read 2026-11-19): a "Responsible Disclosure" policy with GitHub
+    private vulnerability reporting, security@berget.ai with a PGP key and a Signal number, a
+    typical 48-hour response, a scope list and a safe-harbour statement. It describes no technical
+    controls and states no SOC 2, ISO 27001 or pen-test; the stored claim that the page documents
+    encryption and access controls was wrong (those measures are in ToS Sec 6.7 and DPA Sec 8).
   source_type: publisher
   doc_type: security
   retrieved: true
   url: https://berget.ai/en/security
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-dpa
-  claim: 'Berget AI Data Processing Agreement (read 2026-08-06): an Art. 28(3) GDPR
-    controller-processor agreement. Appendix 1 names the sub-processors - 6G AI Sweden AB,
-    Acebit AB, Toriv AB, Obenet AB (all Swedish) and Stripe Payments Europe Ltd (Ireland) -
-    so the sub-processor list IS disclosed and is entirely EEA (no US hyperscaler); Sec 10.1
-    states "All our data centres are within the European Economic Area". Sec 7.1(iii) binds
-    personnel under confidentiality undertakings, and the DPA limits processing to providing
-    the Service ("shall not use the Relevant Personal Data for any other purposes other than
-    that of providing the Service") - a purpose-limitation, not an express "will not train"
-    clause.'
+  claim: >-
+    Berget AI Data Processing Agreement (last updated 2026-10-22, re-read 2026-11-19), an
+    Art. 28(3) GDPR controller-processor agreement that ranks first in the Terms' order of
+    precedence. Appendix 2: "Berget AI applies a true Zero Data Retention policy on its serverless
+    inference services, including Berget Code", with prompts, uploaded or streamed files and
+    outputs not stored after completed calls and "none of it is stored on persisted disks even
+    during inference processing"; and "Berget AI does not train any models on the input or output
+    from serverless inference endpoints, nor does it share the data with any model providers for
+    model training". Sec 10.1: for compute and storage services "(not including serverless
+    inference)" the customer may choose the data centre, and "All Berget AI data centres are
+    within the European Economic Area". Sec 10.2: no transfer outside the EEA without the
+    customer's written instruction. Appendix 1 names four sub-processors: AI Iron AB, Acebit AB,
+    Obenet AB and Stripe Payments Europe, Limited (Toriv AB is no longer listed); Sec 9.3 gives 30
+    days notice and an objection right; Sec 12.1 gives breach notice within 24 hours where
+    feasible; Sec 7.1 binds personnel to confidentiality.
   source_type: publisher
   doc_type: dpa
   retrieved: true
-  url: https://berget.ai/dpa
-  date: '2026-08-06'
+  url: https://berget.ai/en/dpa
+  date: '2026-11-19'
+- id: ev-sla
+  claim: >-
+    Berget AI Service Level Agreement (last updated 2026-10-23, re-read 2026-11-19), part of the
+    Agreement under ToS Sec 3.1. Serverless Inference including Berget Code is "Best effort" and
+    "no compensation is payable for interruptions". Dedicated Inference with an HA setup carries
+    99.5% monthly uptime with credits of 10% (below 99.5%) or 25% (below 99.0%) of the fees for the
+    impacted service, claimed within 30 days; single-instance dedicated is best effort with a 99.5%
+    SLO. The SLA excludes the Trial plan and Preview models and names https://status.berget.ai for
+    incident information; that page is a JavaScript shell this session could not read, so no
+    uptime history is verified.
+  source_type: publisher
+  doc_type: sla
+  retrieved: true
+  url: https://berget.ai/en/sla
+  date: '2026-11-19'
 - id: ev-landing
-  claim: Berget AI landing page - Swedish-owned, EU-sovereign inference, not subject to
-    the US CLOUD Act, no US data transfers, OpenAI-compatible (marketing framing).
+  claim: >-
+    Berget AI landing page (marketing, re-read 2026-11-19): "Open models running under Swedish
+    jurisdiction with zero data retention", "never stores the content of your prompts or generated
+    output, and never trains on your data", "EU-only infrastructure, no US entity involvement".
+    Sweden-only processing is not stated in the DPA or Terms, which say EEA.
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://berget.ai/en
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-docs
-  claim: 'OpenAI-compatible chat completions API at https://api.berget.ai/v1 with bearer
-    API keys; developer documentation.'
+  claim: >-
+    Berget AI developer documentation (now readable, including llms.txt and Markdown pages):
+    OpenAI-compatible chat completions API at https://api.berget.ai/v1 and a model lifecycle
+    policy (Preview models removable without notice; Active models retired with 2 to 3 weeks
+    notice and a named successor).
   source_type: publisher
   doc_type: docs
-  retrieved: false
+  retrieved: true
   url: https://docs.berget.ai/
-  date: '2026-07-25'
+  date: '2026-11-19'
+- id: ev-catalogue
+  claim: >-
+    Berget AI live model listing (GET https://api.berget.ai/v1/models, read 2026-11-19): 15
+    entries, EUR per million tokens: Mistral-Small-3.2-24B 0.30 / 0.30, GLM-5.3-Flash 0.25 / 0.50,
+    Kimi-K3.1-Pro 3.00 / 10.00 (cached input 0.90, licence field "Other"), gemma-4-31B-it
+    0.25 / 0.50, bge-reranker-v2-m3 0.10, two multilingual-e5 embedding models 0.03, four
+    speech-to-text models at about EUR 0.000033 per second and three Preview models. Llama 3.1 8B,
+    Llama 3.3 70B, gpt-oss-120B and GLM-4.7 are listed as retired on the lifecycle page
+    (2026-06-24 to 2026-09-11).
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://api.berget.ai/v1/models
+  date: '2026-11-19'
 - id: ev-mastra
-  claim: 'Independent Mastra model directory lists Berget.AI as a provider using the
-    OpenAI-compatible /chat/completions endpoint at https://api.berget.ai/v1, serving
-    multiple open-weight models.'
+  claim: >-
+    Independent Mastra model directory (re-read 2026-11-19) lists Berget.AI as a provider
+    reached through the OpenAI-compatible /chat/completions endpoint at https://api.berget.ai/v1,
+    with 6 models routable.
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://mastra.ai/models/providers/berget
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-techeu
-  claim: 'Independent EU tech press (Tech.eu): Berget AI is a Stockholm-founded (2024)
-    provider running open language models on sovereign infrastructure in Sweden so
-    sensitive data stays within national borders under EU jurisdiction; raised EUR 2.1M
-    (Luminar Ventures), with the Swedish central bank (Riksbanken) as flagship customer
-    and 300+ pilot/commercial customers.'
+  claim: >-
+    Independent EU tech press (Tech.eu, 2026-02-02, re-read 2026-11-19): Berget AI raised EUR 2.1
+    million (SEK 24 million) in a round led by Luminar Ventures with Wellstreet and Norrsken
+    Evolve; it is developing a service for building AI applications on open language models
+    operated on sovereign infrastructure in Sweden, and its first service launched shortly before
+    summer 2025 with strong customer interest. The article does not name Riksbanken or give a
+    customer count; the 2026-07-25 claim of a Riksbanken flagship and 300+ customers was not
+    found in it and has been removed (other sources repeat it, none confirmed by Riksbanken or
+    Berget).
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://tech.eu/2026/02/02/swedish-startup-berget-ai-lands-2-1m-as-demand-grows-for-sovereign-ai-in-europe/
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-pricing
-  claim: Pay-as-you-go per-token pricing plus prepaid token packs; ZDR the default.
-    Per-model rates were not captured this session.
+  claim: >-
+    Berget AI pricing page (re-read 2026-11-19; the per-model table is JavaScript-rendered, so
+    rates come from ev-catalogue): Serverless Inference plans Trial EUR 0 (EUR 5 credits), Starter
+    EUR 25, Team EUR 50 and Enterprise EUR 500 per month as prepaid top-ups; "we don't offer pure
+    pay-as-you-go without a plan"; credits non-refundable and valid 12 months; Berget Code EUR 150,
+    300 or 500 per seat per month; rate limits "shared per account" with no numbers.
   source_type: publisher
   doc_type: marketing
-  retrieved: false
-  url: https://berget.ai/pricing
-  date: '2026-07-25'
+  retrieved: true
+  url: https://berget.ai/en/pricing
+  date: '2026-11-19'
 - id: ev-code
-  claim: 'Berget Code launch: agentic coding assistants that keep code in Sweden; Berget
-    does not train any models on the code sent to the service.'
+  claim: >-
+    Berget Code launch post (2026-05-13): agentic coding assistants; "All data that is processed
+    stays within Sweden's borders and Berget AI does not train any models on the code sent to the
+    service." Marketing; the binding retention and no-training text is DPA Appendix 2, which covers
+    Berget Code by name.
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://berget.ai/en/blog/berget-code-launch
-  date: '2026-07-25'
+  date: '2026-11-19'
+- id: ev-dedicated
+  claim: >-
+    Berget AI Dedicated Inference page (re-read 2026-11-19): reserved GPUs in Swedish data
+    centres for a chosen or customer-supplied model, sales-led ("Talk to us"), with a "contracted
+    SLA" (99.5% for an HA setup, see ev-sla) and "Smaller models start around EUR 2,500 per GPU per
+    month"; its calculator names AMD MI300X hardware.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://berget.ai/en/dedicated-inference
+  date: '2026-11-19'
+- id: ev-status
+  claim: >-
+    Berget AI status page. https://status.berget.ai answered HTTP 200 but returned a 2.4 KB
+    JavaScript shell whose only readable text is "Berget AI Status"; incident history and uptime
+    could not be read. No score rests on it.
+  source_type: publisher
+  doc_type: sla
+  retrieved: false
+  url: https://status.berget.ai/
+  date: '2026-11-19'
+
 changelog:
 - date: '2026-07-25'
   change: Initial v2 four-domain library entry.
@@ -518,7 +675,34 @@ changelog:
     purpose-limitation, not an express clause; still no independent attestation).'
 - date: '2026-09-21'
   change: 'Freshness re-verification (Cowork browser session). Confidentiality (explicit, ToS Sec 18) and content ZDR by default (ToS Sec 7) re-confirmed verbatim, unchanged. Positive delta: the DPA was refreshed 2026-09-10 (after the prior grounding) and now states verbatim all data centres are within the EEA, and the customer may choose which Berget data centre(s) process their data; Appendix 1 now names five sub-processors (Acebit AB, AI Iron AB, Obenet AB, Stripe Payments Europe Limited, Toriv AB) with 30-day advance notice and objection rights - both eu_region_available and subprocessors_disclosed were already coded correctly and residency was already at ceiling (5), so this strengthens the grounding without moving the score. ISO 27001 remains a stated claim ("actively working toward" per ToS 6.7), not a dated certificate - unchanged. No incidents or SLA changes found. No score change; grade holds at B.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: >-
+    Freshness re-verification (code session, curl against live pages; rubric 1.2). Re-read the ToS
+    (page stamp 2026-10-16), DPA (2026-10-22), SLA (2026-10-23, new), Privacy page (2025-03-10),
+    Security page, Acceptable Use Policy (2026-04-14), pricing, landing, Dedicated Inference page,
+    docs (now readable) and the API model listing. Changes. (1) The DPA now has an express
+    no-training sentence and states prompts, files and outputs are not stored on persisted disks
+    even during inference (Appendix 2); this resolves the earlier caveat, but data_governance stays
+    4 because the 5 anchor needs independent support for zero retention and none exists. (2)
+    residency 5 to 4: DPA Sec 10.1 excludes serverless inference from customer data-centre choice
+    and promises an EEA boundary, while the Sweden-only and "never crosses borders" statements are
+    marketing; region_pinning yes to no. (3) A published SLA now exists: serverless is best
+    effort with no compensation, 99.5% with credits only for Dedicated Inference with an HA setup;
+    reliability stays 2 because status.berget.ai is an unreadable JavaScript shell
+    (retrieved:false). (4) dedicated_availability coming_soon to available (offered sales-led with
+    a published SLA and an indicative price). (5) Sub-processors now four (Toriv AB dropped). (6)
+    Pricing: per-model rates are published through the API, but there is no pure pay-as-you-go and
+    API access needs a plan. (7) Catalogue replaced: Llama, gpt-oss-120B and GLM-4.7 retired, Gemma
+    4, GLM-5.3-Flash and Kimi K3.1 Pro added; lifecycle policy now documented. (8) Corrections to
+    earlier evidence: the Privacy page is a website policy and does not state EU-only inference
+    servers or zero retention; the Security page is a disclosure page and does not list technical
+    controls; the tech.eu article does not name Riksbanken or 300+ customers. Headline and grade
+    recomputed with scripts/score.py: 70.4 (B) to 67.2 (C), driven only by residency 5 to 4. Ownership
+    level unchanged (substantial). SOC 2 or ISO 27001: none found, ISO 27001 is stated as
+    being worked toward (ToS Sec 6.7).
+
+last_verified: '2026-11-19'
+
 freshness_sla:
   fast_days: 30
   score_days: 90

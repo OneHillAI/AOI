@@ -23,8 +23,11 @@ Aggregated common pitfalls (not an exhaustive catalogue):
 Kimi K2 ships as **Base** and **Instruct** checkpoints on the verified `moonshotai` org, tracked
 as **immutable Hugging Face revisions** - the revision hash is your changelog anchor: pin it, and
 diff against a newer revision when you choose to upgrade. Moonshot's "Kimi K2: Open Agentic
-Intelligence" technical report accompanies the release and documents what the model is. (Any newer
-Kimi variants beyond K2 are out of scope for this entry until independently verified.)
+Intelligence" technical report accompanies the release and documents what the model is. The
+Instruct card marks `Kimi-K2-Instruct-0905` as the newer version. Later generations (K2.5, K2.6,
+K2.7-Code and K3) exist and are out of scope for this entry. On the hosted API, K2 series models
+closed to new users on 2026-10-31 and are planned for retirement by the end of December 2026; the
+downloadable weights are not affected.
 
 <!-- security-disclosure is a `gap` item - no formal published vulnerability-disclosure or
      security policy was found; contact is only the general moonshotai Hugging Face / GitHub org

@@ -20,3 +20,11 @@ The GLM-4.5/4.6 and GLM-4-0414 series (incl. GLM-4-9B-0414) moved to a genuine, 
 
 ## hosted-service note (not this entry)
 The Z.ai hosted terms (Singapore law/SIAC; individual vs API content-use split) documented in the aggregate `glm/_sources.md` concern the *hosted service*, not the self-hosted weights this entry scores.
+
+## Re-verification 2026-11-19 (freshness refresh)
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://huggingface.co/THUDM/glm-4-9b-chat/raw/main/LICENSE | 2026-11-19 | yes | true | glm-4 licence unchanged; commercial-registration clause intact; verbatim English text stored in license__glm-4-9b-chat__2026-11-19.md; corrects two sentences earlier printed as verbatim quotes
+model_card | https://huggingface.co/THUDM/glm-4-9b-chat | 2026-11-19 | yes | true | repo live, not gated, tag other / glm-4, last modified 2025-03-13; -hf conversions carry the same tag
+docs | https://open.bigmodel.cn/mla/form | 2026-11-19 | yes | false | HTTP 200 only; single-page app, form content not read
+```

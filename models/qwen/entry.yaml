@@ -22,7 +22,7 @@ publisher:
   url: https://huggingface.co/Qwen
   security_contact: https://huggingface.co/Qwen
 summary: 'Qwen is Alibaba''s large, fast-moving open-weight family. The mainstream
-  Qwen3 generation spans dense models from ~0.5B to 32B plus Mixture-of-Experts variants,
+  Qwen3 generation spans dense models from 0.6B to 32B plus Mixture-of-Experts variants,
   and includes Qwen3-Coder-480B-A35B, one of the strongest open coding models available.
   The mainstream Qwen3 sizes ship under Apache-2.0, which is a genuine advantage over
   the restrictive community licenses some peers use. The two things an adopter must
@@ -33,20 +33,20 @@ summary: 'Qwen is Alibaba''s large, fast-moving open-weight family. The mainstre
   '
 variants:
 - name: Qwen3 dense
-  params_total: 0.5B-32B
-  context_window: up to 128k (per checkpoint)
+  params_total: 0.6B-32B
+  context_window: 32,768 native, 131,072 with YaRN (per checkpoint)
   kind: instruct
   safety_tuned: true
 - name: Qwen3 MoE
   params_total: up to 235B
   params_active: MoE - subset active per token
-  context_window: up to 128k (per checkpoint)
+  context_window: 32,768 native, 131,072 with YaRN (per checkpoint)
   kind: instruct
   safety_tuned: true
 - name: Qwen3-Coder-480B-A35B
   params_total: 480B
   params_active: 35B
-  context_window: long-context (per checkpoint)
+  context_window: 262,144 native (per checkpoint)
   kind: code
   safety_tuned: true
 openness:
@@ -128,7 +128,7 @@ safety: {}
 deployment:
   ceiling_tier: T3
   ceiling_conditional: true
-  hardware_notes: 'Dense 0.5B-32B cover laptop-to-single-GPU; the 235B MoE and 480B-Coder
+  hardware_notes: 'Dense 0.6B-32B cover laptop-to-single-GPU; the 235B MoE and 480B-Coder
     need multi-GPU / serious infrastructure or aggressive quantization.
 
     '
@@ -243,12 +243,12 @@ signals:
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "Capable long-context (up to 128k) knowledge and coding backbone, but China-aligned topic censorship distorts coverage on politically sensitive subjects."
+    summary: "Capable long-context (131k with YaRN; 262k native on Coder) knowledge and coding backbone, but China-aligned topic censorship distorts coverage on politically sensitive subjects."
     refs: [ev-perf-coding, ev-behaviour]
   specialization:
     level: strong
     dimension: openness
-    summary: "Excellent for specialisation: an unusually wide size ladder (0.5B-480B, including a top open coder) under Apache-2.0 for fine-tuning and distillation."
+    summary: "Excellent for specialisation: an unusually wide size ladder (0.6B-480B, including a top open coder) under Apache-2.0 for fine-tuning and distillation."
     refs: [ev-qwen-hf, ev-perf-coding]
   exchangeability:
     level: high
@@ -342,7 +342,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-qwen-hf]
-        summary: "Dense 0.5B-32B run laptop-to-single-GPU; the 235B MoE and 480B-Coder need multi-GPU / serious infrastructure or aggressive quantization."
+        summary: "Dense 0.6B-32B run laptop-to-single-GPU; the 235B MoE and 480B-Coder need multi-GPU / serious infrastructure or aggressive quantization."
       - key: serving
         title: "Serving stacks"
         doc_type: reference
@@ -388,14 +388,14 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-perf-coding, ev-qwen-hf]
-        summary: "Strong general text plus class-leading open coding/agentic performance; text-focused, with a very wide size ladder from 0.5B to a 480B coder."
+        summary: "Strong general text plus class-leading open coding/agentic performance; text-focused, with a very wide size ladder from 0.6B to a 480B coder."
       - key: context-window
         title: "Context window & long-context behaviour"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-qwen-hf]
-        summary: "Up to 128k context on mainstream Qwen3 checkpoints; exact per-variant limits differ, so confirm the window on each model card."
+        summary: "Qwen3 dense and MoE cards give 32,768 native context and 131,072 with YaRN; Qwen3-Coder-480B-A35B-Instruct gives 262,144 native (1M with YaRN). Limits differ per checkpoint, so confirm the window on each model card."
       - key: chat-template
         title: "Prompt format & chat template"
         doc_type: reference
@@ -474,17 +474,17 @@ ownership:
       # grounded in: ev-license (license, retrieved) - apache-2.0 verified across four Qwen3 checkpoints, no MAU clause; ev-license-tongyi (license, retrieved) - Sec 4 MAU>100M + Sec 5 attribution/export read verbatim on Qwen2.5-72B-Instruct
     transparency:
       level: weak
-      rationale: "You hold the weights but cannot inspect what is in them: training data and code are closed and China-aligned topic censorship is baked into behaviour, so sensitive-topic coverage is distorted in ways you cannot audit. On the hosted path, Alibaba's Model Studio FAQ grounds a no-training commitment ('never uses your data for model training'), while the binding specifics (exact retention, region and opt-out) sit in the formal Model Studio Service Agreement."
-      # grounded in: ev-behaviour (third_party) - censorship; ev-modelstudio-faq (docs, retrieved) - hosted no-training commitment; ev-terms (terms, not retrieved) - formal Service Agreement specifics unread
+      rationale: "You hold the weights but cannot inspect what is in them: training data and code are closed and China-aligned topic censorship is baked into behaviour, so sensitive-topic coverage is distorted in ways you cannot audit. On the hosted path, the binding Alibaba Cloud Product Terms (Sec 4.48, updated 19 Oct 2026) say Alibaba Cloud 'will not use your Member Content to develop or improve the models on Model Studio, unless you separately provide your consent' (the FAQ repeats a softer 'never uses your data for model training'), but they state no retention period, storage region or opt-out mechanism."
+      # grounded in: ev-behaviour (third_party) - censorship; ev-terms (terms, retrieved 2026-11-19) - Product Terms Sec 4.48 binding no-training-without-consent, no retention period, region or opt-out stated; ev-modelstudio-faq (docs, retrieved) - FAQ no-training sentence
     reliability:
       level: moderate
-      rationale: "Runs dependably with 128K context and documented thinking modes, but safety tuning is lighter than Western frontier labs, with no companion guard model, so you supply that layer."
+      rationale: "Runs dependably with 32K native context (128K with YaRN; 256K native on Coder) and documented thinking modes, but safety tuning is lighter than Western frontier labs, with no companion guard model, so you supply that layer."
       # grounded in: ev-perf-coding (third_party) - class-leading open coding; ev-tech-report (technical_report, retrieved) - Qwen3 report, modes and multilingual coverage
     data_control:
       level: strong
-      rationale: "Self-hosted, the Apache-licensed weights run on your own infrastructure with no clawback or telemetry, so your data stays yours. On Alibaba's hosted Qwen, the Model Studio FAQ grounds a no-training commitment ('never uses your data for model training'; call data stored, encrypted with AES-256 in transit), and the general privacy policy documents Singapore storage, SCC/DPF cross-border transfers and 'ongoing legitimate business need' retention; the binding specifics (exact retention, region, opt-out) sit in the formal Model Studio Service Agreement."
-      # grounded in: self-hosting (structural); ev-modelstudio-faq (docs, retrieved) - hosted no-training + AES-256 in transit; ev-privacy (privacy_policy, retrieved) - Singapore storage, SCC/DPF transfers, retention; ev-terms (terms, not retrieved) - formal Service Agreement specifics unread
-  verdict: "You partly own Qwen: the Apache-licensed mainstream Qwen3 sizes are yours to run, modify and self-host, they perform strongly (especially coding), and self-hosted your data stays on your infrastructure. Two things cap it at partial. First the licence is per-checkpoint - Apache-2.0 on mainstream Qwen3, but the legacy/large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct) carry a >100M-MAU trigger and 'Built with Qwen' attribution - so verify the LICENSE on the exact checkpoint. Second, transparency: China-aligned censorship is baked in and training is closed; the hosted path carries a grounded no-training commitment (Model Studio FAQ) alongside the Singapore-storage/SCC-DPF/retention privacy policy, and the formal Model Studio Service Agreement holds the binding specifics (exact retention, region, opt-out). Adopt with hard limits: keep politically sensitive and regulated workloads off it, confirm the per-checkpoint licence, and if you place a systemic-risk-scale variant on the EU market, close the Article 55 gap yourself."
+      rationale: "Self-hosted, the Apache-licensed weights run on your own infrastructure with no clawback or telemetry, so your data stays yours. On Alibaba's hosted Qwen, the binding Product Terms (Sec 4.48) commit that Alibaba Cloud will not use your Member Content to develop or improve its Model Studio models without your separate consent, and treat Input and Output as your content processed on your behalf; the FAQ adds AES-256 encryption of transmitted data, and the general privacy policy documents Singapore storage (Philippines addendum), SCC/DPF cross-border transfers and 'ongoing legitimate business need' retention. No document read states an exact retention period, a storage region for Model Studio content or an opt-out mechanism, and the Terms let Alibaba Cloud remove stored data from time to time."
+      # grounded in: self-hosting (structural); ev-terms (terms, retrieved 2026-11-19) - Product Terms Sec 4.48 no-training-without-consent, Member Content processed on customer's behalf; ev-modelstudio-faq (docs, retrieved) - AES-256 for transmitted data; ev-privacy (privacy_policy, retrieved) - Singapore storage, SCC/DPF transfers, retention
+  verdict: "You partly own Qwen: the Apache-licensed mainstream Qwen3 sizes are yours to run, modify and self-host, they perform strongly (especially coding), and self-hosted your data stays on your infrastructure. Two things cap it at partial. First the licence is per-checkpoint - Apache-2.0 on mainstream Qwen3, but the legacy/large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct) carry a >100M-MAU trigger and 'Built with Qwen' attribution - so verify the LICENSE on the exact checkpoint. Second, transparency: China-aligned censorship is baked in and training is closed; the hosted path carries a binding no-training-without-consent term (Alibaba Cloud Product Terms Sec 4.48) alongside the Singapore-storage/SCC-DPF/retention privacy policy, but no document read gives an exact retention period, a Model Studio storage region or an opt-out. Adopt with hard limits: keep politically sensitive and regulated workloads off it, confirm the per-checkpoint licence, and if you place a systemic-risk-scale variant on the EU market, close the Article 55 gap yourself."
 
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
 #     (true = the document's substantive text was read; false = known to exist but not read).
@@ -493,29 +493,31 @@ ownership:
 #     (0.6B/32B/235B-A22B/Coder-480B) is Apache-2.0 (ev-license), while legacy/large Tongyi
 #     Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct) carry an MAU>100M clause
 #     (ev-license-tongyi). The hosted-service posture is grounded via the Model Studio FAQ
-#     (ev-modelstudio-faq, retrieved) - a no-training commitment plus AES-256-in-transit - and
-#     the GENERAL Alibaba Cloud privacy policy (ev-privacy); only the formal Model Studio
-#     Service Agreement specifics (retention/region/opt-out) remain unread (ev-terms,
-#     retrieved:false).
+#     (ev-modelstudio-faq, retrieved) - a no-training commitment plus AES-256 - and
+#     the GENERAL Alibaba Cloud privacy policy (ev-privacy). Re-verified 2026-11-19: the binding
+#     Alibaba Cloud Product Terms Sec 4.48 were read (ev-terms, retrieved) and state no-training-
+#     without-consent; no document read states a Model Studio retention period, region or opt-out.
 evidence:
 - id: ev-qwen-hf
   claim: Qwen3 checkpoints are hosted on the verified Qwen org on Hugging Face in
-    safetensors with checksums.
+    safetensors with checksums; none is gated (Hugging Face API gated False on every
+    Qwen3 checkpoint checked, re-read 2026-11-19).
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/Qwen
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-license
   claim: 'Mainstream Qwen3 checkpoints are released under Apache-2.0 with unconditional
-    commercial use and NO monthly-active-user clause - metadata verified across four
-    checkpoints (Qwen3-0.6B, Qwen3-32B, Qwen3-235B-A22B, Qwen3-Coder-480B-A35B-Instruct),
-    each displaying "License: apache-2.0".'
+    commercial use and NO monthly-active-user clause - raw LICENSE file read on four
+    checkpoints (Qwen3-0.6B, Qwen3-32B, Qwen3-235B-A22B, Qwen3-Coder-480B-A35B-Instruct):
+    byte-identical unmodified Apache License 2.0 text, and the cards show "license: apache-2.0".
+    Re-read 2026-11-19; the same text covers the wider Qwen3 line (2507 updates, FP8, MLX).'
   source_type: publisher
   doc_type: license
   retrieved: true
-  url: https://huggingface.co/Qwen/Qwen3-235B-A22B
-  date: '2026-07-25'
+  url: https://huggingface.co/Qwen/Qwen3-235B-A22B/raw/main/LICENSE
+  date: '2026-11-19'
 - id: ev-license-tongyi
   claim: 'Legacy/large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct)
     are NOT Apache-2.0 - the Tongyi Qianwen community licence, read verbatim: Sec 4
@@ -527,56 +529,62 @@ evidence:
   doc_type: license
   retrieved: true
   url: https://huggingface.co/Qwen/Qwen2.5-72B-Instruct/raw/main/LICENSE
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-tech-report
   claim: 'Qwen3 Technical Report (arXiv 2505.09388): documents the Qwen3 family,
     thinking/non-thinking modes, thinking budget, and multilingual coverage (~119
-    languages).'
+    languages). Abstract page re-read 2026-11-19 (29 to 119 languages and dialects).'
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2505.09388
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-privacy
   claim: 'General Alibaba Cloud International Website Privacy Policy, read: retention
     tied to "ongoing legitimate business need" (Sec F); cross-border transfers under
     SCCs (GDPR Art. 46) and the EU-US/UK/Swiss Data Privacy Framework (Sec D); "Your
     personal data will be stored in Singapore" (Philippines addendum). This general
-    policy is SILENT on AI training.'
+    policy is SILENT on AI training. Re-read 2026-11-19 (Last Updated 4 Sep 2026): clauses unchanged.'
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-privacy-policy
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-modelstudio-faq
   claim: 'Alibaba Cloud Model Studio FAQ, read verbatim: "Alibaba Cloud strictly
     protects data privacy and never uses your data for model training." Model Studio
-    "will store data generated from model and application calls"; data is "encrypted
-    with AES-256" in transit. Grounds a no-training commitment for the hosted service;
-    the formal Model Studio Service Agreement (exact retention period, storage region,
-    opt-out) is still unread - see ev-terms.'
+    All data transmitted "is encrypted with AES-256". Re-read 2026-11-19: the no-training
+    sentence is unchanged, the earlier "will store data generated from model and application
+    calls" sentence is no longer present, and the FAQ now points to the Alibaba Cloud
+    International Website Product Terms of Service for data handling - see ev-terms.'
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://www.alibabacloud.com/help/en/model-studio/faq-about-alibaba-cloud-model-studio
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-terms
-  claim: 'The formal Model Studio / DashScope Service Agreement - its exact retention
-    period, storage region and training opt-out mechanics - was not directly reachable
-    and remains unread. The Model Studio FAQ (ev-modelstudio-faq) points to it and
-    grounds the no-training commitment, but these binding specifics stay unverified.'
+  claim: 'Alibaba Cloud International Website Product Terms of Service (Last Updated 19 Oct 2026),
+    Sec 4.48 Model Studio, read verbatim: Input and Output are "Member Content" processed
+    "for your purposes and on your behalf"; "Alibaba Cloud will not use your Member Content to
+    develop or improve the models on Model Studio, unless you separately provide your consent."
+    The section states no retention period, no storage region and no opt-out mechanism, and
+    lets Alibaba Cloud remove stored data from time to time. This is the binding document the
+    Model Studio FAQ points to.'
   source_type: publisher
   doc_type: terms
-  retrieved: false
-  url: https://www.alibabacloud.com/help/en/model-studio/
-  date: '2026-07-25'
+  retrieved: true
+  url: https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service
+  date: '2026-11-19'
 - id: ev-modelscope
-  claim: Qwen is also officially published on Alibaba's ModelScope hub (dual distribution).
+  claim: 'Qwen is also officially published on Alibaba''s ModelScope hub (dual distribution):
+    the public ModelScope model API returns Qwen/Qwen3-32B, Qwen3-235B-A22B and
+    Qwen3-Coder-480B-A35B-Instruct with License apache-2.0 (read 2026-11-19; the organisation
+    web page is a JavaScript shell and was not readable as a page).'
   source_type: publisher
   doc_type: model_card
-  retrieved: false
-  url: https://modelscope.cn/organisation/qwen
-  date: '2026-07-25'
+  retrieved: true
+  url: https://www.modelscope.cn/api/v1/models/Qwen/Qwen3-32B
+  date: '2026-11-19'
 - id: ev-eu-gap
   claim: No public EU AI Act training-content summary, copyright policy, or Article
     55 documentation for the systemic-risk large variants.
@@ -640,7 +648,9 @@ changelog:
     the verdict; score and ownership level unchanged.'
 - date: '2026-09-21'
   change: 'Freshness re-verification. The tracked Qwen3 weights remain Apache-2.0, not reverted or re-licensed. Flag (not folded): Qwen3 has been superseded by Qwen3.5/3.6/3.8 (also read as Apache-2.0) as the current head of the line - a future build-pass decision on new siblings vs updating this entry, not scored here.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification (59 days stale). Re-read the raw LICENSE of Qwen3-0.6B, Qwen3-32B, Qwen3-235B-A22B and Qwen3-Coder-480B-A35B-Instruct (byte-identical unmodified Apache-2.0; all ungated) and the Tongyi Qianwen licence on Qwen2.5-72B-Instruct (unchanged); the Qwen3 line is still uniformly Apache-2.0. Corrections: smallest dense Qwen3 is 0.6B, not 0.5B; context is 32,768 native / 131,072 with YaRN (Coder 262,144 native), not a flat 128k. Hosted path: located and read the binding Alibaba Cloud Product Terms Sec 4.48 (no training on Member Content without separate consent; no retention period, region or opt-out stated), flipping ev-terms to retrieved; the Model Studio FAQ no longer contains the earlier "will store data" sentence. ModelScope record now read through its API. Correction to the 2026-09-21 flag: the newer generations are NOT all Apache-2.0 - Qwen3.8-2.4T-A95B (Qwen3.8-Max License) and Qwen3.8-Flash-Next (Qwen Community License 1.0) are custom licences, Qwen-Image-2.1 is a non-commercial Qwen Research licence; Qwen3.5, Qwen3.6, Qwen3.8-27B and Qwen-Drive-1.0-4B are Apache-2.0. Those are separate releases and are not folded in here. Score, grade and ownership level unchanged.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

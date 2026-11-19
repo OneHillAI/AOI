@@ -15,9 +15,10 @@ verify checksums. This is not an exhaustive catalogue.
 <!-- item: release-versioning -->
 ## Versions, changelog & cadence
 
-Nemotron 3 Nano Omni was released around 2026 on the verified `nvidia` org with a BF16 variant. There is
-no single-checkpoint changelog; the Hugging Face revision hash is the anchor, so pin it, and watch the
-licence document's date inconsistency.
+Nemotron 3 Nano Omni was released on 2026-04-20 (BF16; FP8 and NVFP4 followed on 2026-04-24, and
+build.nvidia.com on 2026-04-28) on the verified `nvidia` org. There is no single-checkpoint
+changelog; the Hugging Face revision hash is the anchor, so pin it. The licence version line is
+"v. March 9, 2026" while its web page shows an April 2, 2026 release date.
 
 <!-- item: security-disclosure -->
 ## Security / vulnerability disclosure
@@ -37,6 +38,6 @@ repository for red-team and safety-tooling questions.
 ## Tracked known issues
 
 From the card and recipe: the weaker open-data posture and unadvertised recipe, the absence of a
-model-level safety evaluation over the multimodal input path, and the licence date inconsistency are the
+model-level safety evaluation over the multimodal input path, and the two dates on the licence page are the
 recurring caveats. Track these against your own control stack and red-team rather than a published issue
 tracker.

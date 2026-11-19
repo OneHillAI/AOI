@@ -1,0 +1,6 @@
+# license R1-Distill-Qwen and its Qwen2.5 bases, re-read 2026-11-19
+
+- DeepSeek side: DeepSeek-R1-Distill-Qwen-1.5B, -7B, -14B, -32B (deepseek-ai, HF API gated=false, safetensors BF16, last modified 2025-02-24) carry a standard MIT LICENSE (byte-identical to R1) and card metadata license mit. config.json architectures: Qwen2ForCausalLM. Source: https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B/raw/main/LICENSE and README.md.
+- DeepSeek model card, section 7: "DeepSeek-R1-Distill-Qwen-1.5B, ...-7B, ...-14B and ...-32B are derived from Qwen-2.5 series, which are originally licensed under Apache 2.0 License, and now finetuned with 800k samples curated with DeepSeek-R1." Base table: 1.5B on Qwen/Qwen2.5-Math-1.5B, 7B on Qwen/Qwen2.5-Math-7B, 14B on Qwen/Qwen2.5-14B, 32B on Qwen/Qwen2.5-32B.
+- Qwen side (HF API and raw LICENSE, all HTTP 200, gated false): Qwen2.5-Math-1.5B, Qwen2.5-Math-7B, Qwen2.5-14B and Qwen2.5-32B all list license apache-2.0 and their LICENSE files are the same Apache License, Version 2.0 text (md5 identical across the four).
+- Result: base licences unchanged, Apache-2.0 for all four sizes. Note for the entry: the 1.5B and 7B are built on the Math variants of Qwen2.5, not the general Qwen2.5 base, though the licence is the same.
