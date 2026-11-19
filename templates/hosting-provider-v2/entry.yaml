@@ -1,0 +1,225 @@
+# OneHill v2 HOSTING-PROVIDER entry template. A hosting provider is a place where model weights
+# are stored and pulled from: a hub, local runner, serving engine, cloud registry or package ecosystem.
+# Validated against schema/hosting-provider.v2.schema.json. Copy this folder to hosting-providers/<id>/.
+#
+#   score       scripts/score.py --write <path>/entry.yaml        writes the AOI headline and grade
+#   meters      scripts/completeness.py --write <path>/entry.yaml writes per-domain completeness and originality
+#   check       scripts/validate.py hosting-providers/<id>        must pass before a pull request
+#   long prose  the four sibling files assess.md, implement.md, use.md and support.md.
+#               Each section starts with a `<!-- item: KEY -->` marker. KEY must match an item below.
+#
+# Hosting entries carry no ownership block and no signals block.
+# Replace every placeholder (empty strings, score 0, the example evidence and the example items).
+#
+# Provenance vocabularies (both required):
+#   evidence[].source_type         onehill_verified | third_party | publisher   (provenance of a FACT)
+#   documentation item source_type aggregated | onehill_generated | gap         (provenance of a SECTION)
+#   An aggregated item cites at least one evidence id in refs.
+#   An onehill_generated item also needs a method and must cite an onehill_verified evidence id.
+#   A gap item needs a gap_reason and has no coverage. Every other item needs coverage: full | partial.
+#   An onehill_verified evidence item needs a method that says what OneHill ran or observed.
+
+schema_version: "2.0"
+id: "provider-id"                       # lowercase letters, digits and hyphens only
+name: "Provider Name"
+kind: hub                               # hub | local_runner | serving_engine | cloud_registry | package_ecosystem
+operator: ""                            # the organisation that runs it
+summary: >
+  One independent paragraph: what the provider is, how weights reach a downloader, and the single
+  most important thing an adopter needs to know about trusting what comes from here.
+distribution_mechanism: >
+  How weights are obtained: git-LFS, OCI registry, SDK download, CLI pull or one-click deploy.
+
+provenance:
+  verified_orgs: "unknown"              # yes | no | unknown (quote the value, YAML reads bare yes/no as booleans)
+  malware_scanning: "none documented"   # scanners run and what they cover; "none documented" if absent
+  signing: "none documented"            # signing or provenance attestation shown to downloaders; "none documented" if absent
+  checksums: "unknown"                  # yes | no | unknown
+  revision_pinning: "unknown"           # yes | no | unknown
+  gating_enforcement: ""                # how licence or EULA gating is enforced: click-through, access request or none
+
+format_safety:
+  safetensors_default: unknown          # yes | promoted | no | n/a | unknown
+  pickle_handling: ""                   # blocked, flagged and not blocked, or silent
+  trust_remote_code_surface: ""         # where downloaded code or chat templates can run on the user's machine
+  known_loader_cves: []                 # one string per CVE: id, component, affected and fixed versions
+
+license_surfacing: ""                   # how the weights licence is shown to the downloader, and what is enforced
+
+security_track_record:
+  incidents: []                         # items of {date: "YYYY-MM-DD", summary: "", severity: "", url: ""}
+  response_notes: ""                    # how the operator handled reports, disclosure and fixes
+
+trust_signals_exposed: []               # one string per signal a downloader can see, noting which can be gamed
+
+self_hosting_notes: ""                  # safe-use guidance for the person pulling from this provider
+ecosystem_lockin: ""                    # which parts are portable and which are specific to this provider
+
+# --- AOI provider score. The six dimensions and weights come from methodology/provider-scoring-rubric.md
+#     (hosting profile) and HOSTING_WEIGHTS in scripts/score.py. Each score is an integer from 0 to 5.
+#     A score of 5 needs an evidence ref whose source_type is onehill_verified or third_party.
+score:
+  rubric_version: "1.0"
+  headline: null                        # scripts/score.py --write
+  grade: null                           # scripts/score.py --write
+  hard_flags: []                        # rubric hard flags that apply, as short strings
+  dimensions:
+    provenance_integrity:  {score: 0, rationale: "", evidence_refs: []}
+    format_loader_safety:  {score: 0, rationale: "", evidence_refs: []}
+    license_governance:    {score: 0, rationale: "", evidence_refs: []}
+    security_track_record: {score: 0, rationale: "", evidence_refs: []}
+    transparency:          {score: 0, rationale: "", evidence_refs: []}
+    ecosystem_portability: {score: 0, rationale: "", evidence_refs: []}
+
+# --- The four documentation domains. Item keys must match checklists/hosting-provider.yaml and a
+#     `<!-- item: KEY -->` section in the domain's .md file. Gap items need no prose section.
+#     completeness and originality are written by scripts/completeness.py --write (leave null here).
+#     Every item below is a placeholder. Replace it with the real source_type, coverage, refs and summary.
+documentation:
+  assess:
+    completeness: null
+    originality: null
+    items:
+      - key: provenance-integrity
+        title: "Provenance & integrity signals"
+        doc_type: explanation
+        source_type: aggregated         # aggregated | onehill_generated | gap
+        coverage: full                  # full | partial (omit for gap)
+        refs: []                        # at least one evidence id for aggregated
+        summary: "One-line abstract shown in tables and tooltips."
+      - key: format-safety
+        title: "Format & loader safety"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: license-governance
+        title: "License surfacing & gating"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: security-record
+        title: "Security incident history & response"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: transparency
+        title: "Exposed trust signals & their gameability"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: []
+        summary: ""
+  implement:
+    completeness: null
+    originality: null
+    items:
+      - key: obtain-weights
+        title: "Obtaining weights"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: verify-integrity
+        title: "Verifying integrity"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: pin-revision
+        title: "Pinning a revision"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: run-serve
+        title: "Running / serving locally"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: resource-needs
+        title: "Resource requirements"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Gap example. State why this cannot be gathered or provided, and be specific."
+  use:
+    completeness: null
+    originality: null
+    items:
+      - key: catalog-scope
+        title: "Catalog scope & publishers"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: formats-supported
+        title: "Formats supported"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: integration
+        title: "Downstream integration"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: []
+        summary: ""
+  support:
+    completeness: null
+    originality: null
+    items:
+      - key: security-disclosure
+        title: "Reporting malicious models & vulnerabilities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: release-versioning
+        title: "Tooling versioning & changelog"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: known-issues
+        title: "Known issues & caveats"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: []
+        summary: ""
+
+# --- Evidence. One example per source_type. Replace them and add one item per fact you cite.
+#     Optional fields on real entries: doc_type (terms, privacy_policy, dpa, license, security,
+#     technical_report, model_card or docs) and retrieved (true once you have read the document).
+evidence:
+  - {id: ev1, claim: "", source_type: publisher, url: "", date: "2026-11-19"}
+  - {id: ev2, claim: "", source_type: third_party, url: "", date: "2026-11-19"}
+  - {id: ev3, claim: "", source_type: onehill_verified, method: "What OneHill ran or observed: request, command, version and date.", url: "", date: "2026-11-19"}
+
+changelog:
+  - {date: "2026-11-19", change: "Initial entry."}
+
+last_verified: "2026-11-19"
+freshness_sla: {fast_days: 30, score_days: 90, slow_days: 180}

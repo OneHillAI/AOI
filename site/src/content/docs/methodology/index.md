@@ -3,16 +3,12 @@ title: Methodology
 description: The public, versioned method behind every score, badge, and completeness meter in the library.
 ---
 
-Every rating here is an **opinion with receipts**. The full method lives in the
-[GitHub repository](https://github.com/OneHillAI/AOI/tree/main/methodology); this
-page summarises it.
+Every rating is an analytical judgement with its sources shown. The full method is in the
+[GitHub repository](https://github.com/OneHillAI/AOI/tree/main/methodology); this page summarises it.
 
 ## The AI Ownership Index (AOI)
 
-Each model is scored on **seven weighted dimensions**, each 0-5, rolled into a 0-100
-headline and an A-F grade. Trust dimensions deliberately outweigh raw capability - a model
-that benchmarks well but can't be trusted, licensed, or run safely is the failure this
-library exists to catch.
+Each model is scored on seven weighted dimensions, each 0 to 5, rolled into a 0 to 100 headline and an A to F grade. Inference providers use a parallel set of seven dimensions. Trust dimensions outweigh raw capability: a model that benchmarks well but cannot be trusted, licensed or run safely still scores low.
 
 | Dimension | Weight |
 |---|---|
@@ -24,17 +20,11 @@ library exists to catch.
 | Operational Readiness | 0.12 |
 | Maintenance & Governance | 0.08 |
 
-**Hard flags** (e.g. a systemic-risk model with no EU AI Act Article 55 documentation) can
-cap a grade regardless of the computed score.
+Hard flags, such as a systemic-risk model with no EU AI Act Article 55 documentation, cap a grade whatever the computed score.
 
-## Two documentation meters
+## Documentation meter
 
-Beyond the trust score, each documentation domain shows:
-
-- **Completeness** - coverage of the expected items for that domain (grounded in accepted
-  standards). A documented *gap* counts as addressed-but-empty, not as coverage.
-- **OneHill-tested (originality)** - the share of a domain's items OneHill generated or
-  verified itself, rather than aggregating from the publisher's own docs.
+Each documentation domain shows a completeness meter: the coverage of the expected items for that domain. A documented gap counts as addressed and adds nothing to coverage. Entries also record originality, the share of a domain's items OneHill produced itself. It is 0 in every entry today.
 
 ## Grounded in accepted standards
 

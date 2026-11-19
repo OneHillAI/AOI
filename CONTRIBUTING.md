@@ -1,15 +1,15 @@
 # Contributing
 
-This registry is **data-first**: an entry is a validated `entry.yaml` plus a human
-`README.md` dossier generated from and kept consistent with it. Contributions are how
+This registry is **data-first**: an entry is a validated `entry.yaml` plus four dossier pages
+(`assess.md`, `implement.md`, `use.md`, `support.md`) kept consistent with it. Contributions are how
 coverage grows and how the registry stays current.
 
 ## Adding an entry
 
 1. **Pick the type** and copy the matching template folder:
-   - a model → copy [`templates/model/`](templates/model/) to `models/<id>/`
-   - an inference provider → copy [`templates/inference-provider/`](templates/inference-provider/) to `inference-providers/<id>/`
-   - a hosting provider → copy [`templates/hosting-provider/`](templates/hosting-provider/) to `hosting-providers/<id>/`
+   - a model → copy [`templates/model-v2/`](templates/model-v2/) to `models/<id>/`
+   - an inference provider → copy [`templates/inference-provider-v2/`](templates/inference-provider-v2/) to `inference-providers/<id>/`
+   - a hosting provider → copy [`templates/hosting-provider-v2/`](templates/hosting-provider-v2/) to `hosting-providers/<id>/`
 2. **Fill in `entry.yaml`.** Read the relevant [`methodology/`](methodology/) docs first
    - the anchors tell you how to score each dimension. Every non-trivial claim needs an
    `evidence` entry with a `source_type` and URL.
@@ -18,12 +18,16 @@ coverage grows and how the registry stays current.
    ```bash
    python scripts/score.py --write models/<id>/entry.yaml
    ```
-4. **Write the dossier** (`README.md`) so its score block, tables, and flags match the
-   data file, and add the independent prose analysis.
+4. **Write the four dossier pages.** Each section starts with an `<!-- item: KEY -->` marker
+   that matches an item key in `entry.yaml`. State findings as flat facts, as set out in
+   [`STYLE.md`](STYLE.md). Then compute the completeness meters:
+   ```bash
+   python scripts/completeness.py --write models/<id>/entry.yaml
+   ```
 5. **Validate.**
    ```bash
    pip install -r requirements.txt
-   python scripts/validate.py models/<id>
+   python scripts/validate.py
    ```
 6. Open a PR.
 

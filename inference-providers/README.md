@@ -20,4 +20,4 @@ Aggregators such as OpenRouter route data through two parties, the router and th
 
 ## Adding an entry
 
-Copy [`../templates/inference-provider/`](../templates/inference-provider/).
+Copy [`../templates/inference-provider-v2/`](../templates/inference-provider-v2/) and follow [`../CONTRIBUTING.md`](../CONTRIBUTING.md).

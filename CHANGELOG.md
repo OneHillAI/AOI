@@ -67,6 +67,16 @@ Initial public foundation (v0.1).
 
 ### Changed
 
+- Rewrote the public pages to match what the site shows: `start-here` (the four ownership factors, in place of
+  a "Bottom line" box that does not exist), `trust`, the glossary, the methodology index and provenance pages,
+  the home page and the README. Removed claims the library does not meet: a OneHill-tested label and "our own
+  testing" (no entry carries one), a "Posture" strip, and a `trust` example saying Runware's data terms are weak,
+  which no longer holds (it now uses Nebius). Entry pages show each entry's `last_verified` date instead of a
+  fixed 2026-07-25.
+- Added current-format templates for inference providers and hosting providers
+  (`templates/inference-provider-v2/`, `templates/hosting-provider-v2/`) and pointed `CONTRIBUTING.md` and the
+  templates README at the v2 templates. The earlier `data.yaml` template folders remain and are marked as not
+  for new entries.
 - The pre-pull-request check in `AGENTS.md`, `CONFORMANCE.md` and the pull request template is now
   `python scripts/validate.py` with no arguments. CI validates models, inference-providers and
   hosting-providers, and the earlier two-tree command passed locally while hosting entries failed on the

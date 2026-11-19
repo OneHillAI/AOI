@@ -190,7 +190,7 @@ weights data governance and lock-in over raw capability.
 | 1 | Basic encryption asserted, but no isolation model, access-control detail or testing disclosed. |
 | 2 | Encryption in transit and at rest plus stated access controls, but no independent pen-test and a thin isolation story. |
 | 3 | Documented tenant isolation, encryption, RBAC and periodic penetration testing. |
-| 4 | All of 3 plus independent pen-test attestation or a bug-bounty programme, and a clean/well-handled incident history. |
+| 4 | All of 3 plus independent pen-test attestation or a bug-bounty programme, and a clean or well-handled incident history. |
 | 5 | Independently audited posture, regular third-party pen-testing/bug bounty, and a transparent incident-response record. |
 
 ### 5 · Reliability & SLA
@@ -259,7 +259,7 @@ documents are the ceiling.
 
 | Level | Rule |
 |---|---|
-| strong | Operational ≥ 4 and safety ≥ 4 (dependable to run, and misuse genuinely controlled). |
+| strong | Operational ≥ 4 and safety ≥ 4 (dependable to run, and misuse controlled). |
 | moderate | Operational = 3, or safety = 3 (runnable and deployable, but a safety gap you must fill: lighter alignment, unbenchmarked misuse, no guard model, censorship distortion). |
 | weak | Operational ≤ 2 (cannot run it dependably) or safety ≤ 2 (unsafe as presented). A low performance score never touches this factor. |
 

@@ -24,4 +24,4 @@ A SHA256-addressed blob proves integrity, meaning the bytes did not change. It d
 
 ## Adding an entry
 
-Copy [`../templates/hosting-provider/`](../templates/hosting-provider/).
+Copy [`../templates/hosting-provider-v2/`](../templates/hosting-provider-v2/) and follow [`../CONTRIBUTING.md`](../CONTRIBUTING.md).

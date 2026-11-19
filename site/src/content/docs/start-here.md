@@ -1,63 +1,30 @@
 ---
-title: "Start here: what you are actually deciding"
-description: What to look for when you adopt an open AI model, in plain language, without benchmarks.
+title: "Start here: what you are deciding"
+description: How to read an entry - the ownership level and the four factors behind it.
 ---
 
-You do not need to read benchmarks to choose an open model. The decision comes down to how much
-you really **own** what you are adopting. This index scores exactly that as the **AI Ownership
-Index (AOI)**, and it breaks into three plain questions.
+The AI Ownership Index rates how much you own an open model or an inference provider. Each entry ends in one ownership level, from full to none, and shows the four factors behind it. The level is floor-weighted: the weakest factor caps it.
 
-Every model and provider page opens with a **Bottom line** box that answers these three at a
-glance, and closes with the full, sourced **Ownership verdict**.
+## Use and modify
 
-## 1. Can it be restricted?
+Whether anyone can stop you using or changing it. An open-weight model you download cannot be withdrawn, so the licence decides. Some licences are permissive (MIT, Apache-2.0). Others add conditions such as a monthly-active-user threshold, a revenue cap or a limit on certain uses. Each entry states its licence and links the text. For a provider, this factor also covers how portable the service is and what it costs.
 
-The worry: can someone stop you doing what you want with it, now or later? Closed services can
-change their terms, add usage caps, or cut you off.
+## Transparency
 
-What to look for: an **open-weight** model you can download removes most of this risk, because the
-weights are already in your hands. The catch is the **licence**. Some are fully permissive (MIT,
-Apache) with no user caps or field-of-use limits. Others attach conditions, for example a
-monthly-active-user threshold or a restriction on certain uses. Each entry states the licence in
-one line and links the full text.
+What you can see: the weights, the training data and code, the evaluations and the terms. A model that publishes only its weights rates lower than one that also publishes its data and recipe. For a provider, the question is whether the binding terms are published and legible.
 
-Where to check it: the **Can it be restricted?** line in the Bottom line box, and the **Use and
-modify freely** factor in the Ownership verdict.
+## Reliability
 
-## 2. What happens to your data?
+Whether it runs dependably and whether misuse is controlled. This factor combines operational readiness and safety. How capable a model is affects the AOI score and leaves this factor unchanged.
 
-The worry: does using this expose or give away your data? This is where open and hosted differ the
-most.
+## Data control
 
-What to look for: a model you **self-host** runs on your own hardware, so your data never leaves
-and nothing is sent back. A **hosted provider** is different: you are trusting their terms, so the
-questions become whether they train on your inputs, how long they keep them, whether your data and
-outputs stay yours, and where it is processed. The index reads the provider's actual Terms and
-Privacy Policy, not their marketing, and says plainly when the two disagree.
+Whether using it hands your data to someone else. A self-hosted model runs on your hardware and sends nothing back. With a hosted provider, the Terms and Privacy Policy decide whether it keeps your prompts, trains on them and owns the outputs, and where processing happens. The index reads those documents and records where they disagree with the marketing.
 
-Where to check it: the **What happens to your data?** line in the Bottom line box, and the **Does
-not extract your data** factor in the Ownership verdict.
+## Score and grade
 
-## 3. Will you be locked in?
+Beside the level, each entry shows an AOI score from 0 to 100 and a grade from A to F, built from seven weighted dimensions. Trust dimensions outweigh capability. The score is an input to the verdict, and the level is the verdict.
 
-The worry: will you get trapped with one provider and be unable to leave?
+## Cost
 
-What to look for: **open weights are portable**. The same checkpoint runs on many providers or on
-your own machine, so you can move. With a hosted API, an OpenAI-compatible interface makes moving
-cheap; a proprietary interface means rewriting your integration, though the underlying open model
-still runs elsewhere.
-
-Where to check it: the **Will you be locked in?** line in the Bottom line box, and the
-**Transparency** factor in the Ownership verdict.
-
-## A note on cost
-
-For a **self-hosted open model**, the cost is your own hardware, not a metered bill that can creep
-up, and there is no vendor who can raise a per-token price on you. Hosted providers do charge per
-use; each provider page records the pricing model.
-
-## Where this goes next
-
-A later version will show how the best open options compare to the closed frontier, framed on
-**ownership** rather than raw performance: how much of a frontier-grade capability you can now have
-on terms you actually own.
+A self-hosted model costs hardware, and no vendor can raise a per-token price. Hosted providers charge per use, and each provider entry records its pricing.
