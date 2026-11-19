@@ -13,7 +13,7 @@
 
 </div>
 
-**Maintained by [OneHill](https://onehill.org). Status: v0.1, Foundation. Content baseline: July 2026.**
+**Maintained by [OneHill](https://onehill.org). Status: v0.1, Foundation. Content baseline: November 2026 (full refresh 2026-11-19).**
 
 ---
 

@@ -1,4 +1,4 @@
-# Use - Meta Llama (Llama 3.x / Llama 4)
+# Use - Meta Llama 3.x (Llama 3.1 / 3.3 text line)
 
 _What can it do and how do we use it well? Capabilities, context window, prompt/chat
 template, languages, tool-use, structured output._
@@ -8,10 +8,9 @@ template, languages, tool-use, structured output._
 
 Llama is a strong **generalist**: reasoning, summarisation, instruction-following,
 multilingual chat, and capable **coding**. The dense 3.1/3.3 line is text-only;
-the **Llama 4** generation is natively **multimodal**, accepting images alongside text.
-The key usage caveat is legal rather than technical: the multimodal Llama models are **not
-licensed to EU-domiciled entities**, so EU adopters should restrict themselves to the
-text-only checkpoints. Across the family, capability scales with size - the 8B is an
+the natively **multimodal** Llama 4 generation is the separate llama-4 entry.
+The key usage caveat is legal rather than technical: the 700M-MAU trigger and the
+attribution terms of the Community License. Across these models, capability scales with size - the 8B is an
 excellent lightweight worker, while 70B/405B and the large MoE models close in on frontier
 quality for open weights.
 

@@ -1,11 +1,10 @@
 schema_version: '2.0'
 id: meta-llama
-name: Meta Llama (Llama 3.x / Llama 4)
+name: Meta Llama 3.x (Llama 3.1 / 3.3 text line)
 aliases:
 - Llama
 - Llama 3.1
 - Llama 3.3
-- Llama 4
 family:
   id: meta-llama
   name: Meta Llama
@@ -75,7 +74,7 @@ openness:
     - 700M monthly-active-users threshold requires a separate license from Meta
     - Acceptable Use Policy applies
     - '''Built with Llama'' attribution and naming requirements'
-    - Multimodal Llama models are not licensed for EU-domiciled entities
+    - No EU-domicile restriction applies to these text-only models; the multimodal EU carve-out (Llama 3.2 and 3.3 AUPs, Llama 4 licence) is outside this entry and tracked in llama-4
     url: https://dev.meta.ai/llama/llama4/license/
 provenance:
   canonical_source: https://huggingface.co/meta-llama
@@ -110,7 +109,7 @@ eu_ai_act:
     license_qualifies: 'no'
     rationale: 'The Llama Community License is not a free-and-open-source license:
       it carries an Acceptable Use Policy, a 700M-MAU commercial threshold, attribution/naming
-      terms, and a field-of-use restriction barring EU multimodal use - so it likely
+      terms and an access gate, so it likely
       fails the Act''s "free and open-source" test for the Article 53 exemption. Independently,
       the largest Llama checkpoints exceed the 1e25-FLOP systemic-risk threshold,
       and systemic-risk models receive NO open-source exemption regardless of license,
@@ -126,8 +125,8 @@ eu_ai_act:
   deployer_notes: 'Meta publishes detailed model cards and safety evaluations (strong
     Annex-XII-style downstream information) but not a full Article 55 systemic-risk
     package, and publicly declined to sign the EU GPAI Code of Practice in 2025. A
-    downstream EU deployer inherits a partial documentation set and must not use the
-    multimodal variants at all; a fine-tuner placing a derivative on the EU market
+    downstream EU deployer inherits a partial documentation set and faces no EU domicile
+    restriction on these text-only models (the multimodal carve-out is in the llama-4 entry); a fine-tuner placing a derivative on the EU market
     under its own name likely becomes a provider and must maintain its own Annex XI/XII
     docs.
 
@@ -194,7 +193,7 @@ score:
     legal:
       score: 2
       rationale: 'A restrictive, non-OSI community license with an MAU threshold,
-        acceptable-use limits and an outright EU multimodal field-of-use ban; the
+        acceptable-use limits and an access gate; the
         largest models are systemic-risk (voiding any open-source exemption) with
         only a partial Article 55 package; and Meta declined the EU GPAI Code of Practice.
         These compound into a weak legal-readiness posture for a compliant EU deployment.
@@ -203,6 +202,7 @@ score:
       evidence_refs:
       - ev1
       - ev2
+      - ev-l3-license
     safety:
       score: 4
       rationale: 'Safety-tuned instruct releases with published safety evaluations,
@@ -320,7 +320,7 @@ documentation:
       - ev1
       - ev2
       summary: Llama Community License - 700M-MAU threshold, AUP, "Built with Llama"
-        attribution, EU multimodal field-of-use ban; not OSI-approved.
+        attribution, access gate; not OSI-approved.
     - key: provenance
       title: Supply-chain & provenance
       doc_type: reference
@@ -443,8 +443,8 @@ documentation:
       refs:
       - ev2
       - ev4
-      summary: Strong generalist, coding and multilingual text; Llama 4 adds native
-        multimodality (image), which is not licensed to EU-domiciled entities.
+      summary: Strong generalist, coding and multilingual text; the natively multimodal Llama 4
+        models are the separate llama-4 entry.
     - key: context-window
       title: Context window & long-context behaviour
       doc_type: reference
@@ -554,8 +554,8 @@ ownership:
   factors:
     use_modify:
       level: moderate
-      rationale: "Open weights, but on Meta's terms - an access gate, the Community License's 'Built with Llama' naming and the verbatim 700M-MAU commercial-licence trigger, and no licence for multimodal Llama 4 to EU-domiciled entities (a restriction the AUP carries for 3.2/3.3 too, but not 3.1); these are real conditions rather than a clean grant."
-      # grounded in: ev1 (license, retrieved), ev-aup (terms, retrieved) - 700M-MAU + EU-multimodal clauses read verbatim via Meta's GitHub mirror
+      rationale: "Open weights, but on Meta's terms - an access gate, the Community License's 'Built with Llama' naming and the verbatim 700M-MAU commercial-licence trigger; these are real conditions rather than a clean grant. The EU-domicile restriction on multimodal models does not apply to these text-only 3.1 and 3.3 models (it sits in the Llama 3.2 and 3.3 AUPs and the Llama 4 licence; Llama 4 is the separate llama-4 entry)."
+      # grounded in: ev1 (license, retrieved), ev-aup (terms, retrieved) - 700M-MAU clause read verbatim via Meta's GitHub mirror; ev-l3-license (license, retrieved - 3.1 and 3.3 licences)
     transparency:
       level: moderate
       rationale: "You can inspect and self-guard the weights, and Meta publishes safety evaluations plus Llama Guard and Prompt Guard, but training data and code are closed and no broad independent red-team spans every harm domain: you see the finished model while its training stays hidden."
@@ -568,7 +568,7 @@ ownership:
       level: strong
       rationale: "Self-hosted, the weights run on your own infrastructure - the Community License adds naming and scale conditions but no telemetry or data clawback, so your data stays yours."
       # grounded in: self-hosting (structural); ev1 (license) - no clawback/telemetry clause
-  verdict: "You own the self-hosted Llama weights in practice: they run on your infrastructure, perform at the top of the open field, and pair with Meta's Llama Guard and Prompt Guard. But overall ownership is only partial: the Community License is not a clean grant - an access gate, 'Built with Llama' attribution, a 700M-MAU commercial trigger, and no multimodal licence for EU-domiciled entities mean you cannot freely use and modify the whole family the way an OSI licence allows, and training is closed. Clear those conditions first: check the MAU trigger, honour the attribution terms, and if you are EU-domiciled avoid the multimodal variants entirely."
+  verdict: "You own the self-hosted Llama weights in practice: they run on your infrastructure, perform at the top of the open field, and pair with Meta's Llama Guard and Prompt Guard. But overall ownership is only partial: the Community License is not a clean grant - an access gate, 'Built with Llama' attribution, a 700M-MAU commercial trigger, mean you cannot freely use and modify these models the way an OSI licence allows, and training is closed. Clear those conditions first: check the MAU trigger and honour the attribution terms."
 
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
 #     (true = the document's substantive text was read; false = known to exist but not read).
@@ -671,6 +671,8 @@ changelog:
   change: 'Freshness re-verification. Llama 3.x Community License 700M-MAU threshold clause re-read verbatim, unchanged. No new Llama 3.x release; Llama 4 remains tracked separately.'
 - date: '2026-11-19'
   change: 'Freshness re-verification (59 days since the last check). Re-read the Llama 3.1 and 3.3 Community Licences and the 3.1, 3.2 and 3.3 Acceptable Use Policies verbatim from Meta''s GitHub repository: the 700M-MAU clause (Section 2, "Additional Commercial Terms"), the "Built with Llama" display and "Llama" model-name prefix are unchanged; the 3.1 AUP still has no EU clause and the 3.2/3.3 AUPs still carry the multimodal EU paragraph (moot for text-only 3.3). Hub metadata: the four tracked repos are still gated manual, last modified 2024-09-25 to 2024-12-21, and the meta-llama org has no repo created after 2025-04-28, so no new Llama 3.x or other Llama release. Corrections to wording only: Llama 4 licence metadata reads license: other with license_name llama4, and the Llama 4 AUP has five prohibited-use items, not six. Meta''s EU GPAI Code of Practice status re-checked against the Commission signatory list (updated 7 October 2026): Meta is still not a signatory. No score, flag or ownership change. Meta''s newer open weights (Muse Glimmer, Muse Spark Open) are under the Muse name and are not Llama releases; see the refresh report.'
+- date: '2026-11-19'
+  change: 'Scope cleanup after the family split, no score change. This entry is the text-only Llama 3.1 and 3.3 line (Llama 4 is the separate llama-4 entry), but the name, aliases, EU-act rationale, legal rationale, use_modify rationale, verdict and dossier still counted the multimodal EU-domicile restriction against it. The restriction sits in the Llama 3.2 and 3.3 Acceptable Use Policies and the Llama 4 licence and is moot for text-only 3.1 and 3.3 (re-read 2026-11-19, ev-l3-license). Removed that clause from this entry, renamed it Meta Llama 3.x, dropped the Llama 4 alias, and cited ev-l3-license under legal. Legal 2 and use_modify moderate stand on the remaining grounds (access gate, 700M-MAU trigger, acceptable-use policy, systemic-risk 405B, partial Article 55 package, Code of Practice declined); a maintainer may weigh legal 2 against 3 now that the multimodal ban no longer counts.'
 last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
