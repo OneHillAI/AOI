@@ -26,7 +26,17 @@ publisher:
   accountable_entity: true
   url: https://deepmind.google/models/gemma/
   security_contact: https://github.com/google/.github/blob/master/SECURITY.md (Google-wide GitHub policy, intake at g.co/vulnz; whether it covers model weights is unconfirmed)
-summary: "Gemma 4 is the first Gemma generation under a plain Apache-2.0 licence (per the trade press) and, unlike Gemma 3, is published ungated, so the older Gemma Terms of Use and their Prohibited Use Policy do not bind any Gemma 4 checkpoint read. It is a multimodal, open-weight family from Google DeepMind in five sizes (E2B, E4B, 12B Unified, 26B A4B mixture of experts, 31B dense), each as a base and an instruction-tuned checkpoint, with 128K to 256K context, a thinking mode, native function calling, and official quantised and speculative-decoding drafter checkpoints. It stays at the open-weights tier: training data and the pre-training pipeline are not released, the training-content summary names no dataset, and that summary states that user data from Google products (Gemini Apps chats are named) was used in training. Safety evidence is publisher-only and qualitative, and independent capability evidence is mixed."
+summary: >-
+  Gemma 4 is the first Gemma generation under a plain Apache-2.0 licence (per the trade press)
+  and, unlike Gemma 3, is published ungated. The older Gemma Terms of Use and their Prohibited Use
+  Policy do not bind any Gemma 4 checkpoint. It is a multimodal, open-weight family from Google
+  DeepMind in five sizes (E2B, E4B, 12B Unified, 26B A4B mixture of experts, 31B dense), each as a
+  base and an instruction-tuned checkpoint. It offers 128K to 256K context, a thinking mode,
+  native function calling, and official quantised and speculative-decoding drafter checkpoints. It
+  stays at the open-weights tier: training data and the pre-training pipeline are not released,
+  and the training-content summary names no dataset. That summary states that user data from
+  Google products (Gemini Apps chats are named) was used in training. Safety evidence is
+  publisher-only and qualitative, and independent capability evidence is mixed.
 variants:
 - name: Gemma 4 E2B (base)
   params_total: 2.3B effective (5.1B with embeddings)
@@ -134,19 +144,30 @@ eu_ai_act:
   is_gpai: true
   systemic_risk:
     designated: false
-    training_flops_estimate: "not disclosed. Lower-bound arithmetic only: the training-content summary bands text at more than 10 trillion tokens, and 6 x 30.7e9 x 1e13 is about 1.8e24 FLOPs for the 31B, below 1e25; 1e25 would need about 54 trillion tokens, which no document read rules out or states."
+    training_flops_estimate: "not disclosed. Lower-bound arithmetic only. The training-content summary bands text at more than 10 trillion tokens, and 6 x 30.7e9 x 1e13 is about 1.8e24 FLOPs for the 31B, below 1e25. 1e25 would need about 54 trillion tokens, which no cited document rules out or states."
     over_1e25_threshold: unknown
     article_55_docs_available: unknown
   open_source_exemption:
     license_qualifies: 'yes'
-    rationale: "Apache-2.0 is an OSI licence and the weights and architecture are public, so the licence meets the Article 53(2) condition. The exemption does not cover the public training-content summary or the copyright policy, and it does not apply to a monetised model; Google sells hosted access (Vertex AI is named in the launch blog), so whether the exemption applies is a legal question this entry does not settle. Google published the summary regardless."
+    rationale: >-
+      Apache-2.0 is an OSI licence and the weights and architecture are public, so the licence
+      meets the Article 53(2) condition. The exemption does not cover the public training-content
+      summary or the copyright policy, and it does not apply to a monetised model. Google sells
+      hosted access (Vertex AI is named in the launch blog), so whether the exemption applies is a
+      legal question that stays open. Google published the summary regardless.
   provider_package:
     technical_documentation: partial
     downstream_information: 'yes'
     copyright_policy: unknown
     training_content_summary: 'yes'
     code_of_practice_signatory: true
-  deployer_notes: "A deployer who fine-tunes Gemma 4 and places the result on the EU market under its own name may become the provider of that derivative. Upstream, Google published an EU template training-content summary (v1, 31 July 2026) and is a listed signatory of the GPAI Code of Practice, but the summary names no dataset or domain, states that Gemini Apps user data was used, and states that Gemini 3 outputs were used as synthetic data. Keep the summary, the model card and the technical report in the AI-BOM. The Google compute figure is not disclosed."
+  deployer_notes: >-
+    A deployer who fine-tunes Gemma 4 and places the result on the EU market under its own name
+    may become the provider of that derivative. Upstream, Google published an EU template
+    training-content summary (v1, 31 July 2026) and is a listed signatory of the GPAI Code of
+    Practice. The summary names no dataset or domain, states that Gemini Apps user data was used,
+    and states that Gemini 3 outputs were used as synthetic data. Keep the summary, the model card
+    and the technical report in the AI-BOM. The Google compute figure is not disclosed.
   last_assessed: '2026-11-19'
 performance: {}
 behaviour: {}
@@ -154,7 +175,12 @@ safety: {}
 deployment:
   ceiling_tier: T2
   ceiling_conditional: true
-  hardware_notes: "Google's overview table gives weight-load memory with 20 percent overhead: 31B 69.9 GB (BF16), 34.9 GB (8-bit), 17.5 GB (Q4_0); 26B A4B 57.7, 28.8, 14.4 GB (all 25.2B parameters must be resident); 12B 26.7, 13.4, 6.7 GB; E4B 17.9, 8.9, 4.5 GB; E2B 11.4, 5.7, 2.9 GB. KV cache at 128K to 256K context comes on top. The launch blog says the 31B BF16 weights fit one 80 GB H100."
+  hardware_notes: >-
+    Google's overview table gives weight-load memory with 20 percent overhead. The 31B needs 69.9
+    GB (BF16), 34.9 GB (8-bit) and 17.5 GB (Q4_0). The 26B A4B needs 57.7, 28.8 and 14.4 GB,
+    because all 25.2B parameters must be resident. The 12B needs 26.7, 13.4 and 6.7 GB, the E4B
+    17.9, 8.9 and 4.5 GB, and the E2B 11.4, 5.7 and 2.9 GB. KV cache at 128K to 256K context comes
+    on top. The launch blog says the 31B BF16 weights fit one 80 GB H100.
   serving_support:
   - hf-transformers
   - vllm
@@ -163,11 +189,19 @@ deployment:
   - sglang
   - lm-studio
   controls_required:
-  - Deploy an instruction-tuned checkpoint, not a base checkpoint
-  - Add your own input and output guardrails and a guard classifier; no Gemma 4 guard model was found
-  - Run your own safety evaluation per language and per modality; the publisher evaluation is qualitative
-  - Pin the exact Hugging Face revision and verify the LFS checksums
-  - Apply the model card chat-template rules (no thinking content in history, image before text, audio after text)
+  - >-
+    Deploy an instruction-tuned checkpoint, not a base checkpoint
+  - >-
+    Add your own input and output guardrails and a guard classifier; no Gemma 4 guard model has
+    been identified
+  - >-
+    Run your own safety evaluation per language and per modality; the publisher evaluation is
+    qualitative
+  - >-
+    Pin the exact Hugging Face revision and verify the LFS checksums
+  - >-
+    Apply the model card chat-template rules (no thinking content in history, image before text,
+    audio after text)
 score:
   rubric_version: '1.1'
   headline: 68.8
@@ -176,7 +210,13 @@ score:
   dimensions:
     openness:
       score: 3
-      rationale: "Open weights under an OSI licence with a model card, a technical report and a Hugging Face weight release for every size, but the pre-training data is only described (web, code, mathematics, images, audio), the training pipeline is not released (the google-deepmind/gemma library is for inference and fine-tuning), and the EU training summary names no dataset. That is the open-weights anchor, not open weights plus recipe."
+      rationale: >-
+        Open weights under an OSI licence, with a model card, a technical report and a Hugging
+        Face weight release for every size. The pre-training data is only described (web, code,
+        mathematics, images, audio), the training pipeline is not released (the
+        google-deepmind/gemma library is for inference and fine-tuning), and the EU training
+        summary names no dataset. That is the open-weights anchor and not open weights plus
+        recipe.
       evidence_refs:
       - ev-license
       - ev-tech-report
@@ -185,7 +225,13 @@ score:
       - ev-gemma-lib
     provenance:
       score: 4
-      rationale: "Verified google organisation on Hugging Face, safetensors only for the core checkpoints, LFS sha256 per shard, a Hugging Face scan with no flagged files, and official quantised and drafter checkpoints documented by use case. Short of 5 because no cryptographic signature or build attestation was found, and Kaggle was not checked. The training-content summary says user data from Google products was used in training, which is a data-provenance point outside this checkpoint-trust score."
+      rationale: >-
+        The google organisation on Hugging Face is verified, the core checkpoints are safetensors
+        only, each shard has an LFS sha256, the Hugging Face scan flags no files, and official
+        quantised and drafter checkpoints are documented by use case. The score is short of 5
+        because no cryptographic signature or build attestation is evident, and Kaggle is
+        unchecked. The training-content summary says user data from Google products was used in
+        training, which is a data-provenance point outside this checkpoint-trust score.
       evidence_refs:
       - ev-hf-inventory
       - ev-hf-scan
@@ -193,7 +239,12 @@ score:
       - ev-eu-summary
     legal:
       score: 4
-      rationale: "Plain Apache-2.0 with no use policy, field-of-use limit, gate or remote-restriction right, a model card, a technical report, a published EU Article 53 training-content summary (v1, 31 July 2026) and Google listed as a Code of Practice signatory. Residual gaps keep it at 4: the summary names no dataset or domain, no compute figure is disclosed, no copyright policy document was read, and no Annex XI style form was found."
+      rationale: >-
+        Plain Apache-2.0 with no use policy, field-of-use limit, gate or remote-restriction right,
+        plus a model card, a technical report, a published EU Article 53 training-content summary
+        (v1, 31 July 2026) and Google listed as a Code of Practice signatory. Residual gaps keep
+        the score at 4: the summary names no dataset or domain, no compute figure is disclosed, no
+        copyright policy document has been identified, and no Annex XI style form is evident.
       evidence_refs:
       - ev-license
       - ev-eu-summary
@@ -201,14 +252,27 @@ score:
       - ev-tech-report
     safety:
       score: 3
-      rationale: "Instruction-tuned checkpoints with a publisher safety evaluation and stated policies (child safety, dangerous content, sexually explicit content, hate speech, harassment), documented risks and mitigations, and a Responsible Generative AI Toolkit pointer. The evaluation is qualitative: no violation rates, no named red-team, no CBRN or cyber results, no jailbreak figures, no independent evaluation and no Gemma 4 guard model found. The Prohibited Use Policy no longer binds, so there is no contractual use policy either."
+      rationale: >-
+        Instruction-tuned checkpoints with a publisher safety evaluation and stated policies
+        (child safety, dangerous content, sexually explicit content, hate speech, harassment),
+        documented risks and mitigations, and a Responsible Generative AI Toolkit pointer. The
+        evaluation is qualitative: no violation rates, no named red-team, no CBRN or cyber
+        results, no jailbreak figures, no independent evaluation and no Gemma 4 guard model
+        identified. The Prohibited Use Policy does not bind Gemma 4, so there is no contractual
+        use policy either.
       evidence_refs:
       - ev-tech-report
       - ev-card-31b
       - ev-pup
     performance:
       score: 3
-      rationale: "Mixed independent evidence. At launch the trade press relayed an Artificial Analysis GPQA Diamond result placing the 31B second among open models under 40B, and the technical report names a human-preference leaderboard where the 31B is the leading dense open model (publisher-reported). The Artificial Analysis Intelligence Index v5.0.1 page read on 2026-11-19 rates the 31B at the lower end of comparable open-weights models (4, rank 14 of 15). Publisher benchmark tables are strong but are not independent."
+      rationale: >-
+        Independent evidence is mixed. At launch the trade press relayed an Artificial Analysis
+        GPQA Diamond result placing the 31B second among open models under 40B, and the technical
+        report names a human-preference leaderboard where the 31B is the leading dense open model
+        (publisher-reported). The Artificial Analysis Intelligence Index v5.0.1 page rates the 31B
+        at the lower end of comparable open-weights models (4, rank 14 of 15). Publisher benchmark
+        tables are strong but are not independent.
       evidence_refs:
       - ev-decoder
       - ev-aa
@@ -216,7 +280,13 @@ score:
       - ev-card-31b
     operational:
       score: 4
-      rationale: "Standard safetensors on Transformers, with Google documenting official quantised routes for llama.cpp, vLLM and SGLang, drafter checkpoints for speculative decoding, a memory table per precision and 128K to 256K context. Ollama lists all five sizes with vision, tools, thinking and audio tags. Short of 5 because day-0 ecosystem support rests on the launch blog (publisher claim) and the chat template has needed repeated fixes since release."
+      rationale: >-
+        Standard safetensors on Transformers, with Google documenting official quantised routes
+        for llama.cpp, vLLM and SGLang, drafter checkpoints for speculative decoding, a memory
+        table per precision and 128K to 256K context. Ollama lists all five sizes with vision,
+        tools, thinking and audio tags. The score is short of 5 because day-0 ecosystem support
+        rests on the launch blog (publisher claim) and the chat template has needed repeated fixes
+        since release.
       evidence_refs:
       - ev-docs-overview
       - ev-ollama
@@ -224,7 +294,12 @@ score:
       - ev-blog
     governance:
       score: 3
-      rationale: "Accountable, reputable publisher with a visible cadence (Gemma 1 to 4, dated chat-template and QAT updates, technical report v2) and open community discussions. Held at 3 because no Gemma-specific security-reporting path was found (only the Google-wide GitHub policy, whose coverage of weights is unconfirmed) and no deprecation or support-window policy is published."
+      rationale: >-
+        Accountable, reputable publisher with a visible cadence (Gemma 1 to 4, dated chat-template
+        and QAT updates, technical report v2) and open community discussions. The score is held at
+        3 because no Gemma-specific security-reporting path is identified (only the Google-wide
+        GitHub policy, whose coverage of weights is unconfirmed) and no deprecation or
+        support-window policy is published.
       evidence_refs:
       - ev-hf-scan
       - ev-security-policy
@@ -250,12 +325,17 @@ signals:
   exchangeability:
     level: high
     dimension: operational
-    summary: "Standard safetensors and official GGUF, compressed-tensors and mobile builds on the main runtimes; the gotchas when swapping are the thinking-mode control tokens and the template rules."
+    summary: >-
+      Standard safetensors and official GGUF, compressed-tensors and mobile builds on the main
+      runtimes; the points to handle when swapping are the thinking-mode control tokens and the
+      template rules.
     refs: [ev-docs-overview, ev-ollama, ev-card-31b]
   misuse_exposure:
     level: partial
     dimension: safety
-    summary: "Publisher-only, qualitative safety evaluation across five harm areas; no independent red-team, no numbers and no Gemma 4 guard model found."
+    summary: >-
+      Publisher-only, qualitative safety evaluation across five harm areas; no independent
+      red-team, no numbers and no Gemma 4 guard model identified.
     refs: [ev-tech-report, ev-card-31b]
 
 # --- Four documentation domains. Item keys match checklists/model.yaml and a
@@ -271,14 +351,19 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-card-31b, ev-tech-report]
-        summary: "General multimodal assistant, coding, reasoning, agentic and on-device work; deploy the -it checkpoints; no Prohibited Use Policy binds the weights, so your own policy sets the limits."
+        summary: >-
+          General multimodal assistant, coding, reasoning, agentic and on-device work; deploy the
+          -it checkpoints; no Prohibited Use Policy binds the weights, so the deployer's own
+          policy sets the limits.
       - key: limitations
         title: "Known limitations, bias & failure modes"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-card-31b, ev-tech-report, ev-aa]
-        summary: "Publisher-listed limits (training-data gaps, factual accuracy, nuance, common sense) plus mixed independent capability evidence and a training-data cutoff of January 2025."
+        summary: >-
+          Publisher-listed limits (training-data gaps, factual accuracy, nuance, common sense),
+          mixed independent capability evidence and a training-data cutoff of January 2025.
       - key: openness
         title: "Openness tier & components"
         doc_type: reference
@@ -292,14 +377,18 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-license, ev-hf-inventory, ev-terms-old, ev-pup, ev-decoder]
-        summary: "Apache-2.0 on every Gemma 4 checkpoint read; the Gemma Terms of Use and Prohibited Use Policy are scoped to Gemma 1 to 3n and siblings; Gemma 3 derivatives stay under the old terms."
+        summary: >-
+          Apache-2.0 on every Gemma 4 checkpoint; the Gemma Terms of Use and Prohibited Use Policy
+          are scoped to Gemma 1 to 3n and siblings; Gemma 3 derivatives stay under the old terms.
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-hf-inventory, ev-hf-scan, ev-docs-overview, ev-eu-summary]
-        summary: "Verified google org, safetensors, LFS checksums, clean HF scan, official QAT routes; no signing found; user-data and Gemini 3 synthetic-data use disclosed in the EU summary."
+        summary: >-
+          Verified google org, safetensors, LFS checksums, clean HF scan, official QAT routes; no
+          signing evident; user-data and Gemini 3 synthetic-data use disclosed in the EU summary.
       - key: eu-ai-act
         title: "EU AI Act posture"
         doc_type: explanation
@@ -318,7 +407,10 @@ documentation:
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: gap
-        gap_reason: "No independent safety or red-team evaluation of Gemma 4 was found. The only safety evidence read is the publisher's qualitative statement in the model card and technical report; the third-party evaluation of the EU training summary (aial.ie) could not be reached."
+        gap_reason: >-
+          No independent safety or red-team evaluation of Gemma 4 has been identified. The only
+          safety evidence is the publisher's qualitative statement in the model card and technical
+          report. The third-party evaluation of the EU training summary (aial.ie) is unreachable.
   implement:
     completeness: 95.5
     originality: 0.0
@@ -371,7 +463,9 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-ollama, ev-blog]
-        summary: "Ollama and the named servers expose chat endpoints; OpenAI-compatible serving was not run or read in a primary document, so treat it as a runtime feature to verify."
+        summary: >-
+          Ollama and the named servers expose chat endpoints; OpenAI-compatible serving is not
+          documented in a primary document, so treat it as a runtime feature to verify.
   use:
     completeness: 94.4
     originality: 0.0
@@ -396,7 +490,10 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-card-31b, ev-hf-scan]
-        summary: "Native system, user and assistant roles; thinking switched by a control token in the system prompt; thinking output is delimited and must be stripped from history; the template has been fixed several times since release."
+        summary: >-
+          Native system, user and assistant roles; thinking is switched by a control token in the
+          system prompt; thinking output is delimited and must be stripped from history; the
+          template has had several fixes since release.
       - key: languages
         title: "Language coverage"
         doc_type: reference
@@ -440,7 +537,10 @@ documentation:
         title: "Security / vulnerability disclosure"
         doc_type: reference
         source_type: gap
-        gap_reason: "No Gemma-specific security policy, contact or advisory process was found. Google's organisation-wide GitHub policy names g.co/vulnz, but no document read says it covers model weights or the Hugging Face repositories."
+        gap_reason: >-
+          No Gemma-specific security policy, contact or advisory process is published. Google's
+          organisation-wide GitHub policy names g.co/vulnz, but no document says it covers model
+          weights or the Hugging Face repositories.
       - key: channels
         title: "Community & support channels"
         doc_type: reference
@@ -452,7 +552,9 @@ documentation:
         title: "Deprecation / end-of-life policy"
         doc_type: reference
         source_type: gap
-        gap_reason: "No published deprecation or end-of-life policy for Gemma 4 checkpoints was found. Older revisions remain available on Hugging Face but no support window is stated."
+        gap_reason: >-
+          No deprecation or end-of-life policy for Gemma 4 checkpoints is published. Older
+          revisions remain available on Hugging Face but no support window is stated.
       - key: known-issues
         title: "Tracked known issues"
         doc_type: reference
@@ -466,101 +568,179 @@ ownership:
   factors:
     use_modify:
       level: strong
-      rationale: "Plain Apache-2.0 on every Gemma 4 checkpoint read, ungated, with no field-of-use limit, no use policy and no remote-restriction right; you may run, fine-tune, redistribute and sell derivatives (ev-license, ev-hf-inventory)."
+      rationale: >-
+        Plain Apache-2.0 on every Gemma 4 checkpoint, ungated, with no field-of-use limit, no use
+        policy and no remote-restriction right. Users may run, fine-tune, redistribute and sell
+        derivatives (ev-license, ev-hf-inventory).
     transparency:
       level: moderate
-      rationale: "Weights, model card and technical report are open and a training-content summary exists, but the training data is closed (the summary names no dataset), the pre-training pipeline is not released, and the summary discloses user-data and Gemini 3 synthetic-data use you cannot inspect (ev-eu-summary, ev-tech-report)."
+      rationale: >-
+        Weights, model card and technical report are open and a training-content summary exists.
+        The training data is closed (the summary names no dataset), the pre-training pipeline is
+        not released, and the summary discloses user-data and Gemini 3 synthetic-data use that
+        cannot be inspected (ev-eu-summary, ev-tech-report).
     reliability:
       level: moderate
-      rationale: "Operational readiness is good (score 4) but the safety evidence is publisher-only and qualitative (score 3) and no guard model was found, so you supply the safety layer (ev-tech-report, ev-docs-overview)."
+      rationale: >-
+        Operational readiness is good (score 4), but the safety evidence is publisher-only and
+        qualitative (score 3) and no guard model has been identified, so the deployer supplies the
+        safety layer (ev-tech-report, ev-docs-overview).
     data_control:
       level: strong
-      rationale: "Self-hosted weights under Apache-2.0 with no clawback of rights, so your prompts and outputs stay on your infrastructure; the licence read carries no telemetry or remote-restriction clause (ev-license)."
-  verdict: "You own the use of these weights outright: plain Apache-2.0, no gate, no use policy and no remote shut-off, which the older Gemma Terms of Use did have. You do not own what they are: the training data is closed and Google states that user data from its products went into training, and safety evidence is publisher-only. Adopt the instruction-tuned checkpoints behind your own guardrails and re-check the licence per checkpoint, because Gemma 1 to 3n and the Gemma 3 derivatives you may already run remain under the old terms."
+      rationale: >-
+        Self-hosted weights under Apache-2.0 with no clawback of rights, so prompts and outputs
+        stay on the deployer's infrastructure. The licence carries no telemetry or
+        remote-restriction clause (ev-license).
+  verdict: >-
+    Use of these weights is owned outright: plain Apache-2.0, no gate, no use policy and no remote
+    shut-off, which the older Gemma Terms of Use did have. What the weights are is not owned: the
+    training data is closed, Google states that user data from its products went into training,
+    and safety evidence is publisher-only. Adopt the instruction-tuned checkpoints behind your own
+    guardrails and check the licence per checkpoint, because Gemma 1 to 3n and the Gemma 3
+    derivatives you may already run remain under the old terms.
 
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
 #     (true = the document's substantive text was read; false = known to exist but not read).
 #     Grounded 2026-11-19 against docs/primary-sources/gemma-4/_sources.md.
 evidence:
 - id: ev-license
-  claim: "The Gemma 4 licence page (linked as license_link by every Gemma 4 model card) is the Apache License 2.0, read in full; its sections 1 to 9, whitespace-normalised, are identical to the Apache text in the google-deepmind/gemma LICENSE file. It adds no use policy or field-of-use limit. No separate LICENSE or NOTICE file exists in any Gemma 4 repository read."
+  claim: >-
+    The Gemma 4 licence page (linked as license_link by every Gemma 4 model card) is the Apache
+    License 2.0. Its sections 1 to 9, whitespace-normalised, are identical to the Apache text in
+    the google-deepmind/gemma LICENSE file. It adds no use policy or field-of-use limit. No
+    separate LICENSE or NOTICE file exists in any Gemma 4 repository.
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://ai.google.dev/gemma/docs/gemma_4_license
   date: '2026-11-19'
 - id: ev-hf-inventory
-  claim: "Hugging Face API, anonymous: the google organisation is verified; all 38 Gemma 4 repositories found (10 core checkpoints, 10 drafters, 18 QAT releases) carry license:apache-2.0 and gated=false, and every README read states license: apache-2.0 with the license_link above. By contrast gemma-3-4b-it is license:gemma, gated manual, and its raw README returned HTTP 401."
+  claim: >-
+    The Hugging Face API (anonymous) shows the google organisation as verified. All 38 Gemma 4
+    repositories (10 core checkpoints, 10 drafters, 18 QAT releases) carry license:apache-2.0 and
+    gated=false, and every README states license: apache-2.0 with the license_link above. By
+    contrast gemma-3-4b-it is license:gemma and gated manual, and its raw README returns HTTP 401.
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/api/models?author=google&search=gemma-4
   date: '2026-11-19'
 - id: ev-card-31b
-  claim: "Gemma 4 model card (README of google/gemma-4-31B-it, same text in the other cards, plus the gemma.ai model card page): five sizes E2B, E4B, 12B Unified, 26B A4B, 31B; text and image input for all, audio for E2B, E4B and 12B; 128K or 256K context; thinking mode; native function calling; pre-training cutoff January 2025; 140+ languages; benchmark tables; ethics, safety and limitations sections; usage rules for thinking tokens, modality order and sampling."
+  claim: >-
+    The Gemma 4 model card (README of google/gemma-4-31B-it, same text in the other cards, plus
+    the gemma.ai model card page) lists five sizes: E2B, E4B, 12B Unified, 26B A4B and 31B. Text
+    and image input are supported for all sizes and audio for E2B, E4B and 12B, with 128K or 256K
+    context. It documents a thinking mode, native function calling, a pre-training cutoff of
+    January 2025, 140+ languages, benchmark tables, ethics, safety and limitations sections, and
+    usage rules for thinking tokens, modality order and sampling.
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/google/gemma-4-31B-it
   date: '2026-11-19'
 - id: ev-docs-overview
-  claim: "Gemma 4 overview page: memory table per precision for each size, official QAT checkpoint routing (q4_0 GGUF for llama.cpp and LM Studio, w4a16 compressed-tensors for vLLM and SGLang, mobile builds, unquantised QAT weights, matching -assistant drafters), and a leftover sentence that Gemma models 'permit responsible commercial use' from the earlier terms era, which is not a clause."
+  claim: >-
+    The Gemma 4 overview page gives a memory table per precision for each size and routes official
+    QAT checkpoints: q4_0 GGUF for llama.cpp and LM Studio, w4a16 compressed-tensors for vLLM and
+    SGLang, mobile builds, unquantised QAT weights and matching -assistant drafters. One sentence
+    says Gemma models 'permit responsible commercial use', which is leftover wording from the
+    earlier terms era and not a clause.
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://gemma.ai/models/gemma-4/
   date: '2026-11-19'
 - id: ev-tech-report
-  claim: "Gemma 4 Technical Report (arXiv 2607.02770 v2, 24 Jul 2026), HTML read: states the models are released under Apache 2.0; describes architectures, pre-training (cutoff January 2025, filtering), post-training, QAT and multi-token-prediction drafters, benchmarks and a human-preference leaderboard result; section 5 gives qualitative safety policies and evaluations with no numbers; no token count, compute or dataset list."
+  claim: >-
+    The Gemma 4 Technical Report (arXiv 2607.02770 v2, 24 Jul 2026) states that the models are
+    released under Apache 2.0. It describes architectures, pre-training (cutoff January 2025,
+    filtering), post-training, QAT and multi-token-prediction drafters, benchmarks and a
+    human-preference leaderboard result. Section 5 gives qualitative safety policies and
+    evaluations with no numbers. The report gives no token count, compute or dataset list.
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2607.02770
   date: '2026-11-19'
 - id: ev-eu-summary
-  claim: "Google's EU AI Act Article 53(1)(d) Public Summary of Training Content for the Gemma 4 family, v1, last update 31 July 2026, provider Google Ireland Limited, read from the PDF (text and page images): text above 10 trillion tokens, images above 1 billion, audio and video each above 1 million hours; cutoff January 2025; publicly available, commercially licensed and third-party private datasets (none named); crawlers; user data from user interactions and from Google products such as Gemini Apps chats; synthetic data from the Gemini 3 family; Code of Practice signatory: yes."
+  claim: >-
+    Google's EU AI Act Article 53(1)(d) Public Summary of Training Content for the Gemma 4 family
+    is v1, last updated 31 July 2026, from provider Google Ireland Limited. It gives text above 10
+    trillion tokens, images above 1 billion, and audio and video each above 1 million hours. The
+    cutoff is January 2025. Sources are publicly available, commercially licensed and third-party
+    private datasets (none named) and crawlers. They also include user data from user interactions
+    and from Google products such as Gemini Apps chats, and synthetic data from the Gemini 3
+    family. The summary answers yes as Code of Practice signatory.
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://storage.googleapis.com/transparencyreport/report-downloads/pdf-report-nn_2026-7-31_2026-7-31_en_v1.pdf
   date: '2026-11-19'
 - id: ev-terms-old
-  claim: "Gemma Terms of Use (last modified April 1, 2026), read: apply only to the models in its Appendix (Gemma 1, 1.1, 2, 3, 3n and siblings; Gemma 4 not listed) and state 'For Gemma 4 terms, see the Gemma 4 license'. For listed models they require use restrictions and the terms to flow down to anyone receiving the model or a Model Derivative (section 3.1), incorporate the Prohibited Use Policy (3.2), reserve a right to restrict usage remotely (3.2), and define Model Derivatives to include distillation and models trained on Gemma outputs (1.1(e))."
+  claim: >-
+    The Gemma Terms of Use (last modified April 1, 2026) apply only to the models in their
+    Appendix (Gemma 1, 1.1, 2, 3, 3n and siblings; Gemma 4 is not listed) and state 'For Gemma 4
+    terms, see the Gemma 4 license'. For listed models they require use restrictions and the terms
+    to flow down to anyone receiving the model or a Model Derivative (section 3.1). They
+    incorporate the Prohibited Use Policy (3.2), reserve a right to restrict usage remotely (3.2),
+    and define Model Derivatives to include distillation and models trained on Gemma outputs
+    (1.1(e)).
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://ai.google.dev/gemma/terms
   date: '2026-11-19'
 - id: ev-pup
-  claim: "Gemma Prohibited Use Policy (last modified February 21, 2024), read: lists restricted uses for 'Gemma or Model Derivatives' and is bound into a contract only through section 3.2 of the Gemma Terms of Use. No Gemma 4 document read (licence page, model cards, technical report, training summary) refers to it, so no Prohibited Use Policy binding the Gemma 4 weights is evidenced; the policy page does not say which models it covers."
+  claim: >-
+    The Gemma Prohibited Use Policy (last modified February 21, 2024) lists restricted uses for
+    'Gemma or Model Derivatives' and is bound into a contract only through section 3.2 of the
+    Gemma Terms of Use. No Gemma 4 document (licence page, model cards, technical report, training
+    summary) refers to it, so no Prohibited Use Policy binding the Gemma 4 weights is evidenced.
+    The policy page does not say which models it covers.
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://ai.google.dev/gemma/prohibited_use_policy
   date: '2026-11-19'
 - id: ev-blog
-  claim: "Launch blog (2 April 2026): Gemma 4 'released under a commercially permissive Apache 2.0 license', four sizes at launch, day-one support list (Transformers, vLLM, llama.cpp, MLX, Ollama, NVIDIA NIM, LM Studio, Unsloth, SGLang and others), weights from Hugging Face, Kaggle and Ollama. Marketing; the binding text is ev-license."
+  claim: >-
+    The launch blog (2 April 2026) says Gemma 4 is 'released under a commercially permissive
+    Apache 2.0 license'. It lists four sizes at launch, a day-one support list (Transformers,
+    vLLM, llama.cpp, MLX, Ollama, NVIDIA NIM, LM Studio, Unsloth, SGLang and others) and weights
+    from Hugging Face, Kaggle and Ollama. It is marketing; the binding text is ev-license.
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/
   date: '2026-11-19'
 - id: ev-hf-scan
-  claim: "Hugging Face platform data for google/gemma-4-31B-it: scansDone true with no files with issues; safetensors BF16 parameters 31,273,088,876; LFS sha256 for each weight shard; no signature files; commit history through 20 July 2026 including chat-template fixes; open community discussions dated November 2026."
+  claim: >-
+    Hugging Face platform data for google/gemma-4-31B-it shows scansDone true with no files with
+    issues, safetensors BF16 parameters 31,273,088,876, an LFS sha256 for each weight shard and no
+    signature files. Commit history runs through 20 July 2026 and includes chat-template fixes.
+    Open community discussions are dated November 2026.
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://huggingface.co/api/models/google/gemma-4-31B-it/scan
   date: '2026-11-19'
 - id: ev-decoder
-  claim: "The Decoder (2 April 2026) reports Gemma 4 shipping under Apache 2.0 'for the first time', says earlier Gemma versions used a more restrictive Google proprietary licence, and relays launch-time Artificial Analysis GPQA Diamond results (31B 85.7 percent in reasoning mode, second among open models under 40B)."
+  claim: >-
+    The Decoder (2 April 2026) reports Gemma 4 shipping under Apache 2.0 'for the first time' and
+    says earlier Gemma versions used a more restrictive Google proprietary licence. It relays
+    launch-time Artificial Analysis GPQA Diamond results (31B 85.7 percent in reasoning mode,
+    second among open models under 40B).
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://the-decoder.com/googles-gemma-4-is-now-available-with-apache-2-0-licensing-for-the-first-time/
   date: '2026-11-19'
 - id: ev-aa
-  claim: "Artificial Analysis page for Gemma 4 31B (Reasoning), 2026-11-19: Intelligence Index v5.0.1 score 4, 'Intelligence #14 / 15', described as at the lower end among comparable open-weights models (median 10); states Apache 2.0 and a 256K context; lists hosting providers."
+  claim: >-
+    The Artificial Analysis page for Gemma 4 31B (Reasoning) gives an Intelligence Index v5.0.1
+    score of 4 and 'Intelligence #14 / 15', and describes the model as at the lower end among
+    comparable open-weights models (median 10). It states Apache 2.0 and a 256K context and lists
+    hosting providers.
   source_type: third_party
   doc_type: third_party
   retrieved: true
@@ -588,14 +768,20 @@ evidence:
   url: https://github.com/google-deepmind/gemma
   date: '2026-11-19'
 - id: ev-security-policy
-  claim: "Google's organisation-wide GitHub SECURITY.md says to report vulnerabilities at g.co/vulnz and that the Google Security Team processes a report within a day and responds within a week. It is not Gemma-specific, and no Gemma-specific security policy was found."
+  claim: >-
+    Google's organisation-wide GitHub SECURITY.md says to report vulnerabilities at g.co/vulnz and
+    that the Google Security Team processes a report within a day and responds within a week. It
+    is not Gemma-specific, and no Gemma-specific security policy is published.
   source_type: publisher
   doc_type: security
   retrieved: true
   url: https://github.com/google/.github/blob/master/SECURITY.md
   date: '2026-11-19'
 - id: ev-aial
-  claim: "ADAPT Centre AI Accountability Lab evaluation of the Gemma 4 public training summary is referenced by a secondary blog; the page could not be reached (connection refused), so nothing is scored on it."
+  claim: >-
+    The ADAPT Centre AI Accountability Lab evaluation of the Gemma 4 public training summary is
+    referenced by a secondary blog. The page is unreachable (connection refused), so nothing is
+    scored on it.
   source_type: third_party
   doc_type: third_party
   retrieved: false

@@ -1,111 +1,115 @@
 # Assess - Mistral AI (open-weight family)
 
-_Should we adopt this? Openness, license, provenance, EU AI Act, safety, evaluation, and
-the AOI score live here. The headline theme: strong European regulatory posture and a
-genuine Apache-2.0 core, tempered by a per-model licence split._
+_Openness, licence, provenance, EU AI Act position, safety, evaluation and the AOI score._
 
 <!-- item: intended-use -->
 ## Intended & out-of-scope use
 
-Mistral's open-weight family is a general-purpose set of assistant, coding and multilingual
-text models, spanning the dense **Mistral 7B**, the **Mixtral 8x7B / 8x22B** mixture-of-experts
-models, the 128K-context **Mistral Nemo (12B)** and the 24B **Mistral Small 3.x**, plus
-specialist variants (Codestral for code, Mathstral, Devstral, Pixtral for vision). Its
-*realistic* differentiator is being the leading **European** open-weight family: EU-domiciled,
-strong multilingual coverage, and the cleanest GPAI regulatory posture in this class.
+Mistral's open-weight family is a set of general-purpose assistant, coding and multilingual
+text models. It spans the dense Mistral 7B, the Mixtral 8x7B and 8x22B mixture-of-experts
+models, the 128K-context Mistral Nemo (12B), the 24B Mistral Small 3.x, and specialist
+variants (Codestral for code, Mathstral, Devstral, Pixtral for vision). It is the leading
+European open-weight family: EU-domiciled, strongly multilingual, and with the strongest GPAI
+regulatory posture in its class.
 
-For adoption, deploy the **instruct (safety-tuned)** variant rather than the base checkpoint, and -
-uniquely for this family - **confirm the specific model's licence** before any commercial
-deployment (the Apache flagship models are unconditional; the MRL research-only models are
-not). Mistral is not positioned as a safety-critical model; high-stakes, autonomous or
-regulated decision-making is out of scope without the external control stack described in the
-Implement domain.
+Deploy the instruct (safety-tuned) variant, not the base checkpoint, and confirm the specific
+model's licence before any commercial deployment. The Apache flagship models are unconditional
+and the MRL research-only models are not. Mistral is not positioned as a safety-critical
+model. High-stakes, autonomous or regulated decision-making is out of scope without the
+external control stack described in the Implement domain.
 
 <!-- item: limitations -->
 ## Known limitations, bias & failure modes
 
-- **Licence split is the headline risk.** A team that assumes "Mistral = Apache" can trip over
-  the research-only MRL models (Ministral 8B, Mistral Large 2, Pixtral Large) and the
-  non-production MNPL Codestral. Commercial use of those requires a negotiated licence. The split
-  is wider than Apache versus MRL: Mistral's newest large releases (Mistral Large 4, Mistral
-  Medium 3.5, Timestral) use custom licences with their own conditions and are not covered here.
-- **Lighter safety tuning.** Instruct alignment withstands casual jailbreaks, but coverage is
-  historically lighter than the largest US labs, and the companion classifier (the Moderation
-  API) is a hosted service rather than a broadly-shipped open guard-weight.
-- **Closed training data and code.** Unlike a fully-open family, you cannot inspect or reproduce
-  the training pipeline, so bias sources must be reasoned about from an opaque artifact.
-- **Standard hallucination and prompt-injection profile** for the class; treat retrieved/tool
-  content as untrusted.
+The main risk is the licence split. A team that assumes Mistral means Apache can trip over the
+research-only MRL models (Ministral 8B, Mistral Large 2, Pixtral Large) and the
+non-production MNPL Codestral, whose commercial use requires a negotiated licence. The split is
+wider than Apache versus MRL: Mistral's newest large releases (Mistral Large 4, Mistral Medium
+3.5, Timestral) use custom licences with their own conditions and are not covered here.
+
+Safety tuning is historically lighter than at the largest US labs. Instruct alignment
+withstands casual jailbreaks, and the companion classifier (the Moderation API) is a hosted
+service, not a broadly shipped open guard-weight.
+
+Training data and code are closed, so the training pipeline cannot be inspected or reproduced
+and bias sources must be reasoned about from an opaque artifact. The hallucination and
+prompt-injection profile is standard for the class, so retrieved and tool content must be
+treated as untrusted.
 
 The offsetting advantage is regulatory: an EU-domiciled, Code-of-Practice-signatory provider
-with a genuine OSI licence on its flagship models.
+with an OSI-approved licence on its flagship models.
 
 <!-- item: openness -->
 ## Openness tier & components
 
-Mistral earns `open_weights` honestly. The flagship general-purpose models ship **downloadable
-Apache-2.0 weights** - an OSI-approved permissive licence rather than a click-through community gate -
-and documentation is good. But **training data and training code are closed** (no reproduction
-path, unlike a fully-open family), evaluation is only partial, and the licence component is
-**split**: a meaningful subset of the family is research-only MRL. That mix is why Dimension 1
-scores **4**, above a gated-open family but below the fully-open exemplars.
+The tier is `open_weights`. The flagship general-purpose models ship downloadable Apache-2.0
+weights under an OSI-approved permissive licence, and documentation is good. Training data and
+training code are closed, so there is no reproduction path. Evaluation is only partial. The
+licence component is split, because a meaningful subset of the family is research-only MRL.
+
+The open-weights tier caps Dimension 1 at 3. Mistral sits at the top of that band, below the
+recipe (4) and fully-open (5) tiers.
 
 <!-- item: license -->
 ## License terms & permitted use
 
-There is no single licence - read the model card:
+There is no single licence, so the model card decides.
 
-- **Apache-2.0 (OSI-approved, unconditional commercial use):** Mistral 7B, Mixtral 8x7B / 8x22B,
-  Mistral Nemo, Mistral Small 3.x, Magistral/Devstral Small. You may use, modify, redistribute
-  and commercialize derivatives subject only to standard attribution/notice terms. Mistral has
-  publicly **recommitted to Apache-2.0** for general-purpose models with Mistral Small 3.
-  Mistral Large 3 (675B) and Ministral 3 (3B, 8B, 14B) are also Apache-2.0, confirmed on
-  2026-11-19 from the raw model cards (front matter plus the card's License section; there is
-  no separate LICENSE file in those repos).
-- **Mistral Research Licence (MRL-0.1), research-only:** Ministral 8B (2410), Mistral Large 2
-  (2407, 2411), Pixtral Large (2411). Any commercial deployment requires a **separately
-  negotiated** licence from Mistral.
-- **MNPL (non-production):** Codestral-22B-v0.1, still tagged mnpl on Hugging Face on
-  2026-11-19.
+The Apache-2.0 licence (OSI-approved, unconditional commercial use) covers Mistral 7B, Mixtral
+8x7B and 8x22B, Mistral Nemo, Mistral Small 3.x and Magistral/Devstral Small. These can be
+used, modified, redistributed and commercialised, subject only to standard attribution and
+notice terms. Mistral has publicly recommitted to Apache-2.0 for general-purpose models with
+Mistral Small 3. Mistral Large 3 (675B) and Ministral 3 (3B, 8B, 14B) are also Apache-2.0, per
+the raw model cards (front matter plus the card's License section; those repos have no
+separate LICENSE file).
 
-This split is a load-bearing input to both the openness (4) and legal (4) scores - the Apache
-core is genuinely clean, but the family is not uniformly open.
+The Mistral Research Licence (MRL-0.1) is research-only and covers Ministral 8B (2410),
+Mistral Large 2 (2407, 2411) and Pixtral Large (2411). Any commercial deployment needs a
+separately negotiated licence from Mistral. The non-production MNPL covers Codestral-22B-v0.1,
+which is still tagged mnpl on Hugging Face.
+
+The split feeds both the openness (3) and legal (4) scores. The Apache core is clean, but the
+family is not uniformly open.
 
 <!-- item: provenance -->
 ## Supply-chain & provenance
 
-Weights are distributed from the **verified `mistralai` org** on Hugging Face in **safetensors**
-(no pickle requirement) with per-file checksums. The checkpoint trust checklist scores about
-**6/8**; the two missing controls are cryptographic weight signing (Sigstore/model-signing) and
-SLSA build attestation, which is why provenance is a **4 rather than a 5**. No malicious-checkpoint
-incident is on record for the canonical org. Community GGUF/AWQ/FP8 quants and hosted cloud
-endpoints (Bedrock, Azure AI, Vertex, Together, OpenRouter) are separate artifacts - pin the
-exact `mistralai` revision and verify checksums on download.
+Weights are distributed from the verified `mistralai` org on Hugging Face as safetensors (no
+pickle requirement) with per-file checksums. The checkpoint trust checklist scores about 6/8.
+The two missing controls are cryptographic weight signing (Sigstore/model-signing) and SLSA
+build attestation, which is why provenance scores 4, not 5. No malicious-checkpoint incident
+is on record for the canonical org.
+
+Community GGUF/AWQ/FP8 quants and hosted cloud endpoints (Bedrock, Azure AI, Vertex,
+Together, OpenRouter) are separate artifacts. Pin the exact `mistralai` revision and verify
+checksums on download.
 
 <!-- item: eu-ai-act -->
 ## EU AI Act posture
 
-This is Mistral's standout. The open-weight family is a GPAI model set that sits **well under the
-10²⁵-FLOPs systemic-risk threshold** (the Apache releases are ≤24B dense or Mixtral MoE; only the
-123B Mistral Large 2 approaches it, and that is a research-only MRL model rather than an Apache release),
-so no Article 55 regime applies. The flagship Apache-2.0 models plausibly qualify for the
-**Article 53 open-source exemption** from the Annex XI/XII technical-documentation duties; the
-research-only MRL models, carrying a field-of-use restriction, do **not**. Two further facts make
-Mistral the most EU-AI-Act-friendly non-US family here: it is **EU-domiciled (Paris)**, and it was
-an **early signatory of the EU GPAI Code of Practice** - with no EU field-of-use ban of the kind
-that affects some competitors. The surviving copyright-policy and training-content-summary
-obligations are only *partially* met, because Mistral does not publish its training corpus. A
-fine-tuner placing a derivative on the EU market may become a provider for that derivative.
+The open-weight family is a GPAI model set well under the 10²⁵-FLOPs systemic-risk threshold,
+so no Article 55 regime applies. The Apache releases are ≤24B dense or Mixtral MoE. Only the
+123B Mistral Large 2 approaches the threshold, and it is a research-only MRL model.
+
+The flagship Apache-2.0 models plausibly qualify for the Article 53 open-source exemption from
+the Annex XI/XII technical-documentation duties. The research-only MRL models carry a
+field-of-use restriction and do not qualify.
+
+Mistral is EU-domiciled (Paris) and was an early signatory of the EU GPAI Code of Practice,
+with no EU field-of-use ban of the kind that affects some competitors. Together these make it
+the most EU-AI-Act-friendly non-US family in the registry. The copyright-policy and
+training-content-summary obligations are only partially met, because Mistral does not publish
+its training corpus. A fine-tuner placing a derivative on the EU market may become a provider
+for that derivative.
 
 <!-- item: evaluation -->
 ## Benchmarks & evaluation
 
-The picture below is aggregated from
-independent public leaderboards and third-party coverage (`ev-leaderboard`, `ev-wiki`). Mistral
-models are **competitive-to-strong within each size class**: Mistral 7B and Mixtral were
-class-leading at release, and Mistral Small 3.x remains strong for a 24B. Mistral is consistently
-judged the **leading European open-weight family**. Treat published scores as third-party/in-class
-framing; performance is capped at 4 for exactly that reason.
+Aggregated from independent public leaderboards and third-party coverage (`ev-leaderboard`,
+`ev-wiki`), Mistral models are competitive to strong within each size class. Mistral 7B and
+Mixtral were class-leading at release, and Mistral Small 3.x remains strong for a 24B. Mistral
+is consistently judged the leading European open-weight family. The scores are third-party,
+in-class framing, so performance is capped at 4.
 
 <!-- safety-eval is a `gap` item in entry.yaml - see its gap_reason. Mistral ships a Moderation
      API and guardrailing guidance, but there is no broad independent CBRN/cyber/prompt-injection

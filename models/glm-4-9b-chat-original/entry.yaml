@@ -22,22 +22,7 @@ publisher:
   accountable_entity: true
   url: https://huggingface.co/THUDM
   security_contact: license@zhipuai.cn
-summary: 'The original GLM-4-9B-Chat (THUDM, mid-2024) - a 9B dense chat model (with a 128K variant and a
-  1M-context GLM-4-9B-Chat-1M) that predates Zhipu''s move to MIT. It is a separate entry from the
-  current MIT GLM line because its weights are governed by the custom, non-OSI "glm-4" licence, which is
-  materially more restrictive than anything in the MIT cluster (the `glm` entry): the copyright grant is
-  "non-exclusive, worldwide, non-transferable, non-sublicensable, REVOCABLE, royalty-free" - free for
-  academic research, but users who want commercial use must complete a registration form ("Registered
-  users are free to use this model for commercial activities") - and on distribution or provision it
-  requires displaying "Built with glm-4", prefixing derived AI model names with "glm-4", forbids
-  military/illegal/national-security-endangering use, and is governed by PRC law with disputes to
-  Beijing''s Haidian District People''s Court. A revocable, registration-gated grant with a name-prefix
-  rule takes use-and-modify to weak and ownership to limited - the low end of the GLM family. The model
-  is also simply dated: a 2024 9B superseded by the GLM-4-9B-0414 and the 4.5/4.6 line for new work.
-  Use it only if you specifically need this checkpoint, complete the commercial registration, and honour
-  the licence.
-
-  '
+summary: 'The original GLM-4-9B-Chat (THUDM, mid-2024) is a 9B dense chat model (with a 128K variant and a 1M-context GLM-4-9B-Chat-1M) that predates Zhipu''s move to MIT. It is a separate entry from the current MIT GLM line (the `glm` entry) because its weights are governed by the custom, non-OSI "glm-4" licence, which is materially more restrictive than anything in the MIT cluster. The copyright grant is "non-exclusive, worldwide, non-transferable, non-sublicensable, REVOCABLE, royalty-free". It is free for academic research, but users who want commercial use must complete a registration form ("Registered users are free to use this model for commercial activities"). On distribution or provision it requires displaying "Built with glm-4" and prefixing derived AI model names with "glm-4". It forbids military/illegal/national-security-endangering use and is governed by PRC law, with disputes to Beijing''s Haidian District People''s Court. A revocable, registration-gated grant with a name-prefix rule takes use-and-modify to weak and ownership to limited, the low end of the GLM family. The model is also dated: a 2024 9B succeeded for new work by GLM-4-9B-0414 and the 4.5/4.6 line. Use it only if you specifically need this checkpoint, complete the commercial registration, and honour the licence.'
 variants:
 - name: GLM-4-9B-Chat
   params_total: 9B
@@ -64,20 +49,10 @@ openness:
     classification: custom
     commercial_use: allowed_with_conditions
     notable_restrictions:
-    - 'Non-OSI custom licence. The grant is REVOCABLE ("non-exclusive, worldwide, non-transferable,
-      non-sublicensable, revocable, royalty-free") - the publisher can withdraw it'
-    - 'Commercial use is registration-gated: "For users who wish to use the models for commercial
-      purposes, please do so [here] Complete registration. Registered users are free to use this model
-      for commercial activities, but must comply with all terms and conditions of this license."
-      Academic research is free. The registration form (open.bigmodel.cn/mla/form) still resolved on
-      2026-11-19.'
-    - 'On distributing or providing the materials, or products or services using them, the licence says
-      you "should" provide a copy of the agreement and prominently display "Built with glm-4"; if you use
-      the materials to create, train or improve a distributed or available AI model you "should also add
-      ''glm-4'' to the beginning of any such AI model name". No military or illegal purposes and no
-      endangering of national security and unity'
-    - Governed by PRC law; disputes to Beijing's Haidian District People's Court; contact
-      license@zhipuai.cn
+    - 'Non-OSI custom licence. The grant is REVOCABLE ("non-exclusive, worldwide, non-transferable, non-sublicensable, revocable, royalty-free"), so the publisher can withdraw it'
+    - 'Commercial use is registration-gated: "For users who wish to use the models for commercial purposes, please do so [here] Complete registration. Registered users are free to use this model for commercial activities, but must comply with all terms and conditions of this license." Academic research is free. The registration form (open.bigmodel.cn/mla/form) resolves.'
+    - 'On distributing or providing the materials, or products or services using them, the licence says you "should" provide a copy of the agreement and prominently display "Built with glm-4". If you use the materials to create, train or improve a distributed or available AI model, you "should also add ''glm-4'' to the beginning of any such AI model name". The licence also bars military or illegal purposes and endangering national security and unity.'
+    - "Governed by PRC law; disputes to Beijing's Haidian District People's Court; contact license@zhipuai.cn"
     url: https://huggingface.co/THUDM/glm-4-9b-chat/raw/main/LICENSE
 provenance:
   canonical_source: https://huggingface.co/THUDM/glm-4-9b-chat
@@ -94,9 +69,8 @@ provenance:
     notable:
     - name: Community GGUF / quantized builds
       trust: community
-      note: Widely mirrored and quantized as a small 2024 model; each mirror is a separate artifact
-        whose trust equals its uploader, and redistribution must carry the glm-4 licence (including the
-        "Built with glm-4" and name-prefix rules) - pin the THUDM revision and verify checksums
+      note: Widely mirrored and quantized as a small 2024 model. Each mirror is a separate artifact whose trust equals its uploader. Redistribution must carry the glm-4 licence (including the
+        "Built with glm-4" and name-prefix rules). Pin the THUDM revision and verify checksums
   checkpoint_checklist_score: 4
   scanner_result: {}
   incidents: []
@@ -110,13 +84,7 @@ eu_ai_act:
     article_55_docs_available: n/a
   open_source_exemption:
     license_qualifies: 'no'
-    rationale: 'The glm-4 licence is NOT a free-and-open-source licence - it is revocable, gates
-      commercial use behind registration, and imposes field-of-use and naming restrictions - so the
-      Article 53 open-source exemption does not apply on the licence axis. The model is not
-      systemic-risk, but the transparency obligations are not exemption-covered, and no copyright policy
-      or public training-content summary is published.
-
-      '
+    rationale: "The glm-4 licence is not a free-and-open-source licence: it is revocable, gates commercial use behind registration, and imposes field-of-use and naming restrictions. The Article 53 open-source exemption therefore does not apply on the licence axis. The model is not systemic-risk. The transparency obligations are not exemption-covered, and no copyright policy or public training-content summary is published."
   provider_package:
     technical_documentation: partial
     downstream_information: partial
@@ -136,11 +104,7 @@ safety: {}
 deployment:
   ceiling_tier: T2
   ceiling_conditional: true
-  hardware_notes: 'A 9B dense model: runs on a single consumer GPU (and CPU when quantized). The
-    GLM-4-9B-Chat-1M variant advertises a 1M-token context, which is memory-intensive in practice;
-    the standard Chat is 128K.
-
-    '
+  hardware_notes: "A 9B dense model: runs on a single consumer GPU (and CPU when quantized). The GLM-4-9B-Chat-1M variant advertises a 1M-token context, which is memory-intensive; the standard Chat is 128K."
   serving_support:
   - vllm
   - transformers
@@ -181,14 +145,7 @@ score:
       - ev-glm9-card
     legal:
       score: 2
-      rationale: 'The worst legal position in the GLM family: a non-OSI licence that is REVOCABLE, gates
-        commercial use behind registration, restricts fields of use, mandates "Built with glm-4" and a
-        name prefix, and is governed by PRC law (Haidian court) - with no EU copyright policy or
-        training-content summary and no open-source exemption. Commercial use is possible (after
-        registration), so it is a 2 rather than a 1, but the revocability is the key risk and the reason
-        ownership is only limited.
-
-        '
+      rationale: 'The worst legal position in the GLM family: a non-OSI licence that is REVOCABLE, gates commercial use behind registration, restricts fields of use, mandates "Built with glm-4" and a name prefix, and is governed by PRC law (Haidian court). There is no EU copyright policy or training-content summary and no open-source exemption. Commercial use is possible after registration, which is why the score is 2 and not 1. Revocability is the key risk and the reason ownership is only limited.'
       evidence_refs:
       - ev-glm9-license
       - ev-glm9-eu
@@ -203,10 +160,7 @@ score:
       - ev-glm9-behaviour
     performance:
       score: 2
-      rationale: 'A capable 9B for its mid-2024 release, but dated by 2026 and superseded within its own
-        family by GLM-4-9B-0414 and the 4.5/4.6 line. Below-average current capability - a 2.
-
-        '
+      rationale: "A capable 9B for its mid-2024 release, but dated by 2026 and succeeded within its own family by GLM-4-9B-0414 and the 4.5/4.6 line. Below-average current capability, so the score is 2."
       evidence_refs:
       - ev-glm9-perf
     operational:
@@ -233,12 +187,12 @@ signals:
   trainability:
     level: limited
     dimension: openness
-    summary: "You may fine-tune, but derivatives inherit a revocable, registration-gated licence with a mandatory 'glm-4' name prefix, and training data and code are closed - so adaptation is legally encumbered, not free."
+    summary: "You may fine-tune, but derivatives carry a revocable, registration-gated licence with a mandatory 'glm-4' name prefix, and training data and code are closed. Adaptation is legally encumbered."
     refs: [ev-glm9-license]
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "A dated general/chat 9B with China-aligned alignment that distorts coverage on politically sensitive subjects; superseded for current knowledge work."
+    summary: "A dated general/chat 9B with China-aligned alignment that distorts coverage on politically sensitive subjects; succeeded by newer models for current knowledge work."
     refs: [ev-glm9-perf, ev-glm9-behaviour]
   specialization:
     level: weak
@@ -261,30 +215,30 @@ documentation:
     originality: 0.0
     items:
       - {key: intended-use, title: "Intended & out-of-scope use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-license, ev-glm9-perf], summary: "A dated 2024 chat 9B under a revocable, registration-gated glm-4 licence; academic use is free, commercial use needs registration. For new work prefer the MIT GLM line; deploy behind your own guards."}
-      - {key: limitations, title: "Known limitations, bias & failure modes", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-behaviour], summary: "Dated capability (superseded within its family); revocable, restrictive licence; China-aligned alignment; no first-party guard; closed data/code."}
+      - {key: limitations, title: "Known limitations, bias & failure modes", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-behaviour], summary: "Dated capability (succeeded within its family); revocable, restrictive licence; China-aligned alignment; no first-party guard; closed data/code."}
       - {key: openness, title: "Openness tier & components", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-license, ev-glm9-card], summary: "gated_open - weights downloadable and free for academia, but commercial use registration-gated and the grant revocable; training data and code closed."}
       - {key: license, title: "License terms & permitted use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-license], summary: "Custom non-OSI 'glm-4' licence: REVOCABLE, royalty-free; free for academic research but commercial use requires registration; must display 'Built with glm-4' and prefix derivative names with 'glm-4'; no military/illegal/national-security use; PRC law, Haidian court. NOT the MIT licence of the GLM-4.5/4.6/0414 series (the `glm` entry)."}
       - {key: provenance, title: "Supply-chain & provenance", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "Verified THUDM org; safetensors with checksums; widely mirrored, and redistribution must carry the glm-4 licence and name rules - pin the revision and verify checksums."}
       - {key: eu-ai-act, title: "EU AI Act posture", doc_type: explanation, source_type: aggregated, coverage: full, refs: [ev-glm9-eu, ev-glm9-license], summary: "GPAI but not systemic-risk (9B); the glm-4 licence is NOT FOSS, so no open-source exemption on the licence axis; no copyright policy / training-content summary; commercial-registration and naming duties bind downstream; PRC governing law."}
-      - {key: evaluation, title: "Benchmarks & evaluation", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-perf], summary: "Capable for a mid-2024 9B; dated and superseded by 2026. Not OneHill-reproduced."}
-      - {key: safety-eval, title: "Independent safety evaluation", doc_type: reference, source_type: gap, gap_reason: "No broad independent red-team / safety battery has been published for GLM-4-9B-Chat, and OneHill ran none this session; the behavioural caveats are captured under limitations above."}
+      - {key: evaluation, title: "Benchmarks & evaluation", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-perf], summary: "Capable for a mid-2024 9B; dated and succeeded by newer models by 2026. Not reproduced by OneHill."}
+      - {key: safety-eval, title: "Independent safety evaluation", doc_type: reference, source_type: gap, gap_reason: "No broad independent red-team / safety battery has been published for GLM-4-9B-Chat, and OneHill has not run one; the behavioural caveats are captured under limitations above."}
   implement:
     completeness: 90.9
     originality: 0.0
     items:
       - {key: install, title: "Install & run", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "Download safetensors from the THUDM org and serve with transformers, vLLM, llama.cpp or Ollama; runs on a single consumer GPU. Complete the glm-4 commercial registration first if the use is commercial."}
-      - {key: hardware, title: "Hardware & VRAM requirements", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "9B dense - a single consumer GPU, or CPU when quantized. The 1M-context variant is memory-intensive in practice."}
+      - {key: hardware, title: "Hardware & VRAM requirements", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "9B dense: a single consumer GPU, or CPU when quantized. The 1M-context variant is memory-intensive."}
       - {key: serving, title: "Serving stacks", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "vLLM, transformers, llama.cpp and Ollama; broad support for a small 2024 model, though the tooling is older than the current GLM line."}
       - {key: safe-deployment, title: "Safe-deployment controls & Deployment Ceiling", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-glm9-behaviour, ev-glm9-license], summary: "Deployment Ceiling T2 (conditional): complete commercial registration and honour the glm-4 naming/field-of-use terms, account for the revocable grant, supply your own guardrails and a guard model, and add prompt-injection defences for agentic use."}
       - {key: quantization, title: "Available quantizations", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "Widely quantized (GGUF and lower-bit) as a small model; redistribution must carry the glm-4 licence and name rules."}
-      - {key: fine-tuning, title: "Fine-tuning & adaptation", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-glm9-license], summary: "Fine-tuning is permitted but derivatives inherit the revocable, registration-gated licence and the 'glm-4' name prefix; training data and code are closed, so no from-scratch reproduction."}
+      - {key: fine-tuning, title: "Fine-tuning & adaptation", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-glm9-license], summary: "Fine-tuning is permitted but derivatives carry the revocable, registration-gated licence and the 'glm-4' name prefix; training data and code are closed, so no from-scratch reproduction."}
       - {key: integration, title: "API / OpenAI-compatible integration", doc_type: howto, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "Serve behind vLLM's OpenAI-compatible endpoint; the 2024 chat template and tool-call conventions are older than the current GLM line - confirm per stack."}
   use:
     completeness: 55.6
     originality: 0.0
     items:
       - {key: capabilities, title: "Capabilities & modalities", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-perf], summary: "Text chat/instruct 9B with general assistant and coding ability; capable for its 2024 vintage, dated now."}
-      - {key: context-window, title: "Context window & long-context behaviour", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "128K on GLM-4-9B-Chat; an advertised 1M-token context on GLM-4-9B-Chat-1M (memory-intensive); OneHill has not independently measured effective recall."}
+      - {key: context-window, title: "Context window & long-context behaviour", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "128K on GLM-4-9B-Chat; an advertised 1M-token context on GLM-4-9B-Chat-1M (memory-intensive); OneHill has not measured effective recall."}
       - {key: chat-template, title: "Prompt format & chat template", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "Ships a 2024-era GLM chat template; use apply_chat_template and confirm behaviour on your serving stack."}
       - {key: languages, title: "Language coverage", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "Chinese and English strongest; per-language depth varies and is not exhaustively documented."}
       - {key: tool-use, title: "Function / tool calling", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "GLM-4-9B-Chat documented some tool-calling support at release; the convention is older than the current line - confirm and test per stack."}
@@ -294,17 +248,17 @@ documentation:
     originality: 0.0
     items:
       - {key: troubleshooting, title: "Common problems & fixes", doc_type: troubleshooting, source_type: aggregated, coverage: partial, refs: [ev-glm9-card], summary: "1M-context memory blow-ups, older chat-template/tool-call conventions, and quant-quality trade-offs; not exhaustive."}
-      - {key: release-versioning, title: "Versions, changelog & cadence", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "The original GLM-4-9B-Chat / -Chat-1M (and glm-4-9b base) on the THUDM org; superseded for new work by GLM-4-9B-0414 and the 4.5/4.6 line (the `glm` entry). The revision hash is the changelog anchor."}
-      - {key: security-disclosure, title: "Security / vulnerability disclosure", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-license], summary: "A licence contact exists (license@zhipuai.cn), but no formal vulnerability-disclosure/security policy was found for the weights - factor into your incident-response plan."}
+      - {key: release-versioning, title: "Versions, changelog & cadence", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "The original GLM-4-9B-Chat / -Chat-1M (and glm-4-9b base) on the THUDM org; for new work they are succeeded by GLM-4-9B-0414 and the 4.5/4.6 line (the `glm` entry). The revision hash is the changelog anchor."}
+      - {key: security-disclosure, title: "Security / vulnerability disclosure", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-license], summary: "A licence contact exists (license@zhipuai.cn), but no formal vulnerability-disclosure/security policy exists for the weights; factor this into your incident-response plan."}
       - {key: channels, title: "Community & support channels", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-glm9-card], summary: "The THUDM Hugging Face org and GitHub, plus a community around this widely-used 2024 small model."}
-      - {key: deprecation, title: "Deprecation / end-of-life policy", doc_type: reference, source_type: gap, gap_reason: "No published deprecation or end-of-life policy; the model is effectively superseded by the current GLM line but remains downloadable, with no sunset commitment documented."}
+      - {key: deprecation, title: "Deprecation / end-of-life policy", doc_type: reference, source_type: gap, gap_reason: "No published deprecation or end-of-life policy; the model is effectively replaced by the current GLM line but remains downloadable, with no sunset commitment documented."}
       - {key: known-issues, title: "Tracked known issues", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-glm9-license, ev-glm9-behaviour], summary: "The revocable, registration-gated licence, dated capability, China-aligned alignment, and no first-party guard."}
 ownership:
   level: limited
   factors:
     use_modify:
       level: weak
-      rationale: "The glm-4 licence is non-OSI and REVOCABLE, gates commercial use behind a registration form, forbids military/illegal/national-security use, and forces every derivative to display 'Built with glm-4' and to prefix its name with 'glm-4'. A revocable, registration-gated grant with mandatory naming is the weakest use-and-modify position in the GLM family - weak."
+      rationale: "The glm-4 licence is non-OSI and REVOCABLE, gates commercial use behind a registration form, forbids military/illegal/national-security use, and forces every derivative to display 'Built with glm-4' and to prefix its name with 'glm-4'. This is the weakest use-and-modify position in the GLM family."
       # grounded in: ev-glm9-license (license, retrieved) - glm-4 licence Sec 2/3, revocable + commercial registration + naming
     transparency:
       level: moderate
@@ -312,39 +266,23 @@ ownership:
       # grounded in: ev-glm9-card (model_card) - open weights, closed data/code; ev-glm9-behaviour (third_party) - China-aligned alignment
     reliability:
       level: moderate
-      rationale: "Performance 2 (dated, superseded), operational 4, safety 3: runnable and broadly supported, but the below-average current capability holds reliability to moderate."
+      rationale: "Performance 2 (dated, succeeded by newer models), operational 4, safety 3: runnable and broadly supported, but the below-average current capability holds reliability to moderate."
       # grounded in: dimension scores performance 2 / operational 4 / safety 3
     data_control:
       level: moderate
-      rationale: "Self-hosting keeps your processing local, but the licence grant is revocable and commercial use hinges on a registration the publisher controls - so your control over continued use is contingent, not assured. Moderate, not strong."
+      rationale: "Self-hosting keeps your processing local, but the licence grant is revocable and commercial use hinges on a registration the publisher controls, so your control over continued use is contingent and not assured. Moderate and not strong."
       # grounded in: ev-glm9-license (license, retrieved) - revocable grant, registration-gated commercial use
-  verdict: "You have only limited ownership of the original GLM-4-9B-Chat: the custom glm-4 licence is revocable, gates commercial use behind registration, restricts fields of use, and forces a 'glm-4' name prefix and 'Built with glm-4' attribution on every derivative - so use-and-modify is weak and your continued-use control is contingent. Combined with dated capability, ownership lands at limited, the low end of the GLM family and well below the MIT GLM line (the `glm` entry, substantial). Use this checkpoint only if you specifically need it: complete the commercial registration, honour the naming and field-of-use terms, and account for the revocable grant - otherwise adopt the MIT GLM models instead."
+  verdict: "You have only limited ownership of the original GLM-4-9B-Chat. The custom glm-4 licence is revocable, gates commercial use behind registration, restricts fields of use, and forces a 'glm-4' name prefix and 'Built with glm-4' attribution on every derivative. Use-and-modify is therefore weak and continued-use control is contingent. Combined with dated capability, ownership lands at limited, the low end of the GLM family and well below the MIT GLM line (the `glm` entry, substantial). Use this checkpoint only if you specifically need it: complete the commercial registration, honour the naming and field-of-use terms, and account for the revocable grant. Otherwise adopt the MIT GLM models."
 evidence:
 - id: ev-glm9-license
-  claim: 'THUDM/glm-4-9b LICENSE, read: [Sec 2] "a non-exclusive, worldwide, non-transferable,
-    non-sublicensable, revocable, royalty-free copyright license"; free for academic research;
-    "For users who wish to use the models for commercial purposes, please do so [here] Complete
-    registration. Registered users are free to use this model for commercial activities, but must comply
-    with all terms and conditions of this license."; when distributing or providing the materials you
-    "should" ... "Prominently display ''Built with glm-4''" and, when using them to improve a distributed
-    or available AI model, "add ''glm-4'' to the beginning of any such AI model name". Re-read raw
-    2026-11-19, byte-identical for glm-4-9b and glm-4-9b-chat (sha1 4c48e6c0...); the earlier quote of a
-    "Commercial users must complete registration ... business purposes" sentence did not match the text
-    and is replaced. [Sec 3] no use "for any military or illegal purposes" and no endangering national
-    security/unity. [Sec 6] "governed ... in accordance with the laws of People''s Republic of China",
-    disputes to "Beijing''s Haidian District People''s Court"; contact license@zhipuai.cn.'
+  claim: 'THUDM/glm-4-9b LICENSE (byte-identical for glm-4-9b and glm-4-9b-chat, sha1 4c48e6c0...). [Sec 2] "a non-exclusive, worldwide, non-transferable, non-sublicensable, revocable, royalty-free copyright license"; free for academic research; "For users who wish to use the models for commercial purposes, please do so [here] Complete registration. Registered users are free to use this model for commercial activities, but must comply with all terms and conditions of this license."; when distributing or providing the materials you "should" ... "Prominently display ''Built with glm-4''" and, when using them to improve a distributed or available AI model, "add ''glm-4'' to the beginning of any such AI model name". [Sec 3] no use "for any military or illegal purposes" and no endangering national security/unity. [Sec 6] "governed ... in accordance with the laws of People''s Republic of China", disputes to "Beijing''s Haidian District People''s Court"; contact license@zhipuai.cn.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/THUDM/glm-4-9b-chat/raw/main/LICENSE
   date: '2026-11-19'
 - id: ev-glm9-card
-  claim: 'GLM-4-9B-Chat model card on the verified THUDM HF org, re-read 2026-11-19: a 9B dense chat model
-    with up to 128K context (and a 1M-context GLM-4-9B-Chat-1M variant), safetensors, licence tag "other /
-    glm-4", not gated, repo live (created 2024-06-04, last modified 2025-03-13, no licence change in the
-    commit history); broad serving and community quants (not re-checked); a mid-2024 release. Transformers-
-    native conversions glm-4-9b-chat-hf, glm-4-9b-chat-1m-hf and glm-4-9b-hf (THUDM and zai-org mirrors)
-    carry the same glm-4 licence tag.'
+  claim: 'GLM-4-9B-Chat model card on the verified THUDM HF org. It describes a 9B dense chat model with up to 128K context (and a 1M-context GLM-4-9B-Chat-1M variant). The repo has safetensors, licence tag "other / glm-4", is not gated and is live (created 2024-06-04, last modified 2025-03-13, no licence change in the commit history). Broad serving and community quants exist; a mid-2024 release. Transformers-native conversions glm-4-9b-chat-hf, glm-4-9b-chat-1m-hf and glm-4-9b-hf (THUDM and zai-org mirrors) carry the same glm-4 licence tag.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
@@ -352,7 +290,7 @@ evidence:
   date: '2026-11-19'
 - id: ev-glm9-perf
   claim: GLM-4-9B-Chat was a capable small model at its mid-2024 release but is dated by 2026 and
-    superseded within its own family by GLM-4-9B-0414 and the 4.5/4.6 line. Not OneHill-reproduced.
+    succeeded within its own family by GLM-4-9B-0414 and the 4.5/4.6 line. Not reproduced by OneHill.
   source_type: third_party
   doc_type: third_party
   retrieved: false

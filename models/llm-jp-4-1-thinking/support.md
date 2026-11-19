@@ -1,23 +1,22 @@
 # Support - LLM-jp-4.1 thinking (8B, 32B-A3B, 33B)
 
-_How do we keep it running and get help? Troubleshooting, versions, channels and known issues;
-security disclosure and deprecation policy are current gaps._
+_Troubleshooting, versions, security disclosure, channels and deprecation._
 
 <!-- item: troubleshooting -->
 ## Common problems & fixes
 
 From the cookbook and cards (`ev-cookbook`, `ev-gguf`); not an exhaustive catalogue:
 
-- **Garbled or unparsed output, broken tool calls.** You are using the wrong tokenizer or
+- Garbled or unparsed output, broken tool calls: You are using the wrong tokenizer or
   skipping the template. Load the bundled tokenizer, call `apply_chat_template`, and do not use the
   `openai-harmony` tokenizer.
-- **Reasoning text mixed into the answer on vLLM.** Start the server with the `llmjp4` reasoning
+- Reasoning text mixed into the answer on vLLM: Start the server with the `llmjp4` reasoning
   parser from `llm-jp-vllm` 0.1.1 or later and vLLM 0.30.0 or later.
-- **llama.cpp chat parsing fails.** Use upstream v0.6.0 or later and a 4.1 GGUF; the GGUF card
+- llama.cpp chat parsing fails: Use upstream v0.6.0 or later and a 4.1 GGUF; the GGUF card
   still says a fork is needed, so if upstream fails, try the publisher fork named on the card.
-- **Special-token text in user input.** Input that resembles `<|...|>` may need custom encoding;
+- Special-token text in user input: Input that resembles `<|...|>` may need custom encoding;
   parse token IDs instead of decoded text.
-- **Wrong whitespace in decoded text.** The vLLM example documents that `output.text` loses
+- Wrong whitespace in decoded text: The vLLM example documents that `output.text` loses
   whitespace; decode `output.token_ids` with the model tokenizer.
 
 <!-- item: release-versioning -->
@@ -47,12 +46,12 @@ models are used (`ev-card-41`). Hugging Face discussion tabs exist on the model 
 had been opened on the 33B repository on 2026-11-19). The release page lists tools and corpora on
 GitHub and GitLab (`ev-release-page`). NII announced a trial API and chat service through the
 University of Tokyo mdx-MaaS, mainly for researchers (`ev-pcwatch`). No community forum or
-commercial support was found.
+commercial support is listed.
 
 <!-- item: known-issues -->
 ## Tracked known issues
 
-No public issue tracker for the models was found; these are issues stated in publisher documents:
+No public issue tracker exists for the models; these are issues stated in publisher documents:
 
 - the GGUF card and the cookbook disagree on whether llama.cpp needs a fork (`ev-gguf`);
 - LLM-jp-4.1 uses a modified Harmony template and is not compatible with the `openai-harmony`

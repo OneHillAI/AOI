@@ -1,33 +1,32 @@
 # Support - Kimi K2 (Moonshot AI)
 
-_How do we keep it running and get help? Troubleshooting, versions/changelog, channels;
-security-disclosure and deprecation policy are current gaps._
+_Troubleshooting, versions, security disclosure, channels and deprecation._
 
 <!-- item: troubleshooting -->
 ## Common problems & fixes
 
-Aggregated common pitfalls (not an exhaustive catalogue):
+Common pitfalls, not an exhaustive catalogue:
 
-- **Out-of-memory / sharding failures.** The 1T model must be sharded across a multi-GPU/multi-node
-  cluster; size tensor/pipeline parallelism to your hardware, or use KTransformers CPU-offload.
-- **Block-FP8 kernel or engine errors.** Match your vLLM/SGLang/TensorRT-LLM version to one that
-  supports the block-FP8 weights and MLA attention; version mismatches are a common cause.
-- **Garbled or over-verbose Instruct output.** You are almost certainly not applying the chat
-  template - use `apply_chat_template`, and don't prompt the *Base* checkpoint as a chat model.
-- **Non-reproducible results / silent updates.** You floated on `main`; pin an exact revision and
-  verify checksums.
+- Out-of-memory and sharding failures: the 1T model must be sharded across a multi-GPU or
+  multi-node cluster. Size tensor and pipeline parallelism to the hardware, or use KTransformers
+  CPU offload.
+- Block-FP8 kernel or engine errors: match the vLLM, SGLang or TensorRT-LLM version to one that
+  supports the block-FP8 weights and MLA attention. Version mismatch is a common cause.
+- Garbled or over-verbose Instruct output: the chat template is most likely not applied. Use
+  `apply_chat_template` and do not prompt the Base checkpoint as a chat model.
+- Non-reproducible results or silent updates: a deployment floating on `main` changes under you.
+  Pin an exact revision and verify checksums.
 
 <!-- item: release-versioning -->
 ## Versions, changelog & cadence
 
-Kimi K2 ships as **Base** and **Instruct** checkpoints on the verified `moonshotai` org, tracked
-as **immutable Hugging Face revisions** - the revision hash is your changelog anchor: pin it, and
-diff against a newer revision when you choose to upgrade. Moonshot's "Kimi K2: Open Agentic
-Intelligence" technical report accompanies the release and documents what the model is. The
-Instruct card marks `Kimi-K2-Instruct-0905` as the newer version. Later generations (K2.5, K2.6,
-K2.7-Code and K3) exist and are out of scope for this entry. On the hosted API, K2 series models
-closed to new users on 2026-10-31 and are planned for retirement by the end of December 2026; the
-downloadable weights are not affected.
+Kimi K2 ships as Base and Instruct checkpoints on the verified `moonshotai` org, tracked as
+immutable Hugging Face revisions. The revision hash is the changelog anchor: pin it and diff
+against a newer revision when upgrading. The technical report "Kimi K2: Open Agentic
+Intelligence" accompanies the release. The Instruct card marks `Kimi-K2-Instruct-0905` as the
+newer version. Later generations (K2.5, K2.6, K2.7-Code and K3) exist and are not covered here.
+On the hosted API, K2 series models closed to new users on 2026-10-31 and are planned for
+retirement by the end of December 2026; the downloadable weights are not affected.
 
 <!-- security-disclosure is a `gap` item - no formal published vulnerability-disclosure or
      security policy was found; contact is only the general moonshotai Hugging Face / GitHub org
@@ -36,13 +35,10 @@ downloadable weights are not affected.
 <!-- item: channels -->
 ## Community & support channels
 
-- **Hugging Face** model discussion tabs on the `moonshotai` org (`ev-kimi-hf`) for usage
-  questions.
-- **GitHub issues** on `moonshotai/Kimi-K2` (`ev-github`) for deployment, serving-engine, and
-  reproduction problems.
-
-There is no paid support tier for the open weights - this is community and maintainer support
-around an open-weight release.
+Usage questions go to the model discussion tabs on the `moonshotai` Hugging Face org
+(`ev-kimi-hf`). Deployment, serving-engine and reproduction problems go to GitHub issues on
+`moonshotai/Kimi-K2` (`ev-github`). There is no paid support tier for the open weights; support
+is community and maintainer based.
 
 <!-- deprecation is a `gap` item - no published deprecation/EoL policy. Older HF revisions remain
      downloadable, but no formal support window or sunset commitment is documented. See gap_reason. -->
@@ -50,9 +46,7 @@ around an open-weight release.
 <!-- item: known-issues -->
 ## Tracked known issues
 
-Drawn from model-card and third-party caveats rather than a formal issue tracker (hence *partial*):
-
-- **China-aligned topic censorship** on politically sensitive prompts.
-- **Lighter safety coverage** than frontier labs, with **no companion guard model**.
-- **Operational burden** of a 1T-parameter model - multi-node infrastructure is required with no
-  small fallback variant.
+These come from model-card and third-party caveats, not a formal issue tracker, so coverage is
+partial. China-aligned topic censorship appears on politically sensitive prompts. Safety coverage
+is lighter than at frontier labs, with no companion guard model. A 1T-parameter model carries an
+operational burden: multi-node infrastructure is required, with no small fallback variant.

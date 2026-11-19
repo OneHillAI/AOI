@@ -9,22 +9,7 @@ id: groq
 name: Groq
 profile: inference
 hq_country: United States
-summary: 'A US-headquartered inference provider running open models on custom LPU hardware for very
-  low latency, serving a narrow, fast-changing catalogue. Re-verified 2026-11-19: the self-serve
-  (free and developer tier) production text models are now gpt-oss 120B and 20B plus Whisper, with
-  Qwen3.8-27B, gpt-oss-safeguard, Orpheus TTS and Prompt Guard in preview; Llama 3.1 8B and Llama 3.3 70B
-  were retired for self-serve on 2026-08-16 and survive only on enterprise contracts, and the R1 distill,
-  Gemma, Mixtral and Qwen3-32B models are gone. Its standout governance facts, from the binding Groq
-  Services Agreement (last modified 2026-06-22, unchanged) and DPA (2025-10-15, unchanged), are that the
-  customer retains all IP in Inputs and Outputs, Groq may not train on them, and there is a mutual
-  confidentiality clause naming Customer Data. Inference is not retained by default, but the docs say
-  inputs and outputs may be logged for up to 30 days when troubleshooting or investigating abuse unless
-  ZDR is switched on. The biggest caveats are that batch and fine-tuning features retain data in US GCP
-  storage, the catalogue is narrow, and the EU footprint (Finland, with a London site) has no
-  customer-selectable region-pinning clause while the DPA permits US processing. A public status page
-  exists. The trust centre and sub-processor list are JavaScript-only and could not be read.
-
-  '
+summary: "A US-headquartered inference provider that runs open models on custom LPU hardware for very low latency and serves a narrow, fast-changing catalogue. The self-serve (free and developer tier) production text models are gpt-oss 120B and 20B plus Whisper. Qwen3.8-27B, gpt-oss-safeguard, Orpheus TTS and Prompt Guard are in preview. Llama 3.1 8B and Llama 3.3 70B were retired for self-serve on 2026-08-16 and survive only on enterprise contracts. The R1 distill, Gemma, Mixtral and Qwen3-32B models are gone. The binding Groq Services Agreement (last modified 2026-06-22) and DPA (2025-10-15) give the customer all IP in Inputs and Outputs, bar Groq from training on them, and add a mutual confidentiality clause naming Customer Data. Inference is not retained by default. The docs say inputs and outputs may be logged for up to 30 days when troubleshooting or investigating abuse unless ZDR is switched on. The biggest caveats are that batch and fine-tuning features retain data in US GCP storage, the catalogue is narrow, and the EU footprint (Finland, with a London site) has no customer-selectable region-pinning clause while the DPA permits US processing. A public status page exists. The trust centre and sub-processor list are JavaScript-only and unreadable."
 models_served:
 - gpt-oss 120B and 20B (production, self-serve)
 - gpt-oss-safeguard 20B (preview)
@@ -36,8 +21,8 @@ models_served:
 hardware: Custom LPU racks (lock-in signal; open models remain API-portable); Groq site copy now mentions LPX racks linked to NVIDIA hardware once released
 pricing:
   model: per-token
-  notes: 'Per-token pricing with a rate-limited free/developer tier, read 2026-11-19 from the docs models
-    page (groq.com/pricing now redirects to the home page). Llama 3.1 8B and Llama 3.3 70B are
+  notes: 'Per-token pricing with a rate-limited free/developer tier. Rates come from the docs models
+    page, and groq.com/pricing redirects to the home page. Llama 3.1 8B and Llama 3.3 70B are
     "Contact Sales".
 
     '
@@ -47,7 +32,7 @@ pricing:
   - 'Qwen3.8-27B (preview): $0.80/M in, $4.00/M out'
   - 'Whisper large v3: $0.111 per hour'
 data_governance:
-  default_retention: 'Inference is not retained by default. The your-data docs (2026-11-19) add that inputs and
+  default_retention: 'Inference is not retained by default. The your-data docs add that inputs and
     outputs may be logged for up to 30 days when troubleshooting platform errors or investigating suspected
     abuse, unless ZDR is enabled. Batch input/output files are kept 30 days unless deleted, fine-tune
     weights and datasets until the customer deletes them, and all retained data sits in US GCP buckets.
@@ -58,7 +43,7 @@ data_governance:
     features (batch, LoRA and fine-tune storage). The your-data docs say all customers may enable ZDR in
     Data Controls, but Services Agreement Sec 4.2 (last modified 2026-06-22) limits it to "Eligible
     Customers", a term defined in neither the agreement nor the DPA, so check eligibility before relying
-    on it. Re-confirmed unchanged 2026-11-19.
+    on it.
 
     '
   customer_data_ownership: customer_retains
@@ -102,7 +87,7 @@ residency:
     (Sec 11.3).'
 reliability:
   sla: ''
-  uptime_notes: 'A public status page exists (groqstatus.com, incident.io), which earlier passes missed: "fully
+  uptime_notes: 'A public status page exists (groqstatus.com, incident.io): "fully
     operational" on 2026-11-19, Aug to Nov 2026 uptime 100% for the API and all six production model
     components, 99.98% across seven preview components. No SLA is published; the Services Agreement
     mentions service level commitments only as a paid add-on.'
@@ -121,27 +106,16 @@ dedicated_notes: 'Dedicated options are enterprise, sales-negotiated: GroqMetal 
   exist for these, so the isolation guarantee is whatever is negotiated; the standard GroqCloud API
   is shared.'
 trust_considerations:
-- Batch (30-day) and fine-tuning retention default to US GCP storage even though inference
-  is not retained; inference may also be logged for up to 30 days for troubleshooting or abuse
-  investigation unless ZDR is on (your-data docs, 2026-11-19).
-- EU footprint (Finland, with a London site) has about 16 months of track record but still carries no
-  customer-selectable region-pinning clause; default storage is US and the DPA permits US processing.
-- 'The catalogue is narrow and shifting: Llama 3.1 8B and 3.3 70B went enterprise-only on 2026-08-16, and
-  most earlier models (R1 distill, Gemma, Mixtral, Qwen3-32B) were retired. Preview models can be
-  withdrawn at short notice and sit outside the BAA.'
-- Custom LPU hardware and a narrower catalogue limit model coverage relative to GPU providers.
-- Region pinning is unconfirmed.
-- US HQ implies standing CLOUD Act exposure; the DPA permits US processing.
-- Services Agreement Sec 10 gives a mutual confidentiality duty over Customer Data (reasonable-care
-  standard) - a real contractual protection beyond the retention/training terms, and among the
-  strongest standard-terms confidentiality postures in the field. Re-read unchanged 2026-11-19.
-- ZDR is described as available to "all customers" in the docs but the agreement limits it to
-  undefined "Eligible Customers"; free/beta-tier liability is capped at $5,000, and anything framed
-  as "feedback" (Sec 8.3) may be used by Groq without restriction.
-- Dedicated hardware (GroqMetal bare metal) exists but is enterprise-negotiated with no public contract
-  terms; the standard GroqCloud API is shared.
-- The trust centre (SOC 2 claim, sub-processor list) is a JavaScript-only page this session could not
-  read; the SOC 2 report is gated. Treat SOC 2 as a claim, as in earlier passes.
+- "Batch (30-day) and fine-tuning retention default to US GCP storage even though inference is not retained. Inference may also be logged for up to 30 days for troubleshooting or abuse investigation unless ZDR is on (your-data docs)."
+- "The EU footprint (Finland, with a London site) has about 16 months of track record but carries no customer-selectable region-pinning clause. Default storage is US and the DPA permits US processing."
+- "The catalogue is narrow and shifting: Llama 3.1 8B and 3.3 70B went enterprise-only on 2026-08-16, and most earlier models (R1 distill, Gemma, Mixtral, Qwen3-32B) were retired. Preview models can be withdrawn at short notice and sit outside the BAA."
+- "Custom LPU hardware and a narrower catalogue limit model coverage relative to GPU providers."
+- "Region pinning is unconfirmed."
+- "US HQ implies standing CLOUD Act exposure, and the DPA permits US processing."
+- "Services Agreement Sec 10 gives a mutual confidentiality duty over Customer Data (reasonable-care standard), a contractual protection beyond the retention and training terms."
+- 'ZDR is described as available to "all customers" in the docs, but the agreement limits it to undefined "Eligible Customers". Free/beta-tier liability is capped at $5,000, and anything framed as "feedback" (Sec 8.3) may be used by Groq without restriction.'
+- "Dedicated hardware (GroqMetal bare metal) exists but is enterprise-negotiated with no public contract terms. The standard GroqCloud API is shared."
+- "The trust centre (SOC 2 claim, sub-processor list) is a JavaScript-only page that cannot be read, and the SOC 2 report is gated. SOC 2 is a claim."
 score:
   rubric_version: '1.2'
   headline: 72.4
@@ -150,57 +124,28 @@ score:
   dimensions:
     data_governance:
       score: 4
-      rationale: 'The binding Groq Services Agreement (last modified 2026-06-22) and DPA (2025-10-15), both
-        re-read 2026-11-19 and unchanged, state the customer retains all IP in Inputs/Outputs, Groq is not
-        permitted to use Inputs/Outputs to train or fine-tune models (Sec 4.2, all tiers), and a mutual
-        confidentiality clause (Sec 10) treats Customer Data as the customer''s Confidential Information - a
-        strong standard-terms posture. Inference is not retained by default, though the your-data docs
-        allow up-to-30-day troubleshooting and abuse logs unless ZDR is on. Held below 5 because those
-        logs and the batch (30-day) and fine-tuning retention sit in US GCP storage, the DPA permits US
-        processing (CLOUD Act exposure), and ZDR is limited to undefined "Eligible Customers" in the
-        agreement.
-
-        '
+      rationale: 'The binding Groq Services Agreement (last modified 2026-06-22) and DPA (2025-10-15) state that the customer retains all IP in Inputs/Outputs and that Groq may not use Inputs/Outputs to train or fine-tune models (Sec 4.2, all tiers). A mutual confidentiality clause (Sec 10) treats Customer Data as the customer''s Confidential Information. This is a strong standard-terms posture. Inference is not retained by default, though the your-data docs allow up-to-30-day troubleshooting and abuse logs unless ZDR is on. The score is below 5 because those logs and the batch (30-day) and fine-tuning retention sit in US GCP storage, the DPA permits US processing (CLOUD Act exposure), and the agreement limits ZDR to undefined "Eligible Customers".'
       evidence_refs:
       - ev-terms
       - ev-dpa
       - ev-yourdata
     compliance:
       score: 4
-      rationale: 'The DPA (read 2026-11-19) covers GDPR, UK and Swiss transfers via deemed-signed SCCs and a
-        sub-processor list the DPA points to, and a HIPAA BAA (read) is offered for generally available
-        services. SOC 2 Type II is a trust-centre claim from earlier passes: trust.groq.com is now a
-        JavaScript-only page that could not be read, so SOC 2 is not re-confirmed here and rests on the
-        earlier extraction. Held below 5 because the SOC 2 report itself is gated and ISO 27001/27701 is
-        unconfirmed.
-
-        '
+      rationale: "The DPA covers GDPR, UK and Swiss transfers via deemed-signed SCCs and points to a sub-processor list. A HIPAA BAA is offered for generally available services. SOC 2 Type II is a trust-centre claim: trust.groq.com is a JavaScript-only page that cannot be read, so the claim is unconfirmed. The score is below 5 because the SOC 2 report itself is gated and ISO 27001/27701 is unconfirmed."
       evidence_refs:
       - ev-trust
       - ev-dpa
       - ev-baa
     residency:
       score: 3
-      rationale: 'EU capacity exists (Vantaa, Finland, launched as Helsinki in July 2025, plus a London site per
-        the platform page), satisfying the "EU region available" anchor. Held at 3 because no
-        customer-selectable region-pinning clause exists in the Services Agreement or DPA (re-read
-        2026-11-19), the docs say all retained customer data is stored in US GCP buckets, and the DPA
-        expressly permits US processing.
-
-        '
+      rationale: 'EU capacity exists (Vantaa, Finland, launched as Helsinki in July 2025, plus a London site per the platform page), satisfying the "EU region available" anchor. The score is 3 because neither the Services Agreement nor the DPA has a customer-selectable region-pinning clause, the docs say all retained customer data is stored in US GCP buckets, and the DPA expressly permits US processing.'
       evidence_refs:
       - ev-eudc
       - ev-dpa
       - ev-yourdata
     security:
       score: 4
-      rationale: 'SOC 2 Type II controls per the earlier trust-centre extraction, DPA Annex II measures (ZTNA,
-        subprocessor assessments, regular security and vulnerability testing), a private HackerOne
-        vulnerability programme (groq.com/security), and ZDR/Data Controls documented in the Services
-        Agreement and docs. Held below 5 absent an independently reviewed pen-test and because the SOC 2
-        report is gated and the trust centre unreadable.
-
-        '
+      rationale: "SOC 2 Type II controls per the trust-centre claim, DPA Annex II measures (ZTNA, subprocessor assessments, regular security and vulnerability testing), a private HackerOne vulnerability programme (groq.com/security), and ZDR/Data Controls documented in the Services Agreement and docs. The score is below 5 because no independently reviewed pen-test is surfaced, the SOC 2 report is gated and the trust centre is unreadable."
       evidence_refs:
       - ev-trust
       - ev-terms
@@ -208,36 +153,19 @@ score:
       - ev-status
     reliability:
       score: 3
-      rationale: 'CHANGED 2026-11-19 from 2: a public status page exists (groqstatus.com, incident.io) showing
-        Aug to Nov 2026 uptime of 100% for the API and the six production model components and 99.98% for
-        preview models, with a "fully operational" banner. Earlier passes recorded no status page. Meets the
-        score-3 anchor (public status page and operational record). Held at 3 because no SLA is published
-        (service level commitments are a paid add-on), there is no service-credit or failover
-        documentation, and the self-serve catalogue changes quickly.
-
-        '
+      rationale: 'A public status page exists (groqstatus.com, incident.io) showing Aug to Nov 2026 uptime of 100% for the API and the six production model components and 99.98% for preview models, with a "fully operational" banner. That meets the score-3 anchor (public status page and operational record). The score is 3 because no SLA is published (service level commitments are a paid add-on), there is no service-credit or failover documentation, and the self-serve catalogue changes quickly.'
       evidence_refs:
       - ev-status
       - ev-terms
     transparency_lockin:
       score: 3
-      rationale: 'An OpenAI-compatible API (base URL re-read in the docs 2026-11-19) over open-weight models keeps
-        it portable, but custom LPU hardware and a narrow, shifting catalogue (Llama models now enterprise
-        only; arbitrary fine-tunes and larger open models absent) limit coverage and are lock-in
-        considerations.
-
-        '
+      rationale: "An OpenAI-compatible API over open-weight models keeps workloads portable. Custom LPU hardware and a narrow, shifting catalogue (Llama models now enterprise only; arbitrary fine-tunes and larger open models absent) limit coverage and add lock-in."
       evidence_refs:
       - ev-openai
       - ev-models
     cost:
       score: 4
-      rationale: 'Low per-token rates read from the docs models page 2026-11-19 (gpt-oss-120B $0.15/$0.60,
-        gpt-oss-20B $0.075/$0.30, Qwen3.8-27B $0.80/$4.00) plus a rate-limited developer tier (250K TPM,
-        1K RPM for gpt-oss); pricing is clear and public for the self-serve models, though the Llama models
-        are now contact-sales and groq.com/pricing redirects to the home page.
-
-        '
+      rationale: "Per-token rates on the docs models page are low (gpt-oss-120B $0.15/$0.60, gpt-oss-20B $0.075/$0.30, Qwen3.8-27B $0.80/$4.00), and the developer tier is rate-limited (250K TPM, 1K RPM for gpt-oss). Pricing is clear and public for the self-serve models. The Llama models are contact-sales, and groq.com/pricing redirects to the home page."
       evidence_refs:
       - ev-models
       - ev-ratelimits
@@ -258,42 +186,42 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-terms, ev-dpa, ev-yourdata]
-        summary: "Per the Groq Services Agreement (2026-06-22) and the your-data docs (both re-read 2026-11-19): inference is not retained by default, but inputs and outputs may be logged for up to 30 days when troubleshooting or investigating abuse unless ZDR is on; Groq may not use Inputs/Outputs to train or fine-tune models. ZDR is available to all customers per the docs, though the agreement says 'Eligible Customers'. Batch retains files 30 days and fine-tuning retains weights/datasets until deleted, both in US GCP storage."
+        summary: "Per the Groq Services Agreement (2026-06-22) and the your-data docs, inference is not retained by default. Inputs and outputs may be logged for up to 30 days when troubleshooting or investigating abuse unless ZDR is on. Groq may not use Inputs/Outputs to train or fine-tune models. The docs say ZDR is available to all customers, though the agreement says 'Eligible Customers'. Batch retains files 30 days and fine-tuning retains weights/datasets until deleted, both in US GCP storage."
       - key: data-ownership
         title: "Data & IP ownership"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-terms, ev-dpa]
-        summary: "The Services Agreement states the customer retains all IP rights in Customer Data, Inputs and Outputs, and that Groq does not access/store/retain Inputs or Outputs except to provide the service - so your data and derived knowledge stay yours. The DPA discloses a published sub-processor list (trust.groq.com/subprocessors) with a 15-day objection right. Caveat: batch (30-day) and fine-tuning features retain data in US GCP storage until deleted."
+        summary: "The Services Agreement states the customer retains all IP rights in Customer Data, Inputs and Outputs, and that Groq does not access/store/retain Inputs or Outputs except to provide the service. The customer's data and derived knowledge stay with the customer. The DPA discloses a published sub-processor list (trust.groq.com/subprocessors) with a 15-day objection right. Batch (30-day) and fine-tuning features retain data in US GCP storage until deleted."
       - key: compliance
         title: "Compliance & attestations"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-trust, ev-dpa, ev-baa]
-        summary: "The DPA (read) covers GDPR, UK and Swiss transfers through deemed-signed SCCs, and a HIPAA BAA (read) is offered for generally available services only. SOC 2 Type II is an earlier trust-centre claim that could not be re-read because trust.groq.com is JavaScript-only. ISO 27001/27701 unconfirmed and the SOC 2 report itself is gated."
+        summary: "The DPA covers GDPR, UK and Swiss transfers through deemed-signed SCCs, and a HIPAA BAA is offered for generally available services only. SOC 2 Type II is a trust-centre claim that cannot be verified because trust.groq.com is JavaScript-only. ISO 27001/27701 is unconfirmed and the SOC 2 report itself is gated."
       - key: residency
         title: "Data residency & jurisdiction"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-eudc, ev-dpa, ev-yourdata]
-        summary: "US default storage plus EU capacity (Vantaa, Finland, launched as Helsinki in July 2025, and a London site); the docs say retained data sits in US GCP buckets, the DPA expressly permits US processing, region pinning is unconfirmed, and US HQ carries standing CLOUD Act exposure. EEA customers contract with Groq UK Limited."
+        summary: "US default storage plus EU capacity (Vantaa, Finland, launched as Helsinki in July 2025, and a London site). The docs say retained data sits in US GCP buckets. The DPA expressly permits US processing, region pinning is unconfirmed, and US HQ carries standing CLOUD Act exposure. EEA customers contract with Groq UK Limited."
       - key: security
         title: "Security controls"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-trust, ev-terms, ev-dpa, ev-status]
-        summary: "SOC 2 Type II controls per the earlier trust-centre extraction; DPA Annex II lists ZTNA, subprocessor assessments and regular security testing; a private HackerOne programme handles vulnerability reports; Data Controls/ZDR is documented in the agreement. No independently reviewed pen-test is surfaced and the SOC 2 report is gated."
+        summary: "SOC 2 Type II controls per the trust-centre claim. DPA Annex II lists ZTNA, subprocessor assessments and regular security testing. A private HackerOne programme handles vulnerability reports, and Data Controls/ZDR is documented in the agreement. No independently reviewed pen-test is surfaced and the SOC 2 report is gated."
       - key: pricing
         title: "Pricing & cost model"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-models, ev-ratelimits]
-        summary: "Per-token rates read from the docs models page on 2026-11-19: gpt-oss-120B $0.15/$0.60, gpt-oss-20B $0.075/$0.30, Qwen3.8-27B $0.80/$4.00; Llama 3.1 8B and 3.3 70B are contact-sales. groq.com/pricing now redirects to the home page. The developer tier is rate-limited (250K TPM, 1K RPM for gpt-oss)."
+        summary: "Per-token rates on the docs models page: gpt-oss-120B $0.15/$0.60, gpt-oss-20B $0.075/$0.30, Qwen3.8-27B $0.80/$4.00. Llama 3.1 8B and 3.3 70B are contact-sales. groq.com/pricing redirects to the home page. The developer tier is rate-limited (250K TPM, 1K RPM for gpt-oss)."
       - key: reliability
         title: "Reliability posture"
         doc_type: reference
@@ -311,7 +239,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-openai]
-        summary: "OpenAI-compatible API per the docs (re-read 2026-11-19) - point an existing OpenAI client at base URL https://api.groq.com/openai/v1 with a Groq API key; open-weight models are served on custom LPU hardware and some advanced OpenAI features are not supported."
+        summary: "OpenAI-compatible API per the docs: point an existing OpenAI client at base URL https://api.groq.com/openai/v1 with a Groq API key. Open-weight models are served on custom LPU hardware, and some advanced OpenAI features are not supported."
       - key: region-config
         title: "Region & ZDR configuration"
         doc_type: howto
@@ -348,21 +276,21 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-models, ev-deprecation]
-        summary: "Self-serve catalogue on 2026-11-19: gpt-oss 120B and 20B, Whisper v3 and turbo (production); Qwen3.8-27B, gpt-oss-safeguard 20B, Orpheus TTS and Prompt Guard 2 (preview). Llama 3.1 8B and 3.3 70B are enterprise-contract only since 2026-08-16, and Muse Spark Open and MiniMax M2.7 are contact-sales previews. The earlier R1 distill, Gemma, Mixtral and Qwen3-32B models are retired."
+        summary: "Self-serve catalogue: gpt-oss 120B and 20B, Whisper v3 and turbo (production); Qwen3.8-27B, gpt-oss-safeguard 20B, Orpheus TTS and Prompt Guard 2 (preview). Llama 3.1 8B and 3.3 70B are enterprise-contract only since 2026-08-16, and Muse Spark Open and MiniMax M2.7 are contact-sales previews. The R1 distill, Gemma, Mixtral and Qwen3-32B models are retired."
       - key: features
         title: "Inference features"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-openai]
-        summary: "OpenAI-compatible chat/completions on low-latency LPU hardware; some advanced OpenAI features are not yet supported and per-model tool-calling / structured output follows each served model and was not individually verified."
+        summary: "OpenAI-compatible chat/completions on low-latency LPU hardware. Some advanced OpenAI features are not yet supported. Per-model tool-calling and structured output follow each served model and are not individually verified."
       - key: fine-tuning
         title: "Fine-tuning / custom models"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-yourdata, ev-terms]
-        summary: "A fine-tuning feature exists - per the your-data docs and Services Agreement it retains weights/datasets until the customer deletes them (US GCP storage) - but its scope (methods, formats, supported models) is not documented in public sources."
+        summary: "A fine-tuning feature exists. Per the your-data docs and Services Agreement it retains weights/datasets until the customer deletes them (US GCP storage). Its scope (methods, formats, supported models) is not documented in public sources."
       - key: context-limits
         title: "Context & token limits"
         doc_type: reference
@@ -378,21 +306,21 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-trust, ev-status]
-        summary: "A trust centre (trust.groq.com) is the trust surface but is JavaScript-only and could not be read this pass; groq.com/security describes a private HackerOne vulnerability disclosure programme (no public bug bounty). The sub-processor list is referenced by the DPA but was not read."
+        summary: "A trust centre (trust.groq.com) is the trust surface but is JavaScript-only and cannot be read. groq.com/security describes a private HackerOne vulnerability disclosure programme (no public bug bounty). The DPA references the sub-processor list, which is also unreadable."
       - key: channels
         title: "Support & community channels"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-openai]
-        summary: "Product/console documentation (console.groq.com/docs) is the primary support surface; support-tier response commitments and community-channel breadth were not detailed in the sources read."
+        summary: "Product/console documentation (console.groq.com/docs) is the primary support surface. Support-tier response commitments and community-channel breadth are not detailed in public sources."
       - key: deprecation
         title: "Model deprecation policy"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-deprecation]
-        summary: "A published deprecation process: email and docs announcement, a transition phase, optional automatic upgrade, then end of life; production models get a migration path and replacement, preview models may be withdrawn at short notice. Recent history shows frequent retirements (Llama pair for free and developer tiers on 2026-08-16, Compound on 2026-09-21), with enterprise committed-spend contracts exempt."
+        summary: "A published deprecation process: email and docs announcement, a transition phase, optional automatic upgrade, then end of life. Production models get a migration path and replacement, and preview models may be withdrawn at short notice. Recent history shows frequent retirements (Llama pair for free and developer tiers on 2026-08-16, Compound on 2026-09-21), with enterprise committed-spend contracts exempt."
       - key: status-uptime
         title: "Status page & uptime history"
         doc_type: reference
@@ -403,161 +331,115 @@ documentation:
 ownership:
   level: substantial
   factors:
-    use_modify:   { level: strong,   rationale: "OpenAI-compatible API (docs re-read 2026-11-19: base URL https://api.groq.com/openai/v1) over open-weight models keeps workloads portable - the same checkpoints run elsewhere or self-hosted - and the Services Agreement confirms the customer retains all IP in Inputs/Outputs; the custom LPU and a narrow, shifting catalogue are coverage limits, not exit blockers." }
+    use_modify:   { level: strong,   rationale: "An OpenAI-compatible API (base URL https://api.groq.com/openai/v1) over open-weight models keeps workloads portable, since the same checkpoints run elsewhere or self-hosted, and the Services Agreement confirms the customer retains all IP in Inputs/Outputs. The custom LPU and a narrow, shifting catalogue are coverage limits and do not block exit." }
     # grounded in: ev-openai (docs, retrieved), ev-terms (terms, retrieved: customer retains IP)
-    transparency: { level: moderate, rationale: "The governing Services Agreement, DPA, BAA and AUP are legible and were re-read 2026-11-19 - they state customer IP retention, never-train, retention windows and a sub-processor list location - but the sub-processor list and trust centre are JavaScript-only and unread, the SOC 2 report is gated, and ISO 27001 and region-pinning are unconfirmed." }
+    transparency: { level: moderate, rationale: "The governing Services Agreement, DPA, BAA and AUP are legible and state customer IP retention, never-train, retention windows and the sub-processor list location. The sub-processor list and trust centre are JavaScript-only and unreadable, the SOC 2 report is gated, and ISO 27001 and region pinning are unconfirmed." }
     # grounded in: ev-terms, ev-dpa, ev-baa, ev-aup (binding docs retrieved); trust centre unreadable
     reliability:  { level: moderate, rationale: "A public status page shows 100% uptime for the API and production models for Aug to Nov 2026, but no SLA is published (service level commitments are a paid add-on) and the self-serve catalogue turns over quickly." }
     # grounded in: ev-status (status page), ev-terms (SLA add-on wording)
-    data_control: { level: strong,   rationale: "The binding Services Agreement (read) states the customer retains IP in Inputs/Outputs, Groq may not train on them, and Inputs/Outputs are not accessed/stored/retained except to provide the service; the your-data docs confirm no default inference retention and ZDR for all via Data Controls. Caveats: up-to-30-day troubleshooting and abuse logs unless ZDR is on, and the opt-in batch (30-day) and fine-tuning features retain data in US GCP storage." }
+    data_control: { level: strong,   rationale: "The binding Services Agreement states the customer retains IP in Inputs/Outputs, Groq may not train on them, and Inputs/Outputs are not accessed, stored or retained except to provide the service. The your-data docs confirm no default inference retention and ZDR for all via Data Controls. Caveats: up-to-30-day troubleshooting and abuse logs unless ZDR is on, and the opt-in batch (30-day) and fine-tuning features retain data in US GCP storage." }
     # grounded in: ev-terms (terms, retrieved: customer IP + never-train + no-retain), ev-yourdata (docs, retrieved: no default retention + ZDR)
-  verdict: "You substantially own low-latency inference here: the Groq Services Agreement (unchanged since 2026-06-22) and the your-data docs confirm you keep all IP in Inputs/Outputs, Groq never trains on your data, inference is not retained by default, and ZDR is available via Data Controls, with a portable OpenAI-compatible API exit. It falls short of full because inference can be logged for up to 30 days for troubleshooting or abuse unless ZDR is on, the opt-in batch and fine-tuning paths retain data in US GCP storage, the SOC 2 report, trust centre and ISO posture are unverified, and the US HQ (DPA permits US processing) carries CLOUD Act exposure. Turn on ZDR, keep sensitive data out of the batch and fine-tuning paths, and look to an EU-sovereign provider if you need mature EU residency."
+  verdict: "You substantially own low-latency inference here. The Groq Services Agreement (last modified 2026-06-22) and the your-data docs confirm you keep all IP in Inputs/Outputs, Groq never trains on your data, inference is not retained by default, and ZDR is available via Data Controls. The OpenAI-compatible API gives a portable exit. The level falls short of full for four reasons. Inference can be logged for up to 30 days for troubleshooting or abuse unless ZDR is on. The opt-in batch and fine-tuning paths retain data in US GCP storage. The SOC 2 report, trust centre and ISO posture are unverified. The US HQ (DPA permits US processing) carries CLOUD Act exposure. Turn on ZDR, keep sensitive data out of the batch and fine-tuning paths, and use an EU-sovereign provider if you need mature EU residency."
 
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
-#     (true = the document's substantive content was obtained via this session's web tools;
-#     false = documented/known but NOT read this session). On 2026-11-19 console.groq.com, groq.com
-#     and groqstatus.com were read directly (server-rendered). trust.groq.com is a JavaScript-only
-#     single-page app, so the SOC 2 claim, the gated SOC 2 report and the sub-processor list contents
-#     were not read -> retrieved:false.
+#     (true = the document's substantive content was obtained; false = documented or known but
+#     its content was not obtained). console.groq.com, groq.com and groqstatus.com are server-rendered.
+#     trust.groq.com is a JavaScript-only single-page app, so the SOC 2 claim, the gated SOC 2 report
+#     and the sub-processor list contents are retrieved:false.
 evidence:
 - id: ev-yourdata
-  claim: "Your Data in GroqCloud docs (re-read 2026-11-19): by default Groq does not retain customer data for
-    inference requests; inputs and outputs may be logged for up to 30 days only when troubleshooting errors
-    or investigating suspected abuse, and ZDR stops that; Groq is not permitted to use Inputs or Outputs to
-    train or fine-tune AI Model Services or other models; batch input/output files are retained 30 days
-    unless deleted; fine-tuning weights/datasets are retained until deleted; all customers may enable ZDR in
-    Data Controls; all retained customer data sits in US GCP buckets with SCCs for transfers."
+  claim: "Your Data in GroqCloud docs: by default Groq does not retain customer data for inference requests. Inputs and outputs may be logged for up to 30 days only when troubleshooting errors or investigating suspected abuse, and ZDR stops that. Groq is not permitted to use Inputs or Outputs to train or fine-tune AI Model Services or other models. Batch input/output files are retained 30 days unless deleted, and fine-tuning weights/datasets are retained until deleted. All customers may enable ZDR in Data Controls. All retained customer data sits in US GCP buckets with SCCs for transfers."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://console.groq.com/docs/your-data
   date: '2026-11-19'
 - id: ev-terms
-  claim: "Groq Services Agreement (Last Modified 2026-06-22, re-read 2026-11-19, unchanged): Customer retains
-    all Intellectual Property Rights in Customer Data (including Inputs and Outputs); Sec 4.2 - Groq is not
-    permitted to use Inputs or Outputs for training or fine-tuning any AI Model Services or other models (all
-    tiers, free included) unless the Customer grants permission; Groq does not access/store/retain
-    Inputs/Outputs except to provide the Cloud Services; on termination Customer Data is deleted within 30
-    days. Sec 10 is a MUTUAL confidentiality clause and the definitions state Customer Data is considered
-    Customer's Confidential Information (subject to the carve-out sentence before it), protected with
-    'reasonable care'. Sec 8.3 - feedback may be used without restriction. Liability is capped at fees paid in
-    the prior 12 months, and at $5,000 for beta / free Cloud Services. ZDR: the docs say all customers may
-    enable it, but the agreement limits it to undefined 'Eligible Customers'. EEA and Swiss customers contract
-    with Groq UK Limited. Service level commitments are mentioned only as a paid add-on."
+  claim: "Groq Services Agreement (Last Modified 2026-06-22). The Customer retains all Intellectual Property Rights in Customer Data (including Inputs and Outputs). Sec 4.2: Groq is not permitted to use Inputs or Outputs for training or fine-tuning any AI Model Services or other models (all tiers, free included) unless the Customer grants permission. Groq does not access/store/retain Inputs/Outputs except to provide the Cloud Services, and on termination Customer Data is deleted within 30 days. Sec 10 is a mutual confidentiality clause, and the definitions state Customer Data is considered Customer's Confidential Information (subject to the carve-out sentence before it), protected with 'reasonable care'. Sec 8.3: feedback may be used without restriction. Liability is capped at fees paid in the prior 12 months, and at $5,000 for beta / free Cloud Services. The docs say all customers may enable ZDR, but the agreement limits it to undefined 'Eligible Customers'. EEA and Swiss customers contract with Groq UK Limited. Service level commitments are mentioned only as a paid add-on."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://console.groq.com/docs/legal/services-agreement
   date: '2026-11-19'
 - id: ev-dpa
-  claim: "GroqCloud Data Processing Addendum (Effective 2025-10-15, re-read 2026-11-19, unchanged): covers
-    GDPR/CCPA/PDPL; EU SCCs, UK Addendum and Swiss terms deemed signed; Groq maintains a sub-processor list at
-    trust.groq.com/subprocessors (not readable here) with a 15-day objection right; Personal Data may be
-    transferred to and Processed in the United States and other countries; deletion on request within 180
-    days; Annex II security measures (ZTNA, subprocessor assessments, regular security testing)."
+  claim: "GroqCloud Data Processing Addendum (Effective 2025-10-15). It covers GDPR/CCPA/PDPL, and the EU SCCs, UK Addendum and Swiss terms are deemed signed. Groq maintains a sub-processor list at trust.groq.com/subprocessors (unreadable) with a 15-day objection right. Personal Data may be transferred to and Processed in the United States and other countries. Deletion on request takes place within 180 days. Annex II security measures: ZTNA, subprocessor assessments, regular security testing."
   source_type: publisher
   doc_type: dpa
   retrieved: true
   url: https://console.groq.com/docs/legal/customer-data-processing-addendum
   date: '2026-11-19'
 - id: ev-baa
-  claim: "GroqCloud Business Associate Addendum (Effective 2025-10-15, re-read 2026-11-19): supplements the
-    Services Agreement; Groq acts as business associate/subcontractor for PHI for Covered Cloud Services, which
-    exclude beta, preview and not-generally-available features."
+  claim: "GroqCloud Business Associate Addendum (Effective 2025-10-15) supplements the Services Agreement. Groq acts as business associate/subcontractor for PHI for Covered Cloud Services, which exclude beta, preview and not-generally-available features."
   source_type: publisher
   doc_type: dpa
   retrieved: true
   url: https://console.groq.com/docs/legal/customer-business-associate-addendum
   date: '2026-11-19'
 - id: ev-trust
-  claim: "Groq trust centre stated SOC 2 Type II is maintained (2025 report) and hosts the GDPR/HIPAA compliance
-    posture and a sub-processor list (updated November 2025); the SOC 2 report itself is gated behind request.
-    This item records the 2026-07-25 read via search extraction; the live page could not be re-read on
-    2026-11-19 (see ev-trust-2026-11)."
+  claim: "Groq trust centre states SOC 2 Type II is maintained (2025 report) and hosts the GDPR/HIPAA compliance posture and a sub-processor list (updated November 2025). The SOC 2 report itself is gated behind request. These statements are second-hand, from a search-engine extraction dated 2026-07-25, because the live page cannot be read (see ev-trust-2026-11)."
   source_type: publisher
   doc_type: security
   retrieved: true
   url: https://trust.groq.com/
   date: '2026-07-25'
 - id: ev-trust-2026-11
-  claim: "trust.groq.com and trust.groq.com/subprocessors return a roughly 7 KB single-page-app shell whose only
-    visible text is 'Groq Trust Center'; content needs JavaScript, so no SOC 2 statement, certificate or
-    sub-processor entry was read on 2026-11-19. No score was changed on the basis of this page."
+  claim: "trust.groq.com and trust.groq.com/subprocessors return a roughly 7 KB single-page-app shell whose only visible text is 'Groq Trust Center'. Content needs JavaScript, so no SOC 2 statement, certificate or sub-processor entry is readable."
   source_type: publisher
   doc_type: security
   retrieved: false
   url: https://trust.groq.com/
   date: '2026-11-19'
 - id: ev-subproc
-  claim: "Groq publishes its sub-processor list and the nature of services they provide at
-    trust.groq.com/subprocessors (referenced by the DPA, sections 7.2 and 8.2); the individual sub-processor
-    entries were not enumerated because the page is JavaScript-only."
+  claim: "Groq publishes its sub-processor list and the nature of services they provide at trust.groq.com/subprocessors (referenced by the DPA, sections 7.2 and 8.2). The page is JavaScript-only, so the individual entries are unavailable."
   source_type: publisher
   doc_type: subprocessors
   retrieved: false
   url: https://trust.groq.com/subprocessors
   date: '2026-11-19'
 - id: ev-eudc
-  claim: "Groq announced a European data centre footprint in Helsinki, Finland on 6 July 2025 with Equinix (the
-    newsroom post now returns 404). The platform page (2026-11-19) lists 13 data centers including EU-1
-    Vantaa (Finland) and EU-2 London. Marketing; contracts do not let a customer select or pin a region."
+  claim: "Groq announced a European data centre footprint in Helsinki, Finland on 6 July 2025 with Equinix (the newsroom post now returns 404). The platform page lists 13 data centers including EU-1 Vantaa (Finland) and EU-2 London. This is marketing, and contracts do not let a customer select or pin a region."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://groq.com/platform
   date: '2026-11-19'
 - id: ev-pricing
-  claim: "groq.com/pricing now redirects to the Groq home page and shows no prices (2026-11-19). The earlier
-    claim of Llama 3.3 70B $0.59/$0.79 and gpt-oss-120B $0.15/$0.60 was read on 2026-07-25; current prices
-    come from the docs models page (ev-models)."
+  claim: "groq.com/pricing redirects to the Groq home page and shows no prices. Current prices come from the docs models page (ev-models). Llama 3.3 70B was $0.59/$0.79 and gpt-oss-120B $0.15/$0.60 as of 2026-07-25."
   source_type: publisher
   doc_type: marketing
   retrieved: false
   url: https://groq.com/pricing
   date: '2026-11-19'
 - id: ev-openai
-  claim: "Groq OpenAI-compatibility docs (re-read 2026-11-19): use the OpenAI client libraries against base URL
-    https://api.groq.com/openai/v1 with a Groq API key; the API is described as mostly compatible; the
-    /openai/v1/models endpoint lists active models."
+  claim: "Groq OpenAI-compatibility docs: use the OpenAI client libraries against base URL https://api.groq.com/openai/v1 with a Groq API key. The API is described as mostly compatible, and the /openai/v1/models endpoint lists active models."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://console.groq.com/docs/openai
   date: '2026-11-19'
 - id: ev-models
-  claim: "Groq supported-models docs (2026-11-19): production gpt-oss 120B ($0.15/$0.60) and 20B ($0.075/$0.30),
-    Whisper v3 and turbo, with Llama 3.1 8B and Llama 3.3 70B at 'Contact Sales'; preview Qwen3.8-27B
-    ($0.80/$4.00), gpt-oss-safeguard 20B, Orpheus TTS, Llama Prompt Guard 2, Muse Spark Open and MiniMax
-    M2.7 (contact sales)."
+  claim: "Groq supported-models docs. Production: gpt-oss 120B ($0.15/$0.60) and 20B ($0.075/$0.30), Whisper v3 and turbo, with Llama 3.1 8B and Llama 3.3 70B at 'Contact Sales'. Preview: Qwen3.8-27B ($0.80/$4.00), gpt-oss-safeguard 20B, Orpheus TTS, Llama Prompt Guard 2, Muse Spark Open and MiniMax M2.7 (contact sales)."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://console.groq.com/docs/models
   date: '2026-11-19'
 - id: ev-deprecation
-  claim: "Groq model-deprecation docs (2026-11-19): announcement by email and docs, transition phase, optional
-    automatic upgrade, end of life; preview models may be discontinued at short notice. History: Llama 3.1 8B
-    and 3.3 70B retired for free and developer tiers on 2026-08-16 (enterprise committed-spend contracts not
-    affected); groq/compound retired 2026-09-21; Qwen3-32B and Llama 4 Scout 2026-07-17; DeepSeek R1 distill
-    2025-10-02; Gemma2 9B 2025-10-08."
+  claim: "Groq model-deprecation docs: announcement by email and docs, transition phase, optional automatic upgrade, end of life. Preview models may be discontinued at short notice. History: Llama 3.1 8B and 3.3 70B retired for free and developer tiers on 2026-08-16 (enterprise committed-spend contracts not affected); Compound retired 2026-09-21; Qwen3-32B and Llama 4 Scout 2026-07-17; DeepSeek R1 distill 2025-10-02; Gemma2 9B 2025-10-08."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://console.groq.com/docs/deprecations
   date: '2026-11-19'
 - id: ev-ratelimits
-  claim: "Groq models page developer-plan limits (2026-11-19): gpt-oss-120B and 20B at 250K TPM / 1K RPM,
-    gpt-oss-safeguard at 150K TPM / 1K RPM, Qwen3.8-27B at 250K TPM / 1K RPM; Llama and enterprise preview
-    models contact-sales."
+  claim: "Groq models page developer-plan limits: gpt-oss-120B and 20B at 250K TPM / 1K RPM, gpt-oss-safeguard at 150K TPM / 1K RPM, Qwen3.8-27B at 250K TPM / 1K RPM. Llama and enterprise preview models are contact-sales."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://console.groq.com/docs/models
   date: '2026-11-19'
 - id: ev-aup
-  claim: "Groq Acceptable Use & Responsible AI Policy (Effective 2025-10-15, read 2026-11-19): bars illegal or
-    harmful use, use beyond rate limits, automated high-risk decisions without human supervision, malware and
-    lethal weapon functions without human control; no data-use clause beyond the Services Agreement."
+  claim: "Groq Acceptable Use & Responsible AI Policy (Effective 2025-10-15) bars illegal or harmful use, use beyond rate limits, automated high-risk decisions without human supervision, malware and lethal weapon functions without human control. It has no data-use clause beyond the Services Agreement."
   source_type: publisher
   doc_type: terms
   retrieved: true

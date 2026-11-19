@@ -22,21 +22,7 @@ publisher:
   accountable_entity: true
   url: https://huggingface.co/deepseek-ai
   security_contact: https://huggingface.co/deepseek-ai
-summary: 'The original DeepSeek-V3 (December 2024) - the 671B-total / 37B-active Mixture-of-Experts base
-  and chat model, 128K context, that established the V3 line. It is a separate entry from the later
-  MIT-licensed V3 generations because its weights are governed not by MIT but by the custom "DeepSeek
-  License Agreement, Version 1.0": the code repository is MIT, but the *weights* carry a perpetual,
-  worldwide, royalty-free, irrevocable grant that is nonetheless conditioned on RAIL-style use
-  restrictions (no unlawful or military use, no harm to minors, no generating verifiably false content
-  to harm others, no unauthorised PII distribution, no defamation, discrimination, or automated
-  legal-rights decisions). DeepSeek claims no rights in your output. Because the grant carries
-  field-of-use restrictions and is non-OSI, use-and-modify is moderate (not strong) and ownership lands
-  at partial - the material difference from the MIT V3 generations, which reach substantial. The rest
-  of the profile is the family baseline: open_weights (closed data, partial code), safety tuning lighter
-  than Western frontier labs with China-aligned filtering and no first-party guard model, no EU AI Act
-  documentation package, and the 671B systemic-risk question in play. Serving support is first-class.
-
-  '
+summary: "The original DeepSeek-V3 (December 2024) is the 671B-total / 37B-active Mixture-of-Experts base and chat model with 128K context that established the V3 line. It has its own entry because its weights fall under the custom \"DeepSeek License Agreement, Version 1.0\", not MIT. The code repository is MIT. The weight grant is perpetual, worldwide, royalty-free and irrevocable. It is conditioned on RAIL-style use restrictions: no unlawful or military use, no harm to minors, no generating verifiably false content to harm others, no unauthorised PII distribution, and no defamation, discrimination or automated legal-rights decisions. DeepSeek claims no rights in the output. The field-of-use restrictions and non-OSI status hold use-and-modify at moderate and ownership at partial, one step below the MIT V3 generations, which reach substantial. The rest of the profile is the family baseline. Weights are open with closed data and partial code. Safety tuning is lighter than at Western frontier labs, with China-aligned filtering and no first-party guard model. There is no EU AI Act documentation package, the systemic-risk question is open at 671B, and serving support is first-class."
 variants:
 - name: DeepSeek-V3 (Base)
   params_total: 671B
@@ -65,11 +51,7 @@ openness:
     classification: custom
     commercial_use: allowed_with_conditions
     notable_restrictions:
-    - 'Non-OSI custom licence. The weight grant is "perpetual, worldwide, non-exclusive, no-charge,
-      royalty-free, irrevocable" but conditioned on RAIL-style use restrictions (Section 5 / Attachment
-      A): no use violating applicable law, no military application, no harm to minors, no generating
-      verifiably false content to harm others, no unauthorised PII distribution, no
-      defamation/harassment, no discrimination, no automated decisions affecting legal rights'
+    - "Non-OSI custom licence. The weight grant is \"perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable\". The grant is conditioned on RAIL-style use restrictions (Section 5 / Attachment A). They bar use that violates applicable law, military application, harm to minors, generating verifiably false content to harm others, unauthorised PII distribution, defamation, harassment, discrimination, and automated decisions affecting legal rights."
     - The patent licence terminates if you bring patent litigation against DeepSeek over the work
     - 'Output is yours: "DeepSeek claims no rights in the Output You generate." The code repository is
       MIT; only the weights carry this agreement'
@@ -106,27 +88,14 @@ eu_ai_act:
     article_55_docs_available: 'no'
   open_source_exemption:
     license_qualifies: 'no'
-    rationale: 'Unlike the MIT V3 generations, the original V3 weights are NOT under a free-and-open-
-      source licence: the DeepSeek License Agreement imposes field-of-use (RAIL-style) restrictions, so
-      it does not meet the Article 53 open-source definition, and the exemption does not apply on the
-      licence axis at all. The surviving obligations are also unmet: no Article 55 documentation, no
-      copyright policy, no public training-content summary, and the training corpus is closed.
-
-      '
+    rationale: "The original V3 weights are not under a free and open-source licence. The DeepSeek License Agreement imposes field-of-use (RAIL-style) restrictions, so it does not meet the Article 53 open-source definition and the exemption does not apply. The surviving obligations are also unmet: no Article 55 documentation, no copyright policy, no public training-content summary, and a closed training corpus."
   provider_package:
     technical_documentation: partial
     downstream_information: partial
     copyright_policy: 'no'
     training_content_summary: 'no'
     code_of_practice_signatory: false
-  deployer_notes: 'A use-restricted, non-OSI weight licence from a China-based provider with no EU AI
-    Office documentation package. An EU deployer inherits a detailed technical report but must
-    self-assemble the copyright policy and training-content material (not reconstructable - the corpus
-    is closed) AND must honour the DeepSeek License use restrictions downstream. At 671B the
-    systemic-risk question is live and unresolved on disclosed figures. Prefer the MIT V3 generations
-    (deepseek-v3-mit) where the use-restriction burden does not apply.
-
-    '
+  deployer_notes: "A use-restricted, non-OSI weight licence from a China-based provider with no EU AI Office documentation package. An EU deployer receives a detailed technical report but must self-assemble the copyright policy and training-content material, which cannot be reconstructed because the corpus is closed. The deployer must also honour the DeepSeek License use restrictions downstream. At 671B the systemic-risk question is open on disclosed figures. Prefer the MIT V3 generations (deepseek-v3-mit), where the use-restriction burden does not apply."
   last_assessed: '2026-08-03'
 performance: {}
 behaviour: {}
@@ -134,21 +103,15 @@ safety: {}
 deployment:
   ceiling_tier: T2
   ceiling_conditional: true
-  hardware_notes: 'A 671B-total / 37B-active MoE: even quantized the weights are large, so serving is a
-    multi-GPU / multi-node exercise, though the extensive community quant ecosystem makes lower-bit
-    deployment tractable. 128K context.
-
-    '
+  hardware_notes: "A 671B-total / 37B-active MoE. Even quantized the weights are large, so serving is a multi-GPU or multi-node exercise, though the community quant ecosystem makes lower-bit deployment tractable. Context is 128K."
   serving_support:
   - vllm
   - sglang
   - llama.cpp
   - ollama
   controls_required:
-  - Honour the DeepSeek License use restrictions in your deployment and any redistribution (they are a
-    licence condition, not optional)
-  - Add your own input/output guardrails and a guard/classifier model - no first-party guard ships and
-    safety tuning is lighter than Western frontier labs
+  - "Honour the DeepSeek License use restrictions in your deployment and any redistribution; they are a licence condition."
+  - "Add your own input/output guardrails and a guard or classifier model, since no first-party guard ships and safety tuning is lighter than at Western frontier labs."
   - Account for China-aligned topic filtering on politically sensitive prompts
   - Add prompt-injection defences and treat retrieved/tool content as untrusted for agentic use
   - Verify checksums and pin the exact deepseek-ai revision
@@ -160,72 +123,40 @@ score:
   dimensions:
     openness:
       score: 3
-      rationale: 'Open-weights tier: the weights are openly downloadable (ungated) with an open
-        technical report, but the licence is conditional (use-restricted), the training data closed,
-        the training code partial, evaluation partial. Meets the open-weights anchor (3) - the licence
-        restrictions bite on legal and ownership rather than dropping the openness tier, since download
-        is ungated and the grant is irrevocable.
-
-        '
+      rationale: "The weights are openly downloadable (ungated) with an open technical report. The licence is conditional (use-restricted), training data is closed, training code is partial and evaluation is partial. That meets the open-weights anchor of 3: the licence restrictions bear on legal and ownership, and the tier holds because download is ungated and the grant is irrevocable."
       evidence_refs:
       - ev-dsv3o-license
       - ev-dsv3o-card
     provenance:
       score: 3
-      rationale: 'Verified deepseek-ai org on Hugging Face, safetensors distribution with checksums and
-        a clear canonical source with no malicious-checkpoint incident (checklist ~5/8). Short of 4
-        (scanned checkpoint / documented mirror policy) and 5 (cryptographic signing).
-
-        '
+      rationale: "The deepseek-ai org on Hugging Face is verified, distributes safetensors with checksums, has a clear canonical source and has no malicious-checkpoint incident (checklist ~5/8). The score is short of 4 (scanned checkpoint or documented mirror policy) and 5 (cryptographic signing)."
       evidence_refs:
       - ev-dsv3o-card
     legal:
       score: 2
-      rationale: 'The weight grant is irrevocable and permits commercial use, but it is a non-OSI custom
-        licence with RAIL-style field-of-use restrictions on top of the family EU gap: no Article 55
-        documentation, no copyright policy, no training-content summary, and at 671B the open-source
-        exemption does not apply (the licence is not FOSS). A concrete, usable-but-restricted legal
-        position - a 2, and materially the reason ownership is only partial.
-
-        '
+      rationale: "The weight grant is irrevocable and permits commercial use, but the licence is a non-OSI custom licence with RAIL-style field-of-use restrictions. On top of the family EU gap there is no Article 55 documentation, no copyright policy and no training-content summary, and at 671B the open-source exemption does not apply because the licence is not FOSS. The position is usable but restricted, scores 2, and is the main reason ownership is only partial."
       evidence_refs:
       - ev-dsv3o-license
       - ev-dsv3o-eu
     safety:
       score: 3
-      rationale: 'The Chat variant is safety-tuned with documented behaviour, meeting the score-3
-        anchor, but safety tuning is lighter than Western frontier labs, the model exhibits
-        China-aligned topic censorship, and no first-party guard model ships - deployers must add their
-        own guardrails. (The Base variant is not safety-tuned and must not be deployed unwrapped.)
-
-        '
+      rationale: "The Chat variant is safety-tuned with documented behaviour, which meets the score-3 anchor. Safety tuning is lighter than at Western frontier labs, the model applies China-aligned topic censorship, and no first-party guard model ships, so deployers must add their own guardrails. The Base variant is not safety-tuned and must not be deployed unwrapped."
       evidence_refs:
       - ev-dsv3o-behaviour
     performance:
       score: 4
-      rationale: 'The original V3 was competitive among large open-weight models on public leaderboards
-        at release. Capped at 4 because OneHill has not independently re-run the benchmarks.
-
-        '
+      rationale: "The original V3 was competitive among large open-weight models on public leaderboards at release. Capped at 4 because OneHill has not reproduced the benchmarks."
       evidence_refs:
       - ev-dsv3o-perf
     operational:
       score: 5
-      rationale: 'First-class ecosystem support: broad serving across vLLM, SGLang, llama.cpp and
-        Ollama, an extensive family of community quantizations, and wide third-party hosting.
-
-        '
+      rationale: "Serving support is broad across vLLM, SGLang, llama.cpp and Ollama, community quantizations are extensive, and third-party hosting is wide."
       evidence_refs:
       - ev-dsv3o-card
       - ev-dsv3o-perf
     governance:
       score: 3
-      rationale: 'Active, named publisher (DeepSeek) with a verified org and a track record of technical
-        reports, meeting the score-3 anchor. Held down by the absence of a published
-        security-contact/vulnerability-disclosure process and China-origin policy restrictions some
-        organisations apply.
-
-        '
+      rationale: "DeepSeek is an active, named publisher with a verified org and a track record of technical reports, which meets the score-3 anchor. The score is held down by the absence of a published security-contact or vulnerability-disclosure process and by China-origin policy restrictions that some organisations apply."
       evidence_refs:
       - ev-dsv3o-card
       - ev-dsv3o-behaviour
@@ -233,41 +164,41 @@ signals:
   trainability:
     level: partial
     dimension: openness
-    summary: "Fine-tune the weights, but under the DeepSeek License use restrictions (not MIT), and with training data and code unreleased, so full reproduction from scratch is not possible."
+    summary: "Fine-tunable under the DeepSeek License use restrictions (not MIT). Training data and code are unreleased, so full reproduction from scratch is not possible."
     refs: [ev-dsv3o-license]
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "A capable general knowledge/analysis backbone, but built-in topic censorship aligned with Chinese content rules distorts coverage on sensitive subjects."
+    summary: "A capable general knowledge and analysis backbone. Built-in topic censorship aligned with Chinese content rules distorts coverage on sensitive subjects."
     refs: [ev-dsv3o-perf, ev-dsv3o-behaviour]
   specialization:
     level: moderate
     dimension: openness
-    summary: "Adaptable, but specialisation and any redistribution of derivatives must carry the DeepSeek License field-of-use restrictions - a real constraint the MIT V3 generations do not impose."
+    summary: "Adaptable, but specialisation and any redistribution of derivatives must carry the DeepSeek License field-of-use restrictions, which the MIT V3 generations do not impose."
     refs: [ev-dsv3o-license]
   exchangeability:
     level: high
     dimension: operational
-    summary: "Highly exchangeable at the serving layer: safetensors with first-class serving (vLLM, SGLang and more) and an OpenAI-compatible instruct interface - the licence constrains use, not deployment mechanics."
+    summary: "Highly exchangeable at the serving layer: safetensors with first-class serving (vLLM, SGLang and more) and an OpenAI-compatible instruct interface. The licence constrains use, not deployment mechanics."
     refs: [ev-dsv3o-card]
   misuse_exposure:
     level: unbenchmarked
     dimension: safety
-    summary: "Not independently benchmarked for misuse; no broad third-party red-team of the open weights exists, and the hosted service has drawn separate data-privacy scrutiny."
+    summary: "Not independently benchmarked for misuse. No broad third-party red-team of the open weights exists, and the hosted service has drawn separate data-privacy scrutiny."
     refs: [ev-dsv3o-behaviour]
 documentation:
   assess:
     completeness: 86.7
     originality: 0.0
     items:
-      - {key: intended-use, title: "Intended & out-of-scope use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-license, ev-dsv3o-perf], summary: "General-purpose open-weight base/instruct model under a use-restricted custom licence; the DeepSeek License field-of-use limits (no military, no unlawful use, etc.) are binding, EU high-stakes use needs a self-assembled compliance package, and deploy behind your own guards."}
+      - {key: intended-use, title: "Intended & out-of-scope use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-license, ev-dsv3o-perf], summary: "General-purpose open-weight base and instruct model under a use-restricted custom licence. The DeepSeek License field-of-use limits (no military or unlawful use, etc.) are binding. EU high-stakes use needs a self-assembled compliance package. Deploy behind your own guards."}
       - {key: limitations, title: "Known limitations, bias & failure modes", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-behaviour], summary: "China-aligned topic censorship; lighter safety tuning with no guard model; closed training data/code; use-restricted licence; 671B multi-node footprint; systemic-risk status unresolved."}
       - {key: openness, title: "Openness tier & components", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-license, ev-dsv3o-card], summary: "open_weights with a conditional (use-restricted) licence - weights ungated + technical report, but training data closed and code partial, so not reproducible."}
-      - {key: license, title: "License terms & permitted use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-license], summary: "DeepSeek License Agreement v1.0 (non-OSI): irrevocable royalty-free weight grant, commercial use allowed, output owned by you, BUT RAIL-style use restrictions (no unlawful/military use, no harm to minors, no PII abuse, no defamation/discrimination/automated legal decisions). Code repo is MIT; the later V3-0324/V3.1 weights moved to MIT (deepseek-v3-mit)."}
+      - {key: license, title: "License terms & permitted use", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-license], summary: "DeepSeek License Agreement v1.0 (non-OSI): irrevocable royalty-free weight grant, commercial use allowed, output owned by you. The grant is conditioned on RAIL-style use restrictions (no unlawful or military use, no harm to minors, no PII abuse, no defamation, discrimination or automated legal decisions). The code repo is MIT; the later V3-0324/V3.1 weights are MIT (deepseek-v3-mit)."}
       - {key: provenance, title: "Supply-chain & provenance", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-card], summary: "Verified deepseek-ai org; safetensors with checksums; community quants are separate artifacts and must carry the DeepSeek License downstream - pin the revision and verify checksums."}
-      - {key: eu-ai-act, title: "EU AI Act posture", doc_type: explanation, source_type: aggregated, coverage: full, refs: [ev-dsv3o-eu, ev-dsv3o-license], summary: "GPAI; unlike the MIT generations this weight licence is NOT FOSS, so the Article 53 open-source exemption does not apply on the licence axis; no copyright policy or training-content summary is published, and at 671B the systemic-risk question is live."}
+      - {key: eu-ai-act, title: "EU AI Act posture", doc_type: explanation, source_type: aggregated, coverage: full, refs: [ev-dsv3o-eu, ev-dsv3o-license], summary: "GPAI. Unlike the MIT generations, this weight licence is not FOSS, so the Article 53 open-source exemption does not apply on the licence axis. No copyright policy or training-content summary is published, and at 671B the systemic-risk question is open."}
       - {key: evaluation, title: "Benchmarks & evaluation", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsv3o-perf], summary: "Competitive among large open-weight models at release; not OneHill-reproduced."}
-      - {key: safety-eval, title: "Independent safety evaluation", doc_type: reference, source_type: gap, gap_reason: "No broad independent red-team / safety battery has been published for the original DeepSeek-V3 open weights, and OneHill ran none this session; China-aligned filtering is observed but there is no third-party adversarial suite to aggregate."}
+      - {key: safety-eval, title: "Independent safety evaluation", doc_type: reference, source_type: gap, gap_reason: "No broad independent red-team or safety battery is published for the original DeepSeek-V3 open weights. China-aligned filtering is observed, but no third-party adversarial suite exists to aggregate."}
   implement:
     completeness: 95.5
     originality: 0.0
@@ -277,7 +208,7 @@ documentation:
       - {key: serving, title: "Serving stacks", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-card, ev-dsv3o-perf], summary: "First-class support across vLLM, SGLang, llama.cpp and Ollama."}
       - {key: safe-deployment, title: "Safe-deployment controls & Deployment Ceiling", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsv3o-behaviour, ev-dsv3o-license], summary: "Deployment Ceiling T2 (conditional): honour the DeepSeek License use restrictions, supply your own guardrails and a guard model, add prompt-injection defences for agentic use, and account for China-aligned censorship - no first-party guard ships."}
       - {key: quantization, title: "Available quantizations", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsv3o-card], summary: "An extensive community quantization ecosystem circulates; redistribution of these derivatives must carry the DeepSeek License use restrictions."}
-      - {key: fine-tuning, title: "Fine-tuning & adaptation", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsv3o-license], summary: "The licence permits fine-tuning and derivatives, but they inherit the field-of-use restrictions; training data and code are closed, so no from-scratch reproduction."}
+      - {key: fine-tuning, title: "Fine-tuning & adaptation", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsv3o-license], summary: "The licence permits fine-tuning and derivatives, but they carry the field-of-use restrictions. Training data and code are closed, so from-scratch reproduction is not possible."}
       - {key: integration, title: "API / OpenAI-compatible integration", doc_type: howto, source_type: aggregated, coverage: full, refs: [ev-dsv3o-card], summary: "Serve behind vLLM/SGLang's OpenAI-compatible endpoint; the Chat variant exposes a standard instruct interface."}
   use:
     completeness: 55.6
@@ -294,41 +225,34 @@ documentation:
     originality: 0.0
     items:
       - {key: troubleshooting, title: "Common problems & fixes", doc_type: troubleshooting, source_type: aggregated, coverage: partial, refs: [ev-dsv3o-card], summary: "Multi-node OOM/sharding for the 671B model, Base-vs-Chat variant confusion, quant-engine version mismatches; not exhaustive."}
-      - {key: release-versioning, title: "Versions, changelog & cadence", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [ev-dsv3o-card], summary: "The original December-2024 V3 (Base + Chat) on the verified deepseek-ai org; superseded for new work by the MIT V3-0324/V3.1 generations (deepseek-v3-mit). The revision hash is the changelog anchor."}
-      - {key: security-disclosure, title: "Security / vulnerability disclosure", doc_type: reference, source_type: gap, gap_reason: "No formal published vulnerability-disclosure/security policy was found for DeepSeek-V3; contact is only the general deepseek-ai org presence."}
+      - {key: release-versioning, title: "Versions, changelog & cadence", doc_type: release_notes, source_type: aggregated, coverage: full, refs: [ev-dsv3o-card], summary: "The original December-2024 V3 (Base + Chat) is on the verified deepseek-ai org. The MIT V3-0324/V3.1 generations (deepseek-v3-mit) replace it for new work. The revision hash is the changelog anchor."}
+      - {key: security-disclosure, title: "Security / vulnerability disclosure", doc_type: reference, source_type: gap, gap_reason: "No formal vulnerability-disclosure or security policy is published for DeepSeek-V3; the only contact is the general deepseek-ai org presence."}
       - {key: channels, title: "Community & support channels", doc_type: reference, source_type: aggregated, coverage: full, refs: [ev-dsv3o-card], summary: "The deepseek-ai Hugging Face org and GitHub for usage and deployment questions, plus a large community ecosystem."}
-      - {key: deprecation, title: "Deprecation / end-of-life policy", doc_type: reference, source_type: gap, gap_reason: "No published deprecation or end-of-life policy; the original V3 remains downloadable but is effectively superseded by the MIT generations, with no sunset commitment documented."}
+      - {key: deprecation, title: "Deprecation / end-of-life policy", doc_type: reference, source_type: gap, gap_reason: "No deprecation or end-of-life policy is published. The original V3 remains downloadable and the MIT generations replace it for new work, with no sunset commitment documented."}
       - {key: known-issues, title: "Tracked known issues", doc_type: reference, source_type: aggregated, coverage: partial, refs: [ev-dsv3o-behaviour, ev-dsv3o-license], summary: "Use-restricted licence, China-aligned censorship, lighter safety coverage with no guard model, and the operational burden of a 671B model."}
 ownership:
   level: partial
   factors:
     use_modify:
       level: moderate
-      rationale: "The weight grant is irrevocable, royalty-free and permits commercial use and modification, but it is a non-OSI custom licence with binding RAIL-style field-of-use restrictions (no military, no unlawful use, no harm to minors, no automated legal-rights decisions, etc.) that flow down to derivatives - so use-and-modify is moderate, not strong. This is the material difference from the MIT V3 generations."
+      rationale: "The weight grant is irrevocable and royalty-free and permits commercial use and modification. It is a non-OSI custom licence with binding RAIL-style field-of-use restrictions (no military or unlawful use, no harm to minors, no automated legal-rights decisions, etc.) that flow down to derivatives, so use-and-modify is moderate, not strong. This is the main difference from the MIT V3 generations."
       # grounded in: ev-dsv3o-license (license, retrieved) - DeepSeek License Agreement v1.0, Section 5 / Attachment A use restrictions
     transparency:
       level: moderate
-      rationale: "Weights are inspectable and there is a detailed technical report, but the training data and code are closed, and the weights carry China-aligned topic filtering you cannot inspect - open_weights, so moderate."
+      rationale: "Weights are inspectable and there is a detailed technical report, but training data and code are closed and the weights carry China-aligned topic filtering that cannot be inspected. Open weights score moderate."
       # grounded in: ev-dsv3o-card (model_card) - open_weights; ev-dsv3o-behaviour (third_party) - China-aligned filtering
     reliability:
       level: strong
-      rationale: "Performance 4, operational 5 and safety 3: a strong model with first-class serving; all three at or above 3 with two at or above 4, so reliability is strong. The caveat is the absence of a first-party guard model (and the un-tuned Base variant)."
+      rationale: "Performance 4, operational 5 and safety 3: a strong model with first-class serving. All three are at or above 3 and two are at or above 4, so reliability is strong. The caveats are the absence of a first-party guard model and the un-tuned Base variant."
       # grounded in: dimension scores performance 4 / operational 5 / safety 3
     data_control:
       level: strong
-      rationale: "Self-hosted, the weights run entirely on your own infrastructure with no telemetry and an irrevocable grant, so your data stays yours and access cannot be clawed back. (The hosted DeepSeek API is a separate matter with its own data terms.)"
+      rationale: "Self-hosted, the weights run entirely on your own infrastructure with no telemetry and an irrevocable grant, so data stays local and access cannot be clawed back. The hosted DeepSeek API has its own data terms."
       # grounded in: ev-dsv3o-license (license, retrieved) - irrevocable grant, no claw-back; self-hosting structural
-  verdict: "You partially own self-hosted original DeepSeek-V3: self-hosting keeps your data yours under an irrevocable grant (data-control strong, reliability strong), but the DeepSeek License Agreement imposes RAIL-style field-of-use restrictions that flow down to derivatives, holding use-and-modify to moderate - so ownership is partial, one step below the MIT V3 generations (deepseek-v3-mit), which reach substantial. For new work prefer the MIT generations unless you specifically need this checkpoint; where you do use it, honour the use restrictions, deploy behind your own guardrails, and treat EU high-stakes use as needing a self-assembled compliance package (with no open-source exemption on the licence axis)."
+  verdict: "You partially own self-hosted original DeepSeek-V3. Self-hosting keeps your data yours under an irrevocable grant (data-control strong, reliability strong). The DeepSeek License Agreement imposes RAIL-style field-of-use restrictions that flow down to derivatives and hold use-and-modify at moderate, so ownership is partial, one step below the MIT V3 generations (deepseek-v3-mit), which reach substantial. For new work prefer the MIT generations unless this checkpoint is specifically needed. Where it is used, honour the use restrictions, deploy behind your own guardrails and treat EU high-stakes use as needing a self-assembled compliance package, since no open-source exemption applies on the licence axis."
 evidence:
 - id: ev-dsv3o-license
-  claim: 'DeepSeek-V3 LICENSE-CODE / LICENSE-MODEL, read: "This code repository is licensed under the
-    MIT License. The use of DeepSeek-V3 Base/Chat models is subject to the Model License." The Model
-    License is the "DeepSeek License Agreement, Version 1.0" - grant "a perpetual, worldwide,
-    non-exclusive, no-charge, royalty-free, irrevocable copyright license"; patent licence terminates on
-    patent litigation against DeepSeek; Section 5 / Attachment A use restrictions (no unlawful or
-    military use, no harm to minors, no verifiably false content to harm others, no unauthorised PII
-    distribution, no defamation/harassment/discrimination, no automated decisions affecting legal
-    rights); "DeepSeek claims no rights in the Output You generate"; provided "AS IS". Re-read 2026-11-19: Section 7 lets DeepSeek restrict, remotely or otherwise, use in violation of the licence; Section 14 sets PRC governing law and Hangzhou courts; Derivatives of the Model include distillation and synthetic-data training.'
+  claim: "The DeepSeek-V3 LICENSE-CODE states: \"This code repository is licensed under the MIT License. The use of DeepSeek-V3 Base/Chat models is subject to the Model License.\" The Model License (LICENSE-MODEL) is the \"DeepSeek License Agreement, Version 1.0\". It grants \"a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license\", and the patent licence terminates on patent litigation against DeepSeek. Section 5 / Attachment A bars unlawful or military use, harm to minors, verifiably false content to harm others, unauthorised PII distribution, defamation, harassment, discrimination and automated decisions affecting legal rights. \"DeepSeek claims no rights in the Output You generate\", and the work is provided \"AS IS\". Section 7 lets DeepSeek restrict, remotely or otherwise, use in violation of the licence. Section 14 sets PRC governing law and Hangzhou courts. Derivatives of the Model include distillation and synthetic-data training."
   source_type: publisher
   doc_type: license
   retrieved: true
@@ -344,8 +268,7 @@ evidence:
   url: https://huggingface.co/deepseek-ai/DeepSeek-V3
   date: '2026-11-19'
 - id: ev-dsv3o-perf
-  claim: On independent public leaderboards the original DeepSeek-V3 was competitive among large
-    open-weight models at release (coding, maths, analysis); not OneHill-reproduced this session.
+  claim: "On independent public leaderboards the original DeepSeek-V3 was competitive among large open-weight models at release (coding, maths, analysis). OneHill has not reproduced the results."
   source_type: third_party
   doc_type: third_party
   retrieved: false

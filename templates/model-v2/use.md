@@ -3,8 +3,7 @@
 
 # Use - <Model Family>
 
-_What can it do and how do we use it well? Capabilities, context window, prompt/chat
-template, languages, tool-use, structured output._
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities

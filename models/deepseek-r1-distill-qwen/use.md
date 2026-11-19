@@ -1,41 +1,40 @@
 # Use - DeepSeek-R1-Distill (Qwen base)
 
-_What can it do? Capabilities, context window, chat template, languages, tool use, and
-structured output live here._
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities
 
 Text reasoning models (maths, coding, analysis) distilled from R1 into dense 1.5B-32B
-weights. They emit explicit reasoning traces (think tags) and are strong for their size,
-especially the 14B and 32B.
+weights. They emit explicit reasoning traces (think tags). They are strong for their size,
+most of all the 14B and 32B.
 
 <!-- item: context-window -->
 ## Context window & long-context behaviour
 
-128K-token context per the cards (inherited from the Qwen2.5 bases). OneHill has not
-independently measured effective long-context recall, so treat it as the declared window.
+The cards declare a 128K-token context, from the Qwen2.5 bases. OneHill has not measured
+effective long-context recall, so treat 128K as the declared window.
 
 <!-- item: chat-template -->
 ## Prompt format & chat template
 
-Ship a chat template with the R1 reasoning / think-tag convention. Use `apply_chat_template`
-and handle the reasoning segment at the client - decide whether to expose or strip it.
+The models ship a chat template with the R1 reasoning (think-tag) convention. Use
+`apply_chat_template` and decide in the client whether to expose or strip the reasoning segment.
 
 <!-- item: languages -->
 ## Language coverage
 
-English and Chinese are strongest (Qwen2.5 base plus R1 distillation); per-language depth
-varies with model size.
+English and Chinese are strongest (Qwen2.5 base plus R1 distillation). Depth in other
+languages varies with model size.
 
 <!-- item: tool-use -->
 ## Function / tool calling
 
-These are reasoning distils; native structured tool-calling is not the primary documented
-behaviour and was not grounded this session. Confirm per serving stack and size, and test.
+These are reasoning distils. Native tool calling is not their primary documented behaviour and
+is unverified. Confirm per serving stack and size, and test.
 
 <!-- item: structured-output -->
 ## Structured / JSON-constrained output
 
-No model-documented native JSON/schema-constrained output guarantee. Constrained decoding is
-available at the serving layer (vLLM/SGLang grammars), a runtime feature of the server.
+No native JSON or schema-constrained output guarantee is documented. Constrained decoding is a
+serving-layer feature, available through vLLM and SGLang grammars.

@@ -9,40 +9,17 @@ id: infercom
 name: Infercom
 profile: inference
 hq_country: Luxembourg
-summary: 'A Luxembourg-headquartered Inference-as-a-Service provider running open-weight models on
-  SambaNova RDU dataflow hardware, with EU-hosted models processed at Equinix Munich 4, Germany. Its
-  binding documents (Terms v2.1, Privacy Statement v2.4 of 2026-10-30, DPA v1.4 of 2026-09-24) now all
-  read in full: prompt and output content is not stored or used for training, only metadata is logged for 90
-  days, the customer keeps ownership, and sub-processors are named. ISO 27001:2022 is read at source (Proks
-  certificate, valid to 2028-12-15); the CSA STAR for AI listing is a Level 1 self-assessment, and SOC 2 is "not
-  yet". Sovereignty is conditional and the marketing overstates it: the DPA covers EU-hosted models only (Non-EU
-  Models need a separate addendum), the Global Model Catalogue routes prompt content outside the EEA, primarily
-  to the US, and the platform is operated by a US company (SambaNova) with remote administrative access,
-  while the docs and pricing pages claim "no US CLOUD Act exposure". The platform has a public status page
-  (one major incident, June 2026) but no SLA outside Reserved Capacity and Dedicated Rack contracts. Shipped
-  single-tenant dedicated racks and air-gapped on-premises deployment remain the strongest exit path.
-
-  '
+summary: "A Luxembourg-headquartered Inference-as-a-Service provider running open-weight models on SambaNova RDU dataflow hardware, with EU-hosted models processed at Equinix Munich 4, Germany. The binding documents are Terms v2.1, Privacy Statement v2.4 (2026-10-30) and DPA v1.4 (2026-09-24). They state that prompt and output content is not stored or used for training, only metadata is logged for 90 days, the customer keeps ownership, and sub-processors are named. ISO 27001:2022 is certified by Proks (valid to 2028-12-15). The CSA STAR for AI listing is a Level 1 self-assessment, and SOC 2 is \"not yet\". Sovereignty is conditional and the marketing overstates it. The DPA covers EU-hosted models only (Non-EU Models need a separate addendum). The Global Model Catalogue routes prompt content outside the EEA, primarily to the US. The platform is operated by a US company (SambaNova) with remote administrative access, while the docs and pricing pages claim \"no US CLOUD Act exposure\". The platform has a public status page (one major incident, June 2026) but no SLA outside Reserved Capacity and Dedicated Rack contracts. Shipped single-tenant dedicated racks and air-gapped on-premises deployment are the strongest exit path."
 models_served:
-- 'EU-hosted on the Inference API (read 2026-11-19): gpt-oss-120b, gemma-4-31B-it, E5-Mistral-7B-Instruct
-  (embeddings), Whisper-Large-v3 (speech-to-text)'
-- 'Global Model Catalogue (processed outside the EU, primarily US): MiniMax-M3.1-Flash (MiniMax-M3 is an
-  alias)'
-- 'Retired since the 2026-09-21 pass: Meta-Llama-3.3-70B-Instruct (2026-11-17), DeepSeek-V3.1 and V3.2
-  (2026-11-03), MiniMax-M2.7 (2026-09-30)'
-- 'Dedicated Capacity and on-premises catalogue (not on the Inference API): GLM-5.3 and MiniMax-M3.1-Flash
-  (Preview), MiniMax-M3 (Preview), MiniMax-M2.7, M2.5, gpt-oss-120b and 20b, Whisper, gemma-4-31B-it,
-  gemma-3, DeepSeek-V3.2 and others; availability depends on the platform release'
+- "EU-hosted on the Inference API: gpt-oss-120b, gemma-4-31B-it, E5-Mistral-7B-Instruct (embeddings), Whisper-Large-v3 (speech-to-text)"
+- "Global Model Catalogue (processed outside the EU, primarily US): MiniMax-M3.1-Flash (MiniMax-M3 is an alias)"
+- "Retired: Meta-Llama-3.3-70B-Instruct (2026-11-17), DeepSeek-V3.1 and V3.2 (2026-11-03), MiniMax-M2.7 (2026-09-30)"
+- "Dedicated Capacity and on-premises catalogue (not on the Inference API): GLM-5.3 and MiniMax-M3.1-Flash (Preview), MiniMax-M3 (Preview), MiniMax-M2.7, M2.5, gpt-oss-120b and 20b, Whisper, gemma-4-31B-it, gemma-3, DeepSeek-V3.2 and others; availability depends on the platform release"
 hardware: SambaNova RDU (Reconfigurable Dataflow Unit, SN40L) - custom dataflow hardware,
   native BF16
 pricing:
   model: per-token
-  notes: 'Pay-as-you-go per-token rates in EUR excluding VAT, read from infercom.ai/pricing on 2026-11-19. No
-    minimums or commitment; EUR 5.00 free credit that expires after 30 days; the ToS lets Infercom change PAYG
-    prices on posting. Dedicated Capacity and On-Premises are priced per engagement (quote only). Enterprise
-    gets the same list rates with committed-volume discounts.
-
-    '
+  notes: "Pay-as-you-go per-token rates in EUR excluding VAT, as published on infercom.ai/pricing. No minimums or commitment; EUR 5.00 free credit that expires after 30 days; the ToS lets Infercom change PAYG prices on posting. Dedicated Capacity and On-Premises are priced per engagement (quote only). Enterprise gets the same list rates with committed-volume discounts."
   example_rates:
   - 'gpt-oss-120b (EU): EUR 0.22/M in, EUR 0.59/M out'
   - 'Gemma 4 31B (EU): EUR 0.20/M in, EUR 0.35/M out'
@@ -53,17 +30,7 @@ data_governance:
     encrypted in transit)
   trains_on_inputs: never
   zdr_available: yes_default
-  zdr_scope_caveats: 'Prompts/outputs are not stored after inference and are never
-    used for training - in the binding Privacy Statement v2.4 (Sec 4.3, 6, 11.2), Terms v2.1 (Sec 2.4, 6.3) and, for
-    EU-hosted models, DPA v1.4 (Sec 2(1), read in full 2026-11-19). The DPA adds that personnel have no access
-    to prompt content in the ordinary course, and that sub-processors may not train either. Usage logs retain
-    metadata only (timestamps, token counts, model used - no prompt/response content) for 90 days;
-    authentication logs 12 months. The DPA does NOT cover Non-EU Models: DPA Sec 1(1) says they need a separate
-    written addendum. The no-store and no-training commitments for the Global Model Catalogue rest on the
-    Privacy Statement and Terms only, and the Privacy Statement routes that prompt content outside the EEA,
-    primarily to the US, under SCCs / EU-US DPF.
-
-    '
+  zdr_scope_caveats: "Prompts/outputs are not stored after inference and are never used for training, per the binding Privacy Statement v2.4 (Sec 4.3, 6, 11.2), Terms v2.1 (Sec 2.4, 6.3) and, for EU-hosted models, DPA v1.4 (Sec 2(1)). The DPA adds that personnel have no access to prompt content in the ordinary course, and that sub-processors may not train either. Usage logs retain metadata only (timestamps, token counts, model used - no prompt/response content) for 90 days; authentication logs 12 months. The DPA does NOT cover Non-EU Models: DPA Sec 1(1) says they need a separate written addendum. The no-store and no-training commitments for the Global Model Catalogue rest on the Privacy Statement and Terms only, and the Privacy Statement routes that prompt content outside the EEA, primarily to the US, under SCCs / EU-US DPF."
   customer_data_ownership: customer_retains
   outputs_used_to_improve_service: "no"
   third_party_routing_leakage: 'Serves open-weight models only; no closed third-party
@@ -75,12 +42,7 @@ data_governance:
     '
   subprocessors_disclosed: true
   confidentiality: functional_only
-  confidentiality_caveats: 'Re-read 2026-11-19: Terms v2.1 still contain NO confidentiality clause over customer
-    inputs (Sec 3.3 only calls API keys confidential credentials). What exists is functional: logical isolation
-    from other tenants and model creators (Sec 2.3), the narrow service licence (Sec 6.2), no-other-use
-    commitments, and zero content retention. DPA v1.4 Sec 5(1)(b) binds personnel to confidentiality, but as an
-    Art. 28(3)(b) duty over personal data, not trade secrets. For proprietary or trade-secret material, use a
-    separate NDA or the enterprise / on-prem contract.'
+  confidentiality_caveats: "Terms v2.1 contain NO confidentiality clause over customer inputs (Sec 3.3 only calls API keys confidential credentials). What exists is functional: logical isolation from other tenants and model creators (Sec 2.3), the narrow service licence (Sec 6.2), no-other-use commitments, and zero content retention. DPA v1.4 Sec 5(1)(b) binds personnel to confidentiality, but as an Art. 28(3)(b) duty over personal data, not trade secrets. For proprietary or trade-secret material, use a separate NDA or the enterprise / on-prem contract."
 compliance:
   soc2: none
   iso_27001: "yes"
@@ -132,42 +94,26 @@ lock_in:
 
     '
 dedicated_availability: available
-dedicated_notes: 'Two shipped isolation levels available today (On-Premises page, Trust Centre FAQ and Sovereign AI page,
-  re-read 2026-11-19): single-tenant dedicated racks in the EU data centres ("no other tenants", flat
-  monthly, custom SLAs) and full on-prem / air-gapped deployment in your own facility (SambaRack
-  SN40L; "SambaStack runs fully offline" in an air-gap; ~90 days contract-to-production), with BYOC
-  (bring-your-own-checkpoint). Per-engagement contracts, so the weight-ownership language sits in
-  unpublished paper, but the deployment options are real and shipped - the strongest control/exit
-  path among the EU providers here.'
+dedicated_notes: "Two shipped isolation levels are available today (On-Premises page, Trust Centre FAQ and
+  Sovereign AI page). The first is single-tenant dedicated racks in the EU data centres (\"no
+  other tenants\", flat monthly, custom SLAs). The second is full on-prem / air-gapped deployment
+  in the customer's own facility (SambaRack SN40L; \"SambaStack runs fully offline\" in an
+  air-gap; ~90 days contract-to-production), with BYOC (bring-your-own-checkpoint). Contracts are
+  per engagement, so the weight-ownership language sits in unpublished paper. The deployment
+  options themselves are shipped and are the strongest control and exit path among the EU
+  providers here."
 trust_considerations:
-- 'ISO 27001:2022 is read at source (Proks Certification GmbH certificate LU-IS-20250253, valid 2025-12-16
-  to 2028-12-15, scope Inference as a Service), a third-party attestation. The CSA STAR for AI listing is
-  a Level 1 self-assessment (AI CAIQ v1.1.0), not an audit, and the Trust Centre says SOC 2 is "Not yet".'
-- 'Sovereignty is conditional and the marketing overstates it. The docs and pricing pages say EU sovereign
-  models have "no US CLOUD Act exposure". The binding Terms (Sec 2.1) and DPA v1.4 (Sec 7, 7a) disclose
-  that the platform is operated by SambaNova Systems, Inc., a US company, with remote administrative
-  access under SCCs; no binding document addresses CLOUD Act reach through that operator. Treat the claim
-  as marketing.'
-- 'The DPA (v1.4, 2026-09-24) covers EU-hosted models only. Non-EU Models need a separate written addendum,
-  and the Global Model Catalogue (one model today, MiniMax-M3.1-Flash) sends prompt content outside the
-  EEA, primarily to the US. Pin EU-hosted models and decline the Global Catalogue to keep inside the DPA.'
-- 'Content is not stored and never used for training, with metadata-only 90-day logs, in the Privacy
-  Statement v2.4, Terms v2.1 and DPA v1.4, all read in full on 2026-11-19. The DPA adds 48-hour breach
-  notification and controller audit rights.'
-- 'Sub-processors are now named, but in two lists that do not match: the Privacy Statement names SambaNova,
-  Auth0, Stripe, Metronome (US) and TECLIB; the DPA names SambaNova, Google Ireland, Pipedrive, Stripe and
-  TECLIB. SambaNova''s own further sub-processors are available only on request.'
-- 'Public status page (status.infercom.ai) with one major incident (June 2026) but no SLA outside Reserved
-  Capacity and Dedicated Rack contracts; the platform has been live under a year.'
-- 'The model roster is thin and churns: four EU-hosted models and one Global model on the Inference API,
-  with Llama 3.3 70B and two DeepSeek models retired in November 2026 on two to three weeks'' notice (the
-  Terms still allow changes "without prior notice").'
-- 'The standard ToS has NO express confidentiality clause - only functional protections (isolation, zero-
-  retention, narrow licence); the DPA''s confidentiality attaches to personal data, not trade secrets. For
-  trade-secret material use an NDA or the enterprise / on-prem contract.'
-- 'Genuinely shipped isolation - single-tenant dedicated racks in Munich plus full on-prem / air-gapped
-  BYOC, available today (unlike Groq''s enterprise-only/undocumented or Berget''s coming-soon) - the
-  strongest control and exit path among the providers here.'
+- "ISO 27001:2022 is certified by Proks Certification GmbH (certificate LU-IS-20250253, valid 2025-12-16 to 2028-12-15, scope Inference as a Service), a third-party attestation. The CSA STAR for AI listing is a Level 1 self-assessment (AI CAIQ v1.1.0), not an audit, and the Trust Centre says SOC 2 is \"Not yet\"."
+- "Sovereignty is conditional and the marketing overstates it. The docs and pricing pages say EU sovereign models have \"no US CLOUD Act exposure\". The binding Terms (Sec 2.1) and DPA v1.4 (Sec 7, 7a) disclose that the platform is operated by SambaNova Systems, Inc., a US company, with remote administrative access under SCCs. No binding document addresses CLOUD Act reach through that operator, so the claim is marketing."
+- "The DPA (v1.4, 2026-09-24) covers EU-hosted models only. Non-EU Models need a separate written addendum, and the Global Model Catalogue (one model today, MiniMax-M3.1-Flash) sends prompt content outside the EEA, primarily to the US. Pin EU-hosted models and decline the Global Catalogue to keep inside the DPA."
+- "Content is not stored and never used for training, with metadata-only 90-day logs, per the Privacy Statement v2.4, Terms v2.1 and DPA v1.4. The DPA adds 48-hour breach notification and controller audit rights."
+- "Sub-processors are named, but in two lists that do not match: the Privacy Statement names SambaNova, Auth0, Stripe, Metronome (US) and TECLIB; the DPA names SambaNova, Google Ireland, Pipedrive, Stripe and TECLIB. SambaNova's own further sub-processors are available only on request."
+- "Public status page (status.infercom.ai) with one major incident (June 2026) but no SLA outside Reserved Capacity and Dedicated Rack contracts; the platform has been live under a year."
+- "The model roster is thin and churns. The Inference API has four EU-hosted models and one Global
+  model. Llama 3.3 70B and two DeepSeek models were retired in November 2026 on two to three
+  weeks' notice (the Terms still allow changes \"without prior notice\")."
+- "The standard ToS has NO express confidentiality clause - only functional protections (isolation, zero-retention, narrow licence); the DPA's confidentiality attaches to personal data, not trade secrets. For trade-secret material use an NDA or the enterprise / on-prem contract."
+- "Shipped isolation: single-tenant dedicated racks in Munich plus full on-prem / air-gapped BYOC, available today (unlike Groq's enterprise-only/undocumented or Berget's coming-soon). This is the strongest control and exit path among the providers here."
 score:
   rubric_version: '1.2'
   headline: 78.4
@@ -176,33 +122,14 @@ score:
   dimensions:
     data_governance:
       score: 4
-      rationale: 'Zero content retention - "Infercom does not store, log, or retain the
-        content of your prompts or model outputs" - prompts never used for training,
-        fine-tuning or service improvement, customer retains ownership, and metadata-only
-        90-day usage logs. Read verbatim in the binding Privacy Statement v2.4 (ev8) and, for EU-hosted
-        models, in the full text of DPA v1.4 (ev9, read 2026-11-19), so it is contractual rather than a
-        trust-centre claim. Sub-processors are now named in both documents (ev8, ev9), though the two lists
-        differ. Held below 5 because the no-retention/no-training posture is the provider''s own binding
-        attestation, not independently audited (ISO 27001 covers security management, not this clause),
-        the DPA does not cover Non-EU Models, and confidentiality is only functional (no express duty over
-        customer inputs, ev-noconf).
-
-        '
+      rationale: "Zero content retention: \"Infercom does not store, log, or retain the content of your prompts or model outputs\". Prompts are never used for training, fine-tuning or service improvement, the customer retains ownership, and usage logs hold metadata only for 90 days. This is stated in the binding Privacy Statement v2.4 (ev8) and, for EU-hosted models, in DPA v1.4 (ev9), so it is contractual and not a trust-centre claim. Sub-processors are named in both documents (ev8, ev9), though the two lists differ. The score is below 5 for three reasons. The no-retention and no-training posture is the provider's own binding attestation and is not independently audited (ISO 27001 covers security management, not this clause). The DPA does not cover Non-EU Models. Confidentiality is only functional (no express duty over customer inputs, ev-noconf)."
       evidence_refs:
       - ev8
       - ev9
       - ev2
     compliance:
       score: 4
-      rationale: 'ISO 27001:2022 read at source: Proks Certification GmbH certificate LU-IS-20250253, valid
-        2025-12-16 to 2028-12-15, scope Inference as a Service (ev-iso, third-party attestation, retrieved
-        2026-11-19). Plus a CSA STAR for AI listing (ev-csa), which is a Level 1 self-assessment (AI CAIQ
-        v1.1.0), and an Art. 28(3) GDPR DPA read in full (ev9). Meets the score-4 anchor, which names ISO 27001
-        plus CSA STAR as two attestations, but note the CSA entry is self-assessed, so the independent weight
-        rests on the ISO certificate alone. Short of 5: SOC 2 is "Not yet" (Trust Centre), there is no ISO 27701
-        or HIPAA/BAA, and the Trust Centre listing (ev2) is a first-party surface.
-
-        '
+      rationale: "ISO 27001:2022 certificate LU-IS-20250253 from Proks Certification GmbH, valid 2025-12-16 to 2028-12-15, scope Inference as a Service (ev-iso, third-party attestation). Plus a CSA STAR for AI listing (ev-csa), which is a Level 1 self-assessment (AI CAIQ v1.1.0), and an Art. 28(3) GDPR DPA (ev9). This meets the score-4 anchor, which names ISO 27001 plus CSA STAR as two attestations. The CSA entry is self-assessed, so the independent weight rests on the ISO certificate alone. The score is short of 5: SOC 2 is \"Not yet\" (Trust Centre), there is no ISO 27701 or HIPAA/BAA, and the Trust Centre listing (ev2) is a first-party surface."
       evidence_refs:
       - ev-iso
       - ev-csa
@@ -210,70 +137,34 @@ score:
       - ev2
     residency:
       score: 4
-      rationale: 'EU-hosted models run on Infercom-owned hardware at Equinix Munich 4 and, under DPA v1.4
-        (ev9, Sec 1, 2(1), 7a), are processed exclusively in the EU/EEA with no fallback or overflow routing
-        outside it - a documented data boundary for the main workload. Held below 5 because: Infercom''s own
-        Privacy Statement (ev10) routes Global Model Catalogue prompt content outside the EEA, primarily to the
-        US, and the DPA excludes those Non-EU Models; the platform is operated by a US company (SambaNova) with
-        remote administrative access under SCCs (Terms Sec 2.1, DPA Sec 7a), so the marketing line "no US CLOUD
-        Act exposure" (ev7) is not supported by any binding text; and no third-party attestation covers
-        residency. Sovereignty is a per-model choice plus an operator caveat.
-
-        '
+      rationale: "EU-hosted models run on Infercom-owned hardware at Equinix Munich 4 and, under DPA v1.4 (ev9, Sec 1, 2(1), 7a), are processed exclusively in the EU/EEA with no fallback or overflow routing outside it. This is a documented data boundary for the main workload. The score is below 5 for three reasons. Infercom's own Privacy Statement (ev10) routes Global Model Catalogue prompt content outside the EEA, primarily to the US, and the DPA excludes those Non-EU Models. The platform is operated by a US company (SambaNova) with remote administrative access under SCCs (Terms Sec 2.1, DPA Sec 7a), so the marketing line \"no US CLOUD Act exposure\" (ev7) has no binding text behind it. No third-party attestation covers residency. Sovereignty is a per-model choice plus an operator caveat."
       evidence_refs:
       - ev7
       - ev10
       - ev9
     security:
       score: 4
-      rationale: 'ISO 27001:2022 certificate read (ev-iso), plus binding technical measures: DPA v1.4 Annex 1
-        (ev9) lists TLS 1.2+, in-memory stateless processing, hardware-level tenant sandboxing, MFA, least
-        privilege, logging, DDoS protection and automated failover, and the Privacy Statement (ev8) adds AES-256
-        at rest. Held below 5 because no independent penetration-test report or bug-bounty programme was found
-        (vulnerability reports go to an e-mail address), SOC 2 is "Not yet", the physical controls sit with the
-        Equinix facility and the US operator, and the platform is under a year old.
-
-        '
+      rationale: "ISO 27001:2022 certificate (ev-iso), plus binding technical measures. DPA v1.4 Annex 1 (ev9) lists TLS 1.2+, in-memory stateless processing, hardware-level tenant sandboxing, MFA, least privilege, logging, DDoS protection and automated failover, and the Privacy Statement (ev8) adds AES-256 at rest. The score is below 5 for four reasons. No independent penetration-test report or bug-bounty programme is published (vulnerability reports go to an e-mail address). SOC 2 is \"Not yet\". The physical controls sit with the Equinix facility and the US operator. The platform is under a year old."
       evidence_refs:
       - ev-iso
       - ev9
       - ev2
     reliability:
       score: 3
-      rationale: 'RAISED 2 -> 3 on 2026-11-19. The earlier "no status page" finding no longer holds: a public
-        Atlassian Statuspage (ev-status) has run since 2025-12-31 with per-model components, an incident feed, a
-        scheduled-maintenance notice and one documented major incident (gemma-4-31B-it, 2026-06-19, resolved in
-        about 21 hours). That meets the score-3 anchor (operational track record, public status page, documented
-        incident communication). Short of 4: pay-as-you-go has no SLA (Terms Sec 8.2), the Reserved Capacity and
-        Dedicated Rack SLAs are not public, and the platform is under a year old.
-
-        '
+      rationale: "A public Atlassian Statuspage (ev-status) has run since 2025-12-31 with per-model components, an incident feed, a scheduled-maintenance notice and one documented major incident (gemma-4-31B-it, 2026-06-19, resolved in about 21 hours). That meets the score-3 anchor (operational track record, public status page, documented incident communication). The score is short of 4: pay-as-you-go has no SLA (Terms Sec 8.2), the Reserved Capacity and Dedicated Rack SLAs are not public, and the platform is under a year old."
       evidence_refs:
       - ev-status
       - ev-terms
     transparency_lockin:
       score: 5
-      rationale: 'OpenAI-compatible API over portable open-weight models, plus a shipped single-tenant Dedicated
-        Capacity product and on-prem / air-gapped BYOC deployment (re-read 2026-11-19, ev-onprem): you can run
-        the same open checkpoints in your own facility, the strongest control and exit. The SambaNova RDU is a
-        provider-side dependency in the hosted mode only. Routing is transparent (each model is tagged EU or
-        Non-EU in /v1/models) and sub-processors are named, though in two lists that do not match. The Inference
-        API roster is thin (four EU models, one Global) and churns, with a two-to-three-week deprecation notice
-        (ev-docs). The 5 rests on the third-party gateway ref (ev5) and the shipped on-prem path.
-
-        '
+      rationale: "OpenAI-compatible API over portable open-weight models, plus a shipped single-tenant Dedicated Capacity product and on-prem / air-gapped BYOC deployment (ev-onprem). The same open checkpoints can run in the customer's own facility, which is the strongest control and exit. The SambaNova RDU is a provider-side dependency in the hosted mode only. Routing is transparent (each model is tagged EU or Non-EU in /v1/models) and sub-processors are named, though in two lists that do not match. The Inference API roster is thin (four EU models, one Global) and churns, with a two-to-three-week deprecation notice (ev-docs). The 5 rests on the third-party gateway ref (ev5) and the shipped on-prem path."
       evidence_refs:
       - ev5
       - ev-onprem
       - ev-docs
     cost:
       score: 3
-      rationale: 'Per-token EUR rates are now published (ev1, read 2026-11-19): gpt-oss-120b 0.22/0.59, Gemma 4 31B
-        0.20/0.35, MiniMax M3.1 Flash 0.60/2.40 per 1M tokens, with no minimums. Rate limits by tier are documented
-        (ev-docs). Held at 3 rather than 4: Dedicated Capacity and On-Premises are quote-only, the ToS allows
-        price changes on posting, and no independent cost benchmark was captured.
-
-        '
+      rationale: "Per-token EUR rates are published (ev1): gpt-oss-120b 0.22/0.59, Gemma 4 31B 0.20/0.35, MiniMax M3.1 Flash 0.60/2.40 per 1M tokens, with no minimums. Rate limits by tier are documented (ev-docs). The score is 3, not 4: Dedicated Capacity and On-Premises are quote-only, the ToS allows price changes on posting, and no independent cost benchmark exists."
       evidence_refs:
       - ev1
       - ev-docs
@@ -289,7 +180,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev8, ev9, ev2]
-        summary: "Zero content retention (prompts and outputs not stored after inference), no training, fine-tuning or service improvement, and metadata-only logs kept 90 days - read verbatim from Privacy Statement v2.4 and Terms v2.1, and from the full text of DPA v1.4 for EU-hosted models. The DPA excludes Non-EU Models."
+        summary: "Zero content retention (prompts and outputs not stored after inference), no training, fine-tuning or service improvement, and metadata-only logs kept 90 days, per Privacy Statement v2.4 and Terms v2.1 and, for EU-hosted models, DPA v1.4. The DPA excludes Non-EU Models."
       - key: data-ownership
         title: "Data & IP ownership"
         doc_type: reference
@@ -310,14 +201,14 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-iso, ev-csa, ev9]
-        summary: "ISO 27001:2022 certificate read at source (Proks, valid to 2028-12-15). CSA STAR for AI is a Level 1 self-assessment. Art. 28(3) DPA v1.4 read in full. SOC 2 is not held (Trust Centre: Not yet); no ISO 27701 or HIPAA/BAA."
+        summary: "ISO 27001:2022 certificate (Proks, valid to 2028-12-15). CSA STAR for AI is a Level 1 self-assessment. Art. 28(3) DPA v1.4. SOC 2 is not held (Trust Centre: Not yet); no ISO 27701 or HIPAA/BAA."
       - key: security
         title: "Security controls"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-iso, ev9, ev2]
-        summary: "ISO 27001-certified ISMS, TLS 1.2+ in transit, AES-256 at rest, stateless in-memory processing, hardware tenant sandboxing, MFA and least privilege (DPA Annex 1). No independent pen-test report or bug bounty found; vulnerability reports go to an e-mail address; no private connectivity."
+        summary: "ISO 27001-certified ISMS, TLS 1.2+ in transit, AES-256 at rest, stateless in-memory processing, hardware tenant sandboxing, MFA and least privilege (DPA Annex 1). No independent pen-test report or bug bounty is published; vulnerability reports go to an e-mail address; no private connectivity."
       - key: pricing
         title: "Pricing & cost model"
         doc_type: reference
@@ -368,7 +259,7 @@ documentation:
         title: "Authentication & account setup"
         doc_type: reference
         source_type: gap
-        gap_reason: "The API-key issuance and org/project scoping flow sits on docs.infercom.ai (API keys and URLs page), which was not read in this pass; the Terms Sec 3.2-3.3 say only that keys are confidential credentials and may be revoked."
+        gap_reason: "The API-key issuance and org/project scoping flow is described on docs.infercom.ai (API keys and URLs page), which is not covered in this entry. Terms Sec 3.2-3.3 say only that keys are confidential credentials and may be revoked."
   use:
     completeness: 57.1
     originality: 0.0
@@ -386,19 +277,19 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev1, ev-docs]
-        summary: "OpenAI-compatible chat/completions, a Responses API, Anthropic-SDK compatibility, vision, audio (Whisper) and embeddings, per the docs navigation. Per-model tool-calling and structured-output support was not individually verified."
+        summary: "OpenAI-compatible chat/completions, a Responses API, Anthropic-SDK compatibility, vision, audio (Whisper) and embeddings, per the docs navigation. Per-model tool-calling and structured-output support is unverified."
       - key: context-limits
         title: "Context & token limits"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev1, ev-docs]
-        summary: "Published context lengths: gpt-oss-120b and Gemma 4 31B 128K, E5-Mistral 4K, MiniMax M3.1 Flash 1M. Maximum output tokens and per-request token limits were not captured."
+        summary: "Published context lengths: gpt-oss-120b and Gemma 4 31B 128K, E5-Mistral 4K, MiniMax M3.1 Flash 1M. Maximum output tokens and per-request token limits are not documented."
       - key: fine-tuning
         title: "Fine-tuning / custom models"
         doc_type: reference
         source_type: gap
-        gap_reason: "Infercom runs inference only and states it does not train models. Custom checkpoints are supported only on Dedicated Capacity and on-premises for some models (docs marks several as Custom checkpoints: Yes), and no fine-tuning service documentation was read."
+        gap_reason: "Infercom runs inference only and states it does not train models. Custom checkpoints are supported only on Dedicated Capacity and on-premises for some models (docs marks several as Custom checkpoints: Yes), and no fine-tuning service is documented."
   support:
     completeness: 85.7
     originality: 0.0
@@ -409,14 +300,14 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev2, ev-iso, ev-csa]
-        summary: "A server-rendered Trust Centre (infercom.ai/trust) links the DPA, the ISO 27001 certificate and the CSA STAR entry, and its FAQ is candid about SOC 2 (not yet) and the US operator. Vulnerabilities are reported by e-mail to dpo@infercom.ai; no bug-bounty or security.txt programme was found."
+        summary: "A server-rendered Trust Centre (infercom.ai/trust) links the DPA, the ISO 27001 certificate and the CSA STAR entry, and its FAQ states plainly that SOC 2 is not yet held and that the operator is a US company. Vulnerabilities are reported by e-mail to dpo@infercom.ai; no bug-bounty or security.txt programme is published."
       - key: channels
         title: "Support & community channels"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev5, ev-terms]
-        summary: "Documentation at docs.infercom.ai, support tickets at support.infercom.ai (a GLPI portal run by TECLIB), and enhanced support for Reserved Capacity and Dedicated Rack customers under separate agreement. No community forum was surfaced."
+        summary: "Documentation at docs.infercom.ai, support tickets at support.infercom.ai (a GLPI portal run by TECLIB), and enhanced support for Reserved Capacity and Dedicated Rack customers under separate agreement. No community forum is listed."
       - key: status-uptime
         title: "Status page & uptime history"
         doc_type: reference
@@ -441,7 +332,7 @@ ownership:
       # grounded in: ev5 (third_party - gateway partnership, OpenAI-compatible), ev-onprem (docs, retrieved), lock_in block
     transparency:
       level: moderate
-      rationale: "Terms v2.1, Privacy Statement v2.4 and DPA v1.4 are all published and were read in full, and sub-processors are now named. Held at moderate because the Privacy Statement and DPA sub-processor lists do not match, the DPA excludes Non-EU Models, SambaNova's own sub-processors are on request only, and the docs claim no US CLOUD Act exposure while the binding texts disclose a US operator."
+      rationale: "Terms v2.1, Privacy Statement v2.4 and DPA v1.4 are all published, and sub-processors are named. The level is moderate for four reasons. The Privacy Statement and DPA sub-processor lists do not match. The DPA excludes Non-EU Models. SambaNova's own sub-processors are on request only. The docs claim no US CLOUD Act exposure while the binding texts disclose a US operator."
       # grounded in: ev8 (privacy_policy, retrieved), ev9 (dpa, retrieved:true as of 2026-11-19), ev7 (marketing claim contradicted by ev-terms and ev9)
     reliability:
       level: moderate
@@ -449,9 +340,9 @@ ownership:
       # grounded in: ev-iso (third_party, retrieved), ev-status (publisher, retrieved), ev-terms (Sec 8.2); reliability dim 3
     data_control:
       level: strong
-      rationale: "On the data-extraction axis your data stays yours: zero content retention, no training, fine-tuning or service improvement, metadata-only 90-day logs and customer_retains - read verbatim from Privacy Statement v2.4, Terms v2.1 and DPA v1.4. The caveats are jurisdictional and contractual scope, not extractive: Global Catalogue prompts go outside the EEA (primarily US) and outside the DPA, and a US operator has remote administrative access."
+      rationale: "On the data-extraction axis your data stays yours: zero content retention, no training, fine-tuning or service improvement, metadata-only 90-day logs and customer_retains, per Privacy Statement v2.4, Terms v2.1 and DPA v1.4. The caveats are jurisdiction and contractual scope, not extraction: Global Catalogue prompts go outside the EEA (primarily US) and outside the DPA, and a US operator has remote administrative access."
       # grounded in: ev8 (privacy_policy, retrieved), ev10 (privacy_policy, retrieved - US-routing caveat), ev9 (dpa, retrieved - scope and operator access)
-  verdict: "You substantially own EU-sensitive workloads here: zero content retention, no training, metadata-only logs and a portable open-weight exit with shipped single-tenant and air-gapped options keep your data yours, and the posture is read from the full Terms, Privacy Statement and DPA rather than a marketing page. It stops short of full because sovereignty is conditional and oversold: the DPA covers EU-hosted models only, the Global Model Catalogue sends prompts outside the EEA, a US company operates the platform with remote access, and the docs' no-CLOUD-Act claim has no binding text behind it. Pin EU-hosted models, sign the DPA, and use Dedicated Capacity or on-premises if operator access matters."
+  verdict: "You substantially own EU-sensitive workloads here. Zero content retention, no training, metadata-only logs and a portable open-weight exit with shipped single-tenant and air-gapped options keep your data yours, and the Terms, Privacy Statement and DPA state this contractually. Ownership stops short of full because sovereignty is conditional and oversold. The DPA covers EU-hosted models only, the Global Model Catalogue sends prompts outside the EEA, a US company operates the platform with remote access, and the docs' no-CLOUD-Act claim has no binding text behind it. Pin EU-hosted models, sign the DPA, and use Dedicated Capacity or on-premises if operator access matters."
 
 # Each evidence item carries `doc_type` (which kind of primary document) and `retrieved`
 # (true = the document's substantive clause text was actually read; false = documented/known to
@@ -460,174 +351,119 @@ ownership:
 # unreadable-PDF notes no longer apply. Only the BusinessWire release (ev3) could not be fetched.
 evidence:
 - id: ev1
-  claim: 'Pricing page and home page (read 2026-11-19): OpenAI-compatible API on SambaNova RDU hardware in
-    Munich, per-token EUR rates (gpt-oss-120b 0.22/0.59, Gemma 4 31B 0.20/0.35, Whisper 0.10, E5-Mistral 0.13,
-    MiniMax M3.1 Flash 0.60/2.40 per 1M tokens, excluding VAT), no minimums; Dedicated Capacity and On-Premises
-    priced per engagement.'
+  claim: "Pricing page and home page: OpenAI-compatible API on SambaNova RDU hardware in Munich, with per-token EUR rates (gpt-oss-120b 0.22/0.59, Gemma 4 31B 0.20/0.35, Whisper 0.10, E5-Mistral 0.13, MiniMax M3.1 Flash 0.60/2.40 per 1M tokens, excluding VAT) and no minimums. Dedicated Capacity and On-Premises are priced per engagement."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://infercom.ai/pricing
   date: '2026-11-19'
 - id: ev2
-  claim: 'Trust Centre (read 2026-11-19, first-party surface): no persistent storage of prompts or outputs, usage
-    logs metadata only for 90 days, ISO 27001 certified, CSA STAR Level 1, SOC 2 "Not yet", encryption in
-    transit (TLS 1.3 supported), SambaNova is "a US company with operational access to the Munich facility",
-    no private connectivity, vulnerability reports by e-mail.'
+  claim: "Trust Centre (first-party surface): no persistent storage of prompts or outputs, and usage logs hold metadata only for 90 days. It lists ISO 27001 certified, CSA STAR Level 1 and SOC 2 \"Not yet\". Encryption in transit supports TLS 1.3. SambaNova is \"a US company with operational access to the Munich facility\". There is no private connectivity, and vulnerability reports go by e-mail."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://infercom.ai/trust/
   date: '2026-11-19'
 - id: ev3
-  claim: SambaNova partnership announcement - Infercom as a sovereign AI provider, Luxembourg HQ, EU jurisdiction,
-    Munich deployment, ISO 27001, GDPR-safe/EU-compliant. Third-party corroboration of the ISO 27001 /
-    sovereign-provider claims. Not re-read 2026-11-19 (connection failed from this session); the ISO claim is
-    now corroborated by the certificate itself (ev-iso).
+  claim: "SambaNova partnership announcement: Infercom as a sovereign AI provider, Luxembourg HQ, EU jurisdiction, Munich deployment, ISO 27001, GDPR-safe/EU-compliant. It is third-party corroboration of the ISO 27001 and sovereign-provider claims, and the ISO claim is also supported by the certificate itself (ev-iso)."
   source_type: third_party
   doc_type: third_party
   retrieved: false
   url: https://www.businesswire.com/news/home/20251022464116/en/SambaNova-Powers-the-AI-Backbone-for-Three-Sovereign-AI-Providers-Across-Australia-Europe-and-the-UK
   date: '2026-07-25'
 - id: ev4
-  claim: 'SambaNova and Infercom Q&A (re-read 2026-11-19): SambaNova partners with Infercom to launch a European
-    sovereign inference cloud with all data under European jurisdiction. The page no longer carries the Equinix
-    Munich, native BF16, 10x speed or late-2025 launch statements the earlier entry cited; those now rest on
-    Infercom''s own pages (hardware and Munich site: ev2, ev8).'
+  claim: "SambaNova and Infercom Q&A: SambaNova partners with Infercom to launch a European sovereign inference cloud with all data under European jurisdiction. The page does not carry the Equinix Munich, native BF16, 10x speed or late-2025 launch statements. Those rest on Infercom's own pages (hardware and Munich site: ev2, ev8)."
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://sambanova.ai/blog/infercom-qna
   date: '2026-11-19'
 - id: ev5
-  claim: 'Independent gateway partnership (re-read 2026-11-19, updated October 2026): Infercom models routed
-    through the Opper AI gateway, OpenAI-compatible, EU German datacentres by default plus US and JP regions,
-    native BF16, and a repeated marketing claim of no US CLOUD Act exposure for EU-routed inference. A commercial
-    partner''s page, not an audit.'
+  claim: "Independent gateway partnership page (updated October 2026): Infercom models are routed through the Opper AI gateway, OpenAI-compatible, EU German datacentres by default plus US and JP regions, native BF16. It repeats the marketing claim of no US CLOUD Act exposure for EU-routed inference. This is a commercial partner's page, not an audit."
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://opper.ai/blog/infercom-partnership
   date: '2026-11-19'
 - id: ev6
-  claim: 'Zero Data Retention glossary (re-read 2026-11-19): ZDR means content is not persisted after the request and
-    is not used for training; a minimal amount of operational metadata is usually still processed.'
+  claim: "Zero Data Retention glossary: ZDR means content is not persisted after the request and is not used for training. A minimal amount of operational metadata is usually still processed."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://infercom.ai/glossary/zero-data-retention/
   date: '2026-11-19'
 - id: ev7
-  claim: 'EU Sovereign AI page and docs (read 2026-11-19): EU sovereign models run in Munich; "Our US operating partner
-    SambaNova has remote access to run the platform; the DPA names it"; "Luxembourg company, controlled in Europe,
-    no US parent". The docs model page and pricing page separately say EU-hosted models carry "no US CLOUD Act
-    exposure", a claim not made in the binding Terms, Privacy Statement or DPA.'
+  claim: "EU Sovereign AI page and docs: EU sovereign models run in Munich; \"Our US operating partner SambaNova has remote access to run the platform; the DPA names it\"; \"Luxembourg company, controlled in Europe, no US parent\". The docs model page and pricing page separately say EU-hosted models carry \"no US CLOUD Act exposure\", a claim not made in the binding Terms, Privacy Statement or DPA."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://infercom.ai/sovereign-ai
   date: '2026-11-19'
 - id: ev8
-  claim: 'Privacy Statement v2.4, last updated 2026-10-30 (binding, read 2026-11-19): "Infercom does not store, log, or retain
-    the content of your prompts or model outputs" - inference data is processed transiently and discarded - and
-    "We do not use inference data for model training, fine-tuning, or service improvement" for EU-Hosted Models
-    and the Global Model Catalog. API request metadata (timestamps, model identifiers, token counts, response
-    times, error codes, API key identifiers) kept 90 days; authentication logs 12 months. Sec 7.1 names five
-    sub-processors: SambaNova Systems Inc (US; EU infra at Equinix Munich 4), Auth0 (EU), Stripe Payments Europe
-    (Ireland), Metronome Inc (US), TECLIB SAS (France), and states the cloud portal and API are operated by
-    SambaNova as "SambaManaged".'
+  claim: "Privacy Statement v2.4, last updated 2026-10-30 (binding): \"Infercom does not store, log, or retain the content of your prompts or model outputs\". Inference data is processed transiently and discarded, and \"We do not use inference data for model training, fine-tuning, or service improvement\" for EU-Hosted Models and the Global Model Catalog. API request metadata (timestamps, model identifiers, token counts, response times, error codes, API key identifiers) is kept 90 days and authentication logs 12 months. Sec 7.1 names five sub-processors: SambaNova Systems Inc (US; EU infra at Equinix Munich 4), Auth0 (EU), Stripe Payments Europe (Ireland), Metronome Inc (US), TECLIB SAS (France). It states that the cloud portal and API are operated by SambaNova as \"SambaManaged\"."
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://infercom.ai/privacypolicy/
   date: '2026-11-19'
 - id: ev9
-  claim: 'Data Processing Agreement v1.4, 24 September 2026 (binding, read in full 2026-11-19; entry held v1.3): Art. 28(3)
-    GDPR agreement with Infercom SCS. Inference processing "exclusively within the European Union", no fallback or
-    overflow routing outside the EU/EEA, and "Models whose inference is not hosted within the EU/EEA (Non-EU
-    Models) are not covered by this Agreement" (separate addendum required). No training and no content storage;
-    five sub-processors (SambaNova US with remote administration under SCCs Module Three, Google Ireland, Pipedrive,
-    Stripe, TECLIB); 48-hour breach notification; controller audit rights; deletion within 30 days of termination;
-    Luxembourg law. No CLOUD Act statement.'
+  claim: "Data Processing Agreement v1.4, 24 September 2026 (binding): an Art. 28(3) GDPR agreement with Infercom SCS. Inference processing is \"exclusively within the European Union\", with no fallback or overflow routing outside the EU/EEA, and \"Models whose inference is not hosted within the EU/EEA (Non-EU Models) are not covered by this Agreement\" (separate addendum required). There is no training and no content storage. It names five sub-processors (SambaNova US with remote administration under SCCs Module Three, Google Ireland, Pipedrive, Stripe, TECLIB), and provides 48-hour breach notification, controller audit rights, deletion within 30 days of termination and Luxembourg law. It has no CLOUD Act statement."
   source_type: publisher
   doc_type: dpa
   retrieved: true
   url: https://infercom.ai/Infercom_DPA_v1.4_dl.pdf
   date: '2026-11-19'
 - id: ev10
-  claim: 'Privacy Statement v2.4 Sec 8 and 8.1 (binding, read 2026-11-19): for Global Model Catalog models not hosted on
-    EU infrastructure, "your API requests (including prompt content) are routed to SambaNova''s global
-    infrastructure outside the EEA, primarily in the United States"; SCCs (Decision 2021/914) are the primary
-    transfer mechanism with EU-US DPF as an additional basis. EU-Hosted Models are tagged "EU" in the API and
-    usage can be restricted to them.'
+  claim: "Privacy Statement v2.4 Sec 8 and 8.1 (binding): for Global Model Catalog models not hosted on EU infrastructure, \"your API requests (including prompt content) are routed to SambaNova's global infrastructure outside the EEA, primarily in the United States\". SCCs (Decision 2021/914) are the primary transfer mechanism, with EU-US DPF as an additional basis. EU-Hosted Models are tagged \"EU\" in the API and usage can be restricted to them."
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://infercom.ai/privacypolicy/
   date: '2026-11-19'
 - id: ev-onprem
-  claim: 'On-Premises page, Trust Centre FAQ and Sovereign AI page (re-read 2026-11-19): shipped today - SambaRack SN40L
-    on-premises racks, "Air-gapped deployment support", "Typically ~90 days from contract to production", BYOC
-    ("fine-tunes of supported architectures load immediately"), one contract with Infercom delivered with
-    SambaNova engineers; Dedicated Capacity is single-tenant capacity "reserved for you alone" in Munich.'
+  claim: "On-Premises page, Trust Centre FAQ and Sovereign AI page: shipped today are SambaRack SN40L on-premises racks, \"Air-gapped deployment support\", \"Typically ~90 days from contract to production\", BYOC (\"fine-tunes of supported architectures load immediately\") and one contract with Infercom delivered with SambaNova engineers. Dedicated Capacity is single-tenant capacity \"reserved for you alone\" in Munich."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://infercom.ai/on-premises
   date: '2026-11-19'
 - id: ev-noconf
-  claim: 'Terms v2.1 and Privacy Statement v2.4 (re-read 2026-11-19): functional protections only (transient processing and
-    discard, no secondary use, logical isolation, encryption, access controls) with NO express confidentiality
-    clause over customer inputs; Terms Sec 3.3 calls only API keys confidential; DPA personnel confidentiality
-    (Sec 5(1)(b)) attaches to personal data, not trade secrets.'
+  claim: "Terms v2.1 and Privacy Statement v2.4 give functional protections only (transient processing and discard, no secondary use, logical isolation, encryption, access controls) and NO express confidentiality clause over customer inputs. Terms Sec 3.3 calls only API keys confidential. DPA personnel confidentiality (Sec 5(1)(b)) attaches to personal data, not trade secrets."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://infercom.ai/termsconditions/
   date: '2026-11-19'
 - id: ev-terms
-  claim: 'Terms of Service v2.1, 2026-03-09 (binding, read 2026-11-19, unchanged): Sec 2.1 SambaNova (US) operates the
-    platform under a managed services agreement; Sec 2.2 EU-Hosted versus Global Model Catalog and models may
-    change "without prior notice"; Sec 6 customer owns Input and Output; Sec 8.2 SLAs only for Reserved Capacity
-    and Dedicated Rack under separate agreement, none for pay-as-you-go; Sec 11.1 liability capped at six months
-    of fees; Luxembourg law.'
+  claim: "Terms of Service v2.1, 2026-03-09 (binding). Sec 2.1: SambaNova (US) operates the platform under a managed services agreement. Sec 2.2: EU-Hosted versus Global Model Catalog, and models may change \"without prior notice\". Sec 6: customer owns Input and Output. Sec 8.2: SLAs only for Reserved Capacity and Dedicated Rack under separate agreement, none for pay-as-you-go. Sec 11.1: liability capped at six months of fees. Luxembourg law."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://infercom.ai/termsconditions/
   date: '2026-11-19'
 - id: ev-iso
-  claim: 'ISO/IEC 27001:2022 certificate No LU-IS-20250253 issued by Proks Certification GmbH (read at source 2026-11-19):
-    certified company INFERCOM SCS, scope "AI & Cloud Infrastructure Services (Inference as a Service) and the
-    systems that support these services", valid 2025-12-16 to 2028-12-15, IAF and DAkkS accreditation marks.'
+  claim: "ISO/IEC 27001:2022 certificate No LU-IS-20250253 issued by Proks Certification GmbH: certified company INFERCOM SCS, scope \"AI & Cloud Infrastructure Services (Inference as a Service) and the systems that support these services\", valid 2025-12-16 to 2028-12-15, IAF and DAkkS accreditation marks."
   source_type: third_party
   doc_type: security
   retrieved: true
   url: https://infercom.ai/iso-27001-certificate.pdf
   date: '2026-11-19'
 - id: ev-csa
-  claim: 'CSA STAR registry listing "Infercom Inference-as-a-Service" (read 2026-11-19): STAR for AI Level 1, AI CAIQ
-    self-assessment v1.1.0, listed 2026-07-02. Level 1 is a provider self-assessment, not an audit.'
+  claim: "CSA STAR registry listing \"Infercom Inference-as-a-Service\": STAR for AI Level 1, AI CAIQ self-assessment v1.1.0, listed 2026-07-02. Level 1 is a provider self-assessment, not an audit."
   source_type: third_party
   doc_type: security
   retrieved: true
   url: https://cloudsecurityalliance.org/star/registry/infercom/services/infercom-inference-as-a-service
   date: '2026-11-19'
 - id: ev-status
-  claim: 'Public status page (read 2026-11-19 via the Atlassian Statuspage JSON API): Infercom Inference Service component
-    since 2025-12-31, per-model components, all operational on 2026-11-19; one public incident (2026-06-19 to
-    2026-06-20, impact major, gemma-4-31B-it); a scheduled maintenance notice for 2026-11-20. No SLA stated.'
+  claim: "Public status page (Atlassian Statuspage JSON API): Infercom Inference Service component since 2025-12-31, per-model components, one public incident (2026-06-19 to 2026-06-20, impact major, gemma-4-31B-it), and a scheduled maintenance notice for 2026-11-20. No SLA stated."
   source_type: publisher
   doc_type: sla
   retrieved: true
   url: https://status.infercom.ai/
   date: '2026-11-19'
 - id: ev-docs
-  claim: 'Developer docs (read 2026-11-19): Inference API catalogue (EU-hosted gpt-oss-120b, gemma-4-31B-it, E5-Mistral-7B,
-    Whisper-Large-v3; Global MiniMax-M3.1-Flash), rate limits by tier (Free 20 RPM and 20 RPD; Developer
-    gpt-oss-120b 150 RPM and 50,000 RPD; Enterprise 500 RPM and 100,000 RPD), deprecation policy (two to three
-    weeks minimum notice for production models) with retirements of Llama 3.3 70B (2026-11-17) and DeepSeek V3.1
-    and V3.2 (2026-11-03), and the Dedicated Capacity model list.'
+  claim: "Developer docs list the Inference API catalogue (EU-hosted gpt-oss-120b, gemma-4-31B-it, E5-Mistral-7B, Whisper-Large-v3; Global MiniMax-M3.1-Flash). Rate limits by tier are Free 20 RPM and 20 RPD, Developer gpt-oss-120b 150 RPM and 50,000 RPD, Enterprise 500 RPM and 100,000 RPD. The deprecation policy gives two to three weeks minimum notice for production models, with retirements of Llama 3.3 70B (2026-11-17) and DeepSeek V3.1 and V3.2 (2026-11-03). The docs also list the Dedicated Capacity models."
   source_type: publisher
   doc_type: docs
   retrieved: true

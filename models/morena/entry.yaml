@@ -24,7 +24,7 @@ publisher:
   accountable_entity: true
   url: https://vambo.ai/
   security_contact: none published
-summary: "MORENA 1.5B is a small Apache-2.0 base and instruct pair for twelve African languages, best adopted as a fine-tuning starting point and not as a finished assistant. The publisher says it trained the 1.485B-parameter decoder from scratch (a publisher claim, repeated on the cards and in its paper) for Shona, Swahili, Hausa, Yoruba, Igbo, isiZulu, isiXhosa, Kinyarwanda, Setswana, Afrikaans, isiNdebele and Nigerian Pidgin, plus English, French and code, with a 4,096-token context. Weights, tokenizer and a trainer file are public, but the corpus, the SFT corpus, the training configs and the evaluation harness are not, and every benchmark and safety number is the publisher's own, with one model (gemma-3-12b-it) judging safety. The instruct model fails 41% of ordinary benign requests, the weights run only through publisher-written PyTorch code or an official GGUF, there is no LICENSE file in the repos, and the Hugging Face organisation is unverified."
+summary: "MORENA 1.5B is a small Apache-2.0 base and instruct pair for twelve African languages, best adopted as a fine-tuning starting point and not as a finished assistant. The publisher says it trained the 1.485B-parameter decoder from scratch (a publisher claim, repeated on the cards and in its paper). The model covers Shona, Swahili, Hausa, Yoruba, Igbo, isiZulu, isiXhosa, Kinyarwanda, Setswana, Afrikaans, isiNdebele and Nigerian Pidgin, plus English, French and code, with a 4,096-token context. Weights, tokenizer and a trainer file are public. The corpus, the SFT corpus, the training configs and the evaluation harness are not. Every benchmark and safety number is the publisher's own, and one model (gemma-3-12b-it) judges safety. The instruct model fails 41% of ordinary benign requests. The weights run only through publisher-written PyTorch code or an official GGUF, the repos have no LICENSE file, and the Hugging Face organisation is unverified."
 variants:
 - name: MORENA 1.5B base
   params_total: 1.485B
@@ -52,7 +52,7 @@ openness:
     commercial_use: allowed
     notable_restrictions:
     - "No LICENSE, NOTICE or copyright-holder file ships with the weights; the licence is declared only in the Hugging Face metadata and card text."
-    - "Open upstream question, unresolved: the SFT data was synthetic output of Gemma-family models, and the Gemma Terms of Use can attach their use restrictions to models trained on such output (see ev-gemma-terms)."
+    - "Unresolved upstream question: the SFT data was synthetic output of Gemma-family models, and the Gemma Terms of Use can attach their use restrictions to models trained on such output (see ev-gemma-terms)."
     url: https://huggingface.co/vamboai/morena-1.5b-instruct
 provenance:
   canonical_source: https://huggingface.co/vamboai
@@ -70,7 +70,7 @@ provenance:
     notable:
     - name: vamboai/morena-1.5b-instruct-gguf (Q4_K_M, Q8_0, f16)
       trust: publisher
-      note: official GGUF conversion from the same org; the publisher says it was checked for logit equivalence, which OneHill has not repeated
+      note: official GGUF conversion from the same org; the publisher says it was checked for logit equivalence, and OneHill has not repeated the check
   checkpoint_checklist_score: 4
   scanner_result:
     scanner: Hugging Face repository scan
@@ -85,14 +85,14 @@ eu_ai_act:
     article_55_docs_available: n/a
   open_source_exemption:
     license_qualifies: uncertain
-    rationale: "Apache-2.0 is a free and open-source licence and the parameters, architecture and usage information are public, so the Article 53 exemption would normally be plausible. It is marked uncertain because no licence text ships with the weights, the publisher sells services around its own models (monetisation of the weights themselves is not evidenced), and the unresolved Gemma Terms question could attach use restrictions to the instruct model. The exemption does not cover the copyright policy or the public training-content summary, and neither exists as a standalone document."
+    rationale: "Apache-2.0 is a free and open-source licence and the parameters, architecture and usage information are public, so the Article 53 exemption would normally be plausible. It is marked uncertain for three reasons. No licence text ships with the weights. The publisher sells services around its own models, though monetisation of the weights themselves is not evidenced. The unresolved Gemma Terms question could attach use restrictions to the instruct model. The exemption does not cover the copyright policy or the public training-content summary, and neither exists as a standalone document."
   provider_package:
     technical_documentation: partial
     downstream_information: partial
     copyright_policy: 'no'
     training_content_summary: partial
     code_of_practice_signatory: false
-  deployer_notes: "The paper and cards give architecture, compute, a per-source mixture table and named sources, which helps a deployer assemble technical documentation. They do not name the machine-translation system behind 57.1B tokens or the generator behind the 1.1B synthetic mid-training tokens, and the corpus is promised only 'once the legal review is complete'. No code-of-practice signatory status was found in any document read (the Commission list was not checked). A fine-tuner placing a derivative on the EU market may become a provider for it."
+  deployer_notes: "The paper and cards give architecture, compute, a per-source mixture table and named sources, which helps a deployer assemble technical documentation. They do not name the machine-translation system behind 57.1B tokens or the generator behind the 1.1B synthetic mid-training tokens, and the corpus is promised only 'once the legal review is complete'. No document states code-of-practice signatory status, and the Commission list has not been checked. A fine-tuner placing a derivative on the EU market may become a provider for it."
   last_assessed: '2026-11-19'
 performance: {}
 behaviour: {}
@@ -100,7 +100,7 @@ safety: {}
 deployment:
   ceiling_tier: T1
   ceiling_conditional: true
-  hardware_notes: "bf16 weights are 2.97 GB; the official GGUF files are 0.92 GB (Q4_K_M), 1.58 GB (Q8_0) and 2.97 GB (f16), and the paper says the GGUF builds run on a laptop CPU offline (publisher statement, not tested). The paper measured 4.44 ms per character on one A100, on the previous instruct version, which has the same architecture. No VRAM table is published. The 4,096-token context keeps KV-cache memory small."
+  hardware_notes: "bf16 weights are 2.97 GB; the official GGUF files are 0.92 GB (Q4_K_M), 1.58 GB (Q8_0) and 2.97 GB (f16), and the paper says the GGUF builds run on a laptop CPU offline (publisher statement, untested). The paper measured 4.44 ms per character on one A100, on the previous instruct version, which has the same architecture. No VRAM table is published. The 4,096-token context keeps KV-cache memory small."
   serving_support:
   - llama.cpp
   - pytorch-reference-code
@@ -119,7 +119,7 @@ score:
   dimensions:
     openness:
       score: 3
-      rationale: "Open weights, a thorough paper and cards, and an Apache-2.0 declaration put it at the open-weights anchor. It is short of 4 because the corpus and the SFT corpus are not released, the training configs, TRAIN_README, data pipeline and evaluation harness are absent, and the trainer file sits in the repo without the card saying so. Training data is partial (sources and per-source shares are named; the machine-translation system and synthetic-data generators are not), training code is partial (a full trainer script, not a runnable recipe) and evaluation is partial (results and methods, no harness)."
+      rationale: "Open weights, a detailed paper and cards, and an Apache-2.0 declaration put it at the open-weights anchor. It is short of 4 because the corpus and the SFT corpus are not released, the training configs, TRAIN_README, data pipeline and evaluation harness are absent, and the card does not mention the trainer file. Training data is partial: sources and per-source shares are named, but the machine-translation system and synthetic-data generators are not. Training code is partial: a full trainer script without a runnable recipe. Evaluation is partial: results and methods without a harness."
       evidence_refs:
       - ev-card-instruct
       - ev-paper
@@ -127,14 +127,14 @@ score:
       - ev-licence
     provenance:
       score: 2
-      rationale: "Safetensors only, a published SHA256SUMS that matches the host's LFS hash for the weights, and a clean Hugging Face malware scan give about 4 of 8 checklist boxes. It stays at 2 because the vamboai organisation is not verified on Hugging Face and has one member, nothing is signed or attested, and loading needs publisher-written Python (modeling_morena.py) with a stale 'preview weights' comment in load_example.py. Anchor 3 needs a verified publisher organisation."
+      rationale: "Safetensors only, a published SHA256SUMS that matches the host's LFS hash for the weights, and a clean Hugging Face malware scan give about 4 of 8 checklist boxes. The score is 2 because the vamboai organisation is not verified on Hugging Face and has one member, nothing is signed or attested, and loading needs publisher-written Python (modeling_morena.py), with a stale 'preview weights' comment in load_example.py. Anchor 3 needs a verified publisher organisation."
       evidence_refs:
       - ev-hf-platform
       - ev-checksums
       - ev-trainer
     legal:
       score: 3
-      rationale: "The declared licence is Apache-2.0 with commercial use stated, ungated, which is clear for common uses, and the paper documents mixture, compute and sources. It is held at 3 and not 4 because there is no LICENSE file, no copyright policy or GPAI summary, the machine-translation and synthetic-data generators are unnamed, and the Gemma Terms question on the SFT data is unresolved; if it resolves against the publisher the instruct model carries use restrictions that Apache-2.0 does not show."
+      rationale: "The declared licence is Apache-2.0 with commercial use stated and no gating, which is clear for common uses, and the paper documents mixture, compute and sources. The score is 3 and not 4 because there is no LICENSE file, no copyright policy or GPAI summary, the machine-translation and synthetic-data generators are unnamed, and the Gemma Terms question on the SFT data is unresolved. If it resolves against the publisher, the instruct model carries use restrictions that Apache-2.0 does not show."
       evidence_refs:
       - ev-licence
       - ev-apache-text
@@ -142,27 +142,27 @@ score:
       - ev-gemma-terms
     safety:
       score: 2
-      rationale: "The instruct model is safety-tuned and the publisher reports a 3,341-prompt, 13-language, 11-category evaluation with honest residual risks (89.0% handled well, 41% of benign requests failed, Igbo 75%). It is publisher-only, one model (gemma-3-12b-it) wrote the prompts and judged the answers, no native speaker rated anything, no jailbreak or red-team test is described and no outside model was run through it. There is no acceptable-use policy or guard model. The base model has no safety tuning."
+      rationale: "The instruct model is safety-tuned, and the publisher reports a 3,341-prompt, 13-language, 11-category evaluation that includes its residual risks (89.0% handled well, 41% of benign requests failed, Igbo 75%). The evaluation is publisher-only. One model (gemma-3-12b-it) wrote the prompts and judged the answers, no native speaker rated anything, no jailbreak or red-team test is described and no outside model was run through it. There is no acceptable-use policy or guard model. The base model has no safety tuning."
       evidence_refs:
       - ev-card-instruct
       - ev-paper
     performance:
       score: 2
-      rationale: "The publisher reports the lowest African bits per byte of 26 models (1.408 base, 1.441 instruct) and 45.8 chrF++ into five African languages against 37.8 for MADLAD-400-3B, but into English it trails MADLAD-400-3B (48.7 against 53.6), retrieval QA and African multiple choice are near chance, grounded generation is 23% faithful and MMLU is 0.284. Every number comes from the publisher's own harness, which it says had five defects, and no independent re-run was found, so the rating stays at 2 until someone reproduces it."
+      rationale: "The publisher reports the lowest African bits per byte of 26 models (1.408 base, 1.441 instruct) and 45.8 chrF++ into five African languages against 37.8 for MADLAD-400-3B. Into English it trails MADLAD-400-3B (48.7 against 53.6). Retrieval QA and African multiple choice are near chance, grounded generation is 23% faithful and MMLU is 0.284. Every number comes from the publisher's own harness, which it says had five defects, and no independent re-run exists. The rating is 2 until someone reproduces the results."
       evidence_refs:
       - ev-card-instruct
       - ev-paper
       - ev-press
     operational:
       score: 2
-      rationale: "The only mainstream route is the publisher's GGUF on llama.cpp (Q4_K_M, Q8_0, f16; Hugging Face reads it as architecture llama with 4,096 context). The safetensors load only through publisher PyTorch code with no generate() and no KV cache, and nothing documents vLLM, Ollama, TGI or transformers support. Hardware guidance is file sizes and one latency figure, and no inference provider hosts the model."
+      rationale: "The only mainstream route is the publisher's GGUF on llama.cpp (Q4_K_M, Q8_0, f16; Hugging Face reads it as architecture llama with 4,096 context). The safetensors load only through publisher PyTorch code with no generate() and no KV cache. No document covers vLLM, Ollama, TGI or transformers support. Hardware guidance is file sizes and one latency figure, and no inference provider hosts the model."
       evidence_refs:
       - ev-card-instruct
       - ev-trainer
       - ev-hf-platform
     governance:
       score: 2
-      rationale: "A named company (Vambo Technologies (Pty) Ltd) with named founders, a prior public dataset (Fikira, December 2025) and a fix after release (tokenizer_config.json, 2026-10-14). Against that, the model track record is a single release batch, the paper has one author, the Hugging Face organisation is unverified, no security contact, vulnerability process, terms or deprecation policy is published, and the company site does not state a country or registration number."
+      rationale: "A named company (Vambo Technologies (Pty) Ltd) with named founders, a prior public dataset (Fikira, December 2025) and a post-release fix (tokenizer_config.json, 2026-10-14). The model track record is a single release batch, the paper has one author and the Hugging Face organisation is unverified. No security contact, vulnerability process, terms or deprecation policy is published, and the company site does not state a country or registration number."
       evidence_refs:
       - ev-vambo-site
       - ev-hf-platform
@@ -173,27 +173,27 @@ signals:
   trainability:
     level: partial
     dimension: openness
-    summary: "Apache-2.0 base and instruct weights, a full trainer file and the publisher's advice to fine-tune the base support adaptation and continued pretraining, but the corpus, configs and data pipeline are unreleased, so a from-scratch rebuild is not possible."
+    summary: "Apache-2.0 base and instruct weights, a full trainer file and the publisher's advice to fine-tune the base support adaptation and continued pretraining. The corpus, configs and data pipeline are unreleased, so a from-scratch rebuild is not possible."
     refs: [ev-card-base, ev-trainer, ev-paper]
   knowledge_structure:
     level: weak
     dimension: performance
-    summary: "4,096-token context, retrieval QA at 0.325 against a 0.25 floor, grounded generation faithful in 23% of cases and MMLU 0.284 make it a weak RAG or knowledge backbone today, despite strong African-language modelling."
+    summary: "A 4,096-token context, retrieval QA at 0.325 against a 0.25 floor, grounded generation faithful in 23% of cases and MMLU 0.284 make it a weak RAG or knowledge backbone, despite strong African-language modelling."
     refs: [ev-card-instruct, ev-paper]
   specialization:
     level: moderate
     dimension: openness
-    summary: "A small base checkpoint with a purpose-built 65,536-entry tokenizer for twelve African languages and an Apache-2.0 licence is a sensible specialisation start, but no fine-tuning recipe, configs or adaptation results are published."
+    summary: "A small base checkpoint with a purpose-built 65,536-entry tokenizer for twelve African languages and an Apache-2.0 licence suits specialisation, but no fine-tuning recipe, configs or adaptation results are published."
     refs: [ev-card-base, ev-paper]
   exchangeability:
     level: medium
     dimension: operational
-    summary: "The official GGUF drops into llama.cpp, but the safetensors need publisher-written code, the chat format uses reserved tokens not found in other models, and no vLLM, Ollama, TGI or transformers path is documented."
+    summary: "The official GGUF drops into llama.cpp. The safetensors need publisher-written code, the chat format uses reserved tokens not found in other models, and no vLLM, Ollama, TGI or transformers path is documented."
     refs: [ev-card-instruct, ev-trainer, ev-hf-platform]
   misuse_exposure:
     level: partial
     dimension: safety
-    summary: "The publisher benchmarked refusals and harm handling on 3,341 prompts in 13 languages, but one model wrote and judged them, no jailbreak or red-team test exists, and nothing independent confirms it."
+    summary: "The publisher benchmarked refusals and harm handling on 3,341 prompts in 13 languages. One model wrote and judged them, no jailbreak or red-team test exists, and nothing independent confirms the result."
     refs: [ev-card-instruct, ev-paper]
 
 # --- Four documentation domains.
@@ -255,7 +255,7 @@ documentation:
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: gap
-        gap_reason: "The publisher's own 3,341-prompt safety evaluation is summarised under evaluation and limitations, but it is judged by one model (gemma-3-12b-it) that also wrote the prompts, with no native-speaker rating and no jailbreak or red-team test. No independent safety evaluation of MORENA was found."
+        gap_reason: "The publisher's own 3,341-prompt safety evaluation is summarised under evaluation and limitations. One model (gemma-3-12b-it) wrote the prompts and judged the answers, with no native-speaker rating and no jailbreak or red-team test. No independent safety evaluation of MORENA exists."
   implement:
     completeness: 72.7
     originality: 0.0
@@ -308,7 +308,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-card-instruct, ev-hf-platform]
-        summary: "No hosted endpoint; the GGUF can sit behind llama.cpp's own server, which is not documented by the publisher. Chat uses reserved-token markers, not role JSON."
+        summary: "No hosted endpoint. The GGUF can sit behind llama.cpp's own server, which the publisher does not document. Chat uses reserved-token markers and no role JSON."
   use:
     completeness: 83.3
     originality: 0.0
@@ -352,7 +352,7 @@ documentation:
         title: "Structured / JSON-constrained output"
         doc_type: reference
         source_type: gap
-        gap_reason: "No general JSON or schema-constrained output capability is documented. The only structured-output figure is valid JSON in prefilled tool calls, which is not a general guarantee; constrained decoding would be a serving-layer feature."
+        gap_reason: "No general JSON or schema-constrained output capability is documented. The only structured-output figure is valid JSON in prefilled tool calls, which is no general guarantee. Constrained decoding would be a serving-layer feature."
   support:
     completeness: 33.3
     originality: 0.0
@@ -375,14 +375,14 @@ documentation:
         title: "Security / vulnerability disclosure"
         doc_type: reference
         source_type: gap
-        gap_reason: "No SECURITY.md, security contact or disclosure process exists in either Hugging Face repo or on vambo.ai. Only a general questions address on the Fikira dataset card was seen, which is not a security channel."
+        gap_reason: "No SECURITY.md, security contact or disclosure process exists in either Hugging Face repo or on vambo.ai. The Fikira dataset card lists a general questions address, which is not a security channel."
       - key: channels
         title: "Community & support channels"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-hf-platform, ev-vambo-site]
-        summary: "Hugging Face discussions tab (empty on 2026-11-19) and the Vambo contact pages; the company blog has no posts."
+        summary: "Hugging Face discussions tab (empty on 2026-11-19) and the Vambo contact pages. The company blog has no posts."
       - key: deprecation
         title: "Deprecation / end-of-life policy"
         doc_type: reference
@@ -407,71 +407,71 @@ ownership:
       rationale: "Open weights with a detailed paper, but the corpus, SFT corpus, configs and evaluation harness are not released, and the machine-translation and synthetic-data generators are unnamed (ev-paper, ev-trainer)."
     reliability:
       level: weak
-      rationale: "Operational readiness is 2 (publisher code or llama.cpp GGUF only) and safety is 2 (publisher-only, model-judged evaluation, 41% of benign requests failed); the paper itself says the instruct model is not an assistant (ev-card-instruct, ev-paper)."
+      rationale: "Operational readiness is 2 (publisher code or llama.cpp GGUF only) and safety is 2 (publisher-only, model-judged evaluation, 41% of benign requests failed). The paper says the instruct model is not an assistant (ev-card-instruct, ev-paper)."
     data_control:
       level: strong
-      rationale: "Self-hosted weights under a declared Apache-2.0 licence with no clawback clause, and the loader code made no network calls in the outline read (ev-licence, ev-trainer)."
-  verdict: "You own the use of the weights: Apache-2.0 is declared, ungated and commercial use is stated, and your data stays on your hardware. You do not own a finished assistant, because the paper says the instruct model is not one, you cannot rebuild it without the unreleased corpus and configs, and the evaluations are the publisher's own. The level rises if Vambo ships a LICENSE file, releases its corpus and harness, and clears the Gemma Terms question on the SFT data."
+      rationale: "Self-hosted weights under a declared Apache-2.0 licence with no clawback clause. An outline read of the loader code found no network calls (ev-licence, ev-trainer)."
+  verdict: "You own the use of the weights: Apache-2.0 is declared, ungated and commercial use is stated, and your data stays on your hardware. You do not own a finished assistant. The paper says the instruct model is not one, it cannot be rebuilt without the unreleased corpus and configs, and the evaluations are the publisher's own. The level rises if Vambo ships a LICENSE file, releases its corpus and harness, and clears the Gemma Terms question on the SFT data."
 
 evidence:
 - id: ev-card-instruct
-  claim: "Instruct model card, read in full: Apache-2.0 front matter; 'trained from scratch' is stated by the publisher; twelve languages named; 1.485B parameters and 4,096 context; publisher-measured headline numbers; discloses that every safety number is one model (gemma-3-12b-it) judging another, that 41% of benign requests are not answered well, and that the training corpus is not released; files include safetensors, modeling_morena.py and SHA256SUMS."
+  claim: "The instruct card declares Apache-2.0, names twelve languages, and gives 1.485B parameters and a 4,096-token context. It says the model was trained from scratch (a publisher claim). Every headline number is the publisher's own. The card states that every safety number is one model (gemma-3-12b-it) judging another, that 41% of benign requests are not answered well, and that the training corpus is not released. The repo files include safetensors, modeling_morena.py and SHA256SUMS."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/vamboai/morena-1.5b-instruct
   date: '2026-11-19'
 - id: ev-card-base
-  claim: "Base model card, read in full: a base checkpoint exists beside the instruct one (vamboai/morena-1.5b-base), same Apache-2.0 declaration, 'This is not a chat model', 'No safety evaluation applies to this checkpoint', recommended as the starting point for fine-tuning, 12,661 A100 GPU-hours."
+  claim: "The base card describes a base checkpoint beside the instruct one (vamboai/morena-1.5b-base) with the same Apache-2.0 declaration. It says 'This is not a chat model' and 'No safety evaluation applies to this checkpoint', recommends the base as the starting point for fine-tuning, and gives 12,661 A100 GPU-hours."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/vamboai/morena-1.5b-base
   date: '2026-11-19'
 - id: ev-licence
-  claim: "Apache-2.0 is declared in the front matter and card 'Licence' section of every MORENA repo read ('Commercial use is permitted, including fine-tuning and redistributing derivatives'). No LICENSE, NOTICE or copyright-holder file exists (raw LICENSE returns 404 for instruct and base); the licence wording was removed on 2026-09-17 and restored on 2026-09-18; the repos are ungated."
+  claim: "Every MORENA repo declares Apache-2.0 in the front matter and the card 'Licence' section ('Commercial use is permitted, including fine-tuning and redistributing derivatives'). No LICENSE, NOTICE or copyright-holder file exists (raw LICENSE returns 404 for instruct and base). The licence wording was removed on 2026-09-17 and restored on 2026-09-18. The repos are ungated."
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/vamboai/morena-1.5b-instruct
   date: '2026-11-19'
 - id: ev-apache-text
-  claim: "Canonical Apache License 2.0 text, sections 2 (copyright grant), 3 (patent grant) and 4 (redistribution, which requires passing on a copy of the licence) read, as the licence the MORENA declaration points to."
+  claim: "Canonical Apache License 2.0 text, the licence the MORENA declaration points to: section 2 grants copyright, section 3 grants patent rights, and section 4 governs redistribution and requires passing on a copy of the licence."
   source_type: third_party
   doc_type: license
   retrieved: true
   url: https://www.apache.org/licenses/LICENSE-2.0.txt
   date: '2026-11-19'
 - id: ev-paper
-  claim: "Paper 'MORENA: An African Foundation Model' (23 pages, 18 September 2026, single author), read in full: states 'trained from scratch, with its own tokenizer and data mixture'; names pretraining sources and a per-source mixture table; machine translation of English FineWeb-Edu into nine languages with the system unnamed; SFT corpus 'mostly synthetic' generated by 'Gemma-family and GPT-OSS-120b models'; 3,341-prompt safety evaluation judged by gemma-3-12b-it; 12,834 A100 GPU-hours on CINECA Leonardo; five harness defects; the corpus is promised 'once the legal review is complete'; mini and nano are pruned and distilled from the 1.5B base."
+  claim: "Paper 'MORENA: An African Foundation Model' (23 pages, 18 September 2026, single author). It states 'trained from scratch, with its own tokenizer and data mixture' and names pretraining sources with a per-source mixture table. English FineWeb-Edu was machine-translated into nine languages by an unnamed system. The SFT corpus is 'mostly synthetic', generated by 'Gemma-family and GPT-OSS-120b models'. The 3,341-prompt safety evaluation is judged by gemma-3-12b-it. Training took 12,834 A100 GPU-hours on CINECA Leonardo. The paper lists five harness defects and promises the corpus 'once the legal review is complete'. Mini and nano are pruned and distilled from the 1.5B base."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://vambo.ai/papers/MORENA.pdf
   date: '2026-11-19'
 - id: ev-trainer
-  claim: "modeling_morena.py (52,103 bytes, identical in base and instruct) is described in its own docstring as the 'Morena production trainer' (FSDP2, Muon, mixture sampler, checkpointing) and also defines the model; configs, TRAIN_README.md and the data pipeline are not in the repo; the weights load only through this file and load_example.py, which has no generate() and no KV cache and still says 'preview weights'; no network calls were found."
+  claim: "modeling_morena.py (52,103 bytes, identical in base and instruct) calls itself the 'Morena production trainer' (FSDP2, Muon, mixture sampler, checkpointing) and also defines the model. The configs, TRAIN_README.md and data pipeline are not in the repo. The weights load only through this file and load_example.py, which has no generate() and no KV cache and still says 'preview weights'. An outline read found no network calls."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/vamboai/morena-1.5b-instruct/raw/main/modeling_morena.py
   date: '2026-11-19'
 - id: ev-checksums
-  claim: "SHA256SUMS in the repo lists five files; OneHill recomputed config.json, load_example.py and modeling_morena.py locally and all three match; the model.safetensors value equals the LFS oid reported by the Hugging Face API. The 2.97 GB weights were not downloaded. SHA256SUMS is unsigned."
+  claim: "SHA256SUMS in the repo lists five files. The recomputed hashes of config.json, load_example.py and modeling_morena.py match, and the model.safetensors value equals the LFS oid reported by the Hugging Face API. The 2.97 GB weights are not hash-checked locally. SHA256SUMS is unsigned."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/vamboai/morena-1.5b-instruct/raw/main/SHA256SUMS
   date: '2026-11-19'
 - id: ev-hf-platform
-  claim: "Hugging Face platform metadata: organisation vamboai isVerified false with one member and eight model repos created 2026-09-15; repos ungated; repository scan done with no files flagged; no inference provider mapping; discussions empty; GGUF repo parsed as architecture llama with context length 4096; instruct repo last modified 2026-10-14; commit history authored by one user."
+  claim: "Hugging Face platform metadata. The organisation vamboai is not verified (isVerified false), has one member and holds eight model repos created 2026-09-15. The repos are ungated, the repository scan is done with no files flagged, and there is no inference provider mapping. Discussions are empty. The GGUF repo parses as architecture llama with context length 4096. The instruct repo was last modified 2026-10-14, and one user authored the commit history."
   source_type: third_party
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/api/models/vamboai/morena-1.5b-instruct
   date: '2026-11-19'
 - id: ev-siblings
-  claim: "Sibling cards read: morena-0.5b-mini and morena-0.2b-nano (pruned and distilled from the 1.5B base, not safety-tested, Apache-2.0) and morena-1.5b-instruct-gguf (Q4_K_M 0.92 GB, Q8_0 1.58 GB, f16 2.97 GB, 'verified for logit equivalence'). No sibling diverges on licence."
+  claim: "Sibling cards: morena-0.5b-mini and morena-0.2b-nano (pruned and distilled from the 1.5B base, not safety-tested, Apache-2.0) and morena-1.5b-instruct-gguf (Q4_K_M 0.92 GB, Q8_0 1.58 GB, f16 2.97 GB, 'verified for logit equivalence'). No sibling diverges on licence."
   source_type: publisher
   doc_type: model_card
   retrieved: true
@@ -485,21 +485,21 @@ evidence:
   url: https://huggingface.co/datasets/vamboai/fikira
   date: '2026-11-19'
 - id: ev-vambo-site
-  claim: "vambo.ai pages read: footer names Vambo Technologies (Pty) Ltd; named co-founders; the research page lists the MORENA paper with a PDF link; no country, registration number, terms of service, privacy policy or security contact is published; the blog has no posts."
+  claim: "The vambo.ai footer names Vambo Technologies (Pty) Ltd, and the site names co-founders. The research page lists the MORENA paper with a PDF link. The site publishes no country, registration number, terms of service, privacy policy or security contact, and the blog has no posts."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://vambo.ai/research
   date: '2026-11-19'
 - id: ev-press
-  claim: "Three press articles (Tech In Africa 13 Oct 2026, CIO Africa 16 Oct 2026, Daba Finance 7 Oct 2026) describe a South African start-up releasing an open-weight model, say the results are the developer's own and unverified, and one calls it 'open-source'; Tech In Africa says licence, data and compute details were not public, which conflicts with the Hugging Face card and paper."
+  claim: "Three press articles (Tech In Africa 13 Oct 2026, CIO Africa 16 Oct 2026, Daba Finance 7 Oct 2026) describe a South African start-up releasing an open-weight model and say the results are the developer's own and unverified. One calls it 'open-source'. Tech In Africa says licence, data and compute details were not public, which conflicts with the Hugging Face card and paper."
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://cioafrica.co/vambo-ai-releases-open-weight-morena-model/
   date: '2026-11-19'
 - id: ev-gemma-terms
-  claim: "Gemma Terms of Use (last modified April 1, 2026), section 1.1(e): a model created by 'methods based on the generation of synthetic data Outputs by Gemma for training that model' to perform similarly to Gemma can be a Model Derivative; section 3.1 then requires the Gemma use restrictions and a copy of the terms to pass to recipients. Upstream document, not a MORENA document; whether it applies to MORENA's SFT data is not stated by Vambo."
+  claim: "Gemma Terms of Use (last modified April 1, 2026). Section 1.1(e) says a model created by 'methods based on the generation of synthetic data Outputs by Gemma for training that model' to perform similarly to Gemma can be a Model Derivative. Section 3.1 then requires the Gemma use restrictions and a copy of the terms to pass to recipients. This is an upstream document and not a MORENA document. Vambo does not say whether it applies to MORENA's SFT data."
   source_type: third_party
   doc_type: terms
   retrieved: true

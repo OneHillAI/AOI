@@ -20,23 +20,7 @@ publisher:
   accountable_entity: true
   url: https://huggingface.co/moonshotai
   security_contact: https://huggingface.co/moonshotai/Kimi-K3
-summary: 'Kimi K3 is Moonshot AI''s (Beijing) frontier open-weights release: a natively
-  multimodal Mixture-of-Experts model with 2.8T total / 104B active parameters (16 of
-  896 routed experts per token), a 1M-token context window, and native text + image +
-  video understanding, built on Kimi Delta Attention and Attention Residuals with a
-  claimed 2.5x scaling-efficiency gain over Kimi K2. The report titles it "Open Frontier
-  Intelligence" and it benchmarks close to the closed frontier (behind Claude Fable 5
-  and GPT-5.6 Sol overall, ahead of other open models on coding/agentic, and 1st on the
-  Frontend Code Arena). It stays open-weights, not closed-frontier, because the weights
-  are downloadable (MXFP4 weights / MXFP8 activations, ~1.4TB). The three things an adopter
-  must weigh: the custom "Kimi K3 License" is not OSI-certified and adds a $20M/12-month
-  Model-as-a-Service separate-agreement gate on top of the K2-style branding threshold;
-  no safety tuning, guard model, or refusal training is described and the technical report
-  documents offensive-cyber capability (vulnerability discovery and exploit development)
-  on tasks that frontier labs refuse; and the 2.8T scale forces multi-node serving with
-  no small variant. Deploy the weights behind your own full control stack.
-
-  '
+summary: "Kimi K3 is Moonshot AI's (Beijing) frontier open-weights release: a natively multimodal Mixture-of-Experts model with 2.8T total / 104B active parameters (16 of 896 routed experts per token), a 1M-token context window, and native text, image and video understanding. It is built on Kimi Delta Attention and Attention Residuals, with a claimed 2.5x scaling-efficiency gain over Kimi K2. The report titles it \"Open Frontier Intelligence\". It benchmarks close to the closed frontier: behind Claude Fable 5 and GPT-5.6 Sol overall, ahead of other open models on coding and agentic tasks, and 1st on the Frontend Code Arena. It is open-weights and not closed-frontier because the weights are downloadable (MXFP4 weights / MXFP8 activations, ~1.4TB). Three facts matter to an adopter. The custom \"Kimi K3 License\" is not OSI-certified and adds a $20M/12-month Model-as-a-Service separate-agreement gate on top of the K2-style branding threshold. No safety tuning, guard model or refusal training is described, and the technical report documents offensive-cyber capability (vulnerability discovery and exploit development) on tasks that frontier labs refuse. The 2.8T scale forces multi-node serving with no small variant. Deploy the weights behind a full external control stack."
 variants:
 - name: Kimi-K3
   params_total: 2.8T
@@ -59,15 +43,9 @@ openness:
     classification: open_weight
     commercial_use: allowed_with_conditions
     notable_restrictions:
-    - A Model-as-a-Service business (third-party inference or fine-tuning access with
-      meaningful control over inputs, parameters or training data; not end-user products with
-      embedded features, not mere relaying) with more than $20M USD aggregate revenue over any
-      consecutive 12 months must enter into a separate agreement with Moonshot AI before using
-      the Software for any commercial purpose (new vs Kimi K2); internal use and use through
-      Moonshot's official products or certified inference partners are exempt
-    - Products/services with more than 100M monthly active users OR more than $20M USD
-      monthly revenue must prominently display "Kimi K3" on the product user interface
-    - Custom "Kimi K3 License" is not OSI-certified - verify the LICENSE file per checkpoint
+    - "A Model-as-a-Service business with more than $20M USD aggregate revenue over any consecutive 12 months must enter into a separate agreement with Moonshot AI before using the Software for any commercial purpose (new vs Kimi K2). Model-as-a-Service means third-party inference or fine-tuning access with meaningful control over inputs, parameters or training data; end-user products with embedded features and mere relaying are excluded. Internal use and use through Moonshot's official products or certified inference partners are exempt"
+    - "Products/services with more than 100M monthly active users OR more than $20M USD monthly revenue must prominently display \"Kimi K3\" on the product user interface"
+    - "Custom \"Kimi K3 License\" is not OSI-certified - verify the LICENSE file per checkpoint"
     url: https://huggingface.co/moonshotai/Kimi-K3/blob/main/LICENSE
 provenance:
   canonical_source: https://huggingface.co/moonshotai/Kimi-K3
@@ -105,31 +83,14 @@ eu_ai_act:
     article_55_docs_available: n/a
   open_source_exemption:
     license_qualifies: uncertain
-    rationale: 'Kimi K3 publishes its parameters, architecture and usage information, but
-      under a custom "Kimi K3 License" that is not an OSI-certified free/open-source licence
-      and that carries monetisation-linked commercial restrictions - a $20M/12-month
-      Model-as-a-Service separate-agreement gate and a 100M-MAU / $20M-monthly-revenue
-      branding condition. The EU AI Act open-source exemption does not extend to models
-      released under non-free or monetised terms, so the exemption most likely does NOT
-      apply; and even if it did, the systemic-risk duties would still bind if the model
-      crosses 1e25 FLOP, which is unknown because the training compute is unpublished.
-      Recorded as ''uncertain'' leaning negative, pending the full Article 53/55 analysis.
-
-      '
+    rationale: "Kimi K3 publishes its parameters, architecture and usage information, but under a custom \"Kimi K3 License\" that is not an OSI-certified free/open-source licence and carries monetisation-linked commercial restrictions: a $20M/12-month Model-as-a-Service separate-agreement gate and a 100M-MAU / $20M-monthly-revenue branding condition. The EU AI Act open-source exemption does not extend to models released under non-free or monetised terms, so it most likely does not apply. Even if it did, the systemic-risk duties would bind if the model crosses 1e25 FLOP, which is unknown because the training compute is unpublished. Recorded as 'uncertain', leaning negative, pending the full Article 53/55 analysis."
   provider_package:
     technical_documentation: partial
     downstream_information: partial
     copyright_policy: 'no'
     training_content_summary: 'no'
     code_of_practice_signatory: false
-  deployer_notes: 'A China-based provider is unlikely to furnish an EU AI Office documentation
-    package. An EU deployer inherits a detailed technical report but must self-assemble the
-    copyright policy and training-content material, which cannot be reconstructed because the
-    training corpus, the training code and even the training-token/FLOP figures are undisclosed.
-    A fine-tuner placing a derivative on the EU market may become a provider for that derivative
-    and inherits these gaps.
-
-    '
+  deployer_notes: "A China-based provider is unlikely to furnish an EU AI Office documentation package. An EU deployer receives a detailed technical report but must self-assemble the copyright policy and training-content material, which cannot be reconstructed because the training corpus, the training code and the training-token and FLOP figures are undisclosed. A fine-tuner placing a derivative on the EU market may become a provider for that derivative and takes on these gaps."
   last_assessed: '2026-07-28'
 performance: {}
 behaviour: {}
@@ -137,28 +98,17 @@ safety: {}
 deployment:
   ceiling_tier: T2
   ceiling_conditional: true
-  hardware_notes: 'A 2.8T-parameter MoE (104B active): even with native MXFP4 weights the full
-    weights are ~1.4 TB, so serving requires a multi-GPU / multi-node cluster. There are no
-    small variants - single-GPU or laptop deployment is not possible. The card documents
-    vLLM, SGLang and TokenSpeed; exact per-GPU VRAM is not stated.
-
-    '
+  hardware_notes: "A 2.8T-parameter MoE (104B active). Even with native MXFP4 weights the full weights are ~1.4 TB, so serving needs a multi-GPU or multi-node cluster. There are no small variants, so single-GPU or laptop deployment is not possible. The card documents vLLM, SGLang and TokenSpeed; exact per-GPU VRAM is not stated."
   serving_support:
   - vllm
   - sglang
   - tokenspeed
   controls_required:
-  - The weights ship with NO safety tuning, guard model, or refusal training - supply the
-    entire model/input/output control stack externally (guard/classifier model, input and
-    output guardrails, conservative decoding), do not rely on built-in alignment
-  - Sandbox and tightly bound any agentic / tool-use / code-execution deployment - the technical
-    report documents offensive-cyber capability (vulnerability discovery and exploit development)
-    that the model does not refuse
-  - Add prompt-injection defences and treat retrieved/tool content as untrusted
-  - Account for possible China-aligned topic filtering on politically sensitive prompts (observed
-    in the K2 lineage; not independently confirmed for K3 this session)
-  - Verify checksums, pin the exact moonshotai revision, and budget multi-node serving
-    infrastructure; confirm the $20M Model-as-a-Service threshold before commercial deployment
+  - "The weights ship with no safety tuning, guard model or refusal training. Supply the entire control stack externally (guard or classifier model, input and output guardrails, conservative decoding) and do not rely on built-in alignment"
+  - "Sandbox and tightly bound any agentic, tool-use or code-execution deployment; the technical report documents offensive-cyber capability (vulnerability discovery and exploit development) that the model does not refuse"
+  - "Add prompt-injection defences and treat retrieved and tool content as untrusted"
+  - "Account for possible China-aligned topic filtering on politically sensitive prompts (observed in the K2 lineage, unconfirmed for K3)"
+  - "Verify checksums, pin the exact moonshotai revision and budget multi-node serving infrastructure; confirm the $20M Model-as-a-Service threshold before commercial deployment"
 score:
   rubric_version: '1.1'
   headline: 53.2
@@ -167,92 +117,43 @@ score:
   dimensions:
     openness:
       score: 3
-      rationale: 'Open-weights tier: the weights are downloadable (native MXFP4/MXFP8 QAT)
-        with a model card and a technical report, so weights, documentation and licence are
-        Open/Partial, but the training data and training code are undisclosed (the report does
-        not even state the training-token count) and evaluation is only partially reproducible.
-        Solidly open-weight, not open-science.
-
-        '
+      rationale: "Open-weights tier: the weights are downloadable (native MXFP4/MXFP8 QAT) with a model card and a technical report, so weights, documentation and licence are Open or Partial. Training data and training code are undisclosed (the report does not state the training-token count) and evaluation is only partially reproducible. The model is open-weight and not open-science."
       evidence_refs:
       - ev-k3-card
       - ev-k3-report
     provenance:
       score: 3
-      rationale: 'Distributed from the verified moonshotai org on Hugging Face as native
-        MXFP4/MXFP8 weights (not pickle) with the canonical source clear and no malicious-mirror
-        incident on record (checklist ~4/8). Meets the score-3 anchor (verified org + clear
-        canonical source + integrity metadata); short of 4 because the base tensor format is
-        not explicitly stated on the card and there is no scanned-checkpoint or documented
-        mirror/quantization policy, and short of 5''s cryptographic signing / SLSA attestation.
-
-        '
+      rationale: "The weights are distributed from the verified moonshotai org on Hugging Face as native MXFP4/MXFP8 weights (not pickle), with a clear canonical source and no malicious-mirror incident on record (checklist ~4/8). This meets the score-3 anchor (verified org, clear canonical source, integrity metadata). The score stops short of 4 because the base tensor format is not stated on the card and no scanned-checkpoint or documented mirror/quantization policy exists, and short of 5 for lack of cryptographic signing or SLSA attestation."
       evidence_refs:
       - ev-k3-card
       - ev-k3-report
     legal:
       score: 2
-      rationale: 'Permissive-enough for many uses but with material caveats: the custom "Kimi
-        K3 License" is not OSI-certified and adds a $20M/12-month Model-as-a-Service
-        separate-agreement gate on top of the 100M-MAU / $20M-revenue branding threshold, so
-        the commercial grant carries real scale-linked conditions. There is no training-content
-        summary and no copyright policy, GPAI documentation is fragmentary, and a China-based
-        provider is unlikely to furnish an EU package. Lower than the K2 lineage because of the
-        new commercial gate and the custom (not modified-MIT) licence.
-
-        '
+      rationale: "The licence permits many uses but carries material conditions. The custom \"Kimi K3 License\" is not OSI-certified and adds a $20M/12-month Model-as-a-Service separate-agreement gate on top of the 100M-MAU / $20M-revenue branding threshold. There is no training-content summary and no copyright policy, GPAI documentation is fragmentary, and a China-based provider is unlikely to furnish an EU package. The score is lower than for the K2 lineage because of the new commercial gate and the custom licence (not modified-MIT)."
       evidence_refs:
       - ev-k3-license
       - ev-k3-eu-gap
     safety:
       score: 1
-      rationale: 'No safety-tuned release, companion guard model, refusal training, or content
-        filtering is described (model card and report), and the technical report''s section
-        6.2.2 documents offensive-cyber capability - Tier-1 vulnerability discovery and Tier-2
-        end-to-end exploit development - explicitly noting that frontier Anthropic and OpenAI
-        models refuse these tasks while K3 does not. That is a model presented as deployable
-        with readily elicited harmful behaviour and no mitigation, so it sits at the low end of
-        the anchor: there is a hosted-platform acceptable-use policy and a publisher capability
-        evaluation, but no safety-tuned variant to deploy.
-
-        '
+      rationale: "No safety-tuned release, companion guard model, refusal training or content filtering is described in the model card or report. The technical report's section 6.2.2 documents offensive-cyber capability (Tier-1 vulnerability discovery and Tier-2 end-to-end exploit development) and notes that frontier Anthropic and OpenAI models refuse these tasks while K3 does not. The model is presented as deployable with readily elicited harmful behaviour and no mitigation, so it sits at the low end of the anchor. A hosted-platform acceptable-use policy and a publisher capability evaluation exist, but no safety-tuned variant."
       evidence_refs:
       - ev-k3-report
       - ev-k3-card
     performance:
       score: 4
-      rationale: 'Frontier-competitive open capability: the technical report and reputable
-        coverage place Kimi K3 behind only Claude Fable 5 and GPT-5.6 Sol overall, ahead of
-        every other open model on coding and agentic benchmarks, and 1st on the public Frontend
-        Code Arena (1679). Toward the top of its open-weights class across several domains
-        (reasoning, coding, agentic, vision). Short of 5 because the figures are publisher plus
-        secondary coverage rather than OneHill-reproduced independent re-runs.
-
-        '
+      rationale: "Frontier-competitive open capability. The technical report and reputable coverage place Kimi K3 behind only Claude Fable 5 and GPT-5.6 Sol overall, ahead of every other open model on coding and agentic benchmarks, and 1st on the public Frontend Code Arena (1679). It is toward the top of its open-weights class across reasoning, coding, agentic and vision. The score stops short of 5 because the figures come from the publisher and secondary coverage, not from OneHill re-runs."
       evidence_refs:
       - ev-k3-coverage
       - ev-k3-card
     operational:
       score: 3
-      rationale: 'Runs on mainstream serving stacks (vLLM, SGLang, TokenSpeed) with native
-        MXFP4 quantization and community quants available, so there is a practical path to run
-        it - but the 2.8T-parameter scale is a heavy operational burden: minimum viable
-        deployment is a multi-GPU / multi-node cluster (~1.4 TB of weights), there are no small
-        variants, exact hardware guidance is sparse, and the documented stack is narrower than
-        the K2 lineage (no KTransformers / TensorRT-LLM listed). Low end of a 3.
-
-        '
+      rationale: "K3 runs on mainstream serving stacks (vLLM, SGLang, TokenSpeed) with native MXFP4 quantization and community quants, so a practical path exists. The 2.8T-parameter scale is a heavy burden. Minimum viable deployment is a multi-GPU or multi-node cluster (~1.4 TB of weights), there are no small variants, and exact hardware guidance is sparse. The documented stack is narrower than the K2 lineage (no KTransformers or TensorRT-LLM listed). The score is at the low end of a 3."
       evidence_refs:
       - ev-k3-card
       - ev-k3-coverage
     governance:
       score: 3
-      rationale: 'Active, accountable publisher (Moonshot AI) with a detailed technical report
-        and a verified hub presence, but the report is a GitHub PDF rather than an archival
-        venue, there is no documented vulnerability-disclosure or deprecation policy, and there
-        is no EU Code of Practice signature.
-
-        '
+      rationale: "Moonshot AI is an active, accountable publisher with a detailed technical report and a verified hub presence. The report is a GitHub PDF and not an archival venue, no vulnerability-disclosure or deprecation policy is documented, and there is no EU Code of Practice signature."
       evidence_refs:
       - ev-k3-card
       - ev-k3-eu-gap
@@ -262,7 +163,7 @@ signals:
   trainability:
     level: partial
     dimension: openness
-    summary: "Fine-tune and adapt the downloadable weights under the Kimi K3 License, but the training data, code and even the token/FLOP counts are closed - you can adapt, not reproduce - and full fine-tuning of a 2.8T MoE is a heavy multi-node exercise."
+    summary: "The downloadable weights can be fine-tuned and adapted under the Kimi K3 License, but training data, code and the token/FLOP counts are closed, so the model can be adapted and not reproduced. Full fine-tuning of a 2.8T MoE is a heavy multi-node exercise."
     refs: [ev-k3-license, ev-k3-card]
   knowledge_structure:
     level: strong
@@ -272,17 +173,17 @@ signals:
   specialization:
     level: moderate
     dimension: openness
-    summary: "Downloadable weights and a broadly commercial licence invite specialisation, but the 2.8T scale gates it behind serious compute - LoRA is feasible, full domain adaptation or distillation is costly."
+    summary: "Downloadable weights and a broadly commercial licence allow specialisation, but the 2.8T scale gates it behind serious compute: LoRA is feasible, while full domain adaptation or distillation is costly."
     refs: [ev-k3-card, ev-k3-license]
   exchangeability:
     level: medium
     dimension: operational
-    summary: "Portable weights behind vLLM/SGLang, but with ~1.4 TB of weights, no small variant, and a narrower serving stack than K2, swapping Kimi K3 in or out requires multi-node infrastructure - not a drop-in single-GPU model."
+    summary: "Weights are portable behind vLLM/SGLang, but ~1.4 TB of weights, no small variant and a narrower serving stack than K2 mean that swapping Kimi K3 in or out needs multi-node infrastructure. It is not a drop-in single-GPU model."
     refs: [ev-k3-card, ev-k3-coverage]
   misuse_exposure:
     level: partial
     dimension: safety
-    summary: "Misuse exposure is elevated and partly characterised: the technical report benchmarks offensive-cyber capability (vulnerability discovery, exploit development) that K3 does not refuse, but there is no independent red-team, no CBRN/child-safety battery, and no mitigation/guard to offset it."
+    summary: "Misuse exposure is elevated and partly characterised. The technical report benchmarks offensive-cyber capability (vulnerability discovery, exploit development) that K3 does not refuse. No independent red-team, no CBRN or child-safety battery and no mitigation or guard offset it."
     refs: [ev-k3-report, ev-k3-card]
 
 # --- Four documentation domains. Item keys match checklists/model.yaml and a
@@ -299,7 +200,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-k3-card, ev-k3-coverage]
-        summary: "Frontier-adjacent open-weights model for coding, agentic, reasoning and vision workloads where you want open weights and can afford multi-node serving; high-stakes, autonomous, EU-regulated, or unsandboxed cyber-capable use is out of scope without a full external control stack."
+        summary: "Frontier-adjacent open-weights model for coding, agentic, reasoning and vision workloads where open weights are wanted and multi-node serving is affordable. High-stakes, autonomous, EU-regulated or unsandboxed cyber-capable use is out of scope without a full external control stack."
       - key: limitations
         title: "Known limitations, bias & failure modes"
         doc_type: reference
@@ -313,14 +214,14 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-k3-card, ev-k3-license]
-        summary: "open_weights - downloadable MXFP4/MXFP8 weights, a model card and a technical report, but the training data, code and token/FLOP figures are closed and evaluation is only partially reproducible."
+        summary: "open_weights: downloadable MXFP4/MXFP8 weights, a model card and a technical report. Training data, code and token/FLOP figures are closed and evaluation is only partially reproducible."
       - key: license
         title: "License terms & permitted use"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-k3-license]
-        summary: "Custom Kimi K3 License (modified-MIT, not OSI): broadly commercial, but a Model-as-a-Service business over $20M/12-month revenue must secure a separate agreement, and products over 100M MAU or $20M/month must display 'Kimi K3' in the UI."
+        summary: "Custom Kimi K3 License (modified-MIT, not OSI), broadly commercial. A Model-as-a-Service business over $20M/12-month revenue must secure a separate agreement, and products over 100M MAU or $20M/month must display 'Kimi K3' in the UI."
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
@@ -334,21 +235,21 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-k3-eu-gap, ev-k3-license]
-        summary: "GPAI; training compute is unpublished so the 1e25 systemic-risk crossing is unknown (plausible but not grounded); the custom monetised licence most likely fails the open-source exemption; no training-content summary or copyright policy is published."
+        summary: "GPAI. Training compute is unpublished, so the 1e25 systemic-risk crossing is unknown (plausible but not grounded). The custom monetised licence most likely fails the open-source exemption, and no training-content summary or copyright policy is published."
       - key: evaluation
         title: "Benchmarks & evaluation"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-k3-coverage, ev-k3-card]
-        summary: "Aggregated from Moonshot's model card and reputable coverage: behind only Claude Fable 5 and GPT-5.6 Sol overall, ahead of other open models on coding/agentic, 1st on Frontend Code Arena; not OneHill-reproduced."
+        summary: "Aggregated from Moonshot's model card and reputable coverage: behind only Claude Fable 5 and GPT-5.6 Sol overall, ahead of other open models on coding and agentic tasks, 1st on the Frontend Code Arena. Not OneHill-reproduced."
       - key: safety-eval
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-k3-report]
-        summary: "No independent red-team exists. The publisher technical report's section 6.2.2 is a dangerous-capability evaluation, not a mitigation one: it documents offensive-cyber performance (Tier-1 vulnerability discovery, Tier-2 exploit development) that K3 does not refuse."
+        summary: "No independent red-team exists. The publisher technical report's section 6.2.2 is a dangerous-capability evaluation and not a mitigation one: it documents offensive-cyber performance (Tier-1 vulnerability discovery, Tier-2 exploit development) that K3 does not refuse."
   implement:
     completeness: 77.3
     originality: 0.0
@@ -380,28 +281,28 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-k3-report, ev-k3-card]
-        summary: "Deployment Ceiling T2 (conditional): the weights have no built-in safety, so supply the whole external control stack (guard model, input/output guardrails, prompt-injection defences), sandbox agentic/cyber-capable use, and red-team for your use case. T3+ is cautioned given the documented offensive-cyber capability."
+        summary: "Deployment Ceiling T2 (conditional): the weights have no built-in safety, so supply the whole external control stack (guard model, input/output guardrails, prompt-injection defences), sandbox agentic and cyber-capable use, and red-team for the use case. T3+ is cautioned given the documented offensive-cyber capability."
       - key: quantization
         title: "Available quantizations"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-k3-card]
-        summary: "Weights are natively quantization-aware-trained (MXFP4 weights / MXFP8 activations); community MXFP4/GGUF quants circulate to make the 2.8T model more tractable but are community artifacts."
+        summary: "Weights are natively quantization-aware-trained (MXFP4 weights / MXFP8 activations). Community MXFP4/GGUF quants make the 2.8T model more tractable but are community artifacts."
       - key: fine-tuning
         title: "Fine-tuning & adaptation"
         doc_type: howto
         source_type: aggregated
         coverage: partial
         refs: [ev-k3-card, ev-k3-license]
-        summary: "The downloadable weights and a broadly commercial licence support SFT/LoRA adaptation, but the training data and code are closed (no from-scratch reproduction) and full fine-tuning at 2.8T scale is very resource-intensive."
+        summary: "The downloadable weights and a broadly commercial licence support SFT and LoRA adaptation. Training data and code are closed, so there is no from-scratch reproduction, and full fine-tuning at 2.8T scale is very resource-intensive."
       - key: integration
         title: "API / OpenAI-compatible integration"
         doc_type: howto
         source_type: aggregated
         coverage: partial
         refs: [ev-k3-card]
-        summary: "Serve behind vLLM/SGLang's OpenAI-compatible endpoint for drop-in client integration; native multimodal (text/image/video) inputs and tool use map onto the serving layer's APIs."
+        summary: "Serve behind the OpenAI-compatible endpoint of vLLM or SGLang for drop-in client integration. Native multimodal (text, image, video) inputs and tool use map onto the serving layer's APIs."
   use:
     completeness: 44.4
     originality: 0.0
@@ -412,24 +313,24 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-k3-coverage, ev-k3-card]
-        summary: "Natively multimodal (text, image, video) frontier-competitive model with standout coding, agentic and reasoning capability and a 1M-token context."
+        summary: "Natively multimodal (text, image, video) and frontier-competitive, with standout coding, agentic and reasoning capability and a 1M-token context."
       - key: context-window
         title: "Context window & long-context behaviour"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-k3-card, ev-k3-report]
-        summary: "1M-token context per the model card, reached via a 256K-to-1M cooldown curriculum; OneHill has not independently measured effective long-context recall, so treat the maximum as the architectural ceiling."
+        summary: "1M-token context per the model card, reached via a 256K-to-1M cooldown curriculum. Effective long-context recall is not measured, so 1M is the architectural ceiling."
       - key: chat-template
         title: "Prompt format & chat template"
         doc_type: reference
         source_type: gap
-        gap_reason: "The Kimi K3 chat template / prompt format is not captured from a primary source this session (the model card was read for architecture and openness, not the tokenizer chat-template block); confirm apply_chat_template from the tokenizer config before deploying rather than hand-rolling roles."
+        gap_reason: "The Kimi K3 chat template and prompt format are not documented on the model card, which covers architecture and openness and not the tokenizer chat-template block. Use apply_chat_template from the tokenizer config and do not hand-roll roles."
       - key: languages
         title: "Language coverage"
         doc_type: reference
         source_type: gap
-        gap_reason: "Per-language coverage for Kimi K3 is not documented from a primary source this session; multilingual strength (notably English and Chinese) is expected from the lineage but is not grounded for K3 here."
+        gap_reason: "Per-language coverage for Kimi K3 is not documented in a primary source. Multilingual strength (especially English and Chinese) is expected from the lineage but is not grounded for K3."
       - key: tool-use
         title: "Function / tool calling"
         doc_type: reference
@@ -441,7 +342,7 @@ documentation:
         title: "Structured / JSON-constrained output"
         doc_type: reference
         source_type: gap
-        gap_reason: "No model-documented native JSON/schema-constrained output guarantee for Kimi K3 was captured; constrained decoding is available at the serving layer (e.g. vLLM grammars) but is a runtime feature, not a model behaviour, and OneHill has not tested it this session."
+        gap_reason: "No model-documented native JSON or schema-constrained output guarantee exists for Kimi K3. Constrained decoding is available at the serving layer (e.g. vLLM grammars) but is a runtime feature and not a model behaviour. OneHill has not tested it."
   support:
     completeness: 50.0
     originality: 0.0
@@ -459,12 +360,12 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-k3-card, ev-k3-coverage, ev-k3-models]
-        summary: "Kimi K3 ships as a single checkpoint on the verified moonshotai org (announced ~2026-07-17, open weights ~2026-07-27); the Hugging Face revision hash is the changelog anchor. A post-trained successor, Kimi K3.1 Pro (HF 2026-11-02, own licence file), now exists and is not covered by this entry; the hosted platform calls K3 the previous-generation flagship."
+        summary: "Kimi K3 ships as a single checkpoint on the verified moonshotai org (announced ~2026-07-17, open weights ~2026-07-27); the Hugging Face revision hash is the changelog anchor. A post-trained successor, Kimi K3.1 Pro (HF 2026-11-02, own licence file), is a separate release; the hosted platform calls K3 the previous-generation flagship."
       - key: security-disclosure
         title: "Security / vulnerability disclosure"
         doc_type: reference
         source_type: gap
-        gap_reason: "No formal, published vulnerability-disclosure or security policy (SECURITY.md / advisory process) was found for Kimi K3; contact is only the general moonshotai Hugging Face / GitHub presence, so there is no documented process to aggregate."
+        gap_reason: "No formal published vulnerability-disclosure or security policy (SECURITY.md or advisory process) exists for Kimi K3; contact is only the general moonshotai Hugging Face / GitHub presence."
       - key: channels
         title: "Community & support channels"
         doc_type: reference
@@ -476,7 +377,7 @@ documentation:
         title: "Deprecation / end-of-life policy"
         doc_type: reference
         source_type: gap
-        gap_reason: "No published deprecation or end-of-life policy for Kimi K3 checkpoints; older Hugging Face revisions remain downloadable but no formal support-window or sunset commitment is documented."
+        gap_reason: "No published deprecation or end-of-life policy exists for Kimi K3 checkpoints; older Hugging Face revisions remain downloadable but no formal support-window or sunset commitment is documented."
       - key: known-issues
         title: "Tracked known issues"
         doc_type: reference
@@ -490,21 +391,21 @@ ownership:
   factors:
     use_modify:
       level: moderate
-      rationale: "The custom Kimi K3 License grants use, modification, redistribution and sale of the downloadable weights, but it is a community-style licence with real scale-linked restrictions: a Model-as-a-Service business over $20M/12-month revenue must secure a separate agreement before commercial deployment, and large-scale products must display 'Kimi K3'. Commercially usable for most adopters, gated for large Model-as-a-Service operators - open-weight with conditions, not a clean permissive grant."
+      rationale: "The custom Kimi K3 License grants use, modification, redistribution and sale of the downloadable weights, with scale-linked restrictions: a Model-as-a-Service business over $20M/12-month revenue must secure a separate agreement before commercial deployment, and large-scale products must display 'Kimi K3'. Most adopters can use it commercially, while large Model-as-a-Service operators are gated. It is open-weight with conditions and not a clean permissive grant."
       # grounded in: ev-k3-license (license, retrieved) - $20M/12mo MaaS separate-agreement gate + 100M-MAU/$20M-revenue branding clause read verbatim from the raw mirror
     transparency:
       level: moderate
-      rationale: "You can inspect the weights and read a detailed technical report, but the training corpus, the training code and even the training-token and FLOP figures are closed, so you cannot see how it was made or reproduce it."
+      rationale: "The weights can be inspected and a detailed technical report is available, but the training corpus, the training code and the training-token and FLOP figures are closed, so how the model was made cannot be seen or reproduced."
       # grounded in: ev-k3-report (technical_report, retrieved) - 2.8T/104B MoE architecture read directly; training data/code closed and no token/FLOP count stated; ev-k3-card (model_card, retrieved) - weights-only release
     reliability:
       level: weak
-      rationale: "Capability is frontier-competitive, but safety scores 1: no safety tuning, guard, or refusal training, and the report documents offensive-cyber capability the model does not refuse - a model presented as deployable whose safety is left entirely to the adopter. Under the ownership rule, safety <= 1 for a deployable model makes reliability weak regardless of benchmark strength."
+      rationale: "Capability is frontier-competitive, but safety scores 1: no safety tuning, guard or refusal training exists, and the report documents offensive-cyber capability the model does not refuse. The model is presented as deployable while safety is left entirely to the adopter. Under the ownership rule, safety <= 1 for a deployable model makes reliability weak regardless of benchmark strength."
       # grounded in: ev-k3-report (technical_report, retrieved) - section 6.2.2 offensive-cyber, no refusal; ev-k3-card (model_card, retrieved) - no safety tuning described
     data_control:
       level: strong
-      rationale: "Self-hosted, the weights run entirely on your own infrastructure with no telemetry or licence claw-back, so your data stays yours. The hosted platform.kimi.ai service is the opposite: its terms and privacy policy train on user prompts, images, video and files BY DEFAULT (opt-out only via an enterprise arrangement on request, Singapore law / SIAC), so keep to the weights if data control is the point. The practical constraint on self-hosting is the ~1.4 TB footprint that forces multi-node serving."
+      rationale: "Self-hosted, the weights run entirely on the deployer's own infrastructure with no telemetry or licence claw-back, so data stays with the deployer. The hosted platform.kimi.ai service differs: its terms and privacy policy train on user prompts, images, video and files by default, with opt-out only via an enterprise arrangement on request (Singapore law / SIAC). Data control therefore requires the weights and not the hosted API. Self-hosting is constrained by the ~1.4 TB footprint, which forces multi-node serving."
       # grounded in: ev-k3-license (license, retrieved) - grant with no data claw-back; ev-k3-terms (terms, retrieved) - train-to-improve, enterprise-only opt-out, Singapore/SIAC; ev-k3-privacy (privacy_policy, retrieved) - trains on user content by default, Singapore servers
-  verdict: "You substantially use, modify and commercialise the self-hosted Kimi K3 weights and run them entirely on your own infrastructure, so your data stays yours - but ownership is only partial. The custom, non-OSI licence adds a $20M Model-as-a-Service separate-agreement gate on top of the branding threshold, the training corpus/code/compute are closed, and, most consequentially, the model ships with no safety tuning or guard while its own report shows it performing offensive-cyber tasks that frontier labs refuse. Self-host behind a full external control stack, keep off the train-by-default hosted API if data control matters, and confirm the LICENSE and the Model-as-a-Service threshold before commercial deployment."
+  verdict: "Ownership is partial. The self-hosted Kimi K3 weights can be used, modified and commercialised, and they run entirely on the deployer's own infrastructure, so data stays with the deployer. The custom, non-OSI licence adds a $20M Model-as-a-Service separate-agreement gate on top of the branding threshold. The training corpus, code and compute are closed. Most consequentially, the model ships with no safety tuning or guard while its own report shows it performing offensive-cyber tasks that frontier labs refuse. Self-host behind a full external control stack, avoid the train-by-default hosted API where data control matters, and confirm the LICENSE and the Model-as-a-Service threshold before commercial deployment."
 
 # --- Evidence. Each item carries doc_type and retrieved (true = substantive text read).
 #     Grounded 2026-07-28 against the primary-source clauses in
@@ -514,89 +415,56 @@ ownership:
 #     locally. Benchmark positioning is corroborated by reputable secondary coverage.
 evidence:
 - id: ev-k3-card
-  claim: 'Kimi K3 model card on the verified moonshotai Hugging Face org: 2.8T total / 104B
-    active MoE (16 of 896 experts), 1M context, MXFP4 weights / MXFP8 activations, native
-    text+image+video, serving on vLLM/SGLang/TokenSpeed; no training data/code/tokens or
-    safety tuning disclosed. Re-read 2026-11-19: facts unchanged, still no safety text;
-    Kimi K3.1 Pro (post-trained from K3) now exists as a separate release.'
+  claim: "The Kimi K3 model card on the verified moonshotai Hugging Face org lists a 2.8T total / 104B active MoE (16 of 896 experts), 1M context, MXFP4 weights / MXFP8 activations, native text+image+video, and serving on vLLM/SGLang/TokenSpeed. It discloses no training data, code, tokens or safety tuning. Kimi K3.1 Pro, post-trained from K3, is a separate release."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/moonshotai/Kimi-K3
   date: '2026-11-19'
 - id: ev-k3-license
-  claim: 'Kimi K3 License, read verbatim via the raw mirror and re-read 2026-11-19 (byte-identical
-    to the initial commit): grant to use/copy/modify/merge/publish/distribute/sublicense/sell;
-    a Licensee that operates a Model as a Service business with aggregate revenue over $20M in
-    any consecutive 12 months "must enter into a separate agreement with Moonshot AI before using
-    the Software or its derivative works for any commercial purpose" (Model as a Service means
-    giving a third party inference or fine-tuning access with meaningful control over inputs,
-    parameters or training data, and excludes end-user products with embedded model features and
-    mere relaying to models hosted by others); a 100M-MAU or $20M-monthly-revenue "display Kimi K3"
-    branding clause; internal-use and official/certified-partner exemptions from both; not
-    OSI-certified.'
+  claim: "The Kimi K3 License grants use, copying, modification, merging, publication, distribution, sublicensing and sale. A Licensee that operates a Model as a Service business with aggregate revenue over $20M in any consecutive 12 months \"must enter into a separate agreement with Moonshot AI before using the Software or its derivative works for any commercial purpose\". Model as a Service means giving a third party inference or fine-tuning access with meaningful control over inputs, parameters or training data, and excludes end-user products with embedded model features and mere relaying to models hosted by others. A \"display Kimi K3\" branding clause applies at 100M MAU or $20M monthly revenue. Internal use and official or certified-partner use are exempt from both. The licence is not OSI-certified."
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/moonshotai/Kimi-K3/raw/main/LICENSE
   date: '2026-11-19'
 - id: ev-k3-report
-  claim: 'Moonshot''s technical report "Kimi K3: Open Frontier Intelligence" (GitHub PDF), read:
-    2.8T/104B MoE with Kimi Delta Attention and Per-Head Muon; context curriculum 8K to 64K
-    (pretrain) and 256K to 1M (cooldown); no total training-token count and no absolute
-    pretraining-FLOP figure stated; section 6.2.2 documents offensive-cyber capability (Tier-1
-    vulnerability discovery, Tier-2 exploit development) and notes Anthropic/OpenAI models refuse
-    such tasks while K3 does not. Re-downloaded and re-read 2026-11-19, unchanged; the report also
-    cites a UK AI Security Institute / NIST CAISI assessment it calls consistent (not read).'
+  claim: "Moonshot's technical report \"Kimi K3: Open Frontier Intelligence\" (GitHub PDF) describes a 2.8T/104B MoE with Kimi Delta Attention and Per-Head Muon, and a context curriculum of 8K to 64K (pretrain) and 256K to 1M (cooldown). It states no total training-token count and no absolute pretraining-FLOP figure. The report's section 6.2.2 documents offensive-cyber capability (Tier-1 vulnerability discovery, Tier-2 exploit development) and notes that Anthropic and OpenAI models refuse such tasks while K3 does not. The report cites a UK AI Security Institute / NIST CAISI assessment that it calls consistent; that assessment is unverified."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://github.com/MoonshotAI/Kimi-K3/blob/main/k3_tech_report.pdf
   date: '2026-11-19'
 - id: ev-k3-terms
-  claim: 'platform.kimi.ai model-use agreement, read: user Content may be used to develop and
-    improve the Services, with opt-out only via an enterprise arrangement on request; governed by
-    the laws of Singapore with SIAC arbitration. Re-read 2026-11-19: page now dated "Last Updated:
-    July 30th, 2026", same clauses.'
+  claim: "The platform.kimi.ai model-use agreement, dated \"Last Updated: July 30th, 2026\", allows user Content to be used to develop and improve the Services, with opt-out only via an enterprise arrangement on request. It is governed by the laws of Singapore with SIAC arbitration."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://platform.kimi.ai/docs/agreement/modeluse.md
   date: '2026-11-19'
 - id: ev-k3-privacy
-  claim: 'platform.kimi.ai privacy policy, read: the hosted service trains on user prompts,
-    audio, images, videos and files by default ("helps us optimize our models"); controller
-    MOONSHOT AI PTE. LTD with Singapore servers and open-ended retention.'
+  claim: "The platform.kimi.ai privacy policy states that the hosted service trains on user prompts, audio, images, videos and files by default (\"helps us optimize our models\"). The controller is MOONSHOT AI PTE. LTD, with Singapore servers and open-ended retention."
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://platform.kimi.ai/docs/agreement/userprivacy
   date: '2026-11-19'
 - id: ev-k3-models
-  claim: 'Hosted Kimi API Platform model list, read 2026-11-19: kimi-k3.1-pro is "the first model
-    of the new K3.1 series and Kimi''s most capable flagship to date" and kimi-k3 is "Kimi''s
-    previous-generation flagship"; both are live. Moonshot''s Kimi K3.1 Pro model card says it is
-    post-trained from Kimi K3 (HF repo created 2026-11-02, own licence file, see
-    docs/primary-sources/kimi-k3/_sources.md).'
+  claim: "The hosted Kimi API Platform model list calls kimi-k3.1-pro \"the first model of the new K3.1 series and Kimi's most capable flagship to date\" and kimi-k3 \"Kimi's previous-generation flagship\"; both are live. Moonshot's Kimi K3.1 Pro model card says it is post-trained from Kimi K3 (HF repo created 2026-11-02, own licence file, see docs/primary-sources/kimi-k3/_sources.md)."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://platform.kimi.ai/docs/models.md
   date: '2026-11-19'
 - id: ev-k3-coverage
-  claim: 'Reputable coverage (Tom''s Hardware) of the 2.8T Kimi K3 release: architecture
-    (16/896 experts), MXFP4/MXFP8 QAT, K2 comparison, 1st place on the Frontend Code Arena, and
-    positioning behind only Claude Fable 5 and GPT-5.6 Sol overall while ahead of other open
-    models on coding and agentic benchmarks.'
+  claim: "Tom's Hardware (reputable coverage) reports on the 2.8T Kimi K3 release. It covers the architecture (16/896 experts), MXFP4/MXFP8 QAT, a K2 comparison and 1st place on the Frontend Code Arena. It positions K3 behind only Claude Fable 5 and GPT-5.6 Sol overall, while ahead of other open models on coding and agentic benchmarks."
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://www.tomshardware.com/tech-industry/artificial-intelligence/moonshot-releases-2-8-trillion-parameter-kimi-k3
   date: '2026-07-28'
 - id: ev-k3-eu-gap
-  claim: No public EU AI Act training-content summary, copyright policy, or provider documentation
-    package is published for Kimi K3, and the training corpus, training code and training-compute
-    figures are not released.
+  claim: "No public EU AI Act training-content summary, copyright policy or provider documentation package exists for Kimi K3, and the training corpus, training code and training-compute figures are not released."
   source_type: third_party
   doc_type: third_party
   retrieved: false

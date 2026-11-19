@@ -21,15 +21,13 @@ publisher:
   accountable_entity: true
   url: https://allenai.org/olmo
   security_contact: https://huggingface.co/allenai
-summary: 'OLMo is the Allen Institute for AI''s "fully open / open science" language-model
-  family (OLMo 2 and OLMo 3, the latter including a 32B). It is the reference point
-  for what genuine openness means: Apache-2.0 weights, the training code,
-  the full Dolma training dataset, the evaluation harness, intermediate checkpoints,
-  and detailed technical reports are all publicly released. OLMo trades a little raw
-  frontier capability for unmatched auditability and the cleanest EU AI Act posture
-  in the registry; you can, in principle, inspect and reproduce the entire pipeline.
-
-  '
+summary: >-
+  OLMo is the Allen Institute for AI's "fully open / open science" language-model family (OLMo 2
+  and OLMo 3, the latter including a 32B). It is the reference point for openness: Apache-2.0
+  weights, the training code, the full Dolma training dataset, the evaluation harness,
+  intermediate checkpoints and detailed technical reports are all publicly released. OLMo gives up
+  a little raw frontier capability for auditability, and it is the most EU-AI-Act-friendly family
+  in the registry. The entire pipeline can in principle be inspected and reproduced.
 variants:
 - name: OLMo 2 (base)
   params_total: 1B, 7B, 13B, 32B
@@ -71,8 +69,14 @@ openness:
     classification: osi
     commercial_use: allowed
     notable_restrictions:
-    - 'Apache-2.0 text has no field-of-use limit, but the OLMo 3 and OLMo 2 Instruct model cards add "intended for research and educational use in accordance with Ai2''s Responsible Use Guidelines"; those guidelines (allenai.org/responsible-use, dated June 2024) list disallowed uses outside Research Use and are not part of the licence text (ev-resp-use).'
-    - 'Training data is ODC-By v1.0 (attribution), not Apache-2.0; one Dolci subset (Tool-Use-SA) is CC-BY-SA-4.0 (ev-dolma3).'
+    - >-
+      Apache-2.0 text has no field-of-use limit. The OLMo 3 and OLMo 2 Instruct model cards add
+      "intended for research and educational use in accordance with Ai2's Responsible Use
+      Guidelines". Those guidelines (allenai.org/responsible-use, dated June 2024) list disallowed
+      uses outside Research Use and are not part of the licence text (ev-resp-use).
+    - >-
+      Training data is ODC-By v1.0 (attribution), not Apache-2.0; one Dolci subset (Tool-Use-SA)
+      is CC-BY-SA-4.0 (ev-dolma3).
     url: https://huggingface.co/allenai
 provenance:
   canonical_source: https://huggingface.co/allenai
@@ -99,28 +103,24 @@ eu_ai_act:
     article_55_docs_available: n/a
   open_source_exemption:
     license_qualifies: 'yes'
-    rationale: 'Released under genuine OSI-approved Apache-2.0 with public parameters,
-      architecture and usage information, and not monetised - so it qualifies for
-      the Article 53 open-source exemption from the Annex XI/XII technical-documentation
-      duties. The copyright policy and public training-content summary are still owed,
-      and because the full Dolma training corpus is published, OLMo can satisfy the
-      training-content-summary obligation directly. Not a systemic-risk model, so
-      the exemption is not voided.
-
-      '
+    rationale: >-
+      OLMo is released under OSI-approved Apache-2.0 with public parameters, architecture and
+      usage information, and is not monetised, so it qualifies for the Article 53 open-source
+      exemption from the Annex XI/XII technical-documentation duties. The copyright policy and
+      public training-content summary are still owed. Because the full Dolma training corpus is
+      published, OLMo can satisfy the training-content-summary obligation directly. It is not a
+      systemic-risk model, so the exemption stands.
   provider_package:
     technical_documentation: 'yes'
     downstream_information: 'yes'
     copyright_policy: partial
     training_content_summary: 'yes'
     code_of_practice_signatory: false
-  deployer_notes: 'A fine-tuner placing a derivative on the EU market under its own
-    name may become a provider for that derivative, but OLMo makes the underlying
-    obligations unusually easy to meet: the released dataset and technical reports
-    let a downstream provider assemble a training-content summary and much of the
-    technical documentation from public artifacts rather than reconstructing them.
-
-    '
+  deployer_notes: >-
+    A fine-tuner placing a derivative on the EU market under its own name may become a provider
+    for that derivative. OLMo makes the underlying obligations easy to meet: the released dataset
+    and technical reports let a downstream provider assemble a training-content summary and much
+    of the technical documentation from public artifacts instead of reconstructing them.
   last_assessed: '2026-07-25'
 performance: {}
 behaviour: {}
@@ -128,10 +128,9 @@ safety: {}
 deployment:
   ceiling_tier: T2
   ceiling_conditional: true
-  hardware_notes: '7B-13B run on a single modern GPU; the 32B needs multi-GPU or heavy
-    quantization for latency-sensitive serving.
-
-    '
+  hardware_notes: >-
+    7B-13B run on a single modern GPU. The 32B needs multi-GPU or heavy quantisation for
+    latency-sensitive serving.
   serving_support:
   - vllm
   - llama.cpp
@@ -150,13 +149,11 @@ score:
   dimensions:
     openness:
       score: 5
-      rationale: 'Every one of the six openness components is Open: Apache-2.0 weights,
-        the full Dolma training dataset, runnable training code, released evaluation
-        code and results, thorough technical reports, and an OSI-approved license.
-        This is the Model Openness Framework''s top "open science" tier - the registry''s
-        openness exemplar.
-
-        '
+      rationale: >-
+        All six openness components are Open: Apache-2.0 weights, the full Dolma training dataset,
+        runnable training code, released evaluation code and results, thorough technical reports,
+        and an OSI-approved licence. This is the Model Openness Framework's top "open science"
+        tier.
       evidence_refs:
       - ev-mof
       - ev-dolma
@@ -164,30 +161,29 @@ score:
       - ev-olmo-page
     provenance:
       score: 4
-      rationale: 'Distributed from the verified allenai org on Hugging Face in safetensors
-        with checksums, and because training data, code and intermediate checkpoints
-        are all public the pipeline is maximally auditable (checklist 6/8). Held below
-        5 only by the absence of cryptographic weight signing / SLSA attestation.
-
-        '
+      rationale: >-
+        OLMo is distributed from the verified allenai org on Hugging Face in safetensors with
+        checksums. Training data, code and intermediate checkpoints are all public, so the
+        pipeline is fully auditable (checklist 6/8). The score is held below 5 only by the absence
+        of cryptographic weight signing and SLSA attestation.
       evidence_refs:
       - ev-hf-allenai
       - ev-integrity
     legal:
       score: 4
-      rationale: 'OSI-approved Apache-2.0 across weights and code, ODC-By for the published data;
-        not a systemic-risk model; and - uniquely - the full training corpus is published, so a downstream
-        deployer can assemble the EU AI Act training-content summary and technical
-        documentation from released artifacts. Lowered from 5 on 2026-11-19: the OLMo 3 and OLMo 2 Instruct
-        cards say the models are "intended for research and educational use in accordance with Ai2''s
-        Responsible Use Guidelines", and those guidelines bar uses outside Research Use (political campaigning,
-        automated social-media posting, classifying people by protected characteristics). No document says
-        whether they bind someone who only downloaded the weights, so a deployer has an unresolved acceptable-use
-        question, which the score-5 anchor (a clean licence with the obligations assembled from what is provided)
-        does not allow. Ai2''s blog says the datasets carry no licence restrictions, but the dataset cards say
-        ODC-By (attribution required) and one Dolci subset is CC-BY-SA-4.0.
-
-        '
+      rationale: >-
+        Weights and code are OSI-approved Apache-2.0 and the published data is ODC-By. OLMo is not
+        a systemic-risk model, and the full training corpus is published, so a downstream deployer
+        can assemble the EU AI Act training-content summary and technical documentation from
+        released artifacts. The OLMo 3 and OLMo 2 Instruct cards say the models are "intended for
+        research and educational use in accordance with Ai2's Responsible Use Guidelines". Those
+        guidelines bar uses outside Research Use (political campaigning, automated social-media
+        posting, classifying people by protected characteristics). No document says whether they
+        bind someone who only downloaded the weights, so a deployer has an unresolved
+        acceptable-use question. The score-5 anchor (a licence with the obligations assembled from
+        what is provided) does not allow that, so legal scores 4. Ai2's blog says the datasets
+        carry no licence restrictions, but the dataset cards say ODC-By (attribution required) and
+        one Dolci subset is CC-BY-SA-4.0.
       evidence_refs:
       - ev-apache
       - ev-dolma
@@ -196,43 +192,38 @@ score:
       - ev-dolma3
     safety:
       score: 3
-      rationale: 'Instruct variants are safety-tuned and documented, and withstand
-        casual jailbreaks, but safety tuning is lighter than the large commercial
-        labs and there is no companion guard model or broad independent red-team suite
-        across CBRN/cyber domains. Base checkpoints are honestly presented as research
-        artifacts.
-
-        '
+      rationale: >-
+        Instruct variants are safety-tuned and documented, and withstand casual jailbreaks. Safety
+        tuning is lighter than at the large commercial labs, there is no companion guard model,
+        and no broad independent red-team suite covers CBRN or cyber domains. Base checkpoints are
+        presented as research artifacts.
       evidence_refs:
       - ev-olmo-page
       - ev-safety
     performance:
       score: 3
-      rationale: 'On independent leaderboards OLMo is competitive within its size
-        class but not frontier-leading on raw capability; its value proposition is
-        transparency and reproducibility rather than class-topping benchmarks.
-
-        '
+      rationale: >-
+        On independent leaderboards OLMo is competitive within its size class but not
+        frontier-leading on raw capability. Its value is transparency and reproducibility, not
+        class-topping benchmarks.
       evidence_refs:
       - ev-perf
     operational:
       score: 4
-      rationale: 'Standard safetensors checkpoints run on mainstream stacks (vLLM,
-        llama.cpp, Ollama, TGI, transformers) with documented hardware needs and community
-        quants; short of a 5 mainly on the breadth of official quantizations and day-0
-        tooling versus the largest ecosystems.
-
-        '
+      rationale: >-
+        Standard safetensors checkpoints run on mainstream stacks (vLLM, llama.cpp, Ollama, TGI,
+        transformers) with documented hardware needs and community quants. The score stops short
+        of 5 mainly on the breadth of official quantisations and day-0 tooling compared with the
+        largest ecosystems.
       evidence_refs:
       - ev-hf-allenai
       - ev-ops
     governance:
       score: 4
-      rationale: 'Reputable, accountable US non-profit with a clear release cadence
-        (OLMo 2 then OLMo 3) and full technical reports; short of 5 without a formally
+      rationale: >-
+        Ai2 is a reputable, accountable US non-profit with a clear release cadence (OLMo 2 then
+        OLMo 3) and full technical reports. The score stops short of 5 for lack of a formally
         documented vulnerability-disclosure and deprecation policy.
-
-        '
       evidence_refs:
       - ev-olmo-page
       - ev-hf-allenai
@@ -244,27 +235,37 @@ signals:
   trainability:
     level: full
     dimension: openness
-    summary: "Fully retrainable: Apache-2.0 weights, open training code (OLMo-core) and the complete public Dolma corpus let you fine-tune, continue-pretrain or reproduce from scratch."
+    summary: >-
+      Fully retrainable: Apache-2.0 weights, open training code (OLMo-core) and the complete
+      public Dolma corpus allow fine-tuning, continued pre-training or reproduction from scratch.
     refs: [ev-github, ev-dolma, ev-apache]
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "Capable RAG/grounding backbone but a standard decoder LLM: modest context (OLMo 2 ~4-8k), English-centric, with no native structured-knowledge features."
+    summary: >-
+      Capable RAG/grounding backbone, but a standard decoder LLM: modest context (OLMo 2 ~4-8k),
+      English-centric, with no native structured-knowledge features.
     refs: [ev-tech-report, ev-perf]
   specialization:
     level: strong
     dimension: openness
-    summary: "Ideal for specialisation: released training code, intermediate checkpoints and data allow domain-adaptation, distillation and continued pre-training, well beyond LoRA."
+    summary: >-
+      Released training code, intermediate checkpoints and data allow domain adaptation,
+      distillation and continued pre-training, well beyond LoRA.
     refs: [ev-github, ev-olmo-page]
   exchangeability:
     level: high
     dimension: operational
-    summary: "Drop-in portable: standard safetensors on mainstream runtimes behind an OpenAI-compatible endpoint; the main gotcha when swapping is OLMo's own chat template."
+    summary: >-
+      Standard safetensors run on mainstream runtimes behind an OpenAI-compatible endpoint. OLMo's
+      own chat template is the main item to handle when swapping.
     refs: [ev-ops, ev-hf-allenai]
   misuse_exposure:
     level: unbenchmarked
     dimension: safety
-    summary: "Not independently benchmarked for misuse/exposure: Ai2 documents its own safety tuning, but no broad third-party CBRN/cyber/prompt-injection red-team battery exists."
+    summary: >-
+      No independent misuse benchmark exists: Ai2 documents its own safety tuning, but no broad
+      third-party CBRN/cyber/prompt-injection red-team battery exists.
     refs: [ev-safety]
 
 # --- Four documentation domains. Item keys match checklists/model.yaml and a
@@ -283,35 +284,45 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-olmo-page, ev-hf-allenai]
-        summary: "Research + general-purpose assistant use; deploy Instruct rather than base; not safety-critical without controls."
+        summary: >-
+          Research and general-purpose assistant use; deploy Instruct, not base; not
+          safety-critical without controls.
       - key: limitations
         title: "Known limitations, bias & failure modes"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-safety, ev-perf]
-        summary: "Solid-in-class not frontier; lighter safety tuning; English-centric; base checkpoints are untuned research artifacts."
+        summary: >-
+          Solid within its class but not frontier; lighter safety tuning; English-centric; base
+          checkpoints are untuned research artifacts.
       - key: openness
         title: "Openness tier & components"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-mof, ev-olmo-page, ev-dolma, ev-apache]
-        summary: "fully_open - all six components Open; Model Openness Framework top 'open science' tier."
+        summary: >-
+          fully_open: all six components Open; Model Openness Framework top 'open science' tier.
       - key: license
         title: "License terms & permitted use"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-apache, ev-hf-allenai, ev-hf-olmo3, ev-resp-use, ev-dolma3]
-        summary: "Apache-2.0 on weights and code, ODC-By on data; unconditional commercial use and no field-of-use limit in the licence text, but the model cards add an intended-use statement tied to Ai2's Responsible Use Guidelines."
+        summary: >-
+          Apache-2.0 on weights and code, ODC-By on data. The licence text allows unconditional
+          commercial use with no field-of-use limit, and the model cards add an intended-use
+          statement tied to Ai2's Responsible Use Guidelines.
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-hf-allenai, ev-integrity]
-        summary: "Verified allenai org, safetensors + per-file checksums, fully auditable pipeline; no crypto signing / SLSA."
+        summary: >-
+          Verified allenai org, safetensors with per-file checksums, fully auditable pipeline; no
+          cryptographic signing or SLSA attestation.
       - key: eu-ai-act
         title: "EU AI Act posture"
         doc_type: explanation
@@ -325,12 +336,17 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-perf, ev-tech-report]
-        summary: "Aggregated from Ai2 technical reports + independent leaderboards: competitive in size class rather than frontier-leading."
+        summary: >-
+          Aggregated from Ai2 technical reports and independent leaderboards: competitive in size
+          class, not frontier-leading.
       - key: safety-eval
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: gap
-        gap_reason: "No broad independent adversarial evaluation across CBRN/cyber/prompt-injection domains has been published for OLMo. Ai2 documents its safety tuning but there is no third-party red-team battery to aggregate."
+        gap_reason: >-
+          No broad independent adversarial evaluation across CBRN/cyber/prompt-injection domains
+          has been published for OLMo. Ai2 documents its safety tuning, but no third-party
+          red-team battery exists to aggregate.
   implement:
     completeness: 95.5
     originality: 0.0
@@ -394,28 +410,35 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-perf, ev-tech-report]
-        summary: "General English text generation/assistant tasks; solid-in-class, text-only; not frontier on raw capability."
+        summary: >-
+          General English text generation and assistant tasks; solid within its class, text-only,
+          not frontier on raw capability.
       - key: context-window
         title: "Context window & long-context behaviour"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-tech-report, ev-hf-olmo3]
-        summary: "OLMo 2 is 4K (config.json on 1B, 7B, 13B and 32B); OLMo 3 is 64K (65,536 on 7B and 32B) - read from the model configs 2026-11-19."
+        summary: >-
+          OLMo 2 is 4K (config.json on 1B, 7B, 13B and 32B); OLMo 3 is 64K (65,536 on 7B and 32B).
       - key: chat-template
         title: "Prompt format & chat template"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-hf-allenai, ev-tech-report]
-        summary: "OLMo Instruct ships a chat template in its tokenizer config - apply_chat_template rather than hand-rolling roles."
+        summary: >-
+          OLMo Instruct ships a chat template in its tokenizer config. Use apply_chat_template
+          instead of hand-rolling roles.
       - key: languages
         title: "Language coverage"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-olmo-page, ev-tech-report]
-        summary: "Primarily English (Dolma is English-dominant); other-language performance is incidental rather than a supported target."
+        summary: >-
+          Primarily English (Dolma is English-dominant). Other-language performance is incidental
+          and not a supported target.
       - key: tool-use
         title: "Function / tool calling"
         doc_type: reference
@@ -425,7 +448,10 @@ documentation:
         title: "Structured / JSON-constrained output"
         doc_type: reference
         source_type: gap
-        gap_reason: "No published native JSON/schema-constrained output capability for OLMo. Constrained decoding is possible at the serving layer (e.g. vLLM grammars) but is a runtime feature rather than a model-documented behaviour."
+        gap_reason: >-
+          No published native JSON/schema-constrained output capability for OLMo. Constrained
+          decoding is possible at the serving layer (e.g. vLLM grammars) as a runtime feature of
+          the server.
   support:
     completeness: 50.0
     originality: 0.0
@@ -436,7 +462,9 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-hf-allenai, ev-ops]
-        summary: "Aggregated common HF/serving pitfalls (OOM on 32B, template mismatch, revision drift); not an exhaustive catalogue."
+        summary: >-
+          Common HF/serving pitfalls are OOM on 32B, template mismatch and revision drift. The
+          list is not exhaustive.
       - key: release-versioning
         title: "Versions, changelog & cadence"
         doc_type: release_notes
@@ -448,7 +476,10 @@ documentation:
         title: "Security / vulnerability disclosure"
         doc_type: reference
         source_type: gap
-        gap_reason: "No formal, published vulnerability-disclosure or security policy (e.g. SECURITY.md / advisory process) was found for OLMo; contact is only the general Ai2 / Hugging Face org presence, so there is no documented process to aggregate."
+        gap_reason: >-
+          No formal vulnerability-disclosure or security policy (e.g. SECURITY.md / advisory
+          process) is published for OLMo. The only contact is the general Ai2 / Hugging Face org
+          presence.
       - key: channels
         title: "Community & support channels"
         doc_type: reference
@@ -467,28 +498,54 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-safety, ev-perf]
-        summary: "From model-card caveats: lighter safety coverage than frontier labs, in-class (not leading) capability, English-centric behaviour."
+        summary: >-
+          Model-card caveats: lighter safety coverage than frontier labs, in-class capability that
+          does not lead, English-centric behaviour.
 
 ownership:
   level: partial
   factors:
     use_modify:
       level: moderate
-      rationale: "Apache-2.0 weights, ungated, with full trainability - the OLMo-core training code and the Dolma corpus (ODC-BY) let you fine-tune, continue-pretrain or reproduce from scratch, and the licence text has no field-of-use limit. Lowered from strong on 2026-11-19 because the model cards add an acceptable-use statement outside the licence: the models are 'intended for research and educational use in accordance with Ai2's Responsible Use Guidelines', and those guidelines bar uses outside Research Use. No document says whether they bind a downloader, so the strong anchor (no field-of-use restriction) cannot be asserted (ev-resp-use)."
+      rationale: >-
+        Apache-2.0 weights, ungated, with full trainability: the OLMo-core training code and the
+        Dolma corpus (ODC-BY) allow fine-tuning, continued pre-training or reproduction from
+        scratch, and the licence text has no field-of-use limit. The rating is moderate because
+        the model cards add an acceptable-use statement outside the licence: the models are
+        'intended for research and educational use in accordance with Ai2's Responsible Use
+        Guidelines', and those guidelines bar uses outside Research Use. No document says whether
+        they bind a downloader, so the strong anchor (no field-of-use restriction) cannot be
+        asserted (ev-resp-use).
       # grounded in: ev-apache (license, retrieved - Apache-2.0 verbatim), ev-dolma (license, retrieved - ODC-BY), ev-resp-use (terms, retrieved - Ai2 Responsible Use Guidelines, 2026-11-19)
     transparency:
       level: strong
-      rationale: "The registry's most auditable model: weights, training data, training code and evaluation are all open, so you can see the model and exactly how it was made."
+      rationale: >-
+        Weights, training data, training code and evaluation are all open, so the model and
+        exactly how it was made can be inspected. It is the most auditable model in the registry.
       # grounded in: ev-tech-report (technical_report, retrieved - "fully released artifacts"), ev-github (docs, retrieved), ev-hf-allenai (model_card, retrieved)
     reliability:
       level: moderate
-      rationale: "Runs dependably on mainstream stacks (vLLM, llama.cpp, Ollama, TGI), but misuse is unbenchmarked and there is no companion guard model, so you supply the safety layer."
+      rationale: >-
+        OLMo runs dependably on mainstream stacks (vLLM, llama.cpp, Ollama, TGI). Misuse is
+        unbenchmarked and no companion guard model exists, so the deployer supplies the safety
+        layer.
       # grounded in: ev-perf, ev-safety (third_party)
     data_control:
       level: strong
-      rationale: "Self-hosted, the open weights run on your own infrastructure under Apache-2.0 with no clawback or telemetry - your data and derived knowledge stay yours."
+      rationale: >-
+        Self-hosted, the open weights run on the deployer's own infrastructure under Apache-2.0
+        with no clawback or telemetry, so data and derived knowledge stay with the deployer.
       # grounded in: self-hosting (structural); ev-apache (license) - Apache-2.0 imposes no clawback/telemetry
-  verdict: "You own most of OLMo but not all of the right to use it: Apache-licensed, reproducible from open data and code, and self-hostable, so nothing leaves your infrastructure, but the model cards tie its use to Ai2's Responsible Use Guidelines, which bar uses outside research, and no document says whether they bind you. Misuse is also unbenchmarked and there is no companion guard model, so you supply the safety layer. It returns to substantial if Ai2 states that the guidelines are guidance and not a licence condition. Until then, adopt it where you must prove what you run, keep clear of the guidelines' disallowed uses, take advice before a use close to that list, and run the Instruct variant behind your own guardrails."
+  verdict: >-
+    Most, but not all, of the right to use self-hosted OLMo is owned. It is Apache-licensed,
+    reproducible from open data and code, and self-hostable, so nothing leaves the deployer's
+    infrastructure. The model cards tie its use to Ai2's Responsible Use Guidelines, which bar
+    uses outside research, and no document says whether they bind a downloader. Misuse is also
+    unbenchmarked and no companion guard model exists, so the deployer supplies the safety layer.
+    Ownership returns to substantial if Ai2 states that the guidelines are guidance and not a
+    licence condition. Until then, adopt OLMo where you must prove what you run, keep clear of the
+    guidelines' disallowed uses, take advice before a use close to that list, and run the Instruct
+    variant behind your own guardrails.
 
 # --- Evidence. Each item carries `doc_type` and `retrieved` (true = the document's substantive
 #     text was read). Grounded 2026-07-25 against the primary-source clauses in
@@ -506,9 +563,10 @@ evidence:
   url: https://allenai.org/olmo
   date: '2026-07-25'
 - id: ev-hf-allenai
-  claim: 'OLMo 2/3 checkpoints are hosted on the verified allenai org on Hugging Face
-    in safetensors; the OLMo-2-1124-7B card states "The code and model are released under
-    Apache 2.0" with Stage 1 OLMo-Mix-1124 (~3.9T) and Stage 2 Dolmino-Mix-1124 (843B).'
+  claim: >-
+    OLMo 2/3 checkpoints are hosted on the verified allenai org on Hugging Face in safetensors.
+    The OLMo-2-1124-7B card states "The code and model are released under Apache 2.0", with Stage
+    1 OLMo-Mix-1124 (~3.9T) and Stage 2 Dolmino-Mix-1124 (843B).
   source_type: publisher
   doc_type: model_card
   retrieved: true
@@ -524,9 +582,9 @@ evidence:
   url: https://huggingface.co/datasets/allenai/dolma
   date: '2026-07-25'
 - id: ev-apache
-  claim: 'OLMo code and weights are distributed under OSI-approved Apache-2.0, read
-    verbatim from the repository LICENSE ("Apache License, Version 2.0, January 2004") and
-    corroborated by the OLMo-2 model card.'
+  claim: >-
+    OLMo code and weights are distributed under OSI-approved Apache-2.0. The repository LICENSE
+    reads "Apache License, Version 2.0, January 2004", and the OLMo-2 model card corroborates it.
   source_type: publisher
   doc_type: license
   retrieved: true
@@ -573,52 +631,60 @@ evidence:
   url: https://huggingface.co/allenai
   date: '2026-07-25'
 - id: ev-github
-  claim: 'OLMo training and evaluation code is publicly released on GitHub; the allenai/OLMo
-    README (read this pass) is marked "out of date...no longer active" and lists released
-    weights, both-stage checkpoints, training data, code and W&B logs under Apache-2.0.'
+  claim: >-
+    OLMo training and evaluation code is publicly released on GitHub. The allenai/OLMo README is
+    marked "out of date...no longer active" and lists released weights, both-stage checkpoints,
+    training data, code and W&B logs under Apache-2.0.
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://github.com/allenai/OLMo
   date: '2026-07-25'
 - id: ev-tech-report
-  claim: 'Ai2''s OLMo technical reports - "2 OLMo 2 Furious" (arXiv 2501.00656) and "Olmo 3"
-    (arXiv 2512.13961) - document fully-released artifacts (weights, full training data, code,
-    recipes, logs, thousands of intermediate checkpoints); Olmo 3 is "a family of
-    state-of-the-art, fully-open language models at the 7B and 32B parameter scales."'
+  claim: >-
+    Ai2's OLMo technical reports, "2 OLMo 2 Furious" (arXiv 2501.00656) and "Olmo 3" (arXiv
+    2512.13961), document fully-released artifacts: weights, full training data, code, recipes,
+    logs and thousands of intermediate checkpoints. Olmo 3 is "a family of state-of-the-art,
+    fully-open language models at the 7B and 32B parameter scales."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2501.00656
   date: '2026-07-25'
 - id: ev-hf-olmo3
-  claim: 'OLMo 3 model cards (Olmo-3-1025-7B, Olmo-3-1125-32B, Olmo-3-7B-Instruct, Olmo-3.1-32B-Think), read raw
-    2026-11-19: Apache-2.0 tag, not gated, "The code and model are released under Apache 2.0",
-    65,536 context, 5.93T (7B) and 5.50T (32B) training tokens on Dolma 3, intermediate checkpoints
-    published as HF revisions (1,487 branches on the 7B base, 719 on the 32B base), pre-training code
-    OLMo-core, evaluation code OLMo-Eval. The cards also say "intended for research and educational use in
-    accordance with Ai2''s Responsible Use Guidelines".'
+  claim: >-
+    The OLMo 3 model cards (Olmo-3-1025-7B, Olmo-3-1125-32B, Olmo-3-7B-Instruct,
+    Olmo-3.1-32B-Think) carry an Apache-2.0 tag, are not gated, and say "The code and model are
+    released under Apache 2.0". They list 65,536 context, 5.93T (7B) and 5.50T (32B) training
+    tokens on Dolma 3, intermediate checkpoints published as HF revisions (1,487 branches on the
+    7B base, 719 on the 32B base), pre-training code OLMo-core and evaluation code OLMo-Eval. The
+    cards also say "intended for research and educational use in accordance with Ai2's Responsible
+    Use Guidelines".
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/allenai/Olmo-3-1025-7B
   date: '2026-11-19'
 - id: ev-resp-use
-  claim: 'Ai2 Responsible Use Guidelines (page dated June 2024), read 2026-11-19: "govern your use of Ai2''s AI
-    tools and artifacts, including models, datasets, APIs, and applications"; "Except for Research Use, the Ai2
-    Tools may not be used for any of the disallowed use cases below", an illustrative list that includes
-    political campaigning, automated social-media posting and classification of individuals by protected
-    characteristics. The page does not say whether it is a licence condition and does not mention Apache-2.0.'
+  claim: >-
+    The Ai2 Responsible Use Guidelines (page dated June 2024) "govern your use of Ai2's AI tools
+    and artifacts, including models, datasets, APIs, and applications". They state "Except for
+    Research Use, the Ai2 Tools may not be used for any of the disallowed use cases below". The
+    illustrative list includes political campaigning, automated social-media posting and
+    classification of individuals by protected characteristics. The page does not say whether it
+    is a licence condition and does not mention Apache-2.0.
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://allenai.org/responsible-use
   date: '2026-11-19'
 - id: ev-dolma3
-  claim: 'Dolma 3 (pool and mixes) is ODC-By v1.0 "intended for research and educational use" per its dataset
-    cards; the Dolci post-training sets are ODC-By except Dolci-Instruct-SFT-Tool-Use-SA (cc-by-sa-4.0), read
-    2026-11-19. The Olmo 3 blog says datasets are available "without any license restrictions", which the
-    cards do not support: ODC-By requires attribution and CC-BY-SA requires share-alike.'
+  claim: >-
+    Dolma 3 (pool and mixes) is ODC-By v1.0 "intended for research and educational use" per its
+    dataset cards. The Dolci post-training sets are ODC-By except Dolci-Instruct-SFT-Tool-Use-SA
+    (cc-by-sa-4.0). The Olmo 3 blog says datasets are available "without any license
+    restrictions", which the cards do not support: ODC-By requires attribution and CC-BY-SA
+    requires share-alike.
   source_type: publisher
   doc_type: license
   retrieved: true

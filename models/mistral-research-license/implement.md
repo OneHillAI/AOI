@@ -1,14 +1,13 @@
 # Implement - Mistral (research / non-production licence)
 
-_How do we run it? Install, hardware, serving, safe-deployment controls, quantization,
-fine-tuning, and integration live here._
+_Installation, hardware, serving, safe-deployment controls, quantisation, fine-tuning and integration._
 
 <!-- item: install -->
 ## Install & run
 
 Download the safetensors from the verified `mistralai` organisation on Hugging Face and serve
-with vLLM, transformers, llama.cpp, or Ollama - **for research / non-production use only**. Pin
-the exact revision and verify checksums, and confirm the per-model licence tier (MRL vs MNPL).
+with vLLM, transformers, llama.cpp, or Ollama, for research / non-production use only. Pin the
+exact revision, verify checksums, and confirm the per-model licence tier (MRL vs MNPL).
 
 <!-- item: hardware -->
 ## Hardware & VRAM requirements
@@ -20,27 +19,27 @@ production deployment is licence-barred without a commercial agreement.
 <!-- item: serving -->
 ## Serving stacks
 
-**vLLM**, **transformers**, **llama.cpp**, and **Ollama** - strong mechanics, but production
-serving is licence-barred without a commercial agreement.
+vLLM, transformers, llama.cpp, and Ollama have strong mechanics, but production serving is
+licence-barred without a commercial agreement.
 
 <!-- item: safe-deployment -->
 ## Safe-deployment controls & Deployment Ceiling
 
-**Deployment Ceiling: T2 (conditional).** First, **do not deploy in production or commercially
-without a negotiated Mistral licence** - the MRL/MNPL bar it. Then: supply your own input/output
-guardrails and a guard/classifier model (historically lighter safety tuning, no first-party
-guard), add prompt-injection defences, and treat images as untrusted input for Pixtral Large.
+Deployment Ceiling: T2 (conditional). Do not deploy in production or commercially without a
+negotiated Mistral licence; the MRL/MNPL bar it. Supply your own input/output guardrails and a
+guard/classifier model (historically lighter safety tuning, no first-party guard), add
+prompt-injection defences, and treat images as untrusted input for Pixtral Large.
 
 <!-- item: quantization -->
 ## Available quantizations
 
-Community GGUF / AWQ / FP8 builds circulate, but their use remains bound by the **MRL/MNPL
-non-commercial terms** - a quant confers no commercial rights.
+Community GGUF / AWQ / FP8 builds circulate, but their use stays bound by the MRL/MNPL
+non-commercial terms. A quant confers no commercial rights.
 
 <!-- item: fine-tuning -->
 ## Fine-tuning & adaptation
 
-Fine-tuning for research is permitted, but derivatives **inherit the non-commercial bar** -
+Fine-tuning for research is permitted, but derivatives carry the non-commercial bar:
 commercial/production use of a derivative needs a negotiated Mistral licence. Training data and
 code are closed, so there is no from-scratch reproduction.
 
@@ -48,6 +47,6 @@ code are closed, so there is no from-scratch reproduction.
 ## API / OpenAI-compatible integration
 
 Serve behind vLLM's OpenAI-compatible endpoint for research. The hosted API versions of Mistral
-Large 2.x, Pixtral Large and Ministral 8B are retired (Mistral docs, 2026-11-19), so the **licensed
-commercial path** is a negotiated commercial licence from Mistral or a current hosted model, not
-these checkpoints on the API.
+Large 2.x, Pixtral Large and Ministral 8B are retired (Mistral docs), so the licensed commercial
+path is a negotiated commercial licence from Mistral or a current hosted model, not these
+checkpoints on the API.

@@ -20,24 +20,21 @@ publisher:
   accountable_entity: true
   url: https://huggingface.co/nvidia
   security_contact: https://www.nvidia.com/en-us/security/
-summary: 'NVIDIA Nemotron 3 Ultra is the frontier-scale head of NVIDIA''s open Nemotron 3 family: a
-  550B-total / 55B-active Mamba2-Transformer hybrid Latent Mixture-of-Experts with Multi-Token
-  Prediction, a context window up to 1M tokens, trained on approximately 20T tokens. What sets it
-  apart from its Super and Nano siblings is the licence: Ultra is released under the OpenMDW License
-  Agreement v1.1 (OpenMDW-1.1), authored by the OpenMDW project under the Linux Foundation and adopted
-  by NVIDIA, whose grant is to "deal in the Model Materials without restriction" - the most permissive
-  of the three Nemotron 3 licences, covering weights, data, documentation and software together, with
-  only a defensive patent/copyright-litigation termination. That "without restriction" grant, plus
-  self-hosting via NIM, is why Ultra is the one member of the family whose ownership reaches
-  substantial. It is open_weights_recipe: a representative training recipe is published, though the
-  intermediate checkpoints it depends on and the 1M-context data are not open, so the model is not
-  fully reproducible. On safety, the White Paper''s evaluation-and-safety section is a contributor
-  list with no methodology or red-team, so there is no dedicated model-level safety evaluation - only
-  post-training data curation and the downloadable family guard stack. Training compute is not
-  disclosed, so whether Ultra crosses the EU AI Act 1e25-FLOP systemic-risk threshold is
-  undeterminable.
-
-  '
+summary: "NVIDIA Nemotron 3 Ultra is the frontier-scale head of NVIDIA's open Nemotron 3 family: a 550B-total
+  / 55B-active Mamba2-Transformer hybrid Latent Mixture-of-Experts with Multi-Token Prediction, a
+  context window up to 1M tokens, trained on approximately 20T tokens. Ultra is released under the
+  OpenMDW License Agreement v1.1 (OpenMDW-1.1), authored by the OpenMDW project under the Linux
+  Foundation and adopted by NVIDIA. Its grant is to \"deal in the Model Materials without
+  restriction\", which makes it the most permissive of the three Nemotron 3 licences. The grant covers
+  weights, data, documentation and software together, with only a defensive
+  patent/copyright-litigation termination. That grant, plus self-hosting via NIM, is why Ultra is the
+  one member of the family whose ownership reaches substantial. It is open_weights_recipe: a
+  representative training recipe is published, but the intermediate checkpoints it depends on and the
+  1M-context data are not open, so the model is not fully reproducible. On safety, the White Paper's
+  evaluation-and-safety section is a contributor list with no methodology or red-team. There is no
+  dedicated model-level safety evaluation, only post-training data curation and the downloadable
+  family guard stack. Training compute is not disclosed, so whether Ultra crosses the EU AI Act
+  1e25-FLOP systemic-risk threshold is undeterminable."
 variants:
 - name: NVIDIA-Nemotron-3-Ultra-550B-A55B
   params_total: 550B
@@ -62,7 +59,7 @@ openness:
     notable_restrictions:
     - Grant is to "deal in the Model Materials without restriction" (weights, data, documentation and
       software); the most permissive of the three Nemotron 3 licences
-    - Not OSI-approved (v1.0 is SPDX OpenMDW-1.0; v1.1 is not yet on the OSI approved list)
+    - "Not OSI-approved (v1.0 is SPDX OpenMDW-1.0; v1.1 is not on the OSI approved list)"
     - Terminates only on the licensee filing, maintaining or voluntarily joining a patent/copyright
       infringement lawsuit over the Model Materials, unless that suit answered one brought first
       against the licensee
@@ -91,37 +88,32 @@ eu_ai_act:
   is_gpai: true
   systemic_risk:
     designated: false
-    training_flops_estimate: 'Not published. Only "approximately 20 trillion tokens" is disclosed; no
-      absolute FLOP or GPU-hour figure appears in the white paper abstract, model card or blogs read.
-      At 550B / 55B active the 1e25-FLOP systemic-risk question is UNDETERMINABLE from the disclosed
-      figures. No FLOP number is asserted here.'
+    training_flops_estimate: "Not published. Only \"approximately 20 trillion tokens\" is disclosed; no absolute FLOP or GPU-hour
+      figure appears in the white paper abstract, model card or blogs. At 550B / 55B active the 1e25-FLOP
+      systemic-risk question is undeterminable from the disclosed figures. No FLOP number is asserted
+      here."
     over_1e25_threshold: null
     article_55_docs_available: n/a
   open_source_exemption:
     license_qualifies: uncertain
-    rationale: 'Ultra''s OpenMDW-1.1 grant is maximally permissive ("deal in the Model Materials
-      without restriction"), which is favourable, but it is not OSI-approved (v1.1 is not on the OSI
-      approved list), and there is no formal GPAI documentation package, no public training-content
-      summary and no copyright policy; NVIDIA is not a GPAI Code of Practice signatory. Whether the
-      open-source exemption is reached is further complicated because training compute is undisclosed,
-      so the systemic-risk duties cannot be ruled in or out. Recorded as ''uncertain'' pending the
-      full Article 53/55 analysis.
-
-      '
+    rationale: "Ultra's OpenMDW-1.1 grant is maximally permissive (\"deal in the Model Materials without
+      restriction\"), which is favourable. It is not OSI-approved (v1.1 is not on the OSI approved list),
+      there is no formal GPAI documentation package, no public training-content summary and no copyright
+      policy, and NVIDIA is not a GPAI Code of Practice signatory. Training compute is undisclosed, so the
+      systemic-risk duties cannot be ruled in or out, and whether the open-source exemption is reached is
+      open. Recorded as 'uncertain' pending the full Article 53/55 analysis."
   provider_package:
     technical_documentation: partial
     downstream_information: partial
     copyright_policy: 'no'
     training_content_summary: partial
     code_of_practice_signatory: false
-  deployer_notes: 'Ultra''s licence is the most permissive in the family (OpenMDW-1.1, "without
-    restriction"), so the use-and-modify obligations are light, but the EU AI Act information base is
-    the same as the rest of the family: no formal GPAI documentation package, no copyright policy, and
-    NVIDIA is not a Code of Practice signatory. The decisive open question is systemic risk: training
-    compute is undisclosed, so whether Ultra 550B crosses the 1e25-FLOP threshold cannot be resolved,
-    and an EU deployer should treat systemic-risk status as unresolved before high-stakes use.
-
-    '
+  deployer_notes: "Ultra's licence is the most permissive in the family (OpenMDW-1.1, \"without restriction\"), so the
+    use-and-modify obligations are light. The EU AI Act information base is the same as the rest of the
+    family: no formal GPAI documentation package, no copyright policy, and NVIDIA is not a Code of
+    Practice signatory. The open question is systemic risk. Training compute is undisclosed, so whether
+    Ultra 550B crosses the 1e25-FLOP threshold cannot be resolved, and an EU deployer should treat
+    systemic-risk status as unresolved before high-stakes use."
   last_assessed: '2026-08-03'
 performance: {}
 behaviour: {}
@@ -169,77 +161,62 @@ score:
       - ev-ultra-card
     provenance:
       score: 3
-      rationale: 'Distributed from the verified nvidia org on Hugging Face as ungated safetensors with
-        official BF16 / NVFP4 quantization variants and a clear canonical source (checklist ~4/8).
-        Meets the score-3 anchor; short of 4 because published checksums, checkpoint scanning and a
-        documented signing/attestation policy were not verified this pass, and short of 5''s
-        cryptographic weight signing / SLSA provenance.
-
-        '
+      rationale: "Distributed from the verified nvidia org on Hugging Face as ungated safetensors with official BF16
+        / NVFP4 quantization variants and a clear canonical source (checklist ~4/8). Meets the score-3
+        anchor. Short of 4 because published checksums, checkpoint scanning and a documented
+        signing/attestation policy are not verified, and short of 5's cryptographic weight signing / SLSA
+        provenance."
       evidence_refs:
       - ev-ultra-provenance
       - ev-ultra-card
     legal:
       score: 3
-      rationale: 'Ultra carries the most permissive licence in the family: OpenMDW-1.1 grants the
-        right to "deal in the Model Materials without restriction", covering weights, data,
-        documentation and software, with only a defensive patent/copyright-litigation termination.
-        That licence half is close to a 4. It is held at 3 by the regulatory-readiness half: the
-        licence is not OSI-approved (v1.1), there is no formal GPAI documentation package, no public
-        training-content summary and no copyright policy, and - decisively for a 550B model - training
-        compute is undisclosed, so the systemic-risk position cannot be established.
-
-        '
+      rationale: "Ultra carries the most permissive licence in the family: OpenMDW-1.1 grants the right to \"deal in
+        the Model Materials without restriction\", covering weights, data, documentation and software, with
+        only a defensive patent/copyright-litigation termination. That licence half is close to a 4. The
+        regulatory-readiness half holds it at 3. The licence is not OSI-approved (v1.1), and there is no
+        formal GPAI documentation package, no public training-content summary and no copyright policy.
+        Training compute is undisclosed, so for a 550B model the systemic-risk position cannot be
+        established."
       evidence_refs:
       - ev-ultra-openmdw
       - ev-ultra-eu
     safety:
       score: 3
-      rationale: 'A safety-tuned release (post-training safety data plus keyword/regex filtering) with
-        the downloadable family guard stack - the Nemotron-3-Content-Safety classifier, the Apache-2.0
-        NeMo Guardrails toolkit and the Apache-2.0 garak scanner - genuinely attributable to Ultra.
-        Held at 3, below the old aggregate''s 4, because the White Paper''s "Evaluation, Safety and
-        Release" section is a contributor list with no methodology, red-team or benchmarks: there is
-        NO dedicated model-level safety evaluation. The downloadable companion guard stack is what
-        keeps it from dropping to 2.
-
-        '
+      rationale: "A safety-tuned release (post-training safety data plus keyword/regex filtering) with the
+        downloadable family guard stack - the Nemotron-3-Content-Safety classifier, the Apache-2.0 NeMo
+        Guardrails toolkit and the Apache-2.0 garak scanner - attributable to Ultra. Held at 3 because the
+        White Paper's \"Evaluation, Safety and Release\" section is a contributor list with no methodology,
+        red-team or benchmarks: there is no dedicated model-level safety evaluation. The downloadable
+        companion guard stack keeps it from dropping to 2."
       evidence_refs:
       - ev-ultra-safety
       - ev-ultra-report
       - ev-ultra-trep
     performance:
       score: 3
-      rationale: 'A frontier-scale open model (550B / 55B active Mamba2-Transformer LatentMoE, up to
-        1M context, ~20T training tokens) positioned for complex agentic and long-context workloads.
-        Held at 3 because the evidence is publisher and architectural (model card + white paper);
-        OneHill has not reproduced benchmarks and no independent third-party re-runs were gathered
-        this pass.
-
-        '
+      rationale: "A frontier-scale open model (550B / 55B active Mamba2-Transformer LatentMoE, up to 1M context, ~20T
+        training tokens) positioned for complex agentic and long-context workloads. Held at 3 because the
+        evidence is publisher and architectural (model card + white paper). OneHill has not reproduced
+        benchmarks, and no independent third-party re-runs exist."
       evidence_refs:
       - ev-ultra-card
       - ev-ultra-report
     operational:
       score: 3
-      rationale: 'Runs on mainstream stacks (vLLM, SGLang, NVIDIA NIM) with official BF16 / NVFP4
-        quantizations and documented hardware expectations. Held at 3, not 4, because at 550B / 55B
-        active it needs a multi-GPU / multi-node cluster: there is no small-variant portability here,
-        the ecosystem breadth is narrower than the text ladder, and exact sharding/scaling guidance
-        was not verified this pass.
-
-        '
+      rationale: "Runs on mainstream stacks (vLLM, SGLang, NVIDIA NIM) with official BF16 / NVFP4 quantizations and
+        documented hardware expectations. Held at 3, not 4, because at 550B / 55B active it needs a
+        multi-GPU / multi-node cluster. There is no small-variant portability, the ecosystem breadth is
+        narrower than the text ladder, and exact sharding/scaling guidance is not verified."
       evidence_refs:
       - ev-ultra-nim
       - ev-ultra-card
     governance:
       score: 3
-      rationale: 'A reputable, accountable publisher (NVIDIA) with a white paper, a verified hub
-        presence and an active release cadence, and a general corporate security-reporting path. Held
-        at 3 because a model-specific vulnerability-disclosure and deprecation policy was not confirmed
-        and NVIDIA is not a GPAI Code of Practice signatory.
-
-        '
+      rationale: "A reputable, accountable publisher (NVIDIA) with a white paper, a verified hub presence and an
+        active release cadence, and a general corporate security-reporting path. Held at 3 because a
+        model-specific vulnerability-disclosure and deprecation policy is not confirmed and NVIDIA is not a
+        GPAI Code of Practice signatory."
       evidence_refs:
       - ev-ultra-card
       - ev-ultra-eu
@@ -254,12 +231,16 @@ signals:
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "Frontier-scale 550B / 55B-active hybrid Mamba-Transformer MoE with up to 1M context; capable and well-documented, but not independently benchmarked in this pass, so treat class-leading claims as publisher-reported."
+    summary: "Frontier-scale 550B / 55B-active hybrid Mamba-Transformer MoE with up to 1M context; capable and
+      well-documented, but not independently benchmarked, so treat class-leading claims as
+      publisher-reported."
     refs: [ev-ultra-card, ev-ultra-report]
   specialization:
     level: strong
     dimension: openness
-    summary: "The OpenMDW 'without restriction' grant plus a representative recipe and CC-BY post-training data make Ultra genuinely adaptable for high-end agentic and long-context work, subject to the multi-node hardware bar."
+    summary: "The OpenMDW 'without restriction' grant plus a representative recipe and CC-BY post-training data
+      make Ultra adaptable for high-end agentic and long-context work, subject to the multi-node hardware
+      bar."
     refs: [ev-ultra-openmdw, ev-ultra-recipe]
   exchangeability:
     level: medium
@@ -305,35 +286,46 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-ultra-openmdw]
-        summary: "OpenMDW License Agreement v1.1: permission to 'deal in the Model Materials without restriction' (weights, data, documentation, software), the most permissive of the three Nemotron 3 licences, commercial use allowed, with only a defensive patent/copyright-litigation termination; not OSI-approved (v1.1; submitted for OSI review August 2026, no approval found). Re-read raw 2026-11-19, unchanged."
+        summary: "OpenMDW License Agreement v1.1: permission to 'deal in the Model Materials without restriction'
+          (weights, data, documentation, software), the most permissive of the three Nemotron 3 licences.
+          Commercial use is allowed, with only a defensive patent/copyright-litigation termination. Not
+          OSI-approved (v1.1; submitted for OSI review August 2026, no approval found)."
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-ultra-provenance]
-        summary: "Verified nvidia org on Hugging Face; ungated safetensors with official BF16/NVFP4 quantizations; published checksums, scanning and signing not verified this pass - pin the revision and verify checksums."
+        summary: "Verified nvidia org on Hugging Face; ungated safetensors with official BF16/NVFP4 quantizations.
+          Published checksums, scanning and signing are not verified; pin the revision and verify checksums."
       - key: eu-ai-act
         title: "EU AI Act posture"
         doc_type: explanation
         source_type: aggregated
         coverage: full
         refs: [ev-ultra-eu, ev-ultra-openmdw]
-        summary: "GPAI; the OpenMDW licence is maximally permissive but not OSI-approved and there is no GPAI documentation package or copyright policy; decisively, training compute is undisclosed, so whether Ultra 550B crosses the 1e25-FLOP systemic-risk threshold is undeterminable."
+        summary: "GPAI. The OpenMDW licence is maximally permissive but not OSI-approved, and there is no GPAI
+          documentation package or copyright policy. Training compute is undisclosed, so whether Ultra 550B
+          crosses the 1e25-FLOP systemic-risk threshold is undeterminable."
       - key: evaluation
         title: "Benchmarks & evaluation"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-ultra-report, ev-ultra-card]
-        summary: "Aggregated from NVIDIA's white paper and the Ultra card; frontier-scale claims are publisher-reported and not OneHill-reproduced, and no independent third-party re-runs were gathered this pass."
+        summary: "Aggregated from NVIDIA's white paper and the Ultra card. Frontier-scale claims are
+          publisher-reported and not OneHill-reproduced, and no independent third-party re-runs exist."
       - key: safety-eval
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-ultra-safety]
-        summary: "No dedicated model-level safety evaluation for Ultra: the white paper's evaluation-and-safety section is a contributor list. The downloadable family guard stack (Nemotron-3-Content-Safety, NeMo Guardrails, garak) is attributable, but its scores are NVIDIA self-reported. Re-checked 2026-11-19: the safety.md subcard and the dedicated Ultra technical report (arXiv 2606.15007) publish training-side safety work only, no evaluation results."
+        summary: "No dedicated model-level safety evaluation for Ultra: the white paper's evaluation-and-safety
+          section is a contributor list. The downloadable family guard stack (Nemotron-3-Content-Safety, NeMo
+          Guardrails, garak) is attributable, but its scores are NVIDIA self-reported. The safety.md subcard
+          and the dedicated Ultra technical report (arXiv 2606.15007) publish training-side safety work only,
+          with no evaluation results."
   implement:
     completeness: 90.9
     originality: 0.0
@@ -365,7 +357,10 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-ultra-safety, ev-ultra-openmdw]
-        summary: "Deployment Ceiling T3 (bounded autonomous), conditional: assemble NVIDIA's downloadable guard stack yourself and red-team for your own use case, because there is no model-level safety evaluation; the OpenMDW licence imposes no field-of-use restriction, and for EU high-stakes use treat systemic risk as unresolved."
+        summary: "Deployment Ceiling T3 (bounded autonomous), conditional. Assemble NVIDIA's downloadable guard stack
+          yourself and red-team for your own use case, because there is no model-level safety evaluation. The
+          OpenMDW licence imposes no field-of-use restriction. For EU high-stakes use treat systemic risk as
+          unresolved."
       - key: quantization
         title: "Available quantizations"
         doc_type: reference
@@ -416,7 +411,8 @@ documentation:
         title: "Prompt format & chat template"
         doc_type: reference
         source_type: gap
-        gap_reason: "The exact Nemotron 3 Ultra chat template / prompt format was not captured from a primary source this pass; confirm apply_chat_template from the tokenizer config before deploying."
+        gap_reason: "The exact Nemotron 3 Ultra chat template / prompt format is not captured from a primary source;
+          confirm apply_chat_template from the tokenizer config before deploying."
       - key: languages
         title: "Language coverage"
         doc_type: reference
@@ -453,7 +449,8 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-ultra-provenance]
-        summary: "NVIDIA has a general corporate product-security reporting path, but a model-specific vulnerability-disclosure policy for Nemotron was not confirmed this pass."
+        summary: "NVIDIA has a general corporate product-security reporting path, but no model-specific
+          vulnerability-disclosure policy for Nemotron is confirmed."
       - key: channels
         title: "Community & support channels"
         doc_type: reference
@@ -483,7 +480,10 @@ ownership:
       # grounded in: ev-ultra-openmdw (license, retrieved) - "deal in the Model Materials without restriction" + defensive-only termination
     transparency:
       level: strong
-      rationale: "open_weights_recipe: ungated weights, a white paper and a representative training recipe with CC-BY post-training data let you see a great deal of how Ultra was built. The limit is reproducibility, not visibility - the intermediate checkpoints and the 1M-context data are not open - which caps the openness tier, not transparency."
+      rationale: "open_weights_recipe: ungated weights, a white paper and a representative training recipe with CC-BY
+        post-training data let you see a great deal of how Ultra was built. The intermediate checkpoints and
+        the 1M-context data are not open, which limits reproducibility and caps the openness tier.
+        Visibility into the build is high."
       # grounded in: ev-ultra-recipe (docs, retrieved) - representative recipe + open-subset caveat; ev-ultra-card (model_card, retrieved) - open-weights self-description
     reliability:
       level: moderate
@@ -491,94 +491,101 @@ ownership:
       # grounded in: dimension scores operational 3 / safety 3; ev-ultra-safety
     data_control:
       level: strong
-      rationale: "Self-hosted via NIM, the weights and inference run on your own infrastructure and data never leaves your enclave, and the OpenMDW grant claws back no rights - it is 'without restriction' with only a defensive termination. That is the clearest strong case for data control in the family."
+      rationale: "Self-hosted via NIM, the weights and inference run on your own infrastructure and data never leaves
+        your enclave, and the OpenMDW grant claws back no rights - it is 'without restriction' with only a
+        defensive termination. This is a strong case for data control."
       # grounded in: ev-ultra-nim (deployment, retrieved) - self-hosted, data stays in your enclave; ev-ultra-openmdw (license, retrieved) - unconditional grant, defensive-only termination
-  verdict: "Ultra is the one Nemotron 3 release whose ownership reaches substantial: the OpenMDW 'deal without restriction' grant makes use-and-modify strong, self-hosting via NIM makes data control strong, and the open_weights_recipe transparency is strong - so you can use it, see it and keep your data outright. It stops short of full because reliability is only moderate: there is no dedicated model-level safety evaluation, and at 550B / 55B active it is a multi-node deployment. Self-host, assemble the downloadable guard stack, red-team for your own use case, and treat EU systemic-risk status as unresolved until NVIDIA discloses training compute."
+  verdict: "Ultra is the one Nemotron 3 release whose ownership reaches substantial. The OpenMDW 'deal without
+    restriction' grant makes use-and-modify strong, self-hosting via NIM makes data control strong, and
+    the open_weights_recipe transparency is strong, so you can use it, see it and keep your data
+    outright. Ownership stops short of full because reliability is only moderate: there is no dedicated
+    model-level safety evaluation, and at 550B / 55B active it is a multi-node deployment. Self-host,
+    assemble the downloadable guard stack, red-team for your own use case, and treat EU systemic-risk
+    status as unresolved until NVIDIA discloses training compute."
 
 # --- Evidence. Each item carries doc_type and retrieved (true = substantive text read).
 #     Grounded 2026-08-03 against the primary-source clauses in docs/primary-sources/nemotron-3-ultra/.
 evidence:
 - id: ev-ultra-card
-  claim: 'Nemotron 3 Ultra model card on the verified nvidia HF org: 550B total / 55B active;
+  claim: "Nemotron 3 Ultra model card on the verified nvidia HF org. 550B total / 55B active;
     Mamba2-Transformer hybrid LatentMoE + MTP; up to 1M context; ~20T training tokens; ungated
-    safetensors with BF16/NVFP4 variants; card states "open models with open weights, training data,
-    and recipes"; licence tag openmdw-1.1. Re-read 2026-11-19: unchanged (repo last modified
-    2026-08-24, README edit only); still ungated; hub variants are BF16, NVFP4, Base-BF16 and GenRM.'
+    safetensors with BF16/NVFP4 variants. The card states \"open models with open weights, training
+    data, and recipes\" and carries the licence tag openmdw-1.1. The repo was last modified 2026-08-24
+    (README edit only) and is ungated. Hub variants are BF16, NVFP4, Base-BF16 and GenRM."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16
   date: '2026-11-19'
 - id: ev-ultra-openmdw
-  claim: 'OpenMDW License Agreement v1.1, read: "permission is hereby granted, free of charge, to
-    deal in the Model Materials without restriction, including under all copyright, patent, database,
-    and trade secret rights"; "Model Materials" covers weights, data, documentation and software.
-    Terminates only if the licensee files, maintains or voluntarily joins a patent/copyright
-    infringement lawsuit over the Model Materials, unless it answered a suit brought first against
-    them. Authored by the OpenMDW project under the Linux Foundation; adopted by NVIDIA. NOT OSI
-    (v1.1). Commercial use allowed. Raw file re-read in full 2026-11-19: text unchanged, no
-    acceptable-use, guardrail or revocation clause, and the only termination is the litigation trigger;
-    NVIDIA''s own LICENSE file in its Nemotron 3.5 Lightning repo is the same text plus a copyright
-    header. OSI status: OpenMDW-1.1 was submitted for OSI review in August 2026 and no approval was
-    found (no OpenMDW entry on the OSI licences page; no October or November list thread).'
+  claim: "OpenMDW License Agreement v1.1: \"permission is hereby granted, free of charge, to deal in the
+    Model Materials without restriction, including under all copyright, patent, database, and trade
+    secret rights\"; \"Model Materials\" covers weights, data, documentation and software. It terminates
+    only if the licensee files, maintains or voluntarily joins a patent/copyright infringement lawsuit
+    over the Model Materials, unless it answered a suit brought first against them. Authored by the
+    OpenMDW project under the Linux Foundation; adopted by NVIDIA. NOT OSI (v1.1). Commercial use
+    allowed. The raw file has no acceptable-use, guardrail or revocation clause, and the only
+    termination is the litigation trigger. NVIDIA's own LICENSE file in its Nemotron 3.5 Lightning repo
+    is the same text plus a copyright header. OpenMDW-1.1 was submitted for OSI review in August 2026
+    and no approval is listed (no OpenMDW entry on the OSI licences page; no October or November list
+    thread)."
   source_type: third_party
   doc_type: license
   retrieved: true
   url: https://raw.githubusercontent.com/OpenMDW/OpenMDW/refs/heads/main/1.1/LICENSE.OpenMDW-1.1
   date: '2026-11-19'
 - id: ev-ultra-recipe
-  claim: 'Ultra training recipe at github.com/NVIDIA-NeMo/Nemotron (docs/nemotron/ultra3, Pretrain ->
-    SFT -> MOPD -> Quant), read: described as "a representative single pass"; the "intermediate
-    checkpoints it depends on have not been open-sourced" and the "1M-context LC phase is not included
-    because its data ... is not open-source". Post-training data is CC-BY-4.0. So open_weights_recipe,
-    not fully reproducible.'
+  claim: "Ultra training recipe at github.com/NVIDIA-NeMo/Nemotron (docs/nemotron/ultra3, Pretrain -> SFT ->
+    MOPD -> Quant). It is described as \"a representative single pass\"; the \"intermediate checkpoints
+    it depends on have not been open-sourced\" and the \"1M-context LC phase is not included because its
+    data ... is not open-source\". Post-training data is CC-BY-4.0. So open_weights_recipe, not fully
+    reproducible."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://github.com/NVIDIA-NeMo/Nemotron
   date: '2026-08-03'
 - id: ev-ultra-report
-  claim: 'Nemotron 3 White Paper (arXiv 2512.20856), read: Ultra is a Mamba2-Transformer hybrid
-    LatentMoE, up to 1M context. Section 3 "Evaluation, Safety and Release" is a contributor list with
-    no methodology, red-team or benchmarks. Training FLOPs/compute NOT stated (only ~20T tokens), so
-    the 1e25 systemic-risk crossing is undeterminable.'
+  claim: "Nemotron 3 White Paper (arXiv 2512.20856): Ultra is a Mamba2-Transformer hybrid LatentMoE, up to 1M
+    context. Section 3 \"Evaluation, Safety and Release\" is a contributor list with no methodology,
+    red-team or benchmarks. Training FLOPs/compute NOT stated (only ~20T tokens), so the 1e25
+    systemic-risk crossing is undeterminable."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2512.20856
   date: '2026-08-03'
 - id: ev-ultra-trep
-  claim: 'Dedicated Nemotron 3 Ultra technical report (arXiv 2606.15007, v1 2026-06-12), read 2026-11-19
-    (HTML): 550B / 55B active, 20T pretraining tokens, 1M context, post-trained with SFT, RL and
-    multi-teacher on-policy distillation. Safety content is training-side only: a safety SFT blend
-    (translated into six languages) and an agentic safety teacher against indirect prompt injection
-    built with an automated red-teaming loop and a deterministic verifier. It contains no safety
-    benchmark results, no jailbreak or red-team result on Ultra and no residual-risk disclosure. No
-    GPU-hour or FLOP figure is given, so the 1e25 question stays undeterminable.'
+  claim: "Dedicated Nemotron 3 Ultra technical report (arXiv 2606.15007, v1 2026-06-12): 550B / 55B active,
+    20T pretraining tokens, 1M context, post-trained with SFT, RL and multi-teacher on-policy
+    distillation. Safety content is training-side only. It has a safety SFT blend (translated into six
+    languages) and an agentic safety teacher against indirect prompt injection, built with an automated
+    red-teaming loop and a deterministic verifier. It contains no safety benchmark results, no jailbreak
+    or red-team result on Ultra and no residual-risk disclosure. No GPU-hour or FLOP figure is given, so
+    the 1e25 question stays undeterminable."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2606.15007
   date: '2026-11-19'
 - id: ev-ultra-safety
-  claim: 'Safety, read: no dedicated model-level safety evaluation for Ultra (white paper safety
-    section is a contributor list; safety appears only as post-training data curation - Nemotron
-    Content Safety v2 + Gretel refusal data + keyword/regex filtering). The downloadable family guard
-    stack (Nemotron-3-Content-Safety classifier, Apache-2.0 NeMo Guardrails, Apache-2.0 garak) is
-    attributable; classifier scores are NVIDIA self-reported. Re-checked 2026-11-19: the Ultra
-    safety.md subcard states only that a guard model filtered training data and that content-safety
-    evaluation uses Nemotron Content Safety Dataset V2 and an internal dataset, with no scores, and the
-    dedicated Ultra technical report (ev-ultra-trep) adds safety training (an agentic prompt-injection
-    teacher) but no evaluation results. Still no published model-level safety evaluation.'
+  claim: "Safety: no dedicated model-level safety evaluation for Ultra. The white paper safety section is a
+    contributor list, and safety appears only as post-training data curation (Nemotron Content Safety v2
+    + Gretel refusal data + keyword/regex filtering). The downloadable family guard stack
+    (Nemotron-3-Content-Safety classifier, Apache-2.0 NeMo Guardrails, Apache-2.0 garak) is
+    attributable; classifier scores are NVIDIA self-reported. The Ultra safety.md subcard states only
+    that a guard model filtered training data and that content-safety evaluation uses Nemotron Content
+    Safety Dataset V2 and an internal dataset, with no scores. The dedicated Ultra technical report
+    (ev-ultra-trep) adds safety training (an agentic prompt-injection teacher) but no evaluation
+    results. There is no published model-level safety evaluation."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/nvidia/Nemotron-3-Content-Safety
   date: '2026-11-19'
 - id: ev-ultra-provenance
-  claim: 'Verified nvidia org on Hugging Face; the Ultra weight repo is ungated safetensors with
-    published BF16/NVFP4 quantization variants. Published checksums / signing / attestation not
-    verified this pass.'
+  claim: "Verified nvidia org on Hugging Face; the Ultra weight repo is ungated safetensors with published
+    BF16/NVFP4 quantization variants. Published checksums / signing / attestation are not verified."
   source_type: publisher
   doc_type: docs
   retrieved: true

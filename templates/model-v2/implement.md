@@ -3,8 +3,7 @@
 
 # Implement - <Model Family>
 
-_How do we deploy and run it? Install, hardware, serving, quantization, fine-tuning, and
-the safe-deployment controls & Deployment Ceiling._
+_Installation, hardware, serving, safe-deployment controls, quantisation, fine-tuning and integration._
 
 <!-- item: install -->
 ## Install & run

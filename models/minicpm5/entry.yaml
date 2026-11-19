@@ -22,9 +22,7 @@ publisher:
   accountable_entity: true
   url: https://github.com/OpenBMB/MiniCPM
   security_contact: none published (GitHub issues and Discussions only; no SECURITY.md)
-summary: 'MiniCPM5-1B is a 1.08 billion parameter, Apache-2.0, text-only model for on-device use, and it publishes much more of its training data than typical open-weight releases, but it ships with no safety evaluation and no independent benchmark. Adopt it for local assistants, tool-calling agents and fine-tuning on laptops or phones where you can add your own safety layer; do not treat the publisher benchmark table as verified. The release (May 2026) is one dense Llama-architecture transformer with a 131,072-token context, a hybrid think and no-think chat template, and official safetensors, GGUF and MLX checkpoints. The model card names the pretraining corpora (Ultra-FineWeb, Ultra-FineWeb-L3, UltraData-Math) and the SFT set (UltraData-SFT-2605); the three pretraining sets are public and Apache-2.0 tagged on the Hub, while the SFT set sits behind an automatic access gate and its card could not be read. Languages documented are English and Chinese only. This entry scores the 1B release (final, SFT-only and Base checkpoints plus the official GGUF and MLX conversions); the later MiniCPM5-2B release is a separate follow-up.
-
-  '
+summary: "MiniCPM5-1B is a 1.08 billion parameter, Apache-2.0, text-only model for on-device use. It publishes much more of its training data than typical open-weight releases, but it ships with no safety evaluation and no independent benchmark. It suits local assistants, tool-calling agents and fine-tuning on laptops or phones where the deployer adds a safety layer. The publisher benchmark table is unverified. The release (May 2026) is one dense Llama-architecture transformer with a 131,072-token context, a hybrid think and no-think chat template, and official safetensors, GGUF and MLX checkpoints. The model card names the pretraining corpora (Ultra-FineWeb, Ultra-FineWeb-L3, UltraData-Math) and the SFT set (UltraData-SFT-2605). The three pretraining sets are public and Apache-2.0 tagged on the Hub. The SFT set sits behind an automatic access gate and its card is unavailable. Documented languages are English and Chinese only. The score covers the 1B release (final, SFT-only and Base checkpoints plus the official GGUF and MLX conversions); the later MiniCPM5-2B release is a separate follow-up."
 variants:
 - name: MiniCPM5-1B (final, RL + OPD post-trained, hybrid think / no-think)
   params_total: 1.08B
@@ -103,18 +101,14 @@ eu_ai_act:
     article_55_docs_available: n/a
   open_source_exemption:
     license_qualifies: 'yes'
-    rationale: 'Released under OSI-approved Apache-2.0 with public weights and architecture, and not designated as systemic-risk, so it plausibly qualifies for the Article 53 open-source exemption from the Annex XI and XII documentation duties. The duties that survive the exemption are a copyright policy and a public training-content summary. The publisher states no copyright policy. The dataset cards for Ultra-FineWeb, Ultra-FineWeb-L3 and UltraData-Math describe the pretraining sources and are public, which partly serves as a training-content summary, but the SFT dataset card is gated and unread, the Ultra-FineWeb card tells users to check each source dataset licence individually, and no pretraining token count is given.
-
-      '
+    rationale: "Released under OSI-approved Apache-2.0 with public weights and architecture, and not designated as systemic-risk, so it plausibly qualifies for the Article 53 open-source exemption from the Annex XI and XII documentation duties. The duties that survive the exemption are a copyright policy and a public training-content summary. The publisher states no copyright policy. The dataset cards for Ultra-FineWeb, Ultra-FineWeb-L3 and UltraData-Math describe the pretraining sources and are public, which partly serves as a training-content summary. The SFT dataset card is gated and unavailable, the Ultra-FineWeb card tells users to check each source dataset licence individually, and no pretraining token count is given."
   provider_package:
     technical_documentation: partial
     downstream_information: partial
     copyright_policy: 'no'
     training_content_summary: partial
     code_of_practice_signatory: unknown
-  deployer_notes: 'A deployer placing a fine-tune on the EU market may become the provider for that derivative. Upstream, the licence is clean, but there is no EU-specific statement from OpenBMB, no copyright policy, and no MiniCPM5 technical report (the card cites the MiniCPM4 paper). The pretraining synthetic tier (Ultra-FineWeb-L3) was generated with MiniCPM4 and Qwen3, and the Math L2 selection used unnamed proprietary models, so model-lineage questions about the training data need the publisher. Record these gaps in your own documentation.
-
-    '
+  deployer_notes: "A deployer placing a fine-tune on the EU market may become the provider for that derivative. Upstream, the licence is clean, but there is no EU-specific statement from OpenBMB, no copyright policy, and no MiniCPM5 technical report (the card cites the MiniCPM4 paper). The pretraining synthetic tier (Ultra-FineWeb-L3) was generated with MiniCPM4 and Qwen3, and the Math L2 selection used unnamed proprietary models, so model-lineage questions about the training data need the publisher. Deployers should record these gaps in their own documentation."
   last_assessed: '2026-11-19'
 performance: {}
 behaviour: {}
@@ -122,9 +116,7 @@ safety: {}
 deployment:
   ceiling_tier: T1
   ceiling_conditional: true
-  hardware_notes: 'The BF16 safetensors file is 2.16 GB, the official GGUF files are 0.69 GB (Q4_K_M), 1.15 GB (Q8_0) and 2.17 GB (F16), and the MLX 4-bit file is 0.61 GB, so the weights fit on phones, single-board computers and any laptop. The KV cache is small because the model uses 2 key-value heads: by arithmetic from config.json (24 layers x 2 heads x 128 head dim x 2 tensors x 2 bytes) it is 24,576 bytes per token, about 3.2 GB at the full 131,072 tokens in 16-bit, so use short contexts on small devices. The publisher cookbook shows llama-server with -c 8192. The publisher does not state RAM or speed figures for named devices.
-
-    '
+  hardware_notes: "The BF16 safetensors file is 2.16 GB, the official GGUF files are 0.69 GB (Q4_K_M), 1.15 GB (Q8_0) and 2.17 GB (F16), and the MLX 4-bit file is 0.61 GB, so the weights fit on phones, single-board computers and any laptop. The KV cache is small because the model uses 2 key-value heads. By arithmetic from config.json (24 layers x 2 heads x 128 head dim x 2 tensors x 2 bytes) it is 24,576 bytes per token, about 3.2 GB at the full 131,072 tokens in 16-bit, so use short contexts on small devices. The publisher cookbook shows llama-server with -c 8192. The publisher does not state RAM or speed figures for named devices."
   serving_support:
   - hf-transformers
   - vllm
@@ -149,9 +141,7 @@ score:
   dimensions:
     openness:
       score: 4
-      rationale: 'Apache-2.0 weights at four checkpoint stages (Base, SFT, final, plus GGUF and MLX), a detailed card recipe, and three public Apache-2.0 pretraining datasets that the card names as the training corpus, which is more data than most open-weight models release. It is a judgement call between 3 and 4: the anchors for 4 also name training and evaluation code, and the repository holds only user-side fine-tuning and quantisation scripts, no pretraining, RL or OPD pipeline and no evaluation harness. The SFT dataset exists but its card is behind a Hub gate and unread, the RLVR and RLHF data are not released, and there is no MiniCPM5 technical report (the card cites the MiniCPM4 paper). Short of 5 for those reasons.
-
-        '
+      rationale: "Apache-2.0 weights at four checkpoint stages (Base, SFT, final, plus GGUF and MLX), a detailed card recipe, and three public Apache-2.0 pretraining datasets that the card names as the training corpus. That is more data than most open-weight models release. The score is a judgement call between 3 and 4. The anchors for 4 also name training and evaluation code, and the repository holds only user-side fine-tuning and quantisation scripts, with no pretraining, RL or OPD pipeline and no evaluation harness. The SFT dataset exists but its card is behind a Hub gate and unavailable, the RLVR and RLHF data are not released, and there is no MiniCPM5 technical report (the card cites the MiniCPM4 paper). The score stops short of 5 for those reasons."
       evidence_refs:
       - ev-card
       - ev-datasets
@@ -160,18 +150,14 @@ score:
       - ev-papers
     provenance:
       score: 3
-      rationale: 'Safetensors only (no pickle), Hub file scan clean, per-file LFS sha256, official GGUF and MLX conversions, and the GitHub repository links these exact Hub repos; checklist about 5 of 8. The openbmb Hub org is NOT verified (isVerified false), which is why this is 3 on the checkpoint count and not higher, and there is no signature or attestation. The pretraining synthetic tier was generated with MiniCPM4 and Qwen3 and the Math selection used unnamed proprietary models, so the data lineage depends on other models.
-
-        '
+      rationale: "Safetensors only (no pickle), Hub file scan clean, per-file LFS sha256, official GGUF and MLX conversions, and the GitHub repository links these exact Hub repos; checklist about 5 of 8. The openbmb Hub org is not verified (isVerified false), so the score is 3 on the checkpoint count and not higher, and there is no signature or attestation. The pretraining synthetic tier was generated with MiniCPM4 and Qwen3 and the Math selection used unnamed proprietary models, so the data lineage depends on other models."
       evidence_refs:
       - ev-repo-files
       - ev-datasets
       - ev-aa
     legal:
       score: 3
-      rationale: 'Plain Apache-2.0 (byte-compared with the canonical text), ungated, commercial use allowed, no field-of-use or registration clause, and the older General Model License is explicitly replaced. Held at 3 because there is no EU AI Act statement, no copyright policy, no Annex XI-style package and no MiniCPM5 report, and the dataset cards give only a partial training-content summary and warn that source-dataset licences differ (for example NQ-Open is CC BY-SA 3.0 and TriviaQA has no stated licence).
-
-        '
+      rationale: "Plain Apache-2.0 (identical to the canonical text apart from the copyright line), ungated, commercial use allowed, with no field-of-use or registration clause; the older General Model License is explicitly replaced. The score is held at 3 because there is no EU AI Act statement, no copyright policy, no Annex XI-style package and no MiniCPM5 report. The dataset cards give only a partial training-content summary and warn that source-dataset licences differ (for example NQ-Open is CC BY-SA 3.0 and TriviaQA has no stated licence)."
       evidence_refs:
       - ev-license
       - ev-license-meta
@@ -179,34 +165,26 @@ score:
       - ev-datasets
     safety:
       score: 1
-      rationale: 'The only safety text is a three-sentence limitations paragraph saying the model may produce inaccurate, biased or unsafe output and that users must apply safeguards. There is no safety evaluation, no red-team result, no acceptable-use policy, no guard model, and no description of safety tuning (pairwise RLHF signals are cited for reliability and user experience, not safety). Unverified by OneHill, and unmodified community "Uncensored" derivatives exist. This is the lowest-evidence dimension and it is what holds the reliability factor at weak.
-
-        '
+      rationale: "The only safety text is a three-sentence limitations paragraph saying the model may produce inaccurate, biased or unsafe output and that users must apply safeguards. There is no safety evaluation, no red-team result, no acceptable-use policy, no guard model, and no description of safety tuning (pairwise RLHF signals are cited for reliability and user experience, not safety). OneHill has not verified the model's safety, and unmodified community \"Uncensored\" derivatives exist. This is the lowest-evidence dimension and it holds the reliability factor at weak."
       evidence_refs:
       - ev-card
       - ev-repo-files
     performance:
       score: 2
-      rationale: 'The publisher table is strong (average 42.57 against 35.61 for LFM2.5-1.2B, MATH-500 91.60, AIME 40.42, tau2-Bench Telecom 79.53) but it is a publisher image with three small thinking-mode baselines, no harness and no non-thinking numbers. The model trails LFM2.5-1.2B on GPQA-Diamond, IFEval, Multi-IF and MultiChallenge, and trails both Qwen baselines on BFCLv4, even though the card says its advantage is most visible in tool use. Artificial Analysis lists the model but publishes no score, and no other independent evaluation was found, so this is scored on thin independent coverage, not on the publisher claim.
-
-        '
+      rationale: "The publisher table is strong (average 42.57 against 35.61 for LFM2.5-1.2B, MATH-500 91.60, AIME 40.42, tau2-Bench Telecom 79.53). It is a publisher image with three small thinking-mode baselines, no harness and no non-thinking numbers. The model trails LFM2.5-1.2B on GPQA-Diamond, IFEval, Multi-IF and MultiChallenge, and trails both Qwen baselines on BFCLv4, although the card says its advantage is most visible in tool use. Artificial Analysis lists the model but publishes no score, and no other independent evaluation exists. The score rests on thin independent coverage and not on the publisher claim."
       evidence_refs:
       - ev-bench
       - ev-aa
     operational:
       score: 4
-      rationale: 'Standard LlamaForCausalLM with no custom code, listed support for Transformers, vLLM, SGLang, llama.cpp, Ollama (local Modelfile), LM Studio, MLX, LiteRT-LM and ArcLight, official GGUF and MLX conversions, cookbooks with file sizes, and a 131,072-token context in config. Short of 5: the Ollama library page returned 404, tool calling needs SGLang or the repo parser, the cards require recent versions (vLLM 0.21 or later, transformers 5.6 or later), no RAM or speed figures for named devices are given, and no long-context result is published for the 1B.
-
-        '
+      rationale: "Standard LlamaForCausalLM with no custom code, listed support for Transformers, vLLM, SGLang, llama.cpp, Ollama (local Modelfile), LM Studio, MLX, LiteRT-LM and ArcLight, official GGUF and MLX conversions, cookbooks with file sizes, and a 131,072-token context in config. The score stops short of 5. The Ollama library page does not exist (404), tool calling needs SGLang or the repo parser, and the cards require recent versions (vLLM 0.21 or later, transformers 5.6 or later). No RAM or speed figures for named devices are given, and no long-context result is published for the 1B."
       evidence_refs:
       - ev-card
       - ev-github
       - ev-repo-files
     governance:
       score: 3
-      rationale: 'An identifiable, accountable publisher group (Modelbest, THUNLP, Renmin University) with a visible cadence since 2024 (MiniCPM 2B Feb 2024, MiniCPM3 Sep 2024, MiniCPM4 Jun 2025, MiniCPM5-1B May 2026, MiniCPM5-2B Sep 2026), an active repository (last push 2026-11-09), GitHub issue templates and Discussions. Held at 3 because no SECURITY.md or vulnerability-disclosure process exists (404), there is no deprecation policy, and the card cites a previous-generation paper.
-
-        '
+      rationale: "An identifiable, accountable publisher group (Modelbest, THUNLP, Renmin University) with a visible cadence since 2024 (MiniCPM 2B Feb 2024, MiniCPM3 Sep 2024, MiniCPM4 Jun 2025, MiniCPM5-1B May 2026, MiniCPM5-2B Sep 2026), an active repository (last push 2026-11-09), GitHub issue templates and Discussions. The score is held at 3 because no SECURITY.md or vulnerability-disclosure process exists (404), there is no deprecation policy, and the card cites a previous-generation paper."
       evidence_refs:
       - ev-github
       - ev-2b-card
@@ -220,7 +198,7 @@ signals:
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "A 1B dense model with a 131,072-token context and a small KV cache; usable as a compact RAG or agent backbone, but no long-context evaluation is published for the 1B and its knowledge capacity is limited by size (MMLU-Pro 48.85 on the publisher table)."
+    summary: "A 1B dense model with a 131,072-token context and a small KV cache, usable as a compact RAG or agent backbone. No long-context evaluation is published for the 1B, and its knowledge capacity is limited by size (MMLU-Pro 48.85 on the publisher table)."
     refs: [ev-card, ev-bench, ev-repo-files]
   specialization:
     level: strong
@@ -235,7 +213,7 @@ signals:
   misuse_exposure:
     level: unbenchmarked
     dimension: safety
-    summary: "No safety or misuse evaluation, no guard model and no acceptable-use policy was found, and community uncensored derivatives are already on the Hub."
+    summary: "No safety or misuse evaluation, no guard model and no acceptable-use policy exist, and community uncensored derivatives are already on the Hub."
     refs: [ev-card, ev-repo-files]
 
 documentation:
@@ -296,7 +274,7 @@ documentation:
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: gap
-        gap_reason: "No safety evaluation of any kind was found, publisher or independent. The model card has a three-sentence limitations paragraph and nothing on refusal behaviour, red-teaming, CBRN, cyber or child-safety domains, and no guard model is released."
+        gap_reason: "No safety evaluation of any kind, publisher or independent, is published. The model card has a three-sentence limitations paragraph and nothing on refusal behaviour, red-teaming, CBRN, cyber or child-safety domains, and no guard model is released."
   implement:
     completeness: 81.8
     originality: 0.0
@@ -393,7 +371,7 @@ documentation:
         title: "Structured / JSON-constrained output"
         doc_type: reference
         source_type: gap
-        gap_reason: "The model card and cookbooks read do not document a JSON or schema-constrained output mode. Constrained decoding is a serving-layer feature that runtimes such as vLLM and llama.cpp provide, not a documented behaviour of this model."
+        gap_reason: "The model card and cookbooks document no JSON or schema-constrained output mode. Constrained decoding is a serving-layer feature that runtimes such as vLLM and llama.cpp provide and is not a documented behaviour of this model."
   support:
     completeness: 50.0
     originality: 0.0
@@ -435,7 +413,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-card, ev-bench, ev-github]
-        summary: "Card limitations, the weaker benchmark rows, the gated SFT dataset, and 24 open GitHub issues on the shared MiniCPM repository (not triaged here)."
+        summary: "Card limitations, the weaker benchmark rows, the gated SFT dataset, and 24 open GitHub issues on the shared MiniCPM repository (not triaged)."
 
 ownership:
   level: partial
@@ -448,85 +426,85 @@ ownership:
       rationale: "The recipe and three pretraining datasets are public, but the SFT dataset card is gated and unread, the RL data is partly unreleased, there is no MiniCPM5 report or training pipeline, and the benchmark table is an unverified image."
     reliability:
       level: weak
-      rationale: "Operational support is broad (4), but there is no safety evaluation, policy or guard model (safety 1), so it is unsafe to deploy as presented until you supply that layer."
+      rationale: "Operational support is broad (4), but there is no safety evaluation, policy or guard model (safety 1), so the model is unsafe to deploy as presented until the deployer supplies that layer."
     data_control:
       level: strong
-      rationale: "Self-hosted weights run on your own device and the Apache-2.0 licence claws back no rights; nothing in the files read phones home."
-  verdict: "You own the use of these weights outright: Apache-2.0, ungated, runnable on a phone or laptop, with Base and SFT checkpoints and public pretraining data to adapt from. Ownership is partial because one factor is weak, not because of the licence: OpenBMB publishes no safety evaluation, policy or guard model, the SFT data card is gated, and the only benchmark is the publisher's own table. Adopt it for local assistants and fine-tuning behind your own guardrails and safety tests; this moves to substantial once a safety evaluation exists."
+      rationale: "Self-hosted weights run on the deployer's own device and the Apache-2.0 licence claws back no rights; no phone-home behaviour is documented."
+  verdict: "Use of these weights is fully owned: Apache-2.0, ungated, runnable on a phone or laptop, with Base and SFT checkpoints and public pretraining data to adapt from. Ownership is partial because the reliability factor is weak: OpenBMB publishes no safety evaluation, policy or guard model. The SFT data card is gated, and the only benchmark is the publisher's own table. The model suits local assistants and fine-tuning behind the deployer's own guardrails and safety tests. Ownership moves to substantial once a safety evaluation exists."
 
 evidence:
 - id: ev-license
-  claim: 'The LICENSE file in the OpenBMB/MiniCPM repository, which the MiniCPM5-1B model card links as the licence for "this repository and MiniCPM model weights", is the standard Apache License 2.0 text (line-compared with apache.org; only the copyright line differs: "Copyright [OpenBMB]"), with no added field-of-use, scale, branding or registration clause; the README states "This repository and MiniCPM models are released under the Apache-2.0 License". The licence file is in the GitHub repository, not in the Hub model repository.'
+  claim: "The LICENSE file in the OpenBMB/MiniCPM repository, which the MiniCPM5-1B model card links as the licence for \"this repository and MiniCPM model weights\", is the standard Apache License 2.0 text. Compared line by line with apache.org, only the copyright line differs (\"Copyright [OpenBMB]\"). It adds no field-of-use, scale, branding or registration clause. The README states \"This repository and MiniCPM models are released under the Apache-2.0 License\". The licence file is in the GitHub repository and not in the Hub model repository."
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://raw.githubusercontent.com/OpenBMB/MiniCPM/main/LICENSE
   date: '2026-11-19'
 - id: ev-license-meta
-  claim: 'Hub card metadata for openbmb/MiniCPM5-1B, -SFT, -Base, -GGUF, -MLX and every MiniCPM5-2B checkpoint reads license apache-2.0 with gated false; the model card says "This repository and MiniCPM model weights are released under the Apache-2.0 License"; the GitHub API reports spdx Apache-2.0 for the code repository.'
+  claim: "Hub card metadata for openbmb/MiniCPM5-1B, -SFT, -Base, -GGUF, -MLX and every MiniCPM5-2B checkpoint reads license apache-2.0 with gated false. The model card says \"This repository and MiniCPM model weights are released under the Apache-2.0 License\". The GitHub API reports spdx Apache-2.0 for the code repository."
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/openbmb/MiniCPM5-1B
   date: '2026-11-19'
 - id: ev-legacy-gml
-  claim: 'The legacy README for earlier MiniCPM generations says model weights "must strictly follow" a custom General Model License (GML) with commercial use needing authorisation from cpm@modelbest.cn by registration; those generations have no licence tag on the Hub. MiniCPM5 is not under it. The GML file itself was not fetched.'
+  claim: "The legacy README for earlier MiniCPM generations says model weights \"must strictly follow\" a custom General Model License (GML), with commercial use needing authorisation from cpm@modelbest.cn by registration. Those generations have no licence tag on the Hub. MiniCPM5 is not under it. The GML file itself is not part of the evidence."
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://raw.githubusercontent.com/OpenBMB/MiniCPM/main/docs/README-legacy.md
   date: '2026-11-19'
 - id: ev-card
-  claim: 'MiniCPM5-1B model card, read in full: dense LlamaForCausalLM with 1,080,632,832 parameters, 24 layers, GQA 16 query and 2 key-value heads, context length 131,072; hybrid think and no-think template; recipe of base training, mid-training, SFT (200B deep-thinking plus 200B hybrid-thinking tokens), RL and on-policy distillation; names Ultra-FineWeb, Ultra-FineWeb-L3, UltraData-Math and UltraData-SFT-2605; tool calls in XML with the SGLang minicpm5 parser; deployment and fine-tuning cookbook tables; and a "Limitations and Responsible Use" section that is the only safety text. Languages tagged en and zh. The card cites the MiniCPM4 paper as its tech report.'
+  claim: "The MiniCPM5-1B model card describes a dense LlamaForCausalLM with 1,080,632,832 parameters, 24 layers, GQA with 16 query and 2 key-value heads, and a context length of 131,072. It has a hybrid think and no-think template and a recipe of base training, mid-training, SFT (200B deep-thinking plus 200B hybrid-thinking tokens), RL and on-policy distillation. It names Ultra-FineWeb, Ultra-FineWeb-L3, UltraData-Math and UltraData-SFT-2605, gives tool calls in XML with the SGLang minicpm5 parser, and has deployment and fine-tuning cookbook tables. A \"Limitations and Responsible Use\" section is the only safety text. Languages are tagged en and zh. The card cites the MiniCPM4 paper as its tech report."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/openbmb/MiniCPM5-1B
   date: '2026-11-19'
 - id: ev-repo-files
-  claim: 'Repository listing and files: one safetensors shard (2,161,290,912 bytes, LFS sha256 7ab8fd86...), no pickle and no LICENSE file in the Hub repo; config.json (llama, max_position_embeddings 131072, rope_theta 5000000, 2 KV heads, vocab 130560); the Hub scan reports scansDone true with no files with issues; the openbmb org is not Hub-verified (isVerified false); official GGUF (F16, Q8_0, Q4_K_M) and MLX 4-bit repos exist with sha256 ids; community derivatives include repos named "Uncensored"; no signature or attestation file.'
+  claim: "The Hub repository holds one safetensors shard (2,161,290,912 bytes, LFS sha256 7ab8fd86...), no pickle and no LICENSE file. config.json gives llama, max_position_embeddings 131072, rope_theta 5000000, 2 KV heads and vocab 130560. The Hub scan reports scansDone true with no files with issues. The openbmb org is not Hub-verified (isVerified false). Official GGUF (F16, Q8_0, Q4_K_M) and MLX 4-bit repos exist with sha256 ids. Community derivatives include repos named \"Uncensored\". No signature or attestation file exists."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/api/models/openbmb/MiniCPM5-1B/tree/main?recursive=1
   date: '2026-11-19'
 - id: ev-datasets
-  claim: 'The Ultra-FineWeb (about 1T English and 120B Chinese tokens), Ultra-FineWeb-L3 (400B+ English and 200B+ Chinese synthetic tokens generated with MiniCPM4 and Qwen3, "key training data for the decay phase of MiniCPM5-1B") and UltraData-Math (290B+ tokens, L2 annotated by unnamed "proprietary large models") dataset cards were read: all are public, ungated and Apache-2.0 tagged; the Ultra-FineWeb card warns users to check each source dataset licence individually.'
+  claim: "The dataset cards for Ultra-FineWeb (about 1T English and 120B Chinese tokens), Ultra-FineWeb-L3 and UltraData-Math show that all three are public, ungated and Apache-2.0 tagged. Ultra-FineWeb-L3 holds 400B+ English and 200B+ Chinese synthetic tokens generated with MiniCPM4 and Qwen3, \"key training data for the decay phase of MiniCPM5-1B\". UltraData-Math holds 290B+ tokens, L2 annotated by unnamed \"proprietary large models\". The Ultra-FineWeb card warns users to check each source dataset licence individually."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/datasets/openbmb/Ultra-FineWeb
   date: '2026-11-19'
 - id: ev-sft-dataset
-  claim: 'UltraData-SFT-2605 exists on the Hub (API metadata: gated auto, apache-2.0, 1,510 files, created 2026-05-21) but its card returned 401 "restricted ... Please log in", so its contents and provenance statement were not read. The RL sets named on the model card carry licence tags apache-2.0 (DAPO-Math-17k, LongWriter-Zero-RLData), cc-by-sa-3.0 (NQ-Open) and unknown (TriviaQA); the synthesised RLVR data and pairwise RLHF data are not linked. Documented but unverified.'
+  claim: "UltraData-SFT-2605 exists on the Hub (API metadata: gated auto, apache-2.0, 1,510 files, created 2026-05-21) but its card returns 401 \"restricted ... Please log in\", so its contents and provenance statement are unavailable. The RL sets named on the model card carry licence tags apache-2.0 (DAPO-Math-17k, LongWriter-Zero-RLData), cc-by-sa-3.0 (NQ-Open) and unknown (TriviaQA); the synthesised RLVR data and pairwise RLHF data are not linked. Documented but unverified."
   source_type: publisher
   doc_type: docs
   retrieved: false
   url: https://huggingface.co/datasets/openbmb/UltraData-SFT-2605
   date: '2026-11-19'
 - id: ev-papers
-  claim: 'The two arXiv papers the card cites were read at abstract level only: 2506.07900 is "MiniCPM4: Ultra-Efficient LLMs on End Devices" (previous generation, 0.5B and 8B) and 2602.09003 is "Data Science and Technology Towards AGI Part I: Tiered Data Management" (the data framework, which says tiered datasets and tools are released). Neither is a MiniCPM5 technical report, and none was found.'
+  claim: "The card cites two arXiv papers. 2506.07900 is \"MiniCPM4: Ultra-Efficient LLMs on End Devices\" (previous generation, 0.5B and 8B). 2602.09003 is \"Data Science and Technology Towards AGI Part I: Tiered Data Management\" (the data framework, which says tiered datasets and tools are released). Neither is a MiniCPM5 technical report, and no MiniCPM5 report is known. The evidence is at abstract level."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2602.09003
   date: '2026-11-19'
 - id: ev-bench
-  claim: 'Publisher benchmark image on the model card (Thinking mode, three small baselines): average 42.57 vs Qwen3-0.6B 26.77, Qwen3.5-0.8B 25.14 and LFM2.5-1.2B 35.61; MATH-500 91.60; AIME-2025 and AIME-2026 40.42; tau2-Bench Telecom-AA 79.53; BFCLv4 25.15 (Qwen baselines 25.43 and 25.53); behind LFM2.5-1.2B on GPQA-Diamond, IFEval, Multi-IF and MultiChallenge. A claim, not reproduced by anyone else.'
+  claim: "The publisher benchmark image on the model card (Thinking mode, three small baselines) reports an average of 42.57 vs Qwen3-0.6B 26.77, Qwen3.5-0.8B 25.14 and LFM2.5-1.2B 35.61. It reports MATH-500 91.60, AIME-2025 and AIME-2026 40.42, tau2-Bench Telecom-AA 79.53 and BFCLv4 25.15 (Qwen baselines 25.43 and 25.53). The model is behind LFM2.5-1.2B on GPQA-Diamond, IFEval, Multi-IF and MultiChallenge. These are publisher claims, not reproduced by anyone else."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://raw.githubusercontent.com/OpenBMB/MiniCPM/main/assets/minicpm5/public_leaderboard_en.png
   date: '2026-11-19'
 - id: ev-aa
-  claim: 'Artificial Analysis lists MiniCPM5-1B as an open-weights OpenBMB model, Apache 2.0, text only, 128k context, released 25 May 2026, with no publicly available API and no Intelligence Index score or other benchmark result published on the page read.'
+  claim: "Artificial Analysis lists MiniCPM5-1B as an open-weights OpenBMB model, Apache 2.0, text only, 128k context, released 25 May 2026, with no publicly available API and no Intelligence Index score or other benchmark result on its model page."
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://artificialanalysis.ai/models/minicpm5-1b
   date: '2026-11-19'
 - id: ev-github
-  claim: 'OpenBMB/MiniCPM repository: release log (MiniCPM5-1B 2026-05-19), institutions (Modelbest, THUNLP, Renmin University GSAI), deployment cookbooks for Transformers, vLLM, SGLang, llama.cpp, Ollama, LM Studio, MLX, ArcLight, LiteRT-LM and vLLM Ascend, fine-tuning cookbooks for five frameworks, user-side finetune and quantize scripts and a minicpm5 tool parser, GGUF size table, issue templates, Discussions, Discord and Feishu; no SECURITY.md (404) and no MiniCPM5 report or pretraining, RL or OPD code in the repository.'
+  claim: "The OpenBMB/MiniCPM repository holds a release log (MiniCPM5-1B 2026-05-19) and names the institutions (Modelbest, THUNLP, Renmin University GSAI). It provides deployment cookbooks for Transformers, vLLM, SGLang, llama.cpp, Ollama, LM Studio, MLX, ArcLight, LiteRT-LM and vLLM Ascend, and fine-tuning cookbooks for five frameworks. It also has user-side finetune and quantize scripts, a minicpm5 tool parser, a GGUF size table, issue templates, Discussions, Discord and Feishu. It has no SECURITY.md (404) and no MiniCPM5 report or pretraining, RL or OPD code."
   source_type: publisher
   doc_type: docs
   retrieved: true

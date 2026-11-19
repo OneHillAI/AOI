@@ -1,7 +1,6 @@
 # Use - LLM-jp-4.1 thinking (8B, 32B-A3B, 33B)
 
-_What can it do and how do we use it well? Capabilities, context window, chat template,
-languages, and tool use; structured output is a current gap._
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities
@@ -27,7 +26,7 @@ The technical report describes extending context from 4K to 64K in mid-training 
 stage (`ev-techreport`). The publisher's blog reports that on BFCL's multi-turn long-context
 category the 33B model beats the 8B and 32B-A3B models by the widest margin, and that this is
 also the category where LLM-jp-4.1 trails Qwen3.5 most (`ev-blog`). No needle-in-a-haystack or
-long-context reasoning benchmark was found; test your own long inputs.
+long-context reasoning benchmark is published; test your own long inputs.
 
 <!-- item: chat-template -->
 ## Prompt format & chat template

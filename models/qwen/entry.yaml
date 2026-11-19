@@ -21,16 +21,14 @@ publisher:
   accountable_entity: true
   url: https://huggingface.co/Qwen
   security_contact: https://huggingface.co/Qwen
-summary: 'Qwen is Alibaba''s large, fast-moving open-weight family. The mainstream
-  Qwen3 generation spans dense models from 0.6B to 32B plus Mixture-of-Experts variants,
-  and includes Qwen3-Coder-480B-A35B, one of the strongest open coding models available.
-  The mainstream Qwen3 sizes ship under Apache-2.0, which is a genuine advantage over
-  the restrictive community licenses some peers use. The two things an adopter must
-  weigh: the largest variants likely cross the EU AI Act systemic-risk compute threshold
-  with no Article 55 documentation, and the models exhibit some China-aligned topic
-  censorship - so deploy behind your own guards.
-
-  '
+summary: >-
+  Qwen is Alibaba's large, fast-moving open-weight family. The mainstream Qwen3 generation spans
+  dense models from 0.6B to 32B plus Mixture-of-Experts variants, and includes
+  Qwen3-Coder-480B-A35B, one of the strongest open coding models available. The mainstream Qwen3
+  sizes ship under Apache-2.0, which is more permissive than the restrictive community licences
+  some peers use. Two issues matter to an adopter. The largest variants likely cross the EU AI Act
+  systemic-risk compute threshold with no Article 55 documentation, and the models show some
+  China-aligned topic censorship, so deploy behind your own guards.
 variants:
 - name: Qwen3 dense
   params_total: 0.6B-32B
@@ -64,8 +62,9 @@ openness:
     classification: osi
     commercial_use: allowed
     notable_restrictions:
-    - Some historical/very-large variants used the Tongyi Qianwen community license
-      - verify the LICENSE file per checkpoint
+    - >-
+      Some legacy or very large variants use the Tongyi Qianwen community licence. Verify the
+      LICENSE file per checkpoint.
     url: https://huggingface.co/Qwen
 provenance:
   canonical_source: https://huggingface.co/Qwen
@@ -99,28 +98,25 @@ eu_ai_act:
     article_55_docs_available: 'no'
   open_source_exemption:
     license_qualifies: 'no'
-    rationale: 'On license grounds the Apache-2.0 mainstream sizes plausibly qualify
-      for the open-source exemption. But the exemption does not apply to systemic-risk
-      models, and the largest Qwen variants (235B, Qwen3-Coder-480B) likely exceed
-      the 1e25 FLOPs threshold, so for those the exemption is void and the full Article
-      55 package would be owed - which is not published. Recorded as ''no'' for the
-      family because the systemic-risk variants dominate the compliance risk.
-
-      '
+    rationale: >-
+      On licence grounds the Apache-2.0 mainstream sizes plausibly qualify for the open-source
+      exemption. The exemption does not apply to systemic-risk models, and the largest Qwen
+      variants (235B, Qwen3-Coder-480B) likely exceed the 1e25 FLOPs threshold. For those variants
+      the exemption is void and the full Article 55 package is owed, but it is not published.
+      Recorded as "no" for the family because the systemic-risk variants dominate the compliance
+      risk.
   provider_package:
     technical_documentation: partial
     downstream_information: partial
     copyright_policy: 'no'
     training_content_summary: 'no'
     code_of_practice_signatory: false
-  deployer_notes: 'A China-based provider is unlikely to furnish an EU AI Office documentation
-    package. For the smaller Qwen3 sizes an EU deployer inherits a usable model card
-    and a permissive license but must self-assemble copyright policy and training-content
-    material. For the systemic-risk large variants there is a real Article 55 gap
-    that the deployer cannot close from upstream artifacts - factor this into siting
-    and use.
-
-    '
+  deployer_notes: >-
+    A China-based provider is unlikely to furnish an EU AI Office documentation package. For the
+    smaller Qwen3 sizes, an EU deployer has a usable model card and a permissive licence but must
+    write the copyright policy and training-content material itself. For the systemic-risk large
+    variants there is an Article 55 gap that the deployer cannot close from upstream artifacts,
+    which affects siting and use.
   last_assessed: '2026-07-25'
 performance: {}
 behaviour: {}
@@ -128,10 +124,9 @@ safety: {}
 deployment:
   ceiling_tier: T3
   ceiling_conditional: true
-  hardware_notes: 'Dense 0.6B-32B cover laptop-to-single-GPU; the 235B MoE and 480B-Coder
-    need multi-GPU / serious infrastructure or aggressive quantization.
-
-    '
+  hardware_notes: >-
+    Dense 0.6B-32B models cover laptop to single GPU. The 235B MoE and 480B-Coder need multi-GPU
+    infrastructure or aggressive quantisation.
   serving_support:
   - vllm
   - llama.cpp
@@ -156,77 +151,68 @@ score:
   dimensions:
     openness:
       score: 3
-      rationale: 'Open-weights tier: weights are downloadable under Apache-2.0 with
-        a good model card, but training data and training code are undisclosed and
-        evaluation is only partially reproducible. Open-weight distribution over a closed training recipe.
-
-        '
+      rationale: >-
+        Open-weights tier: weights are downloadable under Apache-2.0 with a good model card.
+        Training data and training code are undisclosed, and evaluation is only partially
+        reproducible. The weights are open and the training recipe is closed.
       evidence_refs:
       - ev-qwen-hf
       - ev-license
     provenance:
       score: 3
-      rationale: 'Verified Qwen org on Hugging Face plus official ModelScope publication,
-        safetensors with checksums, and no canonical-org malicious incident (checklist
-        5/8). The dual-hub distribution is a supply-chain surface - verify checksums
-        match across hubs. Meets the score-3 anchor (verified org + safetensors +
-        checksums); short of 4, which needs a scanned checkpoint or a documented
-        mirror/quantization policy (~6-7 boxes), and of 5''s cryptographic signing.
-
-        '
+      rationale: >-
+        The Qwen org on Hugging Face is verified, the models are also officially published on
+        ModelScope, and checkpoints are safetensors with checksums and no canonical-org malicious
+        incident (checklist 5/8). The dual-hub distribution is a supply-chain surface, so
+        checksums must match across hubs. That meets the score-3 anchor (verified org,
+        safetensors, checksums). A 4 needs a scanned checkpoint or a documented
+        mirror/quantisation policy (~6-7 boxes), and a 5 needs cryptographic signing.
       evidence_refs:
       - ev-qwen-hf
       - ev-modelscope
     legal:
       score: 3
-      rationale: 'The permissive Apache-2.0 license on the mainstream sizes is a real
-        plus and better than a restricted community license. But there is no training-content
-        summary or copyright policy, and the largest variants carry a systemic-risk
-        Article 55 gap with no documentation - capping legal readiness at competent-with-caveats.
-
-        '
+      rationale: >-
+        The permissive Apache-2.0 licence on the mainstream sizes is better than a restricted
+        community licence. There is no training-content summary or copyright policy, and the
+        largest variants carry a systemic-risk Article 55 gap with no documentation. That caps
+        legal readiness at competent-with-caveats.
       evidence_refs:
       - ev-license
       - ev-eu-gap
     safety:
       score: 3
-      rationale: 'Instruct variants are safety-tuned and withstand casual jailbreaks,
-        but tuning is lighter than Western frontier labs, there is no companion guard
-        model, and the models exhibit China-aligned topic censorship - a behavioural
-        quirk to account for. Deploy behind your own guards.
-
-        '
+      rationale: >-
+        Instruct variants are safety-tuned and withstand casual jailbreaks. Tuning is lighter than
+        at Western frontier labs, there is no companion guard model, and the models show
+        China-aligned topic censorship. Deploy behind your own guards.
       evidence_refs:
       - ev-safety
       - ev-behaviour
     performance:
       score: 4
-      rationale: 'Strong general capability and especially strong coding: Qwen3-Coder
-        is among the best open coding models on independent evaluation. Not marked
-        5 for the family because leadership is domain-concentrated (coding/agentic)
-        rather than uniform, and the results are third-party framed.
-
-        '
+      rationale: >-
+        Qwen3 has strong general capability and especially strong coding: Qwen3-Coder is among the
+        best open coding models on independent evaluation. It does not earn a 5 for the family
+        because leadership is concentrated in coding and agentic work, and the results are
+        third-party.
       evidence_refs:
       - ev-perf-coding
     operational:
       score: 5
-      rationale: 'First-class ecosystem support: dual distribution on Hugging Face
-        and ModelScope, broad serving support (vLLM, llama.cpp, Ollama, TGI, MLX),
-        a very wide size range from laptop to datacentre, and abundant community quantizations.
-        Day-0 availability across the stack.
-
-        '
+      rationale: >-
+        Distribution is dual, on Hugging Face and ModelScope. Serving support is broad (vLLM,
+        llama.cpp, Ollama, TGI, MLX), sizes run from laptop to datacentre, and community
+        quantisations are abundant. Day-0 availability spans the stack.
       evidence_refs:
       - ev-qwen-hf
       - ev-ecosystem
     governance:
       score: 3
-      rationale: 'Active, accountable publisher (Alibaba Qwen team) with a rapid release
-        cadence and a verified presence on two hubs, but no documented vulnerability-disclosure
-        or deprecation policy and no Code of Practice signature.
-
-        '
+      rationale: >-
+        Alibaba's Qwen team is an active, accountable publisher with a rapid release cadence and a
+        verified presence on two hubs. There is no documented vulnerability-disclosure or
+        deprecation policy and no Code of Practice signature.
       evidence_refs:
       - ev-qwen-hf
       - ev-eu-gap
@@ -238,27 +224,39 @@ signals:
   trainability:
     level: partial
     dimension: openness
-    summary: "Fine-tune freely under Apache-2.0 on the mainstream sizes, but training data and code are closed, so you can adapt the weights without reproducing training; verify each checkpoint's LICENSE."
+    summary: >-
+      Fine-tuning is free under Apache-2.0 on the mainstream sizes. Training data and code are
+      closed, so the weights can be adapted but training cannot be reproduced. Verify each
+      checkpoint's LICENSE.
     refs: [ev-license, ev-qwen-hf]
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "Capable long-context (131k with YaRN; 262k native on Coder) knowledge and coding backbone, but China-aligned topic censorship distorts coverage on politically sensitive subjects."
+    summary: >-
+      Long context (131k with YaRN; 262k native on Coder) makes a capable knowledge and coding
+      backbone. China-aligned topic censorship distorts coverage of politically sensitive
+      subjects.
     refs: [ev-perf-coding, ev-behaviour]
   specialization:
     level: strong
     dimension: openness
-    summary: "Excellent for specialisation: an unusually wide size ladder (0.6B-480B, including a top open coder) under Apache-2.0 for fine-tuning and distillation."
+    summary: >-
+      A wide size ladder (0.6B-480B, including a top open coder) under Apache-2.0 supports
+      fine-tuning and distillation.
     refs: [ev-qwen-hf, ev-perf-coding]
   exchangeability:
     level: high
     dimension: operational
-    summary: "Highly portable: safetensors across vLLM/llama.cpp/Ollama/TGI/MLX behind OpenAI-compatible serving; mind the Qwen3 chat template and thinking-mode format when swapping."
+    summary: >-
+      Safetensors weights run across vLLM, llama.cpp, Ollama, TGI and MLX behind OpenAI-compatible
+      serving. The Qwen3 chat template and thinking-mode format need handling when swapping.
     refs: [ev-ecosystem, ev-qwen-hf]
   misuse_exposure:
     level: unbenchmarked
     dimension: safety
-    summary: "Not independently benchmarked for misuse: safety tuning is lighter than Western frontier labs with no companion guard model, and no broad third-party red-team exists."
+    summary: >-
+      No independent misuse benchmark exists. Safety tuning is lighter than at Western frontier
+      labs with no companion guard model, and no broad third-party red-team exists.
     refs: [ev-safety, ev-behaviour]
 
 # --- Four documentation domains. Item keys match checklists/model.yaml and a
@@ -277,54 +275,73 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-qwen-hf, ev-perf-coding]
-        summary: "General-purpose assistant and especially coding/agentic workloads across a wide size range; deploy behind your own guards, and treat the systemic-risk large variants as out of scope for EU high-stakes use."
+        summary: >-
+          General-purpose assistant use and especially coding and agentic workloads across a wide
+          size range. Deploy behind your own guards, and treat the systemic-risk large variants as
+          out of scope for EU high-stakes use.
       - key: limitations
         title: "Known limitations, bias & failure modes"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-behaviour, ev-safety]
-        summary: "China-aligned topic censorship; lighter safety tuning than Western frontier labs with no guard model; capability leadership is concentrated in coding/agentic rather than uniform."
+        summary: >-
+          China-aligned topic censorship; lighter safety tuning than at Western frontier labs with
+          no guard model; capability leadership concentrated in coding and agentic work.
       - key: openness
         title: "Openness tier & components"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-qwen-hf, ev-license]
-        summary: "open_weights - Apache-2.0 weights and a good model card, but training data and code are closed and evaluation is only partially reproducible."
+        summary: >-
+          open_weights: Apache-2.0 weights and a good model card, with closed training data and
+          code and only partially reproducible evaluation.
       - key: license
         title: "License terms & permitted use"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-license]
-        summary: "Mainstream Qwen3 sizes are OSI Apache-2.0 with unconditional commercial use; verify LICENSE per checkpoint - some large/historical variants used the Tongyi Qianwen community license."
+        summary: >-
+          Mainstream Qwen3 sizes are OSI Apache-2.0 with unconditional commercial use. Verify
+          LICENSE per checkpoint, because some large or legacy variants use the Tongyi Qianwen
+          community licence.
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-qwen-hf, ev-modelscope]
-        summary: "Verified Qwen org on Hugging Face plus official ModelScope dual-publication; safetensors with checksums but no cryptographic signing - verify checksums match across hubs."
+        summary: >-
+          Verified Qwen org on Hugging Face plus official ModelScope dual-publication. Safetensors
+          with checksums but no cryptographic signing, so verify checksums match across hubs.
       - key: eu-ai-act
         title: "EU AI Act posture"
         doc_type: explanation
         source_type: aggregated
         coverage: full
         refs: [ev-eu-gap, ev-license]
-        summary: "GPAI; the 235B and 480B-Coder likely exceed the 1e25 FLOPs systemic-risk threshold with NO Article 55 documentation, voiding the open-source exemption for those variants."
+        summary: >-
+          GPAI. The 235B and 480B-Coder likely exceed the 1e25 FLOPs systemic-risk threshold with
+          no Article 55 documentation, which voids the open-source exemption for those variants.
       - key: evaluation
         title: "Benchmarks & evaluation"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-perf-coding]
-        summary: "Aggregated from third-party evaluation: strong general capability and class-leading open coding (Qwen3-Coder); third-party framed and evaluation is only partially open."
+        summary: >-
+          Third-party evaluation shows strong general capability and class-leading open coding
+          (Qwen3-Coder). The results are third-party and evaluation is only partially open.
       - key: safety-eval
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: gap
-        gap_reason: "No broad independent red-team / safety battery (CBRN, cyber, prompt-injection) has been published for the Qwen3 family. Vendor safety tuning is documented but there is no third-party adversarial suite to aggregate."
+        gap_reason: >-
+          No broad independent red-team or safety battery (CBRN, cyber, prompt-injection) has been
+          published for the Qwen3 family. Vendor safety tuning is documented, but no third-party
+          adversarial suite exists to aggregate.
   implement:
     completeness: 90.9
     originality: 0.0
@@ -363,7 +380,9 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-ecosystem]
-        summary: "Abundant community GGUF/AWQ quants (Ollama and others) across the size range; these are community artifacts rather than a single official quantization program."
+        summary: >-
+          Abundant community GGUF and AWQ quants (Ollama and others) cover the size range. There
+          is no single official quantisation programme.
       - key: fine-tuning
         title: "Fine-tuning & adaptation"
         doc_type: howto
@@ -388,7 +407,9 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-perf-coding, ev-qwen-hf]
-        summary: "Strong general text plus class-leading open coding/agentic performance; text-focused, with a very wide size ladder from 0.6B to a 480B coder."
+        summary: >-
+          Strong general text and class-leading open coding and agentic performance. Text-focused,
+          with sizes from 0.6B to a 480B coder.
       - key: context-window
         title: "Context window & long-context behaviour"
         doc_type: reference
@@ -402,7 +423,9 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-qwen-hf]
-        summary: "Qwen3 ships a chat template (and a thinking / non-thinking mode) in its tokenizer config - use apply_chat_template rather than hand-rolling roles."
+        summary: >-
+          Qwen3 ships a chat template (and a thinking / non-thinking mode) in its tokenizer
+          config. Use apply_chat_template instead of hand-rolling roles.
       - key: languages
         title: "Language coverage"
         doc_type: reference
@@ -421,7 +444,10 @@ documentation:
         title: "Structured / JSON-constrained output"
         doc_type: reference
         source_type: gap
-        gap_reason: "No model-documented native JSON/schema-constrained output guarantee for Qwen3; constrained decoding is available at the serving layer (e.g. vLLM grammars) as a runtime feature rather than a model behaviour."
+        gap_reason: >-
+          No model-documented native JSON/schema-constrained output guarantee for Qwen3.
+          Constrained decoding is available at the serving layer (e.g. vLLM grammars) as a runtime
+          feature of the server.
   support:
     completeness: 50.0
     originality: 0.0
@@ -432,7 +458,9 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-qwen-hf, ev-ecosystem]
-        summary: "Aggregated common pitfalls (OOM on 235B/480B, chat-template/thinking-mode mismatch, checksum drift across HF vs ModelScope); not an exhaustive catalogue."
+        summary: >-
+          Common pitfalls are OOM on 235B/480B, chat-template/thinking-mode mismatch and checksum
+          drift across HF and ModelScope. The list is not exhaustive.
       - key: release-versioning
         title: "Versions, changelog & cadence"
         doc_type: release_notes
@@ -463,28 +491,69 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-behaviour, ev-safety]
-        summary: "From model-card and third-party caveats: China-aligned topic censorship, lighter safety coverage than frontier labs, and an unclosed EU Article 55 gap on the largest variants."
+        summary: >-
+          China-aligned topic censorship, lighter safety coverage than at frontier labs, and an
+          unclosed EU Article 55 gap on the largest variants.
 
 ownership:
   level: partial
   factors:
     use_modify:
       level: strong
-      rationale: "The licence is per-checkpoint rather than a single grant across the family: mainstream Qwen3 (0.6B, 32B, 235B-A22B, Coder-480B-A35B-Instruct) is Apache-2.0 with unconditional commercial use and no MAU clause, but the legacy/large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct) carry a >100M-monthly-active-user licence trigger, a 'Built with Qwen' attribution requirement and export controls - check the LICENSE file on the exact checkpoint before you rely on Apache terms."
+      rationale: >-
+        The licence is per checkpoint. Mainstream Qwen3 (0.6B, 32B, 235B-A22B,
+        Coder-480B-A35B-Instruct) is Apache-2.0 with unconditional commercial use and no MAU
+        clause. The legacy and large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct)
+        carry a >100M-monthly-active-user licence trigger, a 'Built with Qwen' attribution
+        requirement and export controls. Check the LICENSE file on the exact checkpoint before
+        relying on Apache terms.
       # grounded in: ev-license (license, retrieved) - apache-2.0 verified across four Qwen3 checkpoints, no MAU clause; ev-license-tongyi (license, retrieved) - Sec 4 MAU>100M + Sec 5 attribution/export read verbatim on Qwen2.5-72B-Instruct
     transparency:
       level: weak
-      rationale: "You hold the weights but cannot inspect what is in them: training data and code are closed and China-aligned topic censorship is baked into behaviour, so sensitive-topic coverage is distorted in ways you cannot audit. On the hosted path, the binding Alibaba Cloud Product Terms (Sec 4.48, updated 19 Oct 2026) say Alibaba Cloud 'will not use your Member Content to develop or improve the models on Model Studio, unless you separately provide your consent' (the FAQ repeats a softer 'never uses your data for model training'), but they state no retention period, storage region or opt-out mechanism."
+      rationale: >-
+        The weights are held but cannot be inspected: training data and code are closed and
+        China-aligned topic censorship is built into behaviour, so sensitive-topic coverage is
+        distorted in ways that cannot be audited. On the hosted path, the binding Alibaba Cloud
+        Product Terms (Sec 4.48, updated 19 Oct 2026) say Alibaba Cloud 'will not use your Member
+        Content to develop or improve the models on Model Studio, unless you separately provide
+        your consent'. The FAQ repeats a softer 'never uses your data for model training'. The
+        Terms state no retention period, storage region or opt-out mechanism.
       # grounded in: ev-behaviour (third_party) - censorship; ev-terms (terms, retrieved 2026-11-19) - Product Terms Sec 4.48 binding no-training-without-consent, no retention period, region or opt-out stated; ev-modelstudio-faq (docs, retrieved) - FAQ no-training sentence
     reliability:
       level: moderate
-      rationale: "Runs dependably with 32K native context (128K with YaRN; 256K native on Coder) and documented thinking modes, but safety tuning is lighter than Western frontier labs, with no companion guard model, so you supply that layer."
+      rationale: >-
+        Qwen3 runs dependably with 32K native context (128K with YaRN; 256K native on Coder) and
+        documented thinking modes. Safety tuning is lighter than at Western frontier labs and no
+        companion guard model exists, so the deployer supplies that layer.
       # grounded in: ev-perf-coding (third_party) - class-leading open coding; ev-tech-report (technical_report, retrieved) - Qwen3 report, modes and multilingual coverage
     data_control:
       level: strong
-      rationale: "Self-hosted, the Apache-licensed weights run on your own infrastructure with no clawback or telemetry, so your data stays yours. On Alibaba's hosted Qwen, the binding Product Terms (Sec 4.48) commit that Alibaba Cloud will not use your Member Content to develop or improve its Model Studio models without your separate consent, and treat Input and Output as your content processed on your behalf; the FAQ adds AES-256 encryption of transmitted data, and the general privacy policy documents Singapore storage (Philippines addendum), SCC/DPF cross-border transfers and 'ongoing legitimate business need' retention. No document read states an exact retention period, a storage region for Model Studio content or an opt-out mechanism, and the Terms let Alibaba Cloud remove stored data from time to time."
+      rationale: >-
+        Self-hosted, the Apache-licensed weights run on the deployer's own infrastructure with no
+        clawback or telemetry, so data stays with the deployer. On Alibaba's hosted Qwen, the
+        binding Product Terms (Sec 4.48) commit that Alibaba Cloud will not use Member Content to
+        develop or improve its Model Studio models without separate consent. They treat Input and
+        Output as the customer's content, processed on the customer's behalf. The FAQ adds AES-256
+        encryption of transmitted data. The general privacy policy documents Singapore storage
+        (Philippines addendum), SCC/DPF cross-border transfers and 'ongoing legitimate business
+        need' retention. No document states an exact retention period, a storage region for Model
+        Studio content or an opt-out mechanism, and the Terms let Alibaba Cloud remove stored data
+        from time to time.
       # grounded in: self-hosting (structural); ev-terms (terms, retrieved 2026-11-19) - Product Terms Sec 4.48 no-training-without-consent, Member Content processed on customer's behalf; ev-modelstudio-faq (docs, retrieved) - AES-256 for transmitted data; ev-privacy (privacy_policy, retrieved) - Singapore storage, SCC/DPF transfers, retention
-  verdict: "You partly own Qwen: the Apache-licensed mainstream Qwen3 sizes are yours to run, modify and self-host, they perform strongly (especially coding), and self-hosted your data stays on your infrastructure. Two things cap it at partial. First the licence is per-checkpoint - Apache-2.0 on mainstream Qwen3, but the legacy/large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct) carry a >100M-MAU trigger and 'Built with Qwen' attribution - so verify the LICENSE on the exact checkpoint. Second, transparency: China-aligned censorship is baked in and training is closed; the hosted path carries a binding no-training-without-consent term (Alibaba Cloud Product Terms Sec 4.48) alongside the Singapore-storage/SCC-DPF/retention privacy policy, but no document read gives an exact retention period, a Model Studio storage region or an opt-out. Adopt with hard limits: keep politically sensitive and regulated workloads off it, confirm the per-checkpoint licence, and if you place a systemic-risk-scale variant on the EU market, close the Article 55 gap yourself."
+  verdict: >-
+    Qwen is partly owned. The Apache-licensed mainstream Qwen3 sizes can be run, modified and
+    self-hosted, they perform strongly (especially at coding), and self-hosted data stays on the
+    deployer's infrastructure. Two things cap ownership at partial. First, the licence is per
+    checkpoint: Apache-2.0 on mainstream Qwen3, but the legacy and large Tongyi Qianwen
+    checkpoints (Qwen-72B, Qwen2.5-72B-Instruct) carry a >100M-MAU trigger and 'Built with Qwen'
+    attribution, so verify the LICENSE on the exact checkpoint. Second, transparency is weak:
+    China-aligned censorship is built in and training is closed. The hosted path carries a binding
+    no-training-without-consent term (Alibaba Cloud Product Terms Sec 4.48) alongside a privacy
+    policy that documents Singapore storage, SCC/DPF transfers and retention, but no document
+    gives an exact retention period, a Model Studio storage region or an opt-out. Adopt with hard
+    limits: keep politically sensitive and regulated workloads off it, confirm the per-checkpoint
+    licence, and close the Article 55 gap yourself if a systemic-risk-scale variant goes on the EU
+    market.
 
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
 #     (true = the document's substantive text was read; false = known to exist but not read).
@@ -499,87 +568,92 @@ ownership:
 #     without-consent; no document read states a Model Studio retention period, region or opt-out.
 evidence:
 - id: ev-qwen-hf
-  claim: Qwen3 checkpoints are hosted on the verified Qwen org on Hugging Face in
-    safetensors with checksums; none is gated (Hugging Face API gated False on every
-    Qwen3 checkpoint checked, re-read 2026-11-19).
+  claim: >-
+    Qwen3 checkpoints are hosted on the verified Qwen org on Hugging Face in safetensors with
+    checksums. None is gated: the Hugging Face API reports gated False on every Qwen3 checkpoint
+    checked.
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/Qwen
   date: '2026-11-19'
 - id: ev-license
-  claim: 'Mainstream Qwen3 checkpoints are released under Apache-2.0 with unconditional
-    commercial use and NO monthly-active-user clause - raw LICENSE file read on four
-    checkpoints (Qwen3-0.6B, Qwen3-32B, Qwen3-235B-A22B, Qwen3-Coder-480B-A35B-Instruct):
-    byte-identical unmodified Apache License 2.0 text, and the cards show "license: apache-2.0".
-    Re-read 2026-11-19; the same text covers the wider Qwen3 line (2507 updates, FP8, MLX).'
+  claim: >-
+    Mainstream Qwen3 checkpoints are released under Apache-2.0 with unconditional commercial use
+    and no monthly-active-user clause. The raw LICENSE file of four checkpoints (Qwen3-0.6B,
+    Qwen3-32B, Qwen3-235B-A22B, Qwen3-Coder-480B-A35B-Instruct) is byte-identical, unmodified
+    Apache License 2.0 text, and the cards show "license: apache-2.0". The same text covers the
+    wider Qwen3 line (2507 updates, FP8, MLX).
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/Qwen/Qwen3-235B-A22B/raw/main/LICENSE
   date: '2026-11-19'
 - id: ev-license-tongyi
-  claim: 'Legacy/large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct)
-    are NOT Apache-2.0 - the Tongyi Qianwen community licence, read verbatim: Sec 4
-    "If you are commercially using the Materials, and your product or service has more
-    than 100 million monthly active users, you shall request a license from us"; Sec
-    5.b "Built with Qwen"/"Improved using Qwen" attribution; Sec 5.a export controls
-    (China/US/other).'
+  claim: >-
+    Legacy and large Tongyi Qianwen checkpoints (Qwen-72B, Qwen2.5-72B-Instruct) are not
+    Apache-2.0. They use the Tongyi Qianwen community licence. Sec 4 states "If you are
+    commercially using the Materials, and your product or service has more than 100 million
+    monthly active users, you shall request a license from us". Sec 5.b requires "Built with
+    Qwen"/"Improved using Qwen" attribution. Sec 5.a sets export controls (China/US/other).
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/Qwen/Qwen2.5-72B-Instruct/raw/main/LICENSE
   date: '2026-11-19'
 - id: ev-tech-report
-  claim: 'Qwen3 Technical Report (arXiv 2505.09388): documents the Qwen3 family,
-    thinking/non-thinking modes, thinking budget, and multilingual coverage (~119
-    languages). Abstract page re-read 2026-11-19 (29 to 119 languages and dialects).'
+  claim: >-
+    The Qwen3 Technical Report (arXiv 2505.09388) documents the Qwen3 family,
+    thinking/non-thinking modes, thinking budget and multilingual coverage (~119 languages). The
+    abstract gives 29 to 119 languages and dialects.
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2505.09388
   date: '2026-11-19'
 - id: ev-privacy
-  claim: 'General Alibaba Cloud International Website Privacy Policy, read: retention
-    tied to "ongoing legitimate business need" (Sec F); cross-border transfers under
-    SCCs (GDPR Art. 46) and the EU-US/UK/Swiss Data Privacy Framework (Sec D); "Your
-    personal data will be stored in Singapore" (Philippines addendum). This general
-    policy is SILENT on AI training. Re-read 2026-11-19 (Last Updated 4 Sep 2026): clauses unchanged.'
+  claim: >-
+    The general Alibaba Cloud International Website Privacy Policy (Last Updated 4 Sep 2026) ties
+    retention to "ongoing legitimate business need" (Sec F). It covers cross-border transfers
+    under SCCs (GDPR Art. 46) and the EU-US/UK/Swiss Data Privacy Framework (Sec D), and states
+    "Your personal data will be stored in Singapore" (Philippines addendum). This general policy
+    is silent on AI training.
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-privacy-policy
   date: '2026-11-19'
 - id: ev-modelstudio-faq
-  claim: 'Alibaba Cloud Model Studio FAQ, read verbatim: "Alibaba Cloud strictly
-    protects data privacy and never uses your data for model training." Model Studio
-    All data transmitted "is encrypted with AES-256". Re-read 2026-11-19: the no-training
-    sentence is unchanged, the earlier "will store data generated from model and application
-    calls" sentence is no longer present, and the FAQ now points to the Alibaba Cloud
-    International Website Product Terms of Service for data handling - see ev-terms.'
+  claim: >-
+    The Alibaba Cloud Model Studio FAQ states: "Alibaba Cloud strictly protects data privacy and
+    never uses your data for model training." All data transmitted "is encrypted with AES-256".
+    For data handling the FAQ points to the Alibaba Cloud International Website Product Terms of
+    Service (see ev-terms).
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://www.alibabacloud.com/help/en/model-studio/faq-about-alibaba-cloud-model-studio
   date: '2026-11-19'
 - id: ev-terms
-  claim: 'Alibaba Cloud International Website Product Terms of Service (Last Updated 19 Oct 2026),
-    Sec 4.48 Model Studio, read verbatim: Input and Output are "Member Content" processed
-    "for your purposes and on your behalf"; "Alibaba Cloud will not use your Member Content to
-    develop or improve the models on Model Studio, unless you separately provide your consent."
-    The section states no retention period, no storage region and no opt-out mechanism, and
-    lets Alibaba Cloud remove stored data from time to time. This is the binding document the
-    Model Studio FAQ points to.'
+  claim: >-
+    Alibaba Cloud International Website Product Terms of Service (Last Updated 19 Oct 2026), Sec
+    4.48 Model Studio, treat Input and Output as "Member Content" processed "for your purposes and
+    on your behalf". The section states no retention period, no storage region and no opt-out
+    mechanism, and lets Alibaba Cloud remove stored data from time to time. The Model Studio FAQ
+    points to these terms as the binding document. The no-training clause reads: "Alibaba Cloud
+    will not use your Member Content to develop or improve the models on Model Studio, unless you
+    separately provide your consent."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service
   date: '2026-11-19'
 - id: ev-modelscope
-  claim: 'Qwen is also officially published on Alibaba''s ModelScope hub (dual distribution):
-    the public ModelScope model API returns Qwen/Qwen3-32B, Qwen3-235B-A22B and
-    Qwen3-Coder-480B-A35B-Instruct with License apache-2.0 (read 2026-11-19; the organisation
-    web page is a JavaScript shell and was not readable as a page).'
+  claim: >-
+    Qwen is also officially published on Alibaba's ModelScope hub (dual distribution). The public
+    ModelScope model API returns Qwen/Qwen3-32B, Qwen3-235B-A22B and
+    Qwen3-Coder-480B-A35B-Instruct with License apache-2.0. The organisation web page is a
+    JavaScript shell, so the API is the source.
   source_type: publisher
   doc_type: model_card
   retrieved: true

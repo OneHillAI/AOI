@@ -1,7 +1,6 @@
 # Implement - NVIDIA Nemotron 3 Ultra (550B)
 
-_How do we deploy it? Install, hardware, serving, safe-deployment controls, quantization,
-fine-tuning, and integration live here._
+_Installation, hardware, serving, safe-deployment controls, quantisation, fine-tuning and integration._
 
 <!-- item: install -->
 ## Install & run
@@ -39,7 +38,7 @@ licence imposes no field-of-use restriction. Complete the pre-deployment gate in
 ## Available quantizations
 
 NVIDIA publishes official **BF16 and NVFP4** variants of Ultra alongside the base safetensors, so a
-low-precision path is first-party rather than community-only.
+low-precision path is first-party and does not depend on community quantizations.
 
 <!-- item: fine-tuning -->
 ## Fine-tuning & adaptation
@@ -47,7 +46,7 @@ low-precision path is first-party rather than community-only.
 A representative training recipe (Pretrain -> SFT -> MOPD -> Quant) is released with CC-BY post-training
 data, so adaptation is realistic. Reproduction is not: the intermediate checkpoints the recipe depends
 on are not open-sourced, and the 1M-context phase is excluded because its data is not open. Adapt from
-the released checkpoint rather than expecting a full re-run.
+the released checkpoint; a full re-run is not available.
 
 <!-- item: integration -->
 ## API / OpenAI-compatible integration

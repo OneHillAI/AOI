@@ -29,18 +29,7 @@ publisher:
   accountable_entity: true
   url: https://llm-jp.nii.ac.jp/en/
   security_contact: llm-jp(at)nii.ac.jp (general contact on the model cards; no security policy published)
-summary: 'LLM-jp-4.1 is the most documented Japanese open model family reviewed so far, but its own cards
-  say it is for research and development and not for direct use in production services. It is a
-  from-scratch Japanese and English reasoning (thinking) model series from Japan''s National Institute
-  of Informatics: an 8B dense, a 32B-A3B mixture-of-experts and a 33B dense model, each trained on
-  11.7T tokens, with a 64K context window, Apache-2.0 weights, public pre-training and mid-training
-  corpora (with named exclusions), published SFT and DPO datasets (with named exclusions) and released
-  pre-training scripts. Post-training is SFT plus DPO only, with no reinforcement learning. 4.1 adds
-  tool calling over the 4.0 series. Its safety evidence is a single publisher-run Japanese benchmark,
-  there is no guard model and no independent evaluation, so the entry scores low on safety and
-  performance evidence even though openness is high.
-
-  '
+summary: "LLM-jp-4.1 is the most documented Japanese open model family reviewed so far, but its own cards say it is for research and development and not for direct use in production services. It is a from-scratch Japanese and English reasoning (thinking) series from Japan's National Institute of Informatics: an 8B dense, a 32B-A3B mixture-of-experts and a 33B dense model, each trained on 11.7T tokens, with a 64K context window and Apache-2.0 weights. Pre-training and mid-training corpora are public (with named exclusions), as are SFT and DPO datasets (with named exclusions) and pre-training scripts. Post-training is SFT plus DPO only, with no reinforcement learning. 4.1 adds tool calling over the 4.0 series. Safety evidence is a single publisher-run Japanese benchmark, with no guard model and no independent evaluation, so safety and performance score low even though openness is high."
 variants:
 - name: llm-jp-4.1-33b-thinking
   params_total: 33.2B
@@ -111,7 +100,7 @@ provenance:
       note: official GGUF builds from the same org, created 2026-09-24; the card says llama.cpp needs a publisher fork while the cookbook says upstream v0.6.0 or later works
     - name: elyza/ELYZA-Thinking-1.0-llm-jp-4 (33b and 32b-a3b)
       trust: community
-      note: third-party fine-tune built on LLM-jp-4, listed in an earlier research lead only; its card was not read here
+      note: "third-party fine-tune built on LLM-jp-4; its card is not assessed"
   checkpoint_checklist_score: 4
   scanner_result:
     tool: Hugging Face repository scan
@@ -156,13 +145,7 @@ safety: {}
 deployment:
   ceiling_tier: T1
   ceiling_conditional: true
-  hardware_notes: 'No minimum hardware is published; the cookbook records one test machine (RTX 6000 Ada, 32 GiB RAM)
-    and says it is not a minimum. Weight size from the hub listing: the 33B GGUF is 66.4 GB in BF16 and 20.4 GB in
-    Q4_K_M, so the BF16 33B needs roughly 70 GB of accelerator memory before the KV cache, and a Q4_K_M build fits
-    a single 24 GB card with a short context. The 8B is about 17 GB in BF16 (safetensors shards total about 17.2 GB).
-    The 32B-A3B holds 32B parameters in memory but computes with 3.8B.
-
-    '
+  hardware_notes: "No minimum hardware is published. The cookbook records one test machine (RTX 6000 Ada, 32 GiB RAM) and says it is not a minimum. The 33B GGUF is 66.4 GB in BF16 and 20.4 GB in Q4_K_M per the hub listing. The BF16 33B therefore needs roughly 70 GB of accelerator memory before the KV cache, and a Q4_K_M build fits a single 24 GB card with a short context. The 8B is about 17 GB in BF16 (safetensors shards total about 17.2 GB). The 32B-A3B holds 32B parameters in memory but computes with 3.8B."
   serving_support:
   - hf-transformers
   - vllm
@@ -181,9 +164,7 @@ score:
   dimensions:
     openness:
       score: 4
-      rationale: 'Open weights under Apache-2.0 plus a published recipe: pre-training and mid-training corpora on public GitLab with per-subcorpus licences, SFT and DPO datasets on Hugging Face, pre-training and mid-training scripts and installers on GitHub (Apache-2.0), and a technical report that states data-selection criteria. Held at 4, not 5, because the data release is partial (NWJC and Ceek.jp News are not redistributable; the SFT sets omit AnswerCarefully and ichikara, and two further subsets are marked "To be released"), no document confirms the post-training code used for 4.1, and the judge model for the published evaluations is a closed GPT model.
-
-        '
+      rationale: "Open weights under Apache-2.0 plus a published recipe: pre-training and mid-training corpora on public GitLab with per-subcorpus licences, SFT and DPO datasets on Hugging Face, pre-training and mid-training scripts and installers on GitHub (Apache-2.0), and a technical report that states data-selection criteria. Held at 4, not 5, for three reasons. The data release is partial (NWJC and Ceek.jp News are not redistributable; the SFT sets omit AnswerCarefully and ichikara, and two further subsets are marked \"To be released\"). No document confirms the post-training code used for 4.1. The judge model for the published evaluations is a closed GPT model."
       evidence_refs:
       - ev-card-41
       - ev-techreport
@@ -338,7 +319,7 @@ documentation:
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: gap
-        gap_reason: "No independent safety, red-team or jailbreak evaluation of LLM-jp-4 or 4.1 was found. The only safety result is the publisher's own AnswerCarefully score (LLM judge gpt-5.4), so there is nothing independent to aggregate."
+        gap_reason: "No independent safety, red-team or jailbreak evaluation of LLM-jp-4 or 4.1 is published. The only safety result is the publisher's own AnswerCarefully score (LLM judge gpt-5.4), so there is nothing independent to aggregate."
   implement:
     completeness: 86.4
     originality: 0.0
@@ -435,7 +416,7 @@ documentation:
         title: "Structured / JSON-constrained output"
         doc_type: reference
         source_type: gap
-        gap_reason: "No documented JSON or schema-constrained output mode for LLM-jp-4.1 was found on the cards, cookbook or blog; tool-call arguments are JSON, but constrained decoding would be a serving-layer feature that the publisher has not described."
+        gap_reason: "No JSON or schema-constrained output mode is documented for LLM-jp-4.1 on the cards, cookbook or blog. Tool-call arguments are JSON, but constrained decoding would be a serving-layer feature that the publisher has not described."
   support:
     completeness: 50.0
     originality: 0.0
@@ -458,7 +439,7 @@ documentation:
         title: "Security / vulnerability disclosure"
         doc_type: reference
         source_type: gap
-        gap_reason: "No SECURITY.md or disclosure process exists in the llm-jp GitHub repositories checked (HTTP 404) and none is linked from the cards or release page; the only contact is the general llm-jp(at)nii.ac.jp address."
+        gap_reason: "The llm-jp GitHub repositories have no SECURITY.md or disclosure process (HTTP 404), and none is linked from the cards or release page. The only contact is the general llm-jp(at)nii.ac.jp address."
       - key: channels
         title: "Community & support channels"
         doc_type: reference
@@ -499,28 +480,28 @@ ownership:
 # --- Evidence. doc_type says which kind of primary document; retrieved says whether the text was read.
 evidence:
 - id: ev-card-41
-  claim: 'llm-jp-4.1-33b-thinking model card, read in full (8B and 32B-A3B cards identical on the points used): Apache-2.0 front matter, 11.7T tokens, pre-training and mid-training corpora and SFT and DPO datasets linked, "some portions are excluded from public release due to licensing constraints", SFT then DPO without reinforcement learning, 65,536 context, Harmony-style chat template, AnswerCarefully 4.08 and BFCL and tau2-bench tool-calling evaluation, and the Risks and Limitations statement that the models "are research and development models and are not intended for direct use in production services" and "have undergone post-training for instruction following and safety" but may still produce inaccurate or inappropriate output.'
+  claim: "The llm-jp-4.1-33b-thinking model card declares Apache-2.0 in the front matter and 11.7T tokens; the 8B and 32B-A3B cards are identical on the points used. It links the pre-training and mid-training corpora and the SFT and DPO datasets, and says \"some portions are excluded from public release due to licensing constraints\". It describes SFT then DPO without reinforcement learning, a 65,536 context and a Harmony-style chat template. It reports AnswerCarefully 4.08 and BFCL and tau2-bench tool-calling evaluation. Its Risks and Limitations statement says the models \"are research and development models and are not intended for direct use in production services\" and \"have undergone post-training for instruction following and safety\". The models may still produce inaccurate or inappropriate output."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/llm-jp/llm-jp-4.1-33b-thinking
   date: '2026-11-19'
 - id: ev-card-40
-  claim: 'The LLM-jp-4 (4.0) base, 33b-thinking and 8b-instruct cards say "The models released here are in the early stages of our research and development and have not been tuned to ensure outputs align with human intent and safety considerations", a different safety statement from 4.1; this is why 4.0 is a separate follow-up.'
+  claim: "The LLM-jp-4 (4.0) base, 33b-thinking and 8b-instruct cards say \"The models released here are in the early stages of our research and development and have not been tuned to ensure outputs align with human intent and safety considerations\". This differs from the 4.1 safety statement, so 4.0 is a separate follow-up."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/llm-jp/llm-jp-4-33b-base
   date: '2026-11-19'
 - id: ev-license
-  claim: 'Apache-2.0 is declared in the card front matter and License section of all three 4.1 cards and in section 2.4 of the technical report; the Apache-2.0 text (copyright and patent grants, AS IS disclaimer) was read from apache.org. The model repositories contain no LICENSE file (raw LICENSE returned HTTP 404).'
+  claim: "Apache-2.0 is declared in the card front matter and License section of all three 4.1 cards and in section 2.4 of the technical report. The Apache-2.0 text (copyright and patent grants, AS IS disclaimer) is at apache.org. The model repositories contain no LICENSE file (a request for raw LICENSE returns HTTP 404)."
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://www.apache.org/licenses/LICENSE-2.0.txt
   date: '2026-11-19'
 - id: ev-techreport
-  claim: 'LLM-jp-4 Technical Report (arXiv 2610.19331 v1, 2026-10-14), full text read: 8B dense and 32B-A3B MoE trained from scratch on about 12T tokens, five-level dataset release policy built on Japanese copyright law and consistent with OSAID, external models limited to open-source licences, pre-training configurations published on GitHub, Apache-2.0 models, evaluations against Qwen3-8B and gpt-oss-20b with gpt-5.4 as judge. The 33B results are "not included in this version" and 4.1 is not covered.'
+  claim: "The LLM-jp-4 Technical Report (arXiv 2610.19331 v1, 2026-10-14) covers 8B dense and 32B-A3B MoE models trained from scratch on about 12T tokens. It describes a five-level dataset release policy built on Japanese copyright law and consistent with OSAID, external models limited to open-source licences, pre-training configurations published on GitHub, Apache-2.0 models, and evaluations against Qwen3-8B and gpt-oss-20b with gpt-5.4 as judge. The 33B results are \"not included in this version\" and 4.1 is not covered."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
@@ -534,7 +515,7 @@ evidence:
   url: https://gitlab.llm-jp.nii.ac.jp/datasets/llm-jp-corpus-v4.1
   date: '2026-11-19'
 - id: ev-corpus-v4
-  claim: 'LLM-jp Corpus v4 README: Japanese, English, Korean, Chinese and code subcorpora with licences (mostly CC BY, ODC-BY, CC BY-SA); the NWJC and Ceek.jp News Japanese subcorpora "cannot be redistributed" and are not included; en_fineweb, en_finemath and one PDF subcorpus were not used for LLM-jp-4 pre-training.'
+  claim: "LLM-jp Corpus v4 README lists Japanese, English, Korean, Chinese and code subcorpora with licences (mostly CC BY, ODC-BY, CC BY-SA). The NWJC and Ceek.jp News Japanese subcorpora \"cannot be redistributed\" and are not included. en_fineweb, en_finemath and one PDF subcorpus were not used for LLM-jp-4 pre-training."
   source_type: publisher
   doc_type: docs
   retrieved: true
@@ -548,21 +529,21 @@ evidence:
   url: https://gitlab.llm-jp.nii.ac.jp/datasets/llm-jp-corpus-midtraining-v2
   date: '2026-11-19'
 - id: ev-sft-dpo
-  claim: 'The llm-jp-4.1 SFT and DPO dataset cards (ungated) list per-subset licences; responses were generated with gpt-oss-120b; AnswerCarefully ("answer-carefully-dataset-tou") is "Not included due to redistribution restrictions", ichikara "Requires paid license, not included", llmc_math_dataset and synthetic_if_ja "To be released"; the Nemotron agentic data was generated by several third-party models. The AnswerCarefully dataset licence itself is gated and was not read.'
+  claim: "The llm-jp-4.1 SFT and DPO dataset cards (ungated) list per-subset licences, and responses were generated with gpt-oss-120b. AnswerCarefully (\"answer-carefully-dataset-tou\") is \"Not included due to redistribution restrictions\", ichikara is \"Requires paid license, not included\", and llmc_math_dataset and synthetic_if_ja are \"To be released\". The Nemotron agentic data was generated by several third-party models. The AnswerCarefully dataset licence itself is gated and its terms are unverified."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/datasets/llm-jp/llm-jp-4.1-thinking-sft-data
   date: '2026-11-19'
 - id: ev-code
-  claim: 'github.com/llm-jp/scripts (Apache-2.0) holds LLM-jp-4 pre-training and mid-training configurations (v4-8b, v4-32b which matches the 33B dimensions, v4-32b-a3.8b), installers, corpus-building and checkpoint-conversion scripts; no post-training scripts for 4.1 were found; the release page lists trl SFT and DPO and Nemo-Aligner scripts from older repositories.'
+  claim: "github.com/llm-jp/scripts (Apache-2.0) holds LLM-jp-4 pre-training and mid-training configurations (v4-8b, v4-32b which matches the 33B dimensions, v4-32b-a3.8b), installers, corpus-building and checkpoint-conversion scripts. It has no post-training scripts for 4.1. The release page lists trl SFT and DPO and Nemo-Aligner scripts from older repositories."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://github.com/llm-jp/scripts
   date: '2026-11-19'
 - id: ev-cookbook
-  claim: 'The Apache-2.0 llm-jp-4-cookbook documents Transformers 5.0.0 or later, vLLM 0.30.0 or later with llm-jp-vllm 0.1.1 or later, and llama.cpp v0.6.0 or later; Python examples need trust_remote_code=True; one test machine (RTX 6000 Ada) is recorded and is not a minimum; the 33B Q4_K_M GGUF was validated on llama.cpp v0.6.0.'
+  claim: "The Apache-2.0 llm-jp-4-cookbook documents Transformers 5.0.0 or later, vLLM 0.30.0 or later with llm-jp-vllm 0.1.1 or later, and llama.cpp v0.6.0 or later. Python examples need trust_remote_code=True. One test machine (RTX 6000 Ada) is recorded and is not a minimum. The 33B Q4_K_M GGUF was validated on llama.cpp v0.6.0."
   source_type: publisher
   doc_type: docs
   retrieved: true
@@ -576,7 +557,7 @@ evidence:
   url: https://huggingface.co/llm-jp/llm-jp-4.1-33b-thinking-gguf
   date: '2026-11-19'
 - id: ev-hub-api
-  claim: 'Hugging Face API for the three 4.1 repositories: ungated, safetensors BF16 shards with LFS sha256, no pickle files, no LICENSE file, hub scan done with no flagged files, two custom Python files (llmjp4_tokenizer.py, llmjp4_harmony.py); the llm-jp organisation has isVerified false; collection llm-jp-41-models lists six repositories.'
+  claim: "The Hugging Face API lists the three 4.1 repositories as ungated, with safetensors BF16 shards carrying LFS sha256, no pickle files, no LICENSE file and a completed hub scan with no flagged files. There are two custom Python files (llmjp4_tokenizer.py, llmjp4_harmony.py). The llm-jp organisation has isVerified false, and the collection llm-jp-41-models lists six repositories."
   source_type: publisher
   doc_type: docs
   retrieved: true
@@ -590,14 +571,14 @@ evidence:
   url: https://llm-jp.nii.ac.jp/en/release-en/
   date: '2026-11-19'
 - id: ev-blog
-  claim: 'Publisher blog (2026-09-28, Japanese): 4.1 improves post-training for STEM and adds tool calling (first LLM-jp series with it), AnswerCarefully and llm-jp-instructions improved, answers made shorter, a gap to existing open-weight models remains on GPQA Diamond and AIME, and the pipeline is SFT and DPO only with reinforcement learning planned.'
+  claim: "Publisher blog (2026-09-28, Japanese): 4.1 improves post-training for STEM and adds tool calling, the first LLM-jp series with it. AnswerCarefully and llm-jp-instructions improved and answers were made shorter. A gap to existing open-weight models remains on GPQA Diamond and AIME. The pipeline is SFT and DPO only, with reinforcement learning planned."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://llm-jp.nii.ac.jp/blog/llm-jp-4-1/
   date: '2026-11-19'
 - id: ev-pcwatch
-  claim: 'PC Watch (Impress, 2026-09-29) reports that NII released the three LLM-jp-4.1 models on 2026-09-28, that Apache License 2.0 applies to all, that SFT and DPO data were published, and that a trial API and chat service will run through the University of Tokyo mdx-MaaS.'
+  claim: "PC Watch (Impress, 2026-09-29) reports that NII released the three LLM-jp-4.1 models on 2026-09-28 and that Apache License 2.0 applies to all. It also reports that SFT and DPO data were published and that a trial API and chat service will run through the University of Tokyo mdx-MaaS."
   source_type: third_party
   doc_type: third_party
   retrieved: true

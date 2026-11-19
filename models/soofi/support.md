@@ -1,35 +1,36 @@
 # Support - Soofi (Soofi-S)
 
-_How do we keep it running and get help? Troubleshooting, versions/changelog, channels, and known
-issues; security-disclosure and a deprecation policy are current gaps._
+_Troubleshooting, versions, security disclosure, channels and deprecation._
 
 <!-- item: troubleshooting -->
 ## Common problems & fixes
 
-Aggregated preview pitfalls (not an exhaustive catalogue):
+Preview pitfalls, not an exhaustive catalogue:
 
-- **`AutoModel` fails to load / unknown architecture.** Soofi-S is a custom hybrid Mamba-2/MoE - pass
-  `trust_remote_code=True` and use a recent transformers build.
-- **Tool calling silently ignored.** Your runtime is not applying the native tool template - run
-  `llama-server --jinja` (llama.cpp) rather than a runtime whose template strips tools (e.g. Ollama).
-- **Serving stack rejects the model.** Custom-architecture support is still maturing; confirm your
-  vLLM/llama.cpp version supports the hybrid arch, or fall back to a first-party GGUF build.
-- **Out-of-memory loading weights.** Decode uses ~3B active params, but all ~30B must be resident -
-  use a first-party GGUF/3-bit quant or multi-GPU; the near-constant cache means long context is not
-  the culprit.
-- **Non-reproducible results / silent updates.** You floated on `main`; pin an exact Hugging Face
-  revision and verify checksums.
+- `AutoModel` fails to load or reports an unknown architecture: Soofi-S is a custom hybrid
+  Mamba-2/MoE. Pass `trust_remote_code=True` and use a recent transformers build.
+- Tool calling is silently ignored: the runtime is not applying the native tool template. Run
+  `llama-server --jinja` (llama.cpp) instead of a runtime whose template strips tools (e.g.
+  Ollama).
+- The serving stack rejects the model: custom-architecture support is still maturing. Confirm
+  your vLLM or llama.cpp version supports the hybrid architecture, or fall back to a first-party
+  GGUF build.
+- Out-of-memory when loading weights: decode uses ~3B active params, but all ~30B must be
+  resident. Use a first-party GGUF or 3-bit quant or multi-GPU; the near-constant cache means long
+  context is not the cause.
+- Non-reproducible results or silent updates: a deployment floating on `main` changes under you.
+  Pin an exact Hugging Face revision and verify checksums.
 
 <!-- item: release-versioning -->
 ## Versions, changelog & cadence
 
-Soofi-S is in an early **preview/beta** cadence rather than a settled semantic-version stream:
-alongside **Soofi-S-Base** there are **Instruct-Preview**, **Isar-Preview** (reasoning) and
-**Rhine-Preview** variants, plus first-party GGUF/3-bit quant repos and named **iteration
-checkpoints** (e.g. `iter_1056000`, the final constant-annealing checkpoint used for evaluation).
-Individual versions are tracked as **Hugging Face revisions** on the `Soofi-Project` org, so the
-revision hash is your changelog anchor - pin it and diff against a newer revision when you upgrade.
-The pretraining technical report documents architecture, data and evaluation for the release.
+Soofi-S is on an early preview/beta cadence, not a settled semantic-version stream. Alongside
+Soofi-S-Base there are Instruct-Preview, Isar-Preview (reasoning) and Rhine-Preview variants,
+first-party GGUF and 3-bit quant repos, and named iteration checkpoints (e.g. `iter_1056000`, the
+final constant-annealing checkpoint used for evaluation). Versions are tracked as Hugging Face
+revisions on the `Soofi-Project` org, so the revision hash is the changelog anchor: pin it and
+diff against a newer revision when upgrading. The pretraining technical report documents
+architecture, data and evaluation for the release.
 
 <!-- security-disclosure is a `gap` item - no formal published vulnerability-disclosure or security
      policy exists; contact is only the Soofi-Project Hugging Face / GitHub org presence. See
@@ -38,14 +39,12 @@ The pretraining technical report documents architecture, data and evaluation for
 <!-- item: channels -->
 ## Community & support channels
 
-- **Hugging Face** model/dataset discussion tabs on the `Soofi-Project` org (`ev-hf-org`) for usage
-  questions.
-- **GitHub issues** on `soofi-project/Soofi-Pretraining`, `soofi-trainer` and `soofi-model-hosting`
-  (`ev-github`) for training-code and reproduction problems.
-- **The `soofi.info` project site** and the **CAIRNE** launch page (`ev-cairne`) for announcements,
-  plus the **KI-Bundesverband-coordinated consortium** behind the project.
-
-There is no paid support tier - this is community and consortium support around an open project.
+Usage questions go to the model and dataset discussion tabs on the `Soofi-Project` Hugging Face
+org (`ev-hf-org`). Training-code and reproduction problems go to GitHub issues on
+`soofi-project/Soofi-Pretraining`, `soofi-trainer` and `soofi-model-hosting` (`ev-github`).
+Announcements come from the `soofi.info` project site and the CAIRNE launch page (`ev-cairne`),
+plus the KI-Bundesverband-coordinated consortium behind the project. There is no paid support
+tier; support is community and consortium based.
 
 <!-- deprecation is a `gap` item - no published deprecation/EoL policy. As an early preview, prior
      revisions remain downloadable, but no formal support window or sunset commitment is documented.
@@ -54,10 +53,10 @@ There is no paid support tier - this is community and consortium support around 
 <!-- item: known-issues -->
 ## Tracked known issues
 
-Drawn from model-card caveats rather than a formal issue tracker (hence *partial*):
+These come from model-card caveats, not a formal issue tracker, so coverage is partial.
 
-- **Preview status** - capability, safety and tooling are still stabilising.
-- **Safety/privacy features documented as incomplete**, with no companion guard model.
-- **Tool-call template inconsistencies** across runtimes (native under `--jinja`; omitted by some).
-- **Custom-architecture runtime-support maturity** - not every serving stack/version handles the
-  hybrid Mamba-2/MoE yet.
+- Preview status: capability, safety and tooling are still stabilising.
+- Safety and privacy features are documented as incomplete, with no companion guard model.
+- Tool-call templates are inconsistent across runtimes (native under `--jinja`; omitted by some).
+- Runtime support is immature: not every serving stack and version handles the hybrid Mamba-2/MoE
+  yet.

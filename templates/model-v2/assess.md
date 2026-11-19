@@ -5,8 +5,7 @@
 
 # Assess - <Model Family>
 
-_Should we adopt this? Openness, license, provenance, EU AI Act, safety, evaluation, and
-the AOI score live here._
+_Openness, licence, provenance, EU AI Act position, safety, evaluation and the AOI score._
 
 <!-- item: intended-use -->
 ## Intended & out-of-scope use

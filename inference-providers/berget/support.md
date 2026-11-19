@@ -1,15 +1,14 @@
 # Support - Berget AI
 
-_How do we keep it running and get help? Security disclosure, support channels and the model
-deprecation policy live here; status and uptime history remain a documented gap._
+_Status, security disclosure, support channels and model deprecation._
 
 <!-- item: security-disclosure -->
 ## Security disclosure & trust surface
 
-Berget's **Security page** is a responsible-disclosure policy, not a trust centre. It offers
-GitHub private vulnerability reporting, `security@berget.ai` with a **PGP key** and a Signal
-number, a typical 48-hour response, a scope list and a safe-harbour statement. It states no
-technical controls and no attestations (those are in ToS Sec 6.7 and DPA Sec 8). A published
+Berget's **Security page** is a responsible-disclosure policy and is not a trust centre. It
+offers GitHub private vulnerability reporting, `security@berget.ai` with a **PGP key** and a
+Signal number, a typical 48-hour response, a scope list and a safe-harbour statement. It states
+no technical controls and no attestations (those are in ToS Sec 6.7 and DPA Sec 8). A published
 `security.txt` or bug-bounty programme is not stated; use the PGP or Signal contact.
 
 <!-- item: channels -->
