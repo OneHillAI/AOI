@@ -67,6 +67,10 @@ Initial public foundation (v0.1).
 
 ### Changed
 
+- The pre-pull-request check in `AGENTS.md`, `CONFORMANCE.md` and the pull request template is now
+  `python scripts/validate.py` with no arguments. CI validates models, inference-providers and
+  hosting-providers, and the earlier two-tree command passed locally while hosting entries failed on the
+  pull request.
 - Rewrote the reader-facing text of all 39 entries in plain, conclusive prose: the four dossier
   pages, summaries, rationales, verdicts and every evidence line. Evidence lines state what a source
   establishes, with no record of how or when it was read. Narration of what was done or changed,
