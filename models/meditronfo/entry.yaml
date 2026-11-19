@@ -1,0 +1,557 @@
+# OneHill v2 MODEL library entry for MeditronFO (Apertus-70B-MeditronFO and Apertus-8B-MeditronFO).
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+#
+# Scope: one release. The two Apertus-based MeditronFO checkpoints share a base, a licence tag, a corpus,
+# a recipe, a card template and a safety posture. The OLMo-2, EuroLLM, Gemma-3 and Meditron3 checkpoints
+# differ on base licence or base access terms and are follow-ups (see assess.md, license item).
+
+schema_version: "2.0"
+id: meditronfo
+name: MeditronFO (Apertus-70B-MeditronFO / Apertus-8B-MeditronFO)
+aliases:
+- MeditronFO
+- Fully Open Meditron
+- Apertus-70B-MeditronFO
+- Apertus-8B-MeditronFO
+- EPFLiGHT/Apertus-70B-MeditronFO
+family:
+  id: meditron
+  name: Meditron
+publisher:
+  name: LiGHT laboratory (Laboratory for Intelligent Global Health & Humanitarian Response Technologies), EPFL, School of Computer and Communication Sciences
+  country: CH
+  accountable_entity: true
+  url: https://meditron.light-laboratory.org/
+summary: 'Adopt MeditronFO as a research, auditing and specialisation base, not as a clinical tool: the publisher states in plain words that the models are not medical devices, have not been tested in clinical practice and must not be used to make decisions about a patient. This entry covers the two Apertus-based checkpoints, Apertus-70B-MeditronFO (flagship) and Apertus-8B-MeditronFO, supervised fine-tunes of the Swiss AI Initiative Apertus-Instruct models on a released 533,888-example medical corpus whose answers were written by gpt-oss-120b. The openness is real and unusual for a medical model: weights, corpus, data-generation, decontamination, training and evaluation code are public under a declared Apache-2.0 licence. The legal footing is weaker than the headline: no LICENSE file ships with the weights, the arXiv paper says the corpus is under a research-use licence while the dataset card says Apache-2.0, some source datasets carry other terms, and the Apertus base card carries an acceptable-use policy with an indemnity clause. Medically it trails Google MedGemma-27B on the publisher''s own five-benchmark average (54.56 against 63.75 for the 70B), and no independent evaluation or red-team exists.
+
+  '
+variants:
+- name: Apertus-70B-MeditronFO
+  params_total: 70.6B
+  context_window: 65,536 (config max_position_embeddings; fine-tuned on 8,192-token packed sequences)
+  kind: instruct
+  safety_tuned: false
+- name: Apertus-8B-MeditronFO
+  params_total: 8.05B
+  context_window: 65,536 (config max_position_embeddings; fine-tuned on 8,192-token packed sequences)
+  kind: instruct
+  safety_tuned: false
+openness:
+  tier: open_weights_recipe
+  components:
+    weights: open
+    training_data: partial
+    training_code: open
+    evaluation: partial
+    documentation: open
+    license: partial
+  license:
+    spdx: Apache-2.0
+    name: Apache License 2.0 (declared in model card metadata and card header; no LICENSE file in the weight repositories)
+    classification: osi
+    commercial_use: allowed_with_conditions
+    notable_restrictions:
+    - Declared only in the card metadata and a link to apache.org; no LICENSE or NOTICE file and no copyright holder named in the weight repositories (raw LICENSE is HTTP 404).
+    - The publisher states the models are for research, are not medical devices, have not been tested in clinical practice and must not be used to make decisions about a patient.
+    - The arXiv paper (v2, 29 May 2026) says the corpus is released under a research-use licence and that source assets are restricted to research purposes; the dataset card (17 Nov 2026) says Apache-2.0 and flags two source datasets for upstream verification.
+    - The Apertus base card carries an Acceptable Use Policy with an indemnity clause in its gate prompt (gate currently off); whether it binds the fine-tunes is not stated.
+    url: https://huggingface.co/EPFLiGHT/Apertus-70B-MeditronFO
+provenance:
+  canonical_source: https://huggingface.co/EPFLiGHT/Apertus-70B-MeditronFO
+  verified_org_on_primary_host: false
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: mradermacher (GGUF and i1-GGUF) for both sizes; loleg (MLX) and BrazosDeDios (GGUF) for 8B
+      trust: community
+      note: community conversions listed by Hugging Face search; none opened or verified by OneHill
+  checkpoint_checklist_score: 3
+  scanner_result: {}
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: about 6.4e24 for the Apertus-70B base by the 6ND rule (70.6B parameters, 15T tokens, both from the base card and HF metadata; a OneHill estimate, not a publisher figure); the fine-tune used 199 GH200 GPU-hours and adds a negligible amount
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: unclear
+    rationale: 'The declared licence is Apache-2.0, which would normally qualify the open-source exemption, but the licence text is not shipped with the weights and the paper and dataset card disagree on the corpus licence, so OneHill does not treat qualification as established. Whether a fine-tuner of a GPAI model becomes a provider depends on how much compute the modification uses relative to the base; that rule was not read in this session. The medical purpose is the larger regulatory question: the publisher says the models are not medical devices, and any adopter who builds a product that informs clinical decisions has to assess medical-device and high-risk obligations for that product. This entry has not read those instruments and does not assess them.
+
+      '
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: unknown
+    training_content_summary: partial
+    code_of_practice_signatory: unknown
+  deployer_notes: 'The base model publisher lists an EU AI Act public summary and a Code of Practice document on the Apertus card; neither PDF was read here, so nothing is scored on them. MeditronFO itself publishes a corpus with row-level source fields, a per-source licence table and a pipeline, which helps a deployer reconstruct a training-content summary, but it publishes no provider documentation package of its own.
+
+    '
+  last_assessed: '2026-11-19'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T1
+  ceiling_conditional: true
+  hardware_notes: 'The 70B checkpoint is 30 safetensors shards of BF16 weights, about 141 GB (70.6B parameters at 2 bytes), so serving it needs multiple 80 GB class GPUs or a quantised build; the 8B checkpoint is about 16 GB in BF16. Both sizes are derived from the Hugging Face file listing, not from publisher guidance, because the cards give training compute only (199 GH200 GPU-hours for 70B) and no serving requirements.
+
+    '
+  serving_support:
+  - hf-transformers
+  - vllm
+  - sglang
+  - mlx
+  - llama.cpp
+  controls_required:
+  - Use only for research, evaluation, auditing or as a specialisation base; keep a clinician in the loop and do not use any output to decide on a patient
+  - Pin the exact repository revision and verify the per-file sha256 values, because the weights on main were replaced in September and October 2026
+  - Add your own clinical safety evaluation and red-team for the target use before any wider exposure; the publisher's safety judging is explicitly not a deployment-readiness signal
+  - Add input and output guardrails and a separate guard or classifier model; none ships with the release
+  - Obtain legal review of the licence chain (no LICENSE file, corpus licence disagreement, inherited Apertus acceptable-use policy) before any commercial use
+  - For any product that informs clinical decisions, assess medical-device and AI Act high-risk obligations before development, not after
+score:
+  rubric_version: '1.1'
+  headline: 51.2
+  grade: D
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 4
+      rationale: 'Open weights plus recipe: BF16 safetensors, a released 533,888-example corpus with row-level source fields, public data-generation, decontamination, training (Axolotl configs) and evaluation code under Apache-2.0 on GitHub, and a fully open base (Apertus). Short of 5 on the publisher''s own record: the GitHub README says intermediate files and per-item evaluation outputs are not released yet and the MOOVE vignettes are non-public, which contradicts the project page line that outputs of every step are released; the weights carry no LICENSE file; and the paper and dataset card disagree on the corpus licence. Training data and evaluation are therefore partial rather than open.
+
+        '
+      evidence_refs:
+      - ev-card-70b
+      - ev-github-readme
+      - ev-project-page
+      - ev-data-card
+      - ev-paper
+    provenance:
+      score: 2
+      rationale: 'Safetensors only with an LFS sha256 per shard, and a well-documented training lineage, but the Hugging Face organisation EPFLiGHT is not a verified organisation (isVerified false), there are no signatures, attestations or scan results, and the weights on main were replaced in place on 2026-09-10 and 2026-10-06 with no tagged releases. The anchor for 2 is a canonical source with safetensors but an unverified org; 3 needs a verified publisher org. Roughly 3 of 8 checklist boxes.
+
+        '
+      evidence_refs:
+      - ev-hf-meta
+      - ev-card-70b
+    legal:
+      score: 2
+      rationale: 'A permissive licence is declared (Apache-2.0) but with material caveats a deployer must resolve: no LICENSE file or copyright holder with the weights; the paper says the corpus is research-use while the dataset card says Apache-2.0; the dataset card itself flags AfriMed-QA (CC BY-SA 4.0) and LiveQA (open or research use) for upstream verification and the paper lists the guidelines corpus and MOOVE training split as research use; the base card carries an acceptable-use policy with indemnity; and the publisher says the models are not medical devices and not for patient decisions. EU AI Act documentation is fragmentary (base summary not read). Matches the 2 anchor, not 3.
+
+        '
+      evidence_refs:
+      - ev-card-70b
+      - ev-data-card
+      - ev-paper
+      - ev-base-card
+      - ev-hf-meta
+    safety:
+      score: 2
+      rationale: 'The models are supervised fine-tunes for medical accuracy, not safety tuning. Evaluation is publisher-only (HealthBench, AutoMOOVE LLM judges), and the publisher itself says the judge agrees with clinicians on safety only at kappa 0.311, close to the 0.306 between clinicians, and that judge is unsuitable as a deployment-readiness signal for safety criteria. There is no guard model, no independent evaluation and no red-team, general instruction following drops (IFEval down 17.6 to 31.4 points for four of six fine-tunes), and the project page says to treat the models as research only. Residual risks are disclosed candidly, which keeps this at 2 and not lower.
+
+        '
+      evidence_refs:
+      - ev-project-page
+      - ev-paper
+      - ev-card-70b
+    performance:
+      score: 2
+      rationale: 'Class-leading among fully open medical models on the publisher''s numbers (Apertus-70B-MeditronFO 54.56 five-benchmark average against 48.35 for its base) but behind the open-weight MedGemma-27B (63.75 average, 54.8 HealthBench against 49.3), a smaller model, and part of the HealthBench gain is a length effect (40.3 against 35.7 for the base after length adjustment). All figures are publisher-run with an LLM grader; no independent re-run exists, and the arXiv paper v2 reports different numbers (47.2 to 53.8) from the cards.
+
+        '
+      evidence_refs:
+      - ev-card-70b
+      - ev-project-page
+      - ev-paper
+    operational:
+      score: 3
+      rationale: 'Standard transformers architecture class supported since transformers 4.56 per the base card, BF16 safetensors, a chat template and recommended sampling settings in generation_config, and community GGUF and MLX conversions exist for both sizes. Not higher because the publisher gives no serving or VRAM guidance (sizes here are derived from the file list), the 70B needs multi-GPU hardware, and the conversions are community-made and unverified.
+
+        '
+      evidence_refs:
+      - ev-card-70b
+      - ev-base-card
+      - ev-quants
+      - ev-hf-meta
+    governance:
+      score: 3
+      rationale: 'An identifiable university laboratory (EPFL LiGHT) with a named team, Swiss AI Initiative and CSCS funding, a contact address, a community tab and commits through 2026-11-17. Held at 3 because there is no security or vulnerability policy (SECURITY.md is 404), no deprecation policy, weights were swapped in place without version tags, and the arXiv paper is out of step with the current cards and code.
+
+        '
+      evidence_refs:
+      - ev-hf-meta
+      - ev-github-readme
+      - ev-website
+
+# --- Assessed signals: five cross-cutting attributes highlighted at the top of the entry.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "You can fine-tune and rebuild most of the pipeline from public parts (weights, 533,888-row corpus, data-generation and training configs), but intermediate data and the MOOVE vignettes are not released, so a full from-scratch reproduction is not possible yet."
+    refs: [ev-github-readme, ev-data-card]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "English-only medical knowledge in a standard decoder with a 65,536-token configured window but only 8,192-token fine-tuning sequences, so long-record retrieval behaviour is untested."
+    refs: [ev-card-70b, ev-hf-meta]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "The release is itself a specialisation recipe: Apache-declared weights, an open corpus and Axolotl training configs that the publisher applied to five bases, so adapting it or the recipe to a local setting is well supported."
+    refs: [ev-github-readme, ev-card-70b]
+  exchangeability:
+    level: medium
+    dimension: operational
+    summary: "Standard safetensors and a chat template make it portable across Hugging Face based stacks, but it needs a recent transformers for the Apertus architecture and the 70B is heavy; community GGUF and MLX conversions are unverified."
+    refs: [ev-card-70b, ev-base-card, ev-quants]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "No jailbreak, misuse or red-team evaluation exists, and the publisher's own clinical-safety judging is low-agreement; medical misuse and confident wrong advice are the exposed risks."
+    refs: [ev-project-page, ev-paper]
+
+# --- Four documentation domains. Item keys match checklists/model.yaml and a
+#     `<!-- item: KEY -->` section in the domain .md (except gap items).
+documentation:
+  assess:
+    completeness: 86.7
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-project-page, ev-card-70b, ev-data-card, ev-website]
+        summary: "Cleared for research, evaluation, auditing and as a specialisation base; not cleared for patient decisions, clinical practice or use as a medical device, by the publisher's own statements."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-project-page, ev-paper, ev-data-card]
+        summary: "Behind MedGemma-27B, general capability falls, answers are longer, judges are not clinicians, corpus 9.7 to 12.2 percent flagged, English only, single synthetic teacher."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-github-readme, ev-project-page, ev-data-card, ev-base-card]
+        summary: "open_weights_recipe: weights, corpus and code public on a fully open base; intermediate data and MOOVE vignettes not released; project page overstates against the README."
+      - key: license
+        title: "License terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-70b, ev-hf-meta, ev-paper, ev-data-card, ev-base-card, ev-siblings]
+        summary: "Apache-2.0 declared in metadata only, no LICENSE file; paper says research-use corpus; inherited Apertus acceptable-use policy; Gemma and EuroLLM siblings differ."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-meta, ev-card-70b, ev-teacher]
+        summary: "Safetensors with per-shard sha256 from an unverified HF org; no signing or scan; weights replaced in place in Sep and Oct 2026; answers written by gpt-oss-120b."
+      - key: eu-ai-act
+        title: "EU AI Act posture and medical-use caveats"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-70b, ev-base-card, ev-project-page]
+        summary: "GPAI below the 1e25 line by estimate; open-source exemption not established; the medical-device question is the adopter's and was not assessed from the instruments themselves."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-70b, ev-card-8b, ev-project-page, ev-paper]
+        summary: "Publisher-run: 70B avg 54.56 against 48.35 base and 63.75 MedGemma-27B; HealthBench 49.3; AutoMOOVE 89.7 percent over base, 35.8 percent against MedGemma; no independent re-run."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No independent safety, jailbreak or red-team evaluation of MeditronFO was found. The only safety evidence is the publisher's LLM-judge scoring, which the publisher says is low-agreement and not a deployment-readiness signal."
+  implement:
+    completeness: 72.7
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-70b, ev-base-card, ev-hf-meta]
+        summary: "transformers AutoModelForCausalLM in bfloat16 with the bundled chat template; recommended temperature 0.7 and 8,192 new tokens; pin the revision."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-meta, ev-card-70b]
+        summary: "Derived from file sizes: about 141 GB BF16 for 70B and about 16 GB for 8B; the publisher gives training compute only, not serving guidance."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-base-card, ev-quants]
+        summary: "Base card lists transformers, vLLM, SGLang and MLX; community GGUF and MLX conversions exist; MeditronFO's own card documents transformers only."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-project-page, ev-data-card, ev-paper]
+        summary: "Ceiling T1, conditional, for non-clinical research use; clinical decision use is out of scope; legal review, own safety evaluation, guardrails and revision pinning required."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-quants]
+        summary: "Community GGUF (mradermacher, i1 variants) for both sizes and MLX for 8B; no official quantisations; quality and integrity unverified."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-github-readme, ev-card-70b]
+        summary: "Axolotl with DeepSpeed ZeRO-3 configs, seed, learning rate and batch recipe published; 70B used 16 nodes of 4 GH200; the corpus loads with datasets."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-base-card, ev-card-70b]
+        summary: "No MeditronFO-specific API documentation; the base card says vLLM and SGLang can serve Apertus, which would give an OpenAI-compatible endpoint, not tested here."
+  use:
+    completeness: 61.1
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-70b, ev-project-page]
+        summary: "Text-only English medical question answering and open-ended clinical reasoning; stronger than its base on MedQA, MedMCQA, MedXpertQA and HealthBench; weaker on instruction following."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-meta, ev-card-70b]
+        summary: "Configured for 65,536 positions with llama3-style rope scaling, but fine-tuned on 8,192-token packed sequences and generation defaults to 8,192 new tokens; long-context quality untested."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-70b, ev-hf-meta]
+        summary: "chat_template.jinja ships in both repos; the card uses apply_chat_template with a single user turn and no system prompt; the recommended sampling is temperature 0.7."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-70b, ev-data-card, ev-base-card]
+        summary: "Cards tag English only and the corpus is English only; the Apertus base is multilingual, but multilingual medical behaviour of the fine-tune is not evaluated."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "The Apertus base card says it supports tool use, but the MeditronFO cards and paper say nothing about tool calling, and the English question-answer fine-tuning data contains no tool-call examples, so retained ability is undocumented."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No documented native JSON or schema-constrained output; the paper reports an instruction-following drop (IFEval down 17.6 to 31.4 points for four fine-tunes), which makes unconstrained structured output unreliable until tested."
+  support:
+    completeness: 38.9
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-70b, ev-base-card, ev-github-readme]
+        summary: "Needs transformers 4.56 or later for Apertus; use the shipped generation_config sampling; answers run long; the publisher's repo notes no model-specific troubleshooting beyond the Gemma eos fix."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-meta, ev-github-readme]
+        summary: "No tags or changelog; the commit list shows weights retrained on 2026-09-10 and replaced with the ICLR run on 2026-10-06 and the card edited to 2026-11-17; pin the commit sha."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No security policy: SECURITY.md in the code repository is HTTP 404 and neither the model cards nor the project page describe a vulnerability or safety-incident reporting route. The only contact routes are the Hugging Face community tab and a general lab email."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-70b, ev-website, ev-hf-meta]
+        summary: "Hugging Face community tab on each repo, the lab email on the website, a Slack invite via a web form, and the MOOVE clinician community."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No deprecation or end-of-life policy is published for the checkpoints, and the in-place weight replacements in September and October 2026 show no versioning commitment."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-project-page, ev-github-readme, ev-paper]
+        summary: "Publisher-stated limits and known gaps only: judges not clinicians, longer answers, general-capability loss, corpus flagged rows, unreleased intermediates; no issue tracker entries (0 open GitHub issues)."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: "Apache-2.0 is declared and the weights are ungated and fine-tunable, but the declaration sits in metadata only, with no LICENSE file, a paper that calls the corpus research-use, flagged source-dataset terms and an inherited base acceptable-use policy, so the chain of title is unresolved."
+    transparency:
+      level: strong
+      rationale: "Weights, a 533,888-row corpus with source fields and the generation, training and evaluation code are public on a fully open base (open_weights_recipe), with the unreleased intermediates and MOOVE vignettes listed candidly in the README."
+    reliability:
+      level: weak
+      rationale: "Safety is 2: no safety tuning, publisher-only low-agreement safety judging and no guard or red-team, and the publisher says not to use it for patient decisions, so it is not safe to deploy as presented."
+    data_control:
+      level: strong
+      rationale: "Self-hosted BF16 safetensors run on your own hardware with no telemetry or licence clawback in the declared Apache-2.0 grant."
+  verdict: "You own a genuinely inspectable medical fine-tune you can run, adapt and audit on your own hardware, and the pipeline behind it is public. You do not own a clinically usable or clearly licensed product: the publisher bars patient decisions, there is no LICENSE file, the corpus licence is stated two ways, and safety evaluation is thin. It moves to substantial if EPFL ships a LICENSE file and reconciles the corpus licence, and a deployer adds an independent clinical safety evaluation."
+
+# --- Evidence. Grounded 2026-11-19 against docs/primary-sources/meditronfo/_sources.md.
+evidence:
+- id: ev-card-70b
+  claim: 'Apertus-70B-MeditronFO model card, read in full: licence tag apache-2.0 and an Apache 2.0 link in the header, base swiss-ai/Apertus-70B-Instruct-2509 as a finetune, trained on the 533,888-example Fully Open Meditron corpus with every answer written by gpt-oss-120b, 1 epoch at learning rate 1e-5 on 16 nodes of 4 GH200 for 199 GPU-hours, benchmark table (average 54.56 against 48.35 for the base, HealthBench 49.3), and a limitations paragraph saying the content may be inaccurate or biased, the model is specialised for Medicine and intended for medicine related tasks evaluation, and should be an assistive tool rather than a definitive source.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/EPFLiGHT/Apertus-70B-MeditronFO
+  date: '2026-11-19'
+- id: ev-card-8b
+  claim: 'Apertus-8B-MeditronFO model card, read as extracts: same template and licence tag, base swiss-ai/Apertus-8B-Instruct-2509, five-benchmark average 48.26 against 42.39 for the base, preferred over the base in 74.2 percent of AutoMOOVE comparisons.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/EPFLiGHT/Apertus-8B-MeditronFO
+  date: '2026-11-19'
+- id: ev-hf-meta
+  claim: 'Hugging Face records read 2026-11-19: both repositories are ungated, safetensors only (30 shards for 70B, 4 for 8B, each with an LFS sha256), have no LICENSE file (raw LICENSE is HTTP 404), the organisation EPFLiGHT has isVerified false, config.json sets max_position_embeddings 65,536 for both, and the 70B commit list shows weight replacements on 2026-09-10 and 2026-10-06 and card edits through 2026-11-17.'
+  source_type: third_party
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/api/models/EPFLiGHT/Apertus-70B-MeditronFO
+  date: '2026-11-19'
+- id: ev-code-license
+  claim: 'The GitHub code repository EPFLiGHT/FullyOpenMeditron carries an Apache License 2.0 LICENSE file added 2026-08-03; this covers the code only and is not a licence for the weights.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://raw.githubusercontent.com/EPFLiGHT/FullyOpenMeditron/main/LICENSE
+  date: '2026-11-19'
+- id: ev-project-page
+  claim: 'Project page read: states the MeditronFO models are not medical devices, have not been tested in clinical practice and must not be used to make decisions about a patient; lists limits (still behind MedGemma, general capability decreases with IFEval down 17.6 to 31.4, longer answers with HealthBench 40.3 against 35.7 after length adjustment, judges are not clinicians with safety kappa 0.311, 9.7 to 12.2 percent of corpus rows flagged); says the fully-open models and the corpus are released under Apache-2.0 and Gemma-3-27B-MeditronFO keeps the Gemma licence; also says outputs of every step are released.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://meditron.light-laboratory.org/meditronfo
+  date: '2026-11-19'
+- id: ev-github-readme
+  claim: 'GitHub README read: the repository holds the data pipeline, training configs and evaluation to reproduce the paper, but states the intermediate files and per-item evaluation outputs are not released yet, the MOOVE vignettes are evaluation material and not public, and section 1 cannot be rerun from a fresh clone yet; lists Axolotl training configs and a check on 2026-09-26 that regenerated the paper figures.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://github.com/EPFLiGHT/FullyOpenMeditron
+  date: '2026-11-19'
+- id: ev-data-card
+  claim: 'Dataset card read: Apache-2.0 tag, 533,888 rows in four components, every answer by gpt-oss-120b, a per-source licence table (MedQA MIT, MedMCQA MIT, HealthSearchQA CC BY 4.0, LiveQA-Med open or research use, AfriMed-QA CC BY-SA 4.0) with a note to verify upstream terms before redistribution for two rows, syntactic-only decontamination, English only, and an intended use of research that says models trained on it should not be deployed without independent safety evaluation.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/datasets/EPFLiGHT/fully-open-meditron
+  date: '2026-11-19'
+- id: ev-paper
+  claim: 'arXiv 2605.16215 v2 (29 May 2026), read as HTML: says the corpus is released under a research-use licence and that assets are restricted to research purposes; lists the GUIDELINES corpus as per-source mixed and research use and the MOOVE training split as research use; reports Apertus-70B-MeditronFO at 47.2 to 53.8 (the cards say 48.35 to 54.56), eight source QA datasets and 46,469 guidelines (the dataset card and project page say five or seven datasets and 14,192 guidelines); says the judge is unsuitable as a deployment-readiness signal for safety criteria and recommends domain-specific safety evaluation before any deployment-adjacent use.'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2605.16215
+  date: '2026-11-19'
+- id: ev-base-card
+  claim: 'Apertus-70B-Instruct-2509 base card read (the 8B card is identical bar the name): licence tag apache-2.0, a gate prompt holding an Acceptable Use Policy with an indemnity clause and a strongly advised personal-data output filter (Hugging Face reports gated False on the retrieval date), the statement that it is a fully open model with open weights and open data, transformers 4.56 or later required, vLLM, SGLang and MLX listed for deployment, a 65,536-token context, tool use support, links to an EU AI Act public summary and Code of Practice, and the line that no PII output filter is currently provided.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/swiss-ai/Apertus-70B-Instruct-2509
+  date: '2026-11-19'
+- id: ev-teacher
+  claim: 'gpt-oss-120b, the teacher that wrote every training answer, is Apache-2.0 with a one-sentence usage policy requiring compliance with applicable law.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/openai/gpt-oss-120b
+  date: '2026-11-19'
+- id: ev-press
+  claim: 'EPFL AI Center news item of 17 June 2026 describes MeditronFO as the first fully open framework for medical LLMs, says every stage of development is publicly available, quotes a gain of 6.6 points on medical exams and announces planned clinical trials (MED.USE) across several sites.'
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://ai.epfl.ch/?p=18464
+  date: '2026-11-19'
+- id: ev-website
+  claim: 'Meditron website read: family history from Meditron 1 (2023) to MeditronFO (2026), a contact address for the lab, and a chat disclaimer saying it is a research model, not a doctor, that can be wrong.'
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://meditron.light-laboratory.org/
+  date: '2026-11-19'
+- id: ev-siblings
+  claim: 'Hugging Face listing of the EPFLiGHT organisation read: five MeditronFO checkpoints carry the licence tag apache-2.0 (Apertus 70B and 8B, OLMo-2-32B, EuroLLM-22B and 9B), Gemma-3-27B-MeditronFO carries the gemma tag and still the fully-open tag, and Meditron3 checkpoints carry llama3.1, gemma, apache-2.0 and mit tags; the base EuroLLM-22B-Instruct named on the EuroLLM-22B checkpoint is not readable (HTTP 401) and EuroLLM-9B-Instruct is auto-gated.'
+  source_type: third_party
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/api/models?author=EPFLiGHT
+  date: '2026-11-19'
+- id: ev-quants
+  claim: 'A Hugging Face search for MeditronFO lists community GGUF and i1-GGUF conversions of both Apertus sizes by mradermacher, an MLX conversion of the 8B by loleg and Q4 and Q5 GGUF of the 8B by BrazosDeDios; the conversions were not opened or verified.'
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://huggingface.co/api/models?search=MeditronFO&limit=50
+  date: '2026-11-19'
+- id: ev-apertus-eu-docs
+  claim: 'The Apertus card links an EU AI Act public summary and a Code of Practice document for the base model; documented but unverified, the PDFs were not fetched.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://huggingface.co/swiss-ai/Apertus-70B-2509/blob/main/Apertus_EU_Public_Summary.pdf
+  date: '2026-11-19'
+changelog:
+- date: '2026-11-19'
+  change: Initial v2 four-domain library entry, grounded against docs/primary-sources/meditronfo. Scope is the two Apertus-based MeditronFO checkpoints; OLMo-2, EuroLLM, Gemma-3 and Meditron3 checkpoints are listed as follow-ups.
+last_verified: '2026-11-19'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180
