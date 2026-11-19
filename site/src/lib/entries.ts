@@ -236,6 +236,7 @@ export function toRecord(item: { id: string; type: 'model' | 'provider'; dir: st
     title,
     name: e.name || item.id,
     summary: firstSentence(e.summary || ''),
+    lastVerified: e.last_verified instanceof Date ? e.last_verified.toISOString().slice(0, 10) : String(e.last_verified || ''),
     identity: idf,
     grade: e.score?.grade || '',
     score: e.score?.headline ?? null,
