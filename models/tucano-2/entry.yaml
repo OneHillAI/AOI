@@ -1,0 +1,570 @@
+# OneHill v2 MODEL library entry for Tucano 2 (Qwen-derived 0.5B, 1.5B and 3.7B suite, Polygl0t).
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+# Grounded 2026-11-19 against docs/primary-sources/tucano-2/ (see _sources.md). No OneHill evaluation
+# has been run, so there is no onehill_verified evidence and every documentation item is aggregated or a gap.
+
+schema_version: "2.0"
+id: tucano-2
+name: Tucano 2 (Qwen-derived 0.5B, 1.5B and 3.7B; Base, Instruct and Think)
+family:
+  id: tucano
+  name: Tucano
+aliases:
+- Tucano2
+- Tucano2-qwen
+- Tucano2-qwen-3.7B-Instruct
+- Polygl0t/Tucano2-qwen-3.7B-Instruct
+publisher:
+  name: Polygl0t (University of Bonn research groups)
+  country: Germany
+  accountable_entity: true
+  url: https://huggingface.co/Polygl0t
+  security_contact: kluge@uni-bonn.de (SECURITY.md of the llm-foundry code repository; the model repos publish none)
+summary: "Tucano 2 is an Apache-2.0 suite of nine Portuguese models (0.5B, 1.5B and 3.7B, each as Base, Instruct and Think) with public corpora, training code, configs and logs, and it suits adoption as a Portuguese base for fine-tuning. All nine continue pretraining from Qwen3 base models with a transplanted 49K-token tokenizer, so none is trained from scratch. The GigaVerbo-v2 corpus has no single licence and includes two CC-BY-NC sources. Every benchmark is the publisher's own, no safety evaluation is published, and the context is 4,096 tokens. A separate from-scratch 0.6B base exists and is listed as a follow-up."
+variants:
+- name: Tucano2-qwen-3.7B-Base
+  params_total: 3.76B
+  context_window: 4k
+  kind: base
+  safety_tuned: false
+- name: Tucano2-qwen-3.7B-Instruct
+  params_total: 3.76B
+  context_window: 4k
+  kind: instruct
+  safety_tuned: true
+- name: Tucano2-qwen-3.7B-Think
+  params_total: 3.76B
+  context_window: 4k
+  kind: reasoning
+  safety_tuned: true
+- name: Tucano2-qwen-1.5B-Base
+  params_total: 1.51B
+  context_window: 4k
+  kind: base
+  safety_tuned: false
+- name: Tucano2-qwen-1.5B-Instruct
+  params_total: 1.51B
+  context_window: 4k
+  kind: instruct
+  safety_tuned: true
+- name: Tucano2-qwen-1.5B-Think
+  params_total: 1.51B
+  context_window: 4k
+  kind: reasoning
+  safety_tuned: true
+- name: Tucano2-qwen-0.5B-Base
+  params_total: 0.49B
+  context_window: 4k
+  kind: base
+  safety_tuned: false
+- name: Tucano2-qwen-0.5B-Instruct
+  params_total: 0.49B
+  context_window: 4k
+  kind: instruct
+  safety_tuned: true
+- name: Tucano2-qwen-0.5B-Think
+  params_total: 0.49B
+  context_window: 4k
+  kind: reasoning
+  safety_tuned: true
+openness:
+  tier: open_weights_recipe
+  components:
+    weights: open
+    training_data: partial
+    training_code: open
+    evaluation: open
+    documentation: open
+    license: open
+  license:
+    spdx: Apache-2.0
+    name: Apache License 2.0 (LICENSE file in 8 of the 9 repos; Tucano2-qwen-1.5B-Base declares it in the card only)
+    classification: osi
+    commercial_use: allowed
+    notable_restrictions:
+    - "Tucano2-qwen-1.5B-Base has no LICENSE file, only a card declaration of Apache-2.0."
+    - "The LICENSE files name four individuals as copyright holders, not the University of Bonn."
+    - "The GigaVerbo-v2 pretraining corpus has no single licence. Its card lists CC-BY-NC-SA-4.0 (xlsum) and CC-BY-NC-4.0 (Bactrian-X) sources, and no document says whether those texts entered the training mixture."
+    url: https://huggingface.co/Polygl0t/Tucano2-qwen-3.7B-Instruct
+provenance:
+  canonical_source: https://huggingface.co/Polygl0t
+  verified_org_on_primary_host: false
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: false
+    notable:
+    - name: pessini/Tucano2-qwen-3.7B-Instruct-MLX-4bit
+      trust: third_party
+      note: community MLX 4-bit quantisation of the 3.7B Instruct model, Apache-2.0, not made by Polygl0t
+  checkpoint_checklist_score: 3
+  scanner_result:
+    scanner: Hugging Face repository scan
+    result: not determined (the API response carries no scan field)
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: "Estimate of about 8.6e23 FLOPs for the Qwen3-4B base (6 x 4B parameters x 36T tokens, from the Qwen3 card), plus 0.13% more for the Tucano continual pretraining (paper). This is a OneHill estimate, not a publisher figure."
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: "yes"
+    rationale: "Apache-2.0 is a free and open-source licence, the weights, architecture and usage information are public, and no monetisation is documented. The exemption does not cover the copyright policy or the public training-content summary, and no standalone version of either exists."
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: partial
+    code_of_practice_signatory: false
+  deployer_notes: "The paper and dataset cards give compute, energy, data sources with licences, generator models and training recipes, so a deployer can assemble most technical documentation for the Tucano stages. The Qwen3 base stage is documented only by the Qwen3 card, which gives 36T tokens in 119 languages and no data list. The paper does not mention the EU AI Act, and no code-of-practice signatory status appears in any document. A fine-tuner who places a derivative on the EU market may become a provider for it."
+  last_assessed: '2026-11-19'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T1
+  ceiling_conditional: true
+  hardware_notes: "The bf16 weights are 7.52 GB (3.7B Instruct, two shards), 3.02 GB (1.5B) and 0.98 GB (0.5B). A third-party vLLM run served the 3.7B Instruct in bf16 on an RTX 3080 with 8.7 GiB of VRAM, 4,096 context and a 1 GiB KV cache, at 79.4 tokens per second for one request. The publisher gives no requirements table."
+  serving_support:
+  - transformers
+  - vllm
+  - mlx
+  controls_required:
+  - Keep a human reading every output (T1), because no safety evaluation is published
+  - Run your own Portuguese safety, bias and toxicity evaluation before wider use
+  - Add input and output guardrails, since no guard model or acceptable-use policy ships
+  - Pin the repo revision and record the Hugging Face LFS sha256 of each safetensors shard
+  - Add the Apache-2.0 text to anything you redistribute, since Tucano2-qwen-1.5B-Base ships none
+  - Record the mixed GigaVerbo-v2 source licences, including the CC-BY-NC sources, in your AI-BOM
+  - Keep prompts and context within 4,096 tokens
+score:
+  rubric_version: '1.1'
+  headline: 54.4
+  grade: D
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 4
+      rationale: "Weights, training code (llm-foundry), configs, logs, evaluation harness and four datasets (GigaVerbo-v2, Synth, SFT, Preferences) are public and ungated under Apache-2.0 or other stated licences. The score stops at 4 because the Qwen3 base stage has no public data or code, and the corpus has no unified licence."
+      evidence_refs:
+      - ev-card-instruct
+      - ev-card-base
+      - ev-paper
+      - ev-gv2
+      - ev-gv2-post
+      - ev-code
+      - ev-licence-files
+    provenance:
+      score: 2
+      rationale: "Safetensors only, with a Hugging Face LFS sha256 per file, and a clear lineage to Qwen3 base models. The Polygl0t organisation is unverified, nothing is signed or attested, no checksum file ships, and the scan result could not be determined. Anchor 3 needs a verified publisher organisation."
+      evidence_refs:
+      - ev-hf-platform
+      - ev-card-base
+      - ev-qwen3-licence
+    legal:
+      score: 3
+      rationale: "Apache-2.0 LICENSE files, a stated commercial-use grant, and a paper that lists sources, generators, compute and energy support common uses. Gaps hold it at 3: the corpus has no unified licence and lists two CC-BY-NC sources, there is no copyright policy or EU AI Act statement, the Qwen3 base data is undisclosed, and Tucano2-qwen-1.5B-Base has no LICENSE file."
+      evidence_refs:
+      - ev-licence-files
+      - ev-gv2
+      - ev-gv2-post
+      - ev-paper
+      - ev-qwen3-licence
+      - ev-qwen25-licence
+    safety:
+      score: 2
+      rationale: "The Instruct and Think models are safety-tuned with a published 28,437-pair preference set built from written constitutions, and the cards list hallucination, bias, toxicity and repetition. No safety, jailbreak or red-team evaluation is published, no acceptable-use policy or guard model ships, and the Base models have no safety tuning."
+      evidence_refs:
+      - ev-card-instruct
+      - ev-paper
+      - ev-gv2-post
+      - ev-configs
+    performance:
+      score: 2
+      rationale: "The publisher reports the top Knowledge and Reasoning score in the 3 to 4B class (NPM 56.22) and weaker instruction following (41.67) and coding (47.56) than Qwen3-4B. All figures come from the publisher's own harness. One third-party run on 393 ENEM questions gave 74.6% for the 3.7B Instruct, which covers one benchmark only."
+      evidence_refs:
+      - ev-card-instruct
+      - ev-paper
+      - ev-community
+    operational:
+      score: 3
+      rationale: "The weights use the standard Qwen3 architecture in transformers with safetensors. A third party ran the 3.7B Instruct on vLLM in 8.7 GiB of VRAM and made an MLX 4-bit build. The publisher documents no serving stack beyond transformers, ships no quantised weights and gives no hardware table."
+      evidence_refs:
+      - ev-card-instruct
+      - ev-configs
+      - ev-community
+      - ev-hf-platform
+    governance:
+      score: 3
+      rationale: "A named University of Bonn team with a funded project (BMBF and the NRW science ministry), an arXiv paper, a prior Tucano series and a 2026-08-13 update to the post-trained repos. The Hugging Face organisation is unverified, the model repos have no security contact or discussions, the copyright holders are individuals, and there is no deprecation policy."
+      evidence_refs:
+      - ev-paper
+      - ev-hf-platform
+      - ev-code
+
+# --- Assessed signals.
+signals:
+  trainability:
+    level: full
+    dimension: openness
+    summary: "Apache-2.0 weights, the full training code, YAML configs, logs, intermediate base checkpoints and four open datasets allow fine-tuning, continued pretraining and rerunning the Tucano stages. Only the Qwen3 stage below them is closed."
+    refs: [ev-card-base, ev-configs, ev-code, ev-gv2-post]
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: "The 3.7B Instruct scores 85.22 on Belebele and 64.64 on MMLU (publisher figures), and the SFT dataset holds 1.0B tokens of retrieval-augmented data, of which the Instruct mix draws about 2.2 million. The 4,096-token context and a RULER-PT score of 0.686 at 4,096 tokens (Qwen3-4B 0.979) limit long-document use."
+    refs: [ev-card-instruct, ev-paper]
+  specialization:
+    level: strong
+    dimension: openness
+    summary: "The recipe for adapting a Qwen3 base to Portuguese is published end to end: tokenizer transplantation, data mixtures, hyperparameters, code and datasets, with 0.5B, 1.5B and 3.7B examples."
+    refs: [ev-paper, ev-configs, ev-code]
+  exchangeability:
+    level: medium
+    dimension: operational
+    summary: "The Qwen3 architecture loads in transformers, and third parties report a vLLM deployment and an MLX 4-bit build. The tokenizer is a custom 49K vocabulary, and the publisher ships no GGUF, other quantised weights or hosted endpoint."
+    refs: [ev-card-instruct, ev-community, ev-hf-platform]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "Safety tuning uses refusal preference pairs, but no safety, jailbreak or toxicity benchmark of the models is published. The paper tells users to run their own risk assessment."
+    refs: [ev-paper, ev-gv2-post]
+
+# --- Four documentation domains.
+documentation:
+  assess:
+    completeness: 86.7
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-card-base, ev-card-think]
+        summary: "Research and development on Portuguese language modelling, and fine-tuning for deployment under Apache-2.0. The Base models are not for deployment or human-facing use, and all models are for Portuguese only."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-paper, ev-community]
+        summary: "Hallucination, social bias, toxicity, repetition loops, weaker instruction following and coding than Qwen3-4B, and weak long-context scores. A third party saw a fabricated fact and a wrong self-description."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-base, ev-paper, ev-gv2, ev-gv2-post, ev-code, ev-qwen3-licence]
+        summary: "open_weights_recipe: weights, code, configs, logs, harness and four datasets are public. The Qwen3 base data is not, and GigaVerbo-v2 has no single licence."
+      - key: license
+        title: "Licence terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-licence-files, ev-qwen3-licence, ev-qwen25-licence, ev-gv2]
+        summary: "Apache-2.0 on every Tucano 2 weights repo, with a LICENSE file in all but Tucano2-qwen-1.5B-Base. Upstream Qwen3 and Qwen2.5 models are Apache-2.0. The corpus licence is mixed."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-platform, ev-card-base, ev-card-06b, ev-qwen3-licence, ev-paper]
+        summary: "Qwen3 base models continued on Portuguese data, safetensors only, an unverified single-publisher Hugging Face organisation, no signing or checksum file. The 0.6B base is the only from-scratch release."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-paper, ev-qwen3-licence, ev-licence-files]
+        summary: "GPAI, well under the 1e25 FLOP systemic-risk line, Apache-2.0 so the open-source exemption likely applies. No copyright policy, no standalone training-content summary, and no mention of the Act in the paper."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-card-base, ev-card-think, ev-paper, ev-community]
+        summary: "Publisher results on a released Portuguese harness: 3.7B Base total NPM 59.21, Instruct total 53.64, Think total 51.27. One third-party ENEM run gives 74.6% for the 3.7B Instruct."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No safety, jailbreak, toxicity or red-team evaluation of any Tucano 2 model appears in the cards, the paper or any third-party source found. The paper gives only a risk paragraph and a 500-pair judge check on the preference data."
+  implement:
+    completeness: 72.7
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-configs]
+        summary: "Load with transformers AutoModelForCausalLM and AutoTokenizer, then apply the chat template and generate. The cards suggest temperature 0.1, top_k 50 and repetition_penalty 1.2."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-platform, ev-community]
+        summary: "bf16 weights are 7.52 GB (3.7B), 3.02 GB (1.5B) and 0.98 GB (0.5B). A third-party vLLM run used 8.7 GiB on an RTX 3080 at 4,096 context. No publisher requirements table."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-instruct, ev-community, ev-hf-platform]
+        summary: "transformers is documented by the publisher. vLLM and MLX are shown by third parties. No hosted provider, no GGUF."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-paper, ev-gv2-post]
+        summary: "Deployment Ceiling T1 (conditional): human review of every output, own safety evaluation, guardrails, pinned revision, 4,096-token limit, licence record for the corpus."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-platform, ev-community]
+        summary: "The publisher ships no quantised weights. One community MLX 4-bit build of the 3.7B Instruct exists."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-configs, ev-code, ev-paper, ev-card-base]
+        summary: "SFT and APO configs, the llm-foundry trainer, Base checkpoints at 2,500-step intervals and the SFT and preference datasets allow full reruns or adaptation. SFT uses 5 epochs at 5e-5, APO 5 epochs at 5e-6."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-community, ev-hf-platform]
+        summary: "No hosted endpoint. A third-party recipe serves the 3.7B Instruct through vLLM's OpenAI-compatible chat completions route."
+  use:
+    completeness: 88.9
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-paper]
+        summary: "Text only. Portuguese question answering, summarisation, rewriting, translation, RAG, function calling, structured output and maths. Think models add chain-of-thought and have no coding training."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-paper, ev-qwen3-licence]
+        summary: "4,096 tokens in config.json and the tokenizer, against 32,768 for Qwen3-4B-Base. RULER-PT at 4,096 tokens is 0.686 (3.7B Instruct) and 0.707 (3.7B Think)."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-configs, ev-card-instruct]
+        summary: "ChatML turns with <|im_start|> and <|im_end|>, a Portuguese tools block with <tool_call> output, and <think> tags for the Think models."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-instruct, ev-card-base, ev-paper]
+        summary: "Portuguese only. The cards say other languages may fail. Continual pretraining data is purely Portuguese."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-instruct, ev-gv2-post, ev-configs]
+        summary: "The Instruct SFT mix includes about 17.5 million tokens of function-call data. The card shows a tool call in the Qwen-style tool_call format. No tool-calling benchmark is reported."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-instruct, ev-gv2-post]
+        summary: "The Instruct SFT mix includes about 35 million tokens of structured-output data. The card shows a JSON extraction answer. No benchmark and no constrained decoding is reported."
+  support:
+    completeness: 44.4
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-instruct, ev-configs, ev-community]
+        summary: "Use the model's own chat template, keep the repetition penalty near 1.2, stay inside 4,096 tokens, and expect hallucination."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-platform, ev-paper]
+        summary: "Models uploaded February 2026 and described in a paper dated 3 March 2026. The post-trained repos were last edited on 2026-08-13 and the GigaVerbo-v2 dataset card on 2026-09-30. No changelog file."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-code]
+        summary: "The llm-foundry SECURITY.md asks reporters to email a maintainer privately. No policy or contact exists in the model repos."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-platform, ev-gv2-post]
+        summary: "Hugging Face discussions (empty on 2026-11-19), the llm-foundry GitHub issues and a Polygl0t project address on the dataset cards."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No deprecation or support-window statement exists in the model repos, the paper or the code repository."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-instruct, ev-paper, ev-gv2, ev-community]
+        summary: "Publisher-listed: hallucination, bias, repetition, weak instruction following and coding, weak long-context retrieval. Also the mixed corpus licence and the missing LICENSE file in Tucano2-qwen-1.5B-Base. No issue tracker for the models."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: strong
+      rationale: "Apache-2.0 LICENSE files, ungated weights and open training code, configs and data let you run, modify and redistribute the models commercially (ev-licence-files, ev-configs, ev-code). Tucano2-qwen-1.5B-Base lacks a LICENSE file."
+    transparency:
+      level: moderate
+      rationale: "The Tucano stages are documented down to configs, logs and datasets (ev-paper, ev-configs). The Qwen3 base stage and its 36T-token data are undisclosed (ev-qwen3-licence), and the corpus carries no single licence (ev-gv2)."
+    reliability:
+      level: weak
+      rationale: "Safety is rated 2 because no safety evaluation, acceptable-use policy or guard model is published (ev-card-instruct, ev-paper). Operational readiness is 3, with no official quantisation or serving guide."
+    data_control:
+      level: strong
+      rationale: "The weights run on your own hardware under Apache-2.0 with no clawback clause, and the architecture is the standard Qwen3 class with no remote code (ev-licence-files, ev-configs)."
+  verdict: "You own the weights: Apache-2.0, ungated, commercial use allowed, with the code and data to retrain the Tucano stages on your own hardware. You do not own a verified safe assistant, because no safety evaluation exists, and you cannot rebuild the Qwen3 stage underneath. The level rises if Polygl0t publishes a safety evaluation and resolves the mixed licence of the training corpus."
+
+evidence:
+- id: ev-card-instruct
+  claim: "The 3.7B Instruct card declares Apache-2.0, 3,759,341,056 parameters and a 4,096-token context, and describes one SFT round and one APO round on gigaverbo-v2-sft and gigaverbo-v2-preferences. It lists hallucination, bias, toxicity and repetition as limitations. All benchmark figures are the publisher's own."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/Polygl0t/Tucano2-qwen-3.7B-Instruct
+  date: '2026-11-19'
+- id: ev-card-base
+  claim: "The 3.7B Base card says the model is continually pretrained from Qwen3-4B-Base on about 50 billion tokens, with the Tucano2 tokenizer transplanted by Orthogonal Matching Pursuit. It declares Apache-2.0, says the model is not intended for deployment, and states that all data, code and recipes are open."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/Polygl0t/Tucano2-qwen-3.7B-Base
+  date: '2026-11-19'
+- id: ev-card-think
+  claim: "The 3.7B Think card declares Apache-2.0 and describes a reasoning model trained with SFT and APO that writes chain-of-thought inside think tags. It reports total NPM 51.27, and its limitations match the Instruct card."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/Polygl0t/Tucano2-qwen-3.7B-Think
+  date: '2026-11-19'
+- id: ev-card-06b
+  claim: "The Tucano2-0.6B-Base card declares Apache-2.0, a Llama architecture with 670,127,616 parameters, about 400 billion training tokens and three published stage configs. It has no Qwen base and no instruct variant."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/Polygl0t/Tucano2-0.6B-Base
+  date: '2026-11-19'
+- id: ev-licence-files
+  claim: "Eight of the nine Qwen-derived repos and the 0.6B Base repo carry an identical Apache-2.0 LICENSE file that names four individuals as copyright holders. Tucano2-qwen-1.5B-Base has no LICENSE file and declares Apache-2.0 only in its card. No repo is gated."
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/Polygl0t/Tucano2-qwen-3.7B-Instruct/raw/main/LICENSE
+  date: '2026-11-19'
+- id: ev-qwen3-licence
+  claim: "Qwen3-4B-Base, 1.7B-Base and 0.6B-Base each carry an Apache-2.0 LICENSE file and are ungated. The Qwen3-4B-Base card states pretraining on 36 trillion tokens in 119 languages and a 32,768-token context, and links no pretraining data."
+  source_type: third_party
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/Qwen/Qwen3-4B-Base
+  date: '2026-11-19'
+- id: ev-qwen25-licence
+  claim: "Qwen2.5-7B, 14B and 32B-Instruct, which generated the synthetic data, and the abliterated 32B variant that wrote the rejected responses, are Apache-2.0 with LICENSE files and ungated."
+  source_type: third_party
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/Qwen/Qwen2.5-32B-Instruct
+  date: '2026-11-19'
+- id: ev-paper
+  claim: "The paper 'Tucano 2 Cool' (arXiv 2603.03543, 3 March 2026) describes continual pretraining from Qwen3 bases, a from-scratch 0.6B model, the data, the post-training recipe and the publisher's benchmarks. It reports no safety evaluation, gives a risk paragraph, and names a University of Bonn corresponding author."
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2603.03543
+  date: '2026-11-19'
+- id: ev-gv2
+  claim: "The GigaVerbo-v2 card lists its source datasets with their licences and states that the combined dataset has no single unified licence (license: other). The sources include CC-BY-NC-SA-4.0 xlsum and CC-BY-NC-4.0 Bactrian-X, about 22 million of 317.7 billion tokens. The 302 parquet files are ungated."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/datasets/Polygl0t/gigaverbo-v2
+  date: '2026-11-19'
+- id: ev-gv2-post
+  claim: "The Synth, SFT and Preferences cards declare Apache-2.0 and are ungated. They state that Qwen2.5-7B, 14B and 32B-Instruct generated the data and that an abliterated Qwen2.5-32B-Instruct wrote the rejected harmful responses. The Preferences card describes a 500-pair judge check and a 100-sample manual check as its quality control."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/datasets/Polygl0t/gigaverbo-v2-preferences
+  date: '2026-11-19'
+- id: ev-code
+  claim: "llm-foundry (training, data, alignment and evaluation code) is Apache-2.0 and the Portuguese lm-evaluation-harness fork is MIT. The llm-foundry SECURITY.md routes private reports to a maintainer email and covers the code repository only."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://github.com/Polygl0t/llm-foundry
+  date: '2026-11-19'
+- id: ev-hf-platform
+  claim: "The Polygl0t Hugging Face organisation is not verified and has seven members. All ten Tucano 2 repos are ungated and safetensors-only, the three repos with inspected histories have commits from one user, and the post-trained repos were last edited on 2026-08-13. No scan result, checksum file or signature is published, and the discussions tabs are empty."
+  source_type: third_party
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/api/organizations/Polygl0t/overview
+  date: '2026-11-19'
+- id: ev-configs
+  claim: "The Instruct and Think repos publish SFT and APO YAML configs, training logs, config.json and a ChatML chat template. The Instruct SFT mix is about 874 million tokens for five epochs, and the APO run uses 28,437 preference pairs with the apo_zero loss."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/Polygl0t/Tucano2-qwen-3.7B-Instruct/raw/main/training_config_sft.yaml
+  date: '2026-11-19'
+- id: ev-community
+  claim: "A third-party repo ran the 3.7B Instruct in bf16 on vLLM 0.33.0 on an RTX 3080 with 8.7 GiB of VRAM and scored 74.6% on 393 text-only ENEM questions. The same author saw a fabricated fact and a wrong self-description. A community MLX 4-bit build of the Instruct model also exists."
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://huggingface.co/gutoportelaa/tucano2-3.7b-instruct-vllm-rtx3080
+  date: '2026-11-19'
+changelog:
+- date: '2026-11-19'
+  change: 'Initial entry for the Qwen-derived Tucano 2 suite (0.5B, 1.5B and 3.7B in Base, Instruct and Think), grounded against docs/primary-sources/tucano-2. No OneHill evaluation was run. Follow-up: a separate entry for Tucano2-0.6B-Base, which is trained from scratch (Llama architecture, no Qwen base, no instruct variant) and has different provenance.'
+last_verified: '2026-11-19'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

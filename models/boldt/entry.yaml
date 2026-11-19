@@ -1,0 +1,491 @@
+# OneHill v2 MODEL library entry for Boldt-DC (350M and 1B base models, HU Berlin).
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write        (AOI headline/grade)
+#   meters    -> scripts/completeness.py --write  (per-domain completeness/originality)
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+# Grounded 2026-11-19 against docs/primary-sources/boldt/ (see _sources.md). No OneHill evaluation
+# has been run, so there is no onehill_verified evidence and every documentation item is aggregated or a gap.
+# Scope: only Boldt-DC-350M and Boldt-DC-1B (FineWeb-2 German Dense-Core only, 2,048 context). Boldt-1B (adds
+# news data), Boldt-1B-IT-Preview (Qwen-generated SFT data), the 15 research checkpoints and the three
+# classifiers differ on training data or provenance and are follow-ups.
+
+schema_version: "2.0"
+id: boldt
+name: Boldt-DC (350M and 1B base models)
+aliases:
+- Boldt
+- Boldt-DC-350M
+- Boldt-DC-1B
+- Boldt/Boldt-DC-350M
+- Boldt/Boldt-DC-1B
+family:
+  id: boldt
+  name: Boldt
+publisher:
+  name: Chair of Machine Learning, Humboldt-Universitaet zu Berlin (Alan Akbik; authors Ansar Aynetdinov and Patrick Haller)
+  country: Germany
+  accountable_entity: true
+  url: https://alanakbik.github.io/research/boldt
+  security_contact: none published
+summary: "Boldt-DC is a pair of small German-only base models (350M and 1B) under a declared Apache-2.0 licence, best adopted as a German research and fine-tuning starting point and not as an assistant. Both were trained on the German Dense-Core subset of FineWeb-2 (28B unique tokens repeated to 200B), which the publisher also releases with its three quality-filter classifiers and a paper that describes the filter recipe. The publisher says the models were trained from scratch (a claim in the cards and paper; no base model is named). Training code, configs and the Llama-written label set are not released, every benchmark is the publisher's own on a translated suite it built, and there is no safety evaluation. The licence is a front-matter declaration with no LICENSE file in any repo, and the filter classifiers were trained on Llama-3.3-70B-Instruct labels, a Llama 3.3 licence question the publisher does not address. The Hugging Face organisation is unverified."
+variants:
+- name: Boldt-DC-350M
+  params_total: 468M
+  context_window: 2k
+  kind: base
+  safety_tuned: false
+- name: Boldt-DC-1B
+  params_total: 1.205B
+  context_window: 2k
+  kind: base
+  safety_tuned: false
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: open
+    training_code: partial
+    evaluation: partial
+    documentation: open
+    license: open
+  license:
+    spdx: Apache-2.0
+    name: Apache License 2.0 (declared in card metadata only; no LICENSE file in the repos and no licence text in the card bodies)
+    classification: osi
+    commercial_use: allowed
+    notable_restrictions:
+    - "No LICENSE, NOTICE or copyright-holder file ships with the weights; Apache-2.0 appears only in the Hugging Face front matter."
+    - "The training data is ODC-By 1.0 web text subject to Common Crawl's Terms of Use; the weights carry the Apache-2.0 declaration without mentioning either."
+    - "Open upstream question, unresolved: the released filter classifiers were trained on Llama-3.3-70B-Instruct labels, and the Llama 3.3 licence asks that models trained on its outputs carry 'Llama' in their name (see ev-llama-terms). The Boldt base models themselves were trained on filtered web text, not on Llama outputs."
+    url: https://huggingface.co/Boldt/Boldt-DC-1B
+provenance:
+  canonical_source: https://huggingface.co/Boldt
+  verified_org_on_primary_host: false
+  formats:
+  - safetensors
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: false
+    notable:
+    - name: mayflowergmbh/boldt-dc-1b-german-it-16k (and a DPO variant, and Boldt-Embed-DE-350M)
+      trust: community
+      note: third-party fine-tunes of the Boldt-DC models on the Hub, not mirrors or quantisations and not assessed
+  checkpoint_checklist_score: 4
+  scanner_result:
+    scanner: Hugging Face repository scan
+    result: filesWithIssues empty on both repos (scansDone true on the 350M repo, false on the 1B repo)
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: about 1.4e21 FLOPs for the 1B model (OneHill arithmetic, 6 x 1.2B parameters x 200B tokens; the publisher gives no figure)
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: uncertain
+    rationale: "Apache-2.0 is a free and open-source licence and weights, architecture and a usage example are public, so the Article 53 exemption would normally be plausible for a non-monetised university release. It is marked uncertain because no licence text ships with the weights and the Llama 3.3 question on the classifier chain is unresolved. The exemption does not cover the copyright policy or the public training-content summary, and neither exists as a standalone document."
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: partial
+    code_of_practice_signatory: false
+  deployer_notes: "The paper and the Dense-Core dataset card name the corpus, the filter recipe, the architecture and the hyperparameters, which helps a deployer assemble technical documentation. There is no copyright policy and no template-format training-content summary; the web data comes from Common Crawl and the opt-out position is the upstream FineWeb-2 card's, not Boldt's. No code-of-practice signatory status appears in any document examined (the Commission list was not checked). A fine-tuner placing a derivative on the EU market may become a provider for it."
+  last_assessed: '2026-11-19'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T0
+  ceiling_conditional: true
+  hardware_notes: "The bf16 weights are 0.94 GB (350M, 468M parameters) and 2.41 GB (1B, 1.205B parameters). The context is 2,048 tokens and the architecture is plain Llama, so both should fit on a laptop GPU or CPU (OneHill inference from file sizes). The publisher gives no VRAM, latency or throughput figure and no quantised builds. The paper names training hardware (8xA100 and 4xH100) and no GPU-hours."
+  serving_support:
+  - transformers
+  controls_required:
+  - Treat these as base models for German research and fine-tuning; do not expose them to end users without instruction tuning and your own safety evaluation (T0, conditional on a human reviewing any output that leaves a sandbox)
+  - Run your own toxicity, bias and factuality evaluation, because the publisher states it has done none
+  - Add the Apache-2.0 text and a notice yourself when you redistribute, since no LICENSE file ships
+  - Pin the exact repo revision and check the LFS SHA256 yourself, because nothing is signed
+  - Check which repo your code loads, since the Boldt-DC-1B card sample loads Boldt/Boldt-1B, a different model trained on news data
+  - Add input and output guardrails, since no companion guard model or acceptable-use policy ships
+score:
+  rubric_version: '1.1'
+  headline: 45.2
+  grade: D
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: "Open weights, a public training dataset (the 28B-token Dense-Core subset), public filter classifiers, a thorough paper and cards, and an Apache-2.0 declaration put it at the top of the open-weights anchor. It is short of 4 because no training code, configs or evaluation harness is released or linked anywhere, the 500k Llama-written label set is not published, and the card bodies carry no licence text. Training data is open (the exact dataset the models were trained on is public), training code is partial (frameworks and hyperparameters are named in the paper, no runnable recipe) and evaluation is partial (translated benchmarks are public, no harness)."
+      evidence_refs:
+      - ev-card-1b
+      - ev-paper
+      - ev-dataset
+      - ev-licence
+    provenance:
+      score: 2
+      rationale: "Safetensors only, Hugging Face LFS hashes, a scan that flagged nothing and plain Llama-architecture files with no custom code give about 4 of 8 checklist boxes. It stays at 2 because the Boldt organisation is not verified on Hugging Face and has two members, nothing is signed or attested, no mirror or quantisation policy exists, and the 1B repo's scan shows scansDone false. 'Trained from scratch' is the publisher's claim and no base model is named, but nothing independent confirms it. Anchor 3 needs a verified publisher organisation."
+      evidence_refs:
+      - ev-hf-platform
+      - ev-card-350m
+      - ev-paper
+    legal:
+      score: 3
+      rationale: "The declared licence is Apache-2.0, ungated, which is clear for common uses, and the paper and dataset card document corpus, filter recipe and upstream licences (ODC-By and Common Crawl terms). It stays at 3 because no LICENSE file or licence text ships, there is no copyright policy or training-content summary in the AI Office format, and the Llama 3.3 labelling chain behind the released classifiers is unaddressed."
+      evidence_refs:
+      - ev-licence
+      - ev-dataset
+      - ev-llama-terms
+      - ev-paper
+    safety:
+      score: 1
+      rationale: "These are base models and say so; the cards and the paper state plainly that no toxicity, bias or stereotype evaluation was done and that repeated epochs may amplify biases. There is no acceptable-use policy, no guard model and no safety-tuned release in scope (the IT-Preview sibling also has no systematic safety evaluation). The plain disclosure of that gap keeps it above 0, and nothing supports a higher anchor."
+      evidence_refs:
+      - ev-card-350m
+      - ev-card-1b
+      - ev-paper
+    performance:
+      score: 2
+      rationale: "The publisher reports a 44.05 average on its own translated German suite for the 1B model against 40.78 for LLaMmlein-1B, 39.77 for Gemma-3-1B and 37.90 for Llama-3.2-1B, and 40.16 for the 350M model. Every number is the authors' own on a benchmark suite they re-translated themselves, the paper describes no contamination check, absolute scores are low (MMLU 29 to 31 against a 25 floor), and no independent re-run was found, so it stays at 2."
+      evidence_refs:
+      - ev-card-1b
+      - ev-paper
+      - ev-no-independent
+    operational:
+      score: 2
+      rationale: "The weights are standard safetensors with a plain Llama architecture and load through transformers (the cards show only that route). No quantised build, hardware table, serving guidance or inference provider exists, the 1B card's code sample loads the wrong repo, and the 350M card miscounts its own release list. Small size makes it easy to run, but nothing is documented beyond the Python sample."
+      evidence_refs:
+      - ev-card-1b
+      - ev-card-350m
+      - ev-hf-platform
+    governance:
+      score: 3
+      rationale: "An accountable university chair with named authors, a peer-reviewed paper (EMNLP 2026), a project page, two release batches (May and August 2026) and README edits as late as 2026-11-01. Against that, the track record is seven months, there is no security contact, vulnerability process, deprecation policy or terms, discussions are empty, and the Hugging Face organisation is unverified."
+      evidence_refs:
+      - ev-project
+      - ev-paper
+      - ev-hf-platform
+
+# --- Assessed signals.
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: "Apache-2.0 base weights, the exact training dataset and filter classifiers are public and the paper gives hyperparameters, so adaptation and continued pretraining are practical; training code and configs are unreleased, so an exact rebuild is not possible."
+    refs: [ev-card-1b, ev-dataset, ev-paper]
+  knowledge_structure:
+    level: weak
+    dimension: performance
+    summary: "2,048-token context, German only, MMLU about 29 to 31 on the publisher's suite and no retrieval or grounding test make it a weak knowledge or RAG backbone as released."
+    refs: [ev-card-1b, ev-paper]
+  specialization:
+    level: moderate
+    dimension: openness
+    summary: "Small German base checkpoints with a German 32k tokenizer, an open corpus and an Apache-2.0 declaration are a sensible specialisation start; the paper shows supervised fine-tuning on SmolTalk2 German and outside parties have published fine-tunes, but no adaptation recipe ships."
+    refs: [ev-card-1b, ev-paper, ev-hf-platform]
+  exchangeability:
+    level: medium
+    dimension: operational
+    summary: "Standard Llama-architecture safetensors should drop into common runtimes, but the publisher documents only transformers, ships no quantised builds and no inference provider hosts them."
+    refs: [ev-card-1b, ev-hf-platform]
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: "The publisher states it has run no toxicity, bias or stereotype evaluation and nothing independent exists."
+    refs: [ev-card-350m, ev-paper]
+
+# --- Four documentation domains.
+documentation:
+  assess:
+    completeness: 73.3
+    originality: 0.0
+    items:
+      - key: intended-use
+        title: "Intended & out-of-scope use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-1b, ev-project, ev-paper]
+        summary: "Base models for German text completion and further training; the cards say they are not for chat and the org page calls the 350M model for constrained environments. No out-of-scope list is published."
+      - key: limitations
+        title: "Known limitations, bias & failure modes"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-1b, ev-paper]
+        summary: "German only, 2,048 context, models up to 1B trained at most 200B tokens, no toxicity or bias evaluation, possible bias amplification from repeated epochs; the card errors are listed under support."
+      - key: openness
+        title: "Openness tier & components"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-paper, ev-dataset]
+        summary: "open_weights: weights, training dataset, filter classifiers and documentation are public; training code, configs, the label set and an evaluation harness are not."
+      - key: license
+        title: "Licence terms & permitted use"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-licence, ev-dataset, ev-llama-terms]
+        summary: "Apache-2.0 declared in metadata only, ungated, no LICENSE file; data is ODC-By plus Common Crawl terms; the Llama 3.3 labelling chain behind the classifiers is an open question."
+      - key: provenance
+        title: "Supply-chain & provenance"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-hf-platform, ev-card-350m, ev-paper]
+        summary: "Safetensors only, LFS hashes, clean scan, unverified two-member organisation, no signing; 'from scratch' is a publisher claim and no base model is named in any document."
+      - key: eu-ai-act
+        title: "EU AI Act posture"
+        doc_type: explanation
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-paper, ev-dataset, ev-licence]
+        summary: "GPAI, about 1.4e21 FLOPs for the 1B (OneHill arithmetic) so not systemic-risk; exemption uncertain; no copyright policy or standalone training-content summary, though the dataset card and paper describe the corpus."
+      - key: evaluation
+        title: "Benchmarks & evaluation"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-card-350m, ev-paper, ev-no-independent]
+        summary: "Publisher-only on a re-translated German suite: 1B average 44.05, 350M average 40.16, ahead of Gemma-3-1B and Llama-3.2-1B on that suite; no contamination check or independent re-run."
+      - key: safety-eval
+        title: "Independent safety evaluation"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "The publisher states it has run no toxicity, demographic-bias or stereotype evaluation of any Boldt model, and no independent safety or red-team evaluation of the Boldt-DC models was found."
+  implement:
+    completeness: 59.1
+    originality: 0.0
+    items:
+      - key: install
+        title: "Install & run"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-card-350m]
+        summary: "AutoTokenizer and AutoModelForCausalLM from transformers with plain text completion; the Boldt-DC-1B sample loads the wrong repo name."
+      - key: hardware
+        title: "Hardware & VRAM requirements"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-platform, ev-paper]
+        summary: "File sizes only (0.94 GB and 2.41 GB bf16); no VRAM, latency or throughput table; training hardware named without GPU-hours."
+      - key: serving
+        title: "Serving stacks"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-1b, ev-hf-platform]
+        summary: "transformers is the only documented route; Llama-architecture config suggests other stacks work but no publisher statement or test; no inference provider."
+      - key: safe-deployment
+        title: "Safe-deployment controls & Deployment Ceiling"
+        doc_type: howto
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-paper, ev-licence]
+        summary: "Deployment Ceiling T0 (conditional): research and fine-tuning use, own safety evaluation, pinned revision, licence text added on redistribution."
+      - key: quantization
+        title: "Available quantizations"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No quantised build (GGUF, GPTQ, AWQ or ONNX) of Boldt-DC-350M or Boldt-DC-1B was found from the publisher or from anyone else; only a community GGUF of the IT-Preview sibling exists."
+      - key: fine-tuning
+        title: "Fine-tuning & adaptation"
+        doc_type: howto
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-paper, ev-hf-platform]
+        summary: "The paper fine-tunes these base models on SmolTalk2 German with TRL (batch 32, peak LR 5e-5, 1xH100) and community fine-tunes exist; no configs or fine-tuning guide ship."
+      - key: integration
+        title: "API / OpenAI-compatible integration"
+        doc_type: howto
+        source_type: gap
+        gap_reason: "No hosted endpoint, no inference provider mapping and no OpenAI-compatible serving guidance exists for these base models."
+  use:
+    completeness: 77.8
+    originality: 0.0
+    items:
+      - key: capabilities
+        title: "Capabilities & modalities"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-paper]
+        summary: "Text only; German next-token completion; knowledge and reading benchmarks near the low end (MMLU 29 to 31); no instruction following, code or tool-use claim."
+      - key: context-window
+        title: "Context window & long-context behaviour"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-card-350m]
+        summary: "2,048 tokens (config max_position_embeddings and tokenizer model_max_length agree); no long-context claim."
+      - key: chat-template
+        title: "Prompt format & chat template"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-card-350m]
+        summary: "No chat template; the cards say to use plain text completion. End of text is <|endoftext|> (id 0) and padding <|pad|> (id 1)."
+      - key: languages
+        title: "Language coverage"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: [ev-card-1b, ev-paper, ev-dataset]
+        summary: "German only: trained on the deu_Latn split of FineWeb-2 with a German 32k BPE tokenizer; the paper says it studied German only and does not test other languages; English or other languages are not claimed or evaluated."
+      - key: tool-use
+        title: "Function / tool calling"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Base models with no instruction tuning; no tool-calling or function-calling capability is documented or tested."
+      - key: structured-output
+        title: "Structured / JSON-constrained output"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "Base models with no instruction tuning; no structured or JSON output capability is documented or tested."
+  support:
+    completeness: 33.3
+    originality: 0.0
+    items:
+      - key: troubleshooting
+        title: "Common problems & fixes"
+        doc_type: troubleshooting
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-1b, ev-card-350m]
+        summary: "Use plain completion, not a chat template; load the tokenizer from the same repo; check the repo name in the Boldt-DC-1B sample; card text inconsistencies (three versus four models, 300M versus 350M)."
+      - key: release-versioning
+        title: "Versions, changelog & cadence"
+        doc_type: release_notes
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-platform, ev-paper]
+        summary: "Both repos created 2026-05-02; weights unchanged since the initial upload, README edits through 2026-11-01; further research checkpoints added 2026-08-30; no changelog file."
+      - key: security-disclosure
+        title: "Security / vulnerability disclosure"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No SECURITY.md, security contact or disclosure process exists in the Hugging Face repos or on the project page; only the authors' university addresses appear on the paper and the chair's legal notice, which are not a security channel."
+      - key: channels
+        title: "Community & support channels"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-hf-platform, ev-project]
+        summary: "Hugging Face discussions tab (empty on 2026-11-19) and the chair's project page and paper contact addresses."
+      - key: deprecation
+        title: "Deprecation / end-of-life policy"
+        doc_type: reference
+        source_type: gap
+        gap_reason: "No deprecation or support-window statement exists for any Boldt repo or on the project page."
+      - key: known-issues
+        title: "Tracked known issues"
+        doc_type: reference
+        source_type: aggregated
+        coverage: partial
+        refs: [ev-card-1b, ev-card-350m, ev-paper]
+        summary: "No public issue tracker; the publisher lists the missing safety evaluation and bias-amplification risk, and the cards contain the naming and sample-code errors above."
+
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: strong
+      rationale: "Apache-2.0 is declared on both cards, ungated, with weights downloadable and the exact training dataset public; caveat: no LICENSE file ships and the Llama 3.3 question on the classifier chain is open (ev-licence, ev-llama-terms)."
+    transparency:
+      level: moderate
+      rationale: "Weights, training dataset, filter classifiers and a detailed paper are public, but training code, configs, the label set and an evaluation harness are not, so the models cannot be rebuilt exactly (ev-paper, ev-dataset)."
+    reliability:
+      level: weak
+      rationale: "Safety is 1 (no safety evaluation, stated by the publisher) and operational readiness is 2 (transformers sample only, no quantised builds or hardware guidance); these are base models, not deployable assistants (ev-card-1b, ev-paper)."
+    data_control:
+      level: strong
+      rationale: "Self-hosted weights under a declared Apache-2.0 licence with no clawback clause, standard Llama architecture files and no custom code in the repos (ev-licence, ev-hf-platform)."
+  verdict: "You own the use of the weights: Apache-2.0 is declared, ungated, commercial use is allowed and your data stays on your hardware. You do not own a deployable German assistant, because these are small base models with no safety evaluation, you cannot rebuild them without the unreleased training code, and every benchmark is the publisher's own. The level rises if the group ships a LICENSE file, releases its training code and configs, and settles the Llama 3.3 question on the classifiers."
+
+evidence:
+- id: ev-card-350m
+  claim: "The Boldt-DC-350M card declares Apache-2.0 in its metadata only, says the Boldt series is 'trained from scratch' (a publisher claim), calls the model a base model not optimised for chat, and says no systematic toxicity, bias or stereotype evaluation was done. The card says 'three models' but lists four and names the model 'Boldt-DC-300M' in its table."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/Boldt/Boldt-DC-350M
+  date: '2026-11-19'
+- id: ev-card-1b
+  claim: "The Boldt-DC-1B card declares Apache-2.0 in its metadata only, gives a 2,048-token context and 200B training tokens of the German Dense-Core subset, reports a 44.05 average on the publisher's German benchmark suite, and carries the same no-safety-evaluation statement. Its code sample loads the sibling Boldt/Boldt-1B instead of this model."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/Boldt/Boldt-DC-1B
+  date: '2026-11-19'
+- id: ev-licence
+  claim: "Both repos declare 'license: apache-2.0' in front matter and are not gated. No LICENSE file exists in either repo or any other Boldt model repo (the raw LICENSE path returns HTTP 404), and neither card body names a licence or copyright holder."
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/api/models/Boldt/Boldt-DC-1B
+  date: '2026-11-19'
+- id: ev-paper
+  claim: "The EMNLP 2026 paper 'Repetition over Diversity' (arXiv 2604.28075, Aynetdinov, Haller and Akbik, Humboldt-Universitaet zu Berlin) describes training models 'from scratch' on filtered German FineWeb-2. It gives the Llama-3.3-70B-Instruct annotation recipe, the training setup and the upstream licences. The authors state they ran no toxicity or bias evaluation. The paper names no base model, links no code repository and describes no contamination check."
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2604.28075
+  date: '2026-11-19'
+- id: ev-dataset
+  claim: "Boldt/fineweb2-de-dc is a public ODC-By 1.0 dataset of 24.4M German documents (28B tokens) subject to Common Crawl's Terms of Use, selected by three released classifiers trained on Llama-3.3-70B-Instruct labels; the classifier repos have no README, no licence and no LICENSE file. The FineWeb-2 card gives the same ODC-By terms for the upstream corpus."
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/datasets/Boldt/fineweb2-de-dc
+  date: '2026-11-19'
+- id: ev-llama-terms
+  claim: "Llama 3.3 Community License section 1.b.i says that anyone who uses Llama Materials or any outputs of them to train or improve a distributed AI model shall include 'Llama' at the beginning of that model's name. This is an upstream document, not a Boldt one; Boldt does not say whether it applies to its classifiers."
+  source_type: third_party
+  doc_type: terms
+  retrieved: true
+  url: https://www.llama.com/llama3_3/license/
+  date: '2026-11-19'
+- id: ev-hf-platform
+  claim: "The Boldt organisation is not verified on Hugging Face and has two members. Both DC repos are ungated, hold safetensors only, and have no discussions and no inference provider. The scan flagged no files, though scansDone is false on the 1B repo. The 350M config is a Llama model with 468M parameters. Third-party fine-tunes of the DC models exist on the Hub."
+  source_type: third_party
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/api/models/Boldt/Boldt-DC-350M
+  date: '2026-11-19'
+- id: ev-siblings
+  claim: "Sibling releases differ from the DC models. Boldt-1B adds about 6B tokens of Fundus news articles with no stated licence and has a 4,096 context. Boldt-1B-IT-Preview is tuned on 95k pairs, partly written by Qwen-3.6-27B and drawn from a Reddit subreddit, with no systematic safety evaluation. Fifteen further repos are research checkpoints. All declare Apache-2.0 in metadata."
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/Boldt/Boldt-1B-IT-Preview
+  date: '2026-11-19'
+- id: ev-project
+  claim: "The Hugging Face organisation README and the project page name the Chair of Machine Learning at Humboldt-Universitaet zu Berlin as the developer and describe Boldt as 'state-of-the-art' and 'top-tier'; these are marketing statements. The chair's pages list the authors and a legal notice with a postal address."
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://alanakbik.github.io/research/boldt
+  date: '2026-11-19'
+- id: ev-no-independent
+  claim: "No independent benchmark, leaderboard entry or safety report for any Boldt model was found; the only outside artefacts are community fine-tunes on the Hugging Face Hub."
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://huggingface.co/mayflowergmbh/boldt-dc-1b-german-it-16k
+  date: '2026-11-19'
+changelog:
+- date: '2026-11-19'
+  change: 'Initial entry for Boldt-DC-350M and Boldt-DC-1B, grounded against docs/primary-sources/boldt (cards, paper, dataset card, Hugging Face metadata, Llama 3.3 licence text). No OneHill evaluation was run. Follow-ups, each differing on training data or provenance: Boldt-1B (adds Fundus news data, 4,096 context), Boldt-1B-IT-Preview (Qwen-generated and Reddit SFT data, no safety evaluation), the 15 research checkpoints (Random, Coherence, Sorted, Edu, IV, MKC, DC-100BT, Phased at 350M and 1B), and the three fineweb2-de classifiers (no licence, Llama-labelled).'
+last_verified: '2026-11-19'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180

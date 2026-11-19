@@ -10,6 +10,20 @@ Initial public foundation (v0.1).
 
 ### Added
 
+- Five model entries chosen for region and language coverage, each grounded in primary documents. `jais-3`
+  (Inception, UAE; Arabic dialects; six sizes from 0.9B to 375B, each adapted from the finished K2 Horizon
+  checkpoint of the same size; Apache-2.0 declared on the cards with no LICENSE file; AOI 57.6, grade C,
+  ownership partial). `tucano-2` (University of Bonn; Brazilian Portuguese; nine models continually pretrained
+  from Qwen3 bases; Apache-2.0 LICENSE files in eight of nine repos; the largest dataset lists non-commercial
+  sources; AOI 54.4, grade D, ownership partial). `luciole` (OpenLLM-France; French; 23B, 8B and 1B Instruct;
+  Apache-2.0 declared with no LICENSE file in the Instruct repos, GPL-3.0 training code, no technical report;
+  AOI 51.2, grade D, ownership partial). `boldt` (Humboldt University of Berlin; German; 350M and 1B base
+  models; Apache-2.0 declared on the card only; classifiers trained on Llama 3.3 labels; no safety evaluation;
+  AOI 45.2, grade D, ownership partial). `sarvam` (Sarvam AI, India; 30B, 105B and 105B-1711; Apache-2.0
+  declared with no LICENSE file, while Sarvam's Terms bar training on outputs and discovering weights without
+  mentioning the Apache-licensed weights; the "22 Indian languages" claim is evidenced for ten plus English;
+  AOI 44.4, grade D, ownership partial). Sibling releases that differ on licence or base are listed as follow-ups
+  in each entry.
 - Batch of five new model entries and one new inference-provider entry (2026-11-19), chosen for
   region, language and task diversity, each read from primary documents with `retrieved` flags set
   honestly. `gemma-4` (Google, US; Apache-2.0 on every checkpoint, ungated, AOI 68.8, grade C,
