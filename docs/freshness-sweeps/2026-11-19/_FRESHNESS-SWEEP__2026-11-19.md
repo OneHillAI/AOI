@@ -1,15 +1,15 @@
 # AOI freshness re-verification sweep - 2026-11-19
 
-Re-verification of all 30 entries (21 models, 9 inference providers), each 59 days past the 30-day
+Re-verification of all 33 entries (21 models, 9 inference providers, 3 hosting providers), each 59 days past the 30-day
 fast SLA (`last_verified` 2026-09-21). Every entry was re-read against current primary documents:
 raw licence files, model cards, live Terms, Privacy Policies, DPAs and provider catalogues. The work
 was done by automated sessions (one per family or provider group), then checked by a lead session:
-`validate.py` reports 0 errors on all 30, the site builds, and eight score-moving claims were
+`validate.py` reports 0 errors on all 33, the site builds, and eight score-moving claims were
 re-confirmed against the live source. No evaluation was run by OneHill; every performance and
 safety figure is a publisher or third-party figure, as in the earlier entries. A maintainer has not
 yet confirmed the cited text against the changed scores (CONTRIBUTING.md, "Changing a score").
 
-## Entries that changed score, grade or ownership level (11 of 30)
+## Entries that changed score, grade or ownership level (12 of 33)
 
 | Entry | Before | After | Reason |
 |---|---|---|---|
@@ -24,8 +24,9 @@ yet confirmed the cited text against the changed scores (CONTRIBUTING.md, "Chang
 | nebius | 60.8 C, partial | 64.4 C, partial | SOC 3 report and ISO 27001 certificate read; compliance 4 to 5 |
 | groq | 70.0 B, substantial | 72.4 B, substantial | Terms, DPA, BAA and AUP re-read; AUP now read |
 | runware | 50.4 D, partial | 54.4 D, partial | Terms of 29 September re-read in full; confidentiality duty added for Serverless |
+| ollama (hosting) | 55.2 C | 48.4 D | Its own GGUF loader has a critical CVE (CVE-2026-7482, fixed in 0.17.1), four CVE records report no vendor response, no security advisories are published; loader safety 4 to 3, security track record 3 to 2. Hosting entries carry no ownership level |
 
-The other 19 entries are unchanged in score and level. Their changes are evidence, wording and
+The other 21 entries are unchanged in score and level (Hugging Face stays 79.2 B and llama.cpp 56.4 C). Their changes are evidence, wording and
 date corrections only (see each entry's `changelog`).
 
 ## Corrections to the 2026-09-21 sweep
@@ -44,6 +45,8 @@ date corrections only (see each entry's `changelog`).
 - The Mistral weights documentation page cited as evidence now returns HTTP 404.
 - The meta-llama entry (text-only Llama 3.1 and 3.3) still counted the multimodal EU restriction after
   the Llama 4 split; that is removed, with no score change.
+
+- Hosting providers (the September sweep did not cover them): CVE-2026-5760 is an SGLang flaw, not an Ollama or llama-cpp-python one (the llama-cpp-python flaw is CVE-2024-34359), so that claim is removed from the Ollama and llama.cpp entries. Hugging Face holds SOC 2 Type 2 only; its own blog says ISO 27001 "is not currently held", so the certificate is removed. Hugging Face's October 2026 Load/Mine attack (31 malicious repos, one passing the platform's scans) and its July 2026 infrastructure intrusion are recorded. llama.cpp shipped v1.0.0 on 2026-11-13, moved under Hugging Face on 2026-02-20, and disabled private vulnerability reporting on 2026-06-01. The Ollama registry holds GGUF and MLX builds since 0.40.0.
 
 ## New releases found and not yet entered (licence as read from the raw file unless noted)
 
@@ -75,6 +78,7 @@ date corrections only (see each entry's `changelog`).
 - Baseten: every document behind the trust centre "Request access" (SOC 2 and 3, ISO, HIPAA, pen test).
 - Nebius: the logged-in price list and the SOC 2 Type II report.
 - DeepInfra: the DPA PDF (HTTP 403), the ISO certificate, the SOC 2 Type 1 report and the pen-test report.
+- Hugging Face: SOC 2 Type 2 report, DPA text (Enterprise only). Ollama: no DPA, sub-processor list or certification exists to read. llama.cpp: whether ZDI-26-975, -976 and -954 are fixed by the PR ZDI names (#31336).
 - Berget: status page (JavaScript shell). Mistral: Trust Centre sub-processor list.
 - Llama and Gemma-derived models: Hugging Face cards of gated repos were read by API metadata only.
 
@@ -84,3 +88,5 @@ date corrections only (see each entry's `changelog`).
 - Soofi grade B to C; Nebius compliance 5; DeepInfra compliance and reliability 3 (publisher statements);
   Together AI residency 3; Berget residency 4; Nemotron 3 Nano Omni operational held at 3.
 - meta-llama legal 2 now that the multimodal ban no longer counts against the text-only line.
+- Hugging Face security track record held at 3 although the Load/Mine attack evaded its scanners (the platform's own report says published files stayed clean); a drop to 2 is arguable.
+- llama.cpp security track record held at 3 although private disclosure is off and the advisory feed stopped in March; Ollama security track record lowered to 2 for four no-response CVE records and no advisories. Treating the two differently is a judgement a maintainer may want to align.

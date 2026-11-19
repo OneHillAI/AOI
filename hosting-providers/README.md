@@ -27,7 +27,7 @@ the [supply-chain risk framework](../methodology/supply-chain-risk.md).
 | Entry | Type | Provenance strength | Format posture | The one thing to remember |
 |---|---|---|---|---|
 | [`hugging-face`](hugging-face/) | Hub | Strongest (verified orgs + layered scanning + gating) | safetensors default; pickle flagged-not-blocked | Best tooling, but *pin the revision & verify* - typosquats and pickle bypasses are real. |
-| [`ollama`](ollama/) | Local runner | Weak (no verified-org identity, no documented scanning/signing) | GGUF (data-only, avoided the main CVE) | Convenient, but **bring your own provenance discipline**. |
+| [`ollama`](ollama/) | Local runner | Weak (no verified-org identity, no documented scanning/signing) | GGUF and, since 0.40, MLX; its own GGUF loader had a critical CVE (CVE-2026-7482, fixed in 0.17.1) | Convenient, but **bring your own provenance discipline**. |
 | [`llama-cpp-gguf`](llama-cpp-gguf/) | Serving engine / format | Inherits your source; none native | GGUF is safe *data*, but loaders had SSTI/heap CVEs | Pin `llama-cpp-python ≥ 0.2.72` and **inspect the chat template**. |
 
 ## The universal minimum bar (applies to all of them)
