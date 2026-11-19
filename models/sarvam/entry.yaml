@@ -1,0 +1,689 @@
+# OneHill v2 MODEL library entry for Sarvam-30B, Sarvam-105B and Sarvam-105B-1711 (Sarvam AI).
+# Validated against schema/model.v2.schema.json.
+#   scores    -> scripts/score.py --write
+#   meters    -> scripts/completeness.py --write
+#   prose     -> assess.md / implement.md / use.md / support.md (sections keyed <!-- item: KEY -->)
+# Scope: one entry for the three builds because they share the Apache-2.0 declaration, the weights-only
+# openness tier and the same base. Sarvam-105B-1711 is a further post-trained finetune of Sarvam-105B.
+# Grounded 2026-11-19 against docs/primary-sources/sarvam/. No OneHill evaluation has been run, so there
+# is no onehill_verified evidence and every documentation item is aggregated or a gap.
+
+schema_version: '2.0'
+id: sarvam
+name: Sarvam-30B, Sarvam-105B and Sarvam-105B-1711
+aliases:
+- Sarvam-105B
+- Sarvam-30B
+- sarvam-105b-1711
+- Sarvam 105B
+- Sarvam 30B
+family:
+  id: sarvam
+  name: Sarvam
+publisher:
+  name: Axonwise Private Limited (Sarvam AI)
+  country: IN
+  accountable_entity: true
+  url: https://www.sarvam.ai/
+  security_contact: Email address on the Trust Center for the hosted platform; no security policy covers the weights
+summary: 'Sarvam-30B and Sarvam-105B are Apache-2.0 reasoning models from Sarvam AI in Bengaluru, released as weights only. No training data, training code or technical report is published and no safety evaluation exists. Both are mixture-of-experts models: the 105B has 10.3B active parameters and a 128K context, the 30B has 2.4B active parameters. The 105B-1711 build shares the base, licence and openness tier and is covered here. No weights repo holds a LICENSE file, so the licence is a card declaration. Sarvam''s own API documentation lists 10 Indian languages plus English where the cards claim 22. Training from scratch is a publisher claim. The headline is D because safety evidence is absent and legal documentation is thin.'
+variants:
+- name: sarvam-105b
+  params_total: 106.0B
+  params_active: 10.3B
+  context_window: 128k
+  kind: reasoning
+  safety_tuned: true
+- name: sarvam-30b
+  params_total: 32.2B
+  params_active: 2.4B
+  context_window: 65k evaluated (config 131k)
+  kind: reasoning
+  safety_tuned: true
+- name: sarvam-105b-1711-bf16
+  params_total: 106.0B
+  params_active: 10.3B
+  context_window: 131k (config 163k)
+  kind: reasoning
+- name: sarvam-105b-1711 (NVFP4 and MXFP8)
+  params_total: 106.0B
+  params_active: 10.3B
+  context_window: 131k (config 163k)
+  kind: quantized
+- name: sarvam-105b-fp8
+  params_total: 106.0B
+  params_active: 10.3B
+  context_window: 128k
+  kind: quantized
+  safety_tuned: true
+- name: sarvam-30b-fp8
+  params_total: 32.2B
+  params_active: 2.4B
+  context_window: 65k evaluated (config 131k)
+  kind: quantized
+  safety_tuned: true
+- name: sarvam-105b-gguf (Q4_K_M)
+  params_total: 106.0B
+  params_active: 10.3B
+  context_window: 128k
+  kind: quantized
+  safety_tuned: true
+- name: sarvam-30b-gguf (Q4_K_M)
+  params_total: 32.2B
+  params_active: 2.4B
+  context_window: 65k evaluated (config 131k)
+  kind: quantized
+  safety_tuned: true
+openness:
+  tier: open_weights
+  components:
+    weights: open
+    training_data: closed
+    training_code: closed
+    evaluation: partial
+    documentation: partial
+    license: open
+  license:
+    spdx: Apache-2.0
+    name: Apache License 2.0 (declared on the cards)
+    classification: osi
+    commercial_use: allowed
+    notable_restrictions:
+    - No weights repo holds a LICENSE file. The grant is the card front matter and a card sentence that names 'the Apache License' without a version or link.
+    - Sarvam's Terms of Service (clause 10.5) and EULA bar training AI systems on service output and bar derivative works of its 'proprietary language models'. Neither mentions the Apache-2.0 weights, so their reach over downloaded weights is unstated.
+    url: https://huggingface.co/sarvamai/sarvam-105b
+provenance:
+  canonical_source: https://huggingface.co/sarvamai
+  verified_org_on_primary_host: false
+  formats:
+  - safetensors
+  - gguf
+  integrity:
+    checksums: true
+    signed: false
+    signing_tech: ''
+    provenance_attestation: false
+  mirrors_and_quants:
+    acknowledged: true
+    notable:
+    - name: sarvamai/sarvam-105b-fp8 and sarvam-30b-fp8
+      trust: publisher
+      note: official FP8 builds made with NVIDIA ModelOpt, March 2026
+    - name: sarvamai/sarvam-105b-gguf and sarvam-30b-gguf
+      trust: publisher
+      note: official Q4_K_M builds; the hub scan had not completed for these repos
+    - name: sarvamai/sarvam-105b-1711
+      trust: publisher
+      note: official NVFP4 and MXFP8 build of the 1711 BF16 weights
+  checkpoint_checklist_score: 3
+  scanner_result:
+    tool: Hugging Face repository scan
+    clean: true
+    date: '2026-11-19'
+  incidents: []
+eu_ai_act:
+  is_gpai: true
+  systemic_risk:
+    designated: false
+    training_flops_estimate: About 7.4e23 FLOPs for the 105B (6 x 10.3B active parameters x 12T tokens) and about 2.3e23 for the 30B (6 x 2.4B x 16T), OneHill estimates from publisher token counts
+    over_1e25_threshold: false
+    article_55_docs_available: n/a
+  open_source_exemption:
+    license_qualifies: uncertain
+    rationale: Apache-2.0 is declared and the weights are public. Sarvam also charges for API access to the same models, and the Article 53 exemption does not cover monetised models on some readings. Whether it applies is unresolved. The exemption leaves the copyright policy and the public training-content summary duties in place, and Sarvam publishes neither.
+  provider_package:
+    technical_documentation: partial
+    downstream_information: partial
+    copyright_policy: 'no'
+    training_content_summary: 'no'
+    code_of_practice_signatory: unknown
+  deployer_notes: Sarvam publishes a blog and cards but no technical report, training-data summary or copyright policy, so a deployer has to assemble Annex XI and XII style information alone. A fine-tuner who places a derivative on the EU market under its own name may become a provider for that derivative. The hosted service is a separate offering with its own conflicting data terms.
+  last_assessed: '2026-11-19'
+performance: {}
+behaviour: {}
+safety: {}
+deployment:
+  ceiling_tier: T1
+  ceiling_conditional: true
+  hardware_notes: 'No minimum hardware is stated for the March builds. Sizes on disk: sarvam-105b 424.2 GB in float32, sarvam-105b-fp8 112.6 GB, 105B Q4_K_M GGUF 64.2 GB, 105B-1711 BF16 218.3 GB, 105B-1711 NVFP4 70.2 GB; sarvam-30b 128.6 GB in float32, 30B FP8 38.7 GB, 30B Q4_K_M 19.6 GB. The 1711 card gives throughput tables for one B200 and one 96 GB RTX PRO 6000 Blackwell with vLLM 0.33.0. The card examples for the March builds use tensor parallelism of 4 to 8 for the 105B and 2 for the 30B.'
+  serving_support:
+  - hf-transformers
+  - vllm
+  - sglang
+  - llama.cpp
+  controls_required:
+  - Keep a human reviewing every output (T1 internal assistant) until you have run your own safety and jailbreak tests, because Sarvam publishes no safety evaluation.
+  - Add input and output guardrails and your own guard classifier. Sarvam ships none.
+  - Pin the Hugging Face revision, verify the LFS sha256 values and review the custom Python files and hotpatch_vllm.py before using trust_remote_code=True.
+  - Test tool-call and reasoning parsing on your serving stack before allowing tool use, and sandbox any tool execution.
+  - Treat the Terms of Service and EULA clauses on derivative works and training as an open question for legal review before building a derivative.
+score:
+  rubric_version: '1.1'
+  headline: 44.4
+  grade: D
+  hard_flags: []
+  dimensions:
+    openness:
+      score: 3
+      rationale: Weights are open under an Apache-2.0 declaration, with cards, a blog and a public 22-language evaluation prompt set. Training data, training code, post-training recipes, base checkpoints and a technical report are not published. That is the open-weights anchor.
+      evidence_refs:
+      - ev-card-105b
+      - ev-blog
+      - ev-quant-code
+      - ev-indivibe
+      - ev-no-report
+    provenance:
+      score: 2
+      rationale: The canonical source is the sarvamai Hugging Face organisation, which is not verified. Weights are safetensors with LFS checksums and a clean hub scan on the main repos, and nothing is signed. Loading needs trust_remote_code, and the 30B and 105B repos ship a script that patches a vLLM install. The from-scratch claim has no independent support. About 3 of 8 checklist boxes are met.
+      evidence_refs:
+      - ev-hub
+      - ev-blog
+      - ev-aa
+    legal:
+      score: 2
+      rationale: Apache-2.0 is declared but no repo holds a LICENSE file, and Sarvam's Terms and EULA add limits on derivative works and training that do not mention the weights. No technical report, training-data summary, copyright policy or GPAI documentation exists. The models are far below the 1e25 FLOP line. The open-source exemption is uncertain because Sarvam sells API access to the same models.
+      evidence_refs:
+      - ev-license
+      - ev-tos
+      - ev-eula
+      - ev-no-report
+      - ev-token-factory
+    safety:
+      score: 1
+      rationale: The blog says the fine-tuning data covered India-specific risks and red-team prompts. No card states a safety result, risk or limitation, no safety evaluation is published for any build and there is no guard model. The 1711 cards are silent on safety. No third-party safety test was found. The acceptable-use policy sits in the hosted Terms. Any published safety evaluation would move this to 2.
+      evidence_refs:
+      - ev-blog
+      - ev-card-105b
+      - ev-card-1711
+      - ev-tos
+    performance:
+      score: 2
+      rationale: Every card and blog number is the publisher's own, and the blog and the 30B card disagree on one cell. Artificial Analysis puts the 105B at 18 and the 30B at 12 on its index, below every peer it lists, and reports high hallucination. The score is 2 because independent coverage is one index at one date. The 1711 build has no third-party score.
+      evidence_refs:
+      - ev-aa
+      - ev-card-105b
+      - ev-card-30b
+      - ev-card-1711
+      - ev-blog
+    operational:
+      score: 3
+      rationale: The models run on Transformers with trust_remote_code, SGLang and vLLM. Official FP8 and Q4_K_M GGUF builds exist, and the 1711 cards give vLLM 0.33.0 commands, an NVFP4 build and throughput tables. The March models need a vLLM fork or hot-patch and ship as float32 weights of 128.6 GB and 424.2 GB. Open threads report loading and reasoning-toggle faults, and Ollama and MLX are undocumented.
+      evidence_refs:
+      - ev-card-105b
+      - ev-card-1711
+      - ev-hub
+      - ev-quant-code
+      - ev-discussions
+    governance:
+      score: 3
+      rationale: 'Sarvam AI is an accountable company in Bengaluru with a release record: the March release, fix pull requests in September and November, and the 1711 build in November. Staff merge pull requests on the repos. Issues go through Hugging Face discussions and several stay unanswered. No security policy, deprecation policy or technical report covers the weights.'
+      evidence_refs:
+      - ev-hub
+      - ev-discussions
+      - ev-api-docs
+      - ev-no-report
+signals:
+  trainability:
+    level: partial
+    dimension: openness
+    summary: Apache-2.0 weights allow fine-tuning, and Prism is a Sarvam LoRA fine-tune of the 105B. Data, base checkpoints and post-training code are withheld, so a rebuild is impossible.
+    refs:
+    - ev-license
+    - ev-token-factory
+    - ev-no-report
+  knowledge_structure:
+    level: moderate
+    dimension: performance
+    summary: A 128K context on the 105B, a reasoning mode and tool calling suit grounded work. Independent scores are low for the class and hallucination is high.
+    refs:
+    - ev-card-105b
+    - ev-aa
+  specialization:
+    level: moderate
+    dimension: openness
+    summary: Fine-tuning is possible and a public Indic prompt set exists for evaluation. The custom architecture needs custom code and no post-training recipe is published.
+    refs:
+    - ev-indivibe
+    - ev-discussions
+  exchangeability:
+    level: medium
+    dimension: operational
+    summary: The models load on common runtimes with custom code. The March builds need a vLLM fork or hot-patch and the 1711 build needs vLLM 0.33.0 with a glm45 parser.
+    refs:
+    - ev-card-105b
+    - ev-card-1711
+  misuse_exposure:
+    level: unbenchmarked
+    dimension: safety
+    summary: No safety, jailbreak or red-team result is published for any build, and no guard model exists.
+    refs:
+    - ev-blog
+    - ev-card-1711
+documentation:
+  assess:
+    completeness: 73.3
+    originality: 0.0
+    items:
+    - key: intended-use
+      title: Intended & out-of-scope use
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-card-105b
+      - ev-card-30b
+      - ev-api-docs
+      summary: The cards describe reasoning, coding, agentic and Indian-language use and state no out-of-scope uses. The hosted Terms prohibit several uses and bar professional advice without review. Those Terms govern the hosted service.
+    - key: limitations
+      title: Known limitations, bias & failure modes
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-aa
+      - ev-api-docs
+      - ev-discussions
+      summary: 'The cards list no limitations. Artificial Analysis finds high hallucination and weak agentic-coding scores. The API docs list one limit: reasoning is on by default and consumes the token budget.'
+    - key: openness
+      title: Openness tier & components
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-card-105b
+      - ev-blog
+      - ev-quant-code
+      - ev-indivibe
+      - ev-no-report
+      summary: Open weights tier. Weights, official quantised builds and a 22-language evaluation prompt set are public. Training data, training code, post-training recipes, base checkpoints and a technical report are not.
+    - key: license
+      title: License terms & permitted use
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-license
+      - ev-tos
+      - ev-eula
+      summary: Apache-2.0 is declared on every weights repo, with no LICENSE file. Sarvam's Terms and EULA restrict derivative works and training on service output and do not mention the weights.
+    - key: provenance
+      title: Supply-chain & provenance
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-hub
+      - ev-blog
+      - ev-aa
+      summary: Unverified Hugging Face organisation, safetensors with checksums, clean hub scan on main repos, nothing signed, custom code required. From-scratch training is a publisher claim.
+    - key: eu-ai-act
+      title: EU AI Act posture
+      doc_type: explanation
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-blog
+      - ev-license
+      - ev-no-report
+      - ev-token-factory
+      summary: General-purpose AI model far below the 1e25 FLOP line. No technical documentation package, training-data summary or copyright policy is published. The open-source exemption is uncertain because Sarvam sells API access to the same models.
+    - key: evaluation
+      title: Benchmarks & evaluation
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-card-105b
+      - ev-card-30b
+      - ev-card-1711
+      - ev-aa
+      - ev-indivibe
+      summary: Publisher benchmark tables for all three builds, one third-party index for the March builds, and a public Indic prompt set whose results are charts only.
+    - key: safety-eval
+      title: Independent safety evaluation
+      doc_type: reference
+      source_type: gap
+      gap_reason: No safety, red-team or jailbreak evaluation of Sarvam-30B, Sarvam-105B or 105B-1711 was found from Sarvam or any third party. The blog describes safety fine-tuning data without results.
+  implement:
+    completeness: 86.4
+    originality: 0.0
+    items:
+    - key: install
+      title: Install & run
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-card-105b
+      - ev-card-1711
+      - ev-hub
+      summary: Transformers with trust_remote_code=True, SGLang, or vLLM. The March models need a vLLM fork or hot-patch script. The 1711 cards give vLLM 0.33.0 serve commands.
+    - key: hardware
+      title: Hardware & VRAM requirements
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-hub
+      - ev-card-1711
+      - ev-quant-code
+      summary: 'Sizes on disk: 105B 424 GB float32, 112.6 GB FP8, 64.2 GB Q4_K_M; 30B 128.6 GB, 38.7 GB, 19.6 GB; 1711 BF16 218 GB, NVFP4 70 GB. The 1711 card gives throughput on one B200 and one 96 GB RTX PRO 6000 Blackwell.'
+    - key: serving
+      title: Serving stacks
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-card-105b
+      - ev-card-1711
+      - ev-quant-code
+      summary: Transformers, SGLang and vLLM (fork or hot-patch for March builds, vLLM 0.33.0 for 1711) and llama.cpp for the GGUF builds. No Ollama or MLX documentation; an MLX request thread is open.
+    - key: safe-deployment
+      title: Safe-deployment controls & Deployment Ceiling
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-blog
+      - ev-aa
+      - ev-hub
+      summary: 'Ceiling T1, conditional: human-reviewed internal use until you add a guard classifier, safety and jailbreak tests, a reviewed copy of the custom code and sandboxed tools.'
+    - key: quantization
+      title: Available quantizations
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-quant-code
+      - ev-hub
+      - ev-card-1711
+      summary: Official FP8 for both models, Q4_K_M GGUF for both, and a mixed NVFP4 and MXFP8 build of 105B-1711.
+    - key: fine-tuning
+      title: Fine-tuning & adaptation
+      doc_type: howto
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-discussions
+      - ev-token-factory
+      - ev-license
+      summary: Apache-2.0 weights can be fine-tuned and Prism is a Sarvam LoRA fine-tune of the 105B. A staff fix restores differentiable single-rank MoE training. No recipe, data or post-training code is published.
+    - key: integration
+      title: API / OpenAI-compatible integration
+      doc_type: howto
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-api-docs
+      - ev-card-1711
+      summary: Self-hosted vLLM exposes an OpenAI-compatible endpoint with glm45 tool and reasoning parsers. Sarvam's hosted API is OpenAI-compatible and carries its own terms.
+  use:
+    completeness: 77.8
+    originality: 0.0
+    items:
+    - key: capabilities
+      title: Capabilities & modalities
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-card-105b
+      - ev-card-30b
+      - ev-card-1711
+      summary: Text-only reasoning models for chat, maths, code, tool calling and agentic tasks, with Indian-language emphasis. The 105B targets agentic work and the 30B targets low-latency conversation.
+    - key: context-window
+      title: Context window & long-context behaviour
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-card-105b
+      - ev-card-30b
+      - ev-card-1711
+      - ev-hub
+      summary: '105B: 128K through YaRN per the card. 30B: 65,536 tokens evaluated, config allows 131,072. 1711: examples use 131,072, config allows 163,840. No long-context retrieval benchmark is published.'
+    - key: chat-template
+      title: Prompt format & chat template
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-card-105b
+      - ev-card-1711
+      summary: A bundled chat_template.jinja with an enable_thinking switch. The 1711 cards recommend temperature 1.0 with thinking and 0.6 without.
+    - key: languages
+      title: Language coverage
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-card-105b
+      - ev-blog
+      - ev-indivibe
+      - ev-api-docs
+      summary: Cards tag 22 languages plus English, including Tibetan and omitting Bodo. The blog trains on the 10 most-spoken and benchmarks 22 by LLM judge. The API docs list 10 plus English.
+    - key: tool-use
+      title: Function / tool calling
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-blog
+      - ev-card-1711
+      summary: 'Native tool calling, with the 1711 build further post-trained for it. Publisher scores: tau2-Bench 85.5 and BFCL v4 62.4 for 1711, tau2-Bench 68.3 for the 105B and 45.7 for the 30B.'
+    - key: structured-output
+      title: Structured / JSON-constrained output
+      doc_type: reference
+      source_type: gap
+      gap_reason: The hosted API docs list JSON and json_schema outputs. No card or cookbook documents a constrained-output mode for the downloadable weights.
+  support:
+    completeness: 50.0
+    originality: 0.0
+    items:
+    - key: troubleshooting
+      title: Common problems & fixes
+      doc_type: troubleshooting
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-discussions
+      - ev-card-105b
+      - ev-card-1711
+      summary: Open threads report an is_torch_fx_available import error, thinking that cannot be switched off and the lack of native vLLM support for the March builds. A staff fix covers Transformers 5 loading.
+    - key: release-versioning
+      title: Versions, changelog & cadence
+      doc_type: release_notes
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-hub
+      - ev-card-1711
+      summary: March 2026 release of 30B and 105B, FP8 and GGUF in March, 105B routing fix on 21 September, 30B Transformers 5 fix on 12 November, 105B-1711 on 17 November. Revisions are Hugging Face commits.
+    - key: security-disclosure
+      title: Security / vulnerability disclosure
+      doc_type: reference
+      source_type: gap
+      gap_reason: No security policy or disclosure process covers the weights or the custom code. The Trust Center lists a security email for the hosted platform.
+    - key: channels
+      title: Community & support channels
+      doc_type: reference
+      source_type: aggregated
+      coverage: full
+      refs:
+      - ev-discussions
+      - ev-quant-code
+      - ev-trust
+      summary: Hugging Face discussions on each repo, the sarvamai GitHub organisation, and enterprise support on the hosted platform.
+    - key: deprecation
+      title: Deprecation / end-of-life policy
+      doc_type: reference
+      source_type: gap
+      gap_reason: No deprecation policy covers the weights. The hosted API has deprecated Sarvam-M and Sarvam-30B and tells users to migrate to Sarvam-105B.
+    - key: known-issues
+      title: Tracked known issues
+      doc_type: reference
+      source_type: aggregated
+      coverage: partial
+      refs:
+      - ev-discussions
+      - ev-blog
+      - ev-aa
+      summary: Open Hugging Face threads, a blog-versus-card benchmark mismatch for the 30B AIME cell, and Artificial Analysis findings on hallucination.
+ownership:
+  level: partial
+  factors:
+    use_modify:
+      level: moderate
+      rationale: Apache-2.0 is declared, the weights are ungated and fine-tuning is possible. The licence is a card declaration with no LICENSE file, and Sarvam's Terms and EULA add limits on derivative works and training that do not mention the weights (ev-license, ev-tos, ev-eula).
+    transparency:
+      level: moderate
+      rationale: Weights, cards and a blog are public. Training data, training code, post-training recipes, base checkpoints and a technical report are not (ev-card-105b, ev-blog, ev-no-report).
+    reliability:
+      level: weak
+      rationale: 'Safety scores 1: no safety evaluation, no guard model and silent 1711 cards. Operational scores 3 (ev-blog, ev-card-1711, ev-hub).'
+    data_control:
+      level: moderate
+      rationale: Weights run on your own hardware. The custom Python and the vLLM hot-patch script need review, and the hosted API terms conflict on training and retention (ev-hub, ev-privacy, ev-eula).
+  verdict: You can run and fine-tune Apache-2.0-declared weights, but you get no data, code, recipes or safety case, and the licence is a card declaration with no LICENSE file. Sarvam's own Terms and EULA restrict derivative works and training without mentioning the weights. Ownership rises if Sarvam adds a LICENSE file, clarifies those documents and publishes a safety evaluation.
+evidence:
+- id: ev-card-105b
+  claim: The 105B card declares Apache-2.0 and lists 22 language codes plus English. It describes a mixture-of-experts model with 10.3B active parameters and a 128K context through YaRN. Every benchmark table is the publisher's own. The card has no section on training data, safety or limitations.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/sarvamai/sarvam-105b
+  date: '2026-11-19'
+- id: ev-card-30b
+  claim: The 30B card declares Apache-2.0 and the same language codes. It describes 2.4B non-embedding active parameters and a 65,536-token evaluation length. Its AIME 25 cell for the 30B reads 88.3 where the publisher blog table reads 80.0. It has no safety or limitations section.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/sarvamai/sarvam-30b
+  date: '2026-11-19'
+- id: ev-card-1711
+  claim: The 105B-1711 cards declare Apache-2.0 and say the model shares the Sarvam-105B base and is further post-trained for tool calling, instruction following, agentic tasks and Indian languages. The BF16 repo lists sarvamai/sarvam-105b as its base model (finetune). Benchmarks are the publisher's own and include an internal Indic Suite judged by Gemini 3.1 Pro. The cards have no language list, safety section or data section.
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/sarvamai/sarvam-105b-1711
+  date: '2026-11-19'
+- id: ev-license
+  claim: All eight weights repos declare Apache-2.0 in the card front matter and none holds a LICENSE file (raw LICENSE returns HTTP 404). The cards say the model is open-sourced under 'the Apache License' with no version or link. The standard Apache-2.0 text grants copyright and patent licences and disclaims warranty.
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://www.apache.org/licenses/LICENSE-2.0.txt
+  date: '2026-11-19'
+- id: ev-hub
+  claim: The sarvamai Hugging Face organisation is not verified and lists 17 ungated model repos. The main repos hold safetensors with LFS sha256 values, no pickle files and a completed hub scan with no flagged files. The 30B and 105B repos store float32 weights (128.6 GB and 424.2 GB) and ship custom Python and a vLLM hot-patch script. The GGUF repos show no completed scan.
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/api/models?author=sarvamai
+  date: '2026-11-19'
+- id: ev-blog
+  claim: The launch blog of 6 March 2026 says both models were trained from scratch on in-house data, 16T tokens for the 30B and 12T for the 105B, with the 10 most-spoken Indian languages emphasised in pre-training (publisher claims). It describes safety fine-tuning data with India-specific risks and red-team prompts and gives no safety result. It releases no data or code.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://www.sarvam.ai/blogs/sarvam-30b-105b
+  date: '2026-11-19'
+- id: ev-indivibe
+  claim: The indivibe dataset holds 4,840 evaluation prompts in the 22 scheduled languages, including Bodo, in native and romanised script, under CC-BY-4.0. It has no results or evaluation code. The blog names Gemini 3 as judge and Claude Opus 4 as the source of reference answers.
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/datasets/sarvamai/indivibe
+  date: '2026-11-19'
+- id: ev-api-docs
+  claim: Sarvam's API documentation lists 10 Indian languages plus English for Sarvam-105B and for the deprecated Sarvam-30B. It marks Sarvam-30B and Sarvam-M as deprecated on the API. The hosted sarvam-105b-conversations variant has a 32K context and is not on Hugging Face.
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.sarvam.ai/api/token-factory/models/sarvam-105b
+  date: '2026-11-19'
+- id: ev-retention-docs
+  claim: The platform documentation says workspace data is retained indefinitely until an owner sets a period. It offers zero retention for Model APIs.
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.sarvam.ai/api/platform/data-retention
+  date: '2026-11-19'
+- id: ev-tos
+  claim: Terms of Service v2.0, effective 29 July 2026, clause 10.5 bars using the Offerings or their output to train or fine-tune AI systems and bars discovering model weights. Clause 17.5 lets Sarvam use inputs, outputs and usage data to improve the services and to train models as the Privacy Policy and consent allow. The Terms do not mention the Apache-2.0 weights.
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://www.sarvam.ai/terms-of-service
+  date: '2026-11-19'
+- id: ev-privacy
+  claim: The Privacy Policy of 29 July 2026 headlines model training as opt-in but says Sarvam trains on inputs and outputs unless the user opts out. The default retention for inputs and outputs is 30 days after last access. The policy lists transfers to the United States and the European Union.
+  source_type: publisher
+  doc_type: privacy_policy
+  retrieved: true
+  url: https://www.sarvam.ai/privacy-policy
+  date: '2026-11-19'
+- id: ev-eula
+  claim: The EULA of 22 May 2026 defines Software to include 'proprietary language models' and bars derivative works. It says Sarvam will not train on user content without opt-in consent. The Terms of Service control on conflict. The EULA does not mention the Apache-2.0 weights.
+  source_type: publisher
+  doc_type: terms
+  retrieved: true
+  url: https://www.sarvam.ai/eula
+  date: '2026-11-19'
+- id: ev-trust
+  claim: The Trust Center claims ISO 27001, SOC 2 Type II, India-only residency and no use of one customer's data to train models for other customers. Audit reports are shared under NDA. The page has no section on the open weights.
+  source_type: publisher
+  doc_type: security
+  retrieved: true
+  url: https://www.sarvam.ai/trust-center
+  date: '2026-11-19'
+- id: ev-aa
+  claim: Artificial Analysis scored Sarvam 105B at 18 and Sarvam 30B at 12 on its Intelligence Index in April 2026. Both trail every peer it lists. It reports AA-Omniscience indexes of -60 and -72 and TerminalBench Hard scores of 1.5% and 2.3%. It covers the March builds only.
+  source_type: third_party
+  doc_type: third_party
+  retrieved: true
+  url: https://artificialanalysis.ai/articles/sarvam-105b-Sarvam-30b-everything-you-need-to-know
+  date: '2026-11-19'
+- id: ev-quant-code
+  claim: Official FP8 builds of both models and Q4_K_M GGUF builds (19.6 GB for the 30B, 64.2 GB for the 105B) exist. The sarvamai GitHub organisation holds vLLM, SGLang and torchtune forks and SDKs. It holds no training, data or post-training code for these models.
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://github.com/sarvamai
+  date: '2026-11-19'
+- id: ev-discussions
+  claim: Community threads ask for the training data and for newer checkpoints and have no Sarvam reply. A Sarvam staff pull request that fixes MoE routing in the 105B is merged. Open threads report vLLM, Transformers 5 and thinking-toggle problems.
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://huggingface.co/sarvamai/sarvam-105b/discussions
+  date: '2026-11-19'
+- id: ev-token-factory
+  claim: The Token Factory post of 16 November 2026 says Sarvam serves the 105B in MXFP8 with DSpark speculative decoding from GPU clusters in India. The Prism post of 3 November 2026 says Prism is a LoRA fine-tune of the 105B released under Apache 2.0.
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://www.sarvam.ai/blogs/sarvam-token-factory
+  date: '2026-11-19'
+- id: ev-no-report
+  claim: No technical report, paper or data statement for these models was found. The Hugging Face organisation lists no papers, and searches return only the launch blog and press coverage.
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: false
+  url: https://huggingface.co/sarvamai
+  date: '2026-11-19'
+- id: ev-aikosh
+  claim: The AIKosh page for the 105B, linked from the blog as a second download source, is a JavaScript app and returns no text.
+  source_type: publisher
+  doc_type: docs
+  retrieved: false
+  url: https://aikosh.indiaai.gov.in/web/models/details/sarvam_105b.html
+  date: '2026-11-19'
+changelog:
+- date: '2026-11-19'
+  change: Initial entry for Sarvam-30B, Sarvam-105B and Sarvam-105B-1711, grounded against docs/primary-sources/sarvam. Sarvam-translate (GPL-3.0 tag), Prism, Sarvam-M, Sarvam-1, Shuka and the hosted-only sarvam-105b-conversations variant are follow-ups, not folded in.
+last_verified: '2026-11-19'
+freshness_sla:
+  fast_days: 30
+  score_days: 90
+  slow_days: 180
