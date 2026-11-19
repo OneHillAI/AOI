@@ -10,6 +10,22 @@ Initial public foundation (v0.1).
 
 ### Added
 
+- Batch of five new model entries and one new inference-provider entry (2026-11-19), chosen for
+  region, language and task diversity, each read from primary documents with `retrieved` flags set
+  honestly. `gemma-4` (Google, US; Apache-2.0 on every checkpoint, ungated, AOI 68.8, grade C,
+  ownership substantial; the Gemma Terms of Use no longer apply to Gemma 4, but Gemma 3 derivatives
+  remain bound by them). `llm-jp-4-1-thinking` (NII, Japan; Apache-2.0, trained from scratch with
+  published corpora, AOI 54.4, grade D, ownership partial; the publisher says it is not for direct
+  production use). `morena` (Vambo AI, South Africa; African-language 1.5B model, Apache-2.0
+  declared on the cards with no LICENSE file, AOI 46.8, grade D, ownership partial; "trained from
+  scratch" is a publisher claim and the synthetic training data raises an unresolved Gemma Terms
+  question). `meditronfo` (EPFL, Switzerland; medical, Apache-2.0 on the card tag only, AOI 51.2,
+  grade D, ownership partial; not cleared for clinical use, and the corpus licence is contradicted
+  between the paper and the dataset card). `minicpm5` (OpenBMB, China; MiniCPM5-1B on-device model,
+  Apache-2.0, AOI 56.8, grade C, ownership partial; no safety evaluation exists). `sakura-ai-engine`
+  (Sakura Internet, Japan; AOI 48.0, grade D, ownership partial; the binding terms permit
+  undefined temporary retention and contain no data-location clause, against marketing that
+  claims zero retention and Japan-only processing).
 - NVIDIA Nemotron 3, as three per-licence entries under one family: `nemotron-3` (Super + Nano,
   NVIDIA Nemotron Open Model License, AOI 66.0, grade C, ownership partial), `nemotron-3-ultra`
   (Ultra 550B, OpenMDW-1.1, AOI 63.6, grade C, ownership substantial) and `nemotron-3-nano-omni`

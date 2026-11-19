@@ -1,0 +1,23 @@
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://raw.githubusercontent.com/OpenBMB/MiniCPM/main/LICENSE | 2026-11-19 | yes | true | Apache-2.0, byte-diffed against apache.org canonical text; only the copyright line differs ("Copyright [OpenBMB]"). The licence file the model card links; there is no LICENSE file in the Hugging Face model repo.
+license | https://huggingface.co/api/models/openbmb/MiniCPM5-1B (and -SFT, -Base, -GGUF, -MLX, MiniCPM5-2B family) | 2026-11-19 | yes | true | All MiniCPM5 checkpoints tag apache-2.0 and are ungated. Older generations (MiniCPM 2B era) have no licence tag.
+license | https://raw.githubusercontent.com/OpenBMB/MiniCPM/main/docs/README-legacy.md | 2026-11-19 | yes | true | Older generations: weights under the custom General Model License (GML) with commercial authorisation by registration. NOT MiniCPM5. The GML file itself (github.com/OpenBMB/General-Model-License) was not fetched.
+model_card | https://huggingface.co/openbmb/MiniCPM5-1B | 2026-11-19 | yes | true | Full README read; sha ac83f813; lastModified 2026-11-09. Same card text on -SFT, -Base, -GGUF and -MLX repos (diffed).
+model_card | https://huggingface.co/openbmb/MiniCPM5-2B | 2026-11-19 | yes | true | Sibling release read only for the scope rule (header and highlights); not scored.
+docs | https://huggingface.co/api/models/openbmb/MiniCPM5-1B/tree/main?recursive=1 | 2026-11-19 | yes | true | File list, one safetensors shard, LFS sha256 ids, config.json, generation_config.json, chat template. No weights downloaded.
+docs | https://huggingface.co/datasets/openbmb/Ultra-FineWeb | 2026-11-19 | yes | true | Pretraining web corpus card; Apache-2.0; ~1T en + ~120B zh tokens; warns to check source-dataset licences.
+docs | https://huggingface.co/datasets/openbmb/Ultra-FineWeb-L3 | 2026-11-19 | yes | true | Synthetic pretraining tier generated with MiniCPM4 and Qwen3; Apache-2.0; "key training data for the decay phase of MiniCPM5-1B".
+docs | https://huggingface.co/datasets/openbmb/UltraData-Math | 2026-11-19 | yes | true | Math pretraining corpus, Apache-2.0; L2 annotation by unnamed "proprietary large models".
+docs | https://huggingface.co/datasets/openbmb/UltraData-SFT-2605 | 2026-11-19 | yes | false | Dataset exists (API metadata: gated auto, apache-2.0, 1,510 files). Raw README returns 401 "restricted ... Please log in". Card text unread; nothing scored on its content.
+docs | https://huggingface.co/api/datasets/{DAPO-Math-17k, LongWriter-Zero-RLData, nq_open, trivia_qa} | 2026-11-19 | yes | true | API metadata only (licence tags apache-2.0, apache-2.0, cc-by-sa-3.0, unknown). Cards not read.
+docs | https://github.com/OpenBMB/MiniCPM (README, API, docs/deployment) | 2026-11-19 | yes | true | Release log, institutions, deployment cookbooks, issue templates; no SECURITY.md (404).
+technical_report | https://arxiv.org/abs/2506.07900 | 2026-11-19 | yes | true | MiniCPM4 paper (abstract page only), the paper the MiniCPM5-1B card cites as "Tech Report". Not a MiniCPM5 report.
+technical_report | https://arxiv.org/abs/2602.09003 | 2026-11-19 | yes | true | UltraData tiered data management paper (abstract page only). PDFs not read.
+technical_report | MiniCPM5-specific technical report | 2026-11-19 | no | false | None found on the model card, GitHub README or dataset cards.
+marketing | https://raw.githubusercontent.com/OpenBMB/MiniCPM/main/assets/minicpm5/public_leaderboard_en.png | 2026-11-19 | yes | true | Publisher benchmark image (Thinking mode, 3 small baselines); numbers transcribed by hand. Publisher claim only.
+third_party | https://artificialanalysis.ai/models/minicpm5-1b | 2026-11-19 | yes | true | Lists the model (open weights, Apache 2.0, 128k, released 25 May 2026) but publishes no Intelligence Index score or benchmark result.
+third_party | independent safety or red-team evaluation of MiniCPM5-1B | 2026-11-19 | no | false | None found.
+docs | https://ollama.com/library/minicpm5 | 2026-11-19 | no | false | HTTP 404. The publisher cookbook uses a local Modelfile instead.
+security | SECURITY.md or vulnerability-disclosure policy for OpenBMB/MiniCPM | 2026-11-19 | no | false | Not found at SECURITY.md or .github/SECURITY.md (404).
+docs | https://ultradata.openbmb.cn/ | 2026-11-19 | yes | false | Client-rendered page; only navigation text was readable. Not used.
+docs | https://huggingface.co/api/organizations/openbmb/overview | 2026-11-19 | yes | true | openbmb org isVerified false; Hub file scan of MiniCPM5-1B: scansDone true, no files with issues (recorded in docs__repo-files-checksums__2026-11-19.md).
