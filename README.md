@@ -13,7 +13,7 @@
 
 </div>
 
-**Maintained by [OneHill](https://onehill.org). Status: v0.1, Foundation. Content baseline: November 2026 (full refresh 2026-11-19).**
+**Maintained by [OneHill](https://onehill.org). Status: v0.1, Foundation. Content baseline: November 2026.**
 
 ---
 
@@ -23,17 +23,16 @@ Adopting an open model, or routing your traffic through a hosted inference API, 
 ownership decision as much as a capability one. Four things decide how much of it is
 actually yours:
 
-- **Use and modify it** freely, with no gate and no field-of-use trap.
-- **See what it is:** the weights, the training, the behaviour, and the binding terms.
-- **Rely on it:** dependable to run and safe to deploy. How *capable* it is shapes the AOI
-  score, not this factor - you can fully own a model that is not the most capable.
-- **Keep your data yours:** running it does not hand your inputs or your knowledge to
-  someone else.
+- Use and modify it freely, with no gate and no field-of-use limit.
+- See what it is: the weights, the training, the behaviour and the binding terms.
+- Rely on it: dependable to run and safe to deploy. How capable it is shapes the AOI score
+  and leaves this factor unchanged, so a model that is not the most capable can still be fully owned.
+- Keep your data yours: running it does not hand your inputs or your knowledge to someone else.
 
 The AI Ownership Index rates every entry on those four factors and resolves them into one
 verdict: an ownership **level**, from `full` down through `substantial`, `partial` and
-`limited` to `none`. The verdict is floor-weighted, so the weakest factor caps it. A black
-box is never "full", however cheap the price.
+`limited` to `none`. The verdict is floor-weighted, so the weakest factor caps it. A closed black
+box never reaches full.
 
 ## Score against verdict
 
@@ -96,7 +95,7 @@ are in [STYLE.md](STYLE.md).
 No index can independently re-run every evaluation on every open checkpoint. Where a datum
 comes from a publisher or a third party rather than from OneHill's own check, it is marked
 as such (`source_type: publisher | third_party | onehill_verified`). A missing document is
-recorded as a finding, not papered over. Trust the labels.
+recorded as a finding.
 
 ---
 

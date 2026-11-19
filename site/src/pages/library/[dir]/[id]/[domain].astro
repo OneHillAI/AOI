@@ -32,7 +32,7 @@ const crumbs = [
 const factorShorts = (d) => DOMAIN_FACTORS[d].map((k) => record.factors.find((f) => f.key === k)?.short).join(' + ');
 const proseHtml = await renderMarkdown(getDomainMarkdown(record.dir, record.id, domain));
 ---
-<AppShell title={`${capd(domain)}: ${record.title} - AI Ownership Index`} crumbs={crumbs} browseActive="Library" reviewed="Reviewed 2026-07-25" canvas="read">
+<AppShell title={`${capd(domain)}: ${record.title} - AI Ownership Index`} crumbs={crumbs} browseActive="Library" reviewed={record.lastVerified ? `Reviewed ${record.lastVerified}` : ''} canvas="read">
   <nav slot="sidebar" class="navgroup" aria-label={record.title}>
     <div class="lbl">{record.title}</div>
     <a href={`${base}/library/${record.dir}/${record.id}/`}>Entry sheet</a>

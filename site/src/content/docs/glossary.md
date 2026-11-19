@@ -3,7 +3,7 @@ title: Glossary
 description: Plain, one-line definitions for the terms used across the index.
 ---
 
-Plain-language definitions. If a term on any page is unclear, it should be here.
+Plain definitions of the terms used on the site.
 
 ## Scores and verdicts
 
@@ -12,24 +12,18 @@ Plain-language definitions. If a term on any page is unclear, it should be here.
   weighted dimensions.
 - **Grade (A to F)** - the band of the AOI score: A is 85 or above, B is 70 to 84, C is 55 to 69,
   D is 40 to 54, F is below 40.
-- **Ownership verdict** - the single closing judgement on how much you really own the thing: for a
-  model it is about the weights (can you run, adapt and specialise it); for a provider it is about
-  your data. Levels are full, substantial, partial, limited, none.
-- **Posture** - the short strip of letters on the index that flags the handful of facts that most
-  affect a decision. Green is strong, amber is partial, red is weak or absent. Hover a letter for
-  its meaning.
-- **Completeness** - how much of the expected documentation we have actually written for an entry.
-  Below 100% is normal and means some items are still gaps or not yet gathered. It measures
-  coverage, not quality.
-- **OneHill-tested** - the share of an entry that OneHill verified or produced itself, rather than
-  citing from a source. A low number is honest, not a fault.
+- **Ownership verdict** - the closing level for how much you own the model or provider. For a model
+  it concerns the weights (can you run, adapt and specialise them). For a provider it concerns your
+  data. The levels are full, substantial, partial, limited and none.
+- **Completeness** - the share of the expected documentation items that an entry covers. Below 100%
+  means some items are gaps. It measures coverage and says nothing about quality.
 
 ## Provenance badges
 
 - **aggregated** - a claim taken from an existing source, cited and dated.
-- **OneHill-tested** - a claim OneHill checked or reproduced, with the method recorded.
-- **gap** - something that cannot be gathered or provided, recorded explicitly with the reason
-  rather than quietly left out.
+- **OneHill-tested** - a claim OneHill checked or reproduced, with the method recorded. No entry
+  carries one yet.
+- **gap** - something that could not be gathered or provided, recorded with the reason.
 
 ## Openness
 

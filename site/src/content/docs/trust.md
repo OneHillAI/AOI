@@ -3,34 +3,21 @@ title: Why trust this index
 description: Who stewards the AI Ownership Index, how every rating is grounded, and the public standards it is built to.
 ---
 
-You are right to distrust ratings you cannot check. This page explains why this index is different:
-every rating traces to a document you can read, the method is public, and the score is built to
-recognised standards rather than to opinion.
+Every rating traces to a document you can read, the method is public, and the score follows published standards.
 
-## The one rule everything rests on
+## The one rule
 
-Every claim in an entry must trace to a **primary document that was actually read**, not a marketing
-page. Each piece of evidence carries two auditable fields: what kind of document it is, and whether
-its text was actually read (`retrieved`). A strong rating cannot rest on a marketing page or an
-unread document. Where a document is missing, we record that as a finding rather than leave it
-unstated. You can see this on any entry: the **Sources** section lists each document, whether it was
-read, and a link.
+Every claim in an entry traces to a primary document that was read, not a marketing page. Each piece of evidence records what kind of document it is and whether its text was read (`retrieved`). A strong rating cannot rest on a marketing page or an unread document, and a missing document is recorded as a finding. The Sources section of every entry lists each document, whether it was read, and a link.
 
-This is also why the Runware entry says its data terms are weak: we read the binding Terms and
-Privacy Policy, and they contradicted the marketing. We report the document, not the brochure.
+Nebius shows the effect. Its Legal Quick Guide says it does not train on customer content. Its binding Token Factory Supplemental Terms allow it to train smaller speculative-decoding models on inputs and outputs by default, with an opt-out. The entry reports the Terms.
 
 ## Independence
 
-The Index is stewarded by the OneHill Foundation. Ratings are **not for sale** and entries are **not
-pay-to-play**. Where a provider or model publisher disputes a rating, they are invited to point at
-the primary document that supports their position, and the entry is updated from the read text. See
-[GOVERNANCE](https://github.com/OneHillAI/AOI/blob/main/GOVERNANCE.md).
+The index is stewarded by the OneHill Foundation. Ratings are not for sale and entries are not pay-to-play. A provider or publisher that disputes a rating can point to the primary document that supports its position, and the entry is updated from that text. See [GOVERNANCE](https://github.com/OneHillAI/AOI/blob/main/GOVERNANCE.md).
 
 ## Standards it is built to
 
-The scoring is grounded on public standards and frameworks, linked below. We follow the same rule we
-apply to entries: link the canonical source, and keep a short dated extract where a standard defines
-something we use, rather than copying the whole document.
+The scoring is grounded on the public standards and frameworks linked below. Each is linked to its canonical source, with a short dated extract kept where a standard defines something the index uses.
 
 - **[Model Openness Framework](https://arxiv.org/abs/2403.13784)** - the openness-tier taxonomy
   (fully open vs open weights) our tiers mirror.
@@ -52,17 +39,10 @@ something we use, rather than copying the whole document.
 
 ## Keeping it current
 
-Each entry carries a `last_verified` date and a freshness target. A weekly review ingests newly
-gathered primary documents, re-grounds the affected entries, re-runs validation, and reports what
-changed and what is still outstanding. The data is validated in continuous integration on every
-change, so an entry that does not meet the grounding rule does not ship.
+Each entry carries a `last_verified` date. An entry past its freshness limit fails validation, and validation runs on every change, so an entry that breaks the grounding rule does not ship. Entries are re-checked against their primary documents on a recurring cycle.
 
 ## ownershipindex.ai and GitHub
 
-The reader-facing site is published at **ownershipindex.ai** (the AI Ownership Index). The full source,
-the calculations, the methodology, and the primary-source extracts live in the public GitHub
-repository, [OneHillAI/AOI](https://github.com/OneHillAI/AOI), which anyone
-can inspect or contribute to. The published site is a projection of that repository, so what you read
-and what you can audit are the same thing.
+The site at ownershipindex.ai is generated from the public repository [OneHillAI/AOI](https://github.com/OneHillAI/AOI), which holds the methodology, the calculations and the primary-source extracts. What you read and what you can audit are the same thing.
 
 Questions or corrections: dev@onehill.org.

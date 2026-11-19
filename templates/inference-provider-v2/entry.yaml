@@ -1,0 +1,207 @@
+# OneHill v2 INFERENCE PROVIDER library entry: machine-readable record plus documentation index.
+# Validated against schema/inference-provider.v2.schema.json.
+# Copy this folder to inference-providers/<id>/ and replace every placeholder.
+#
+# Commands, run in this order from the repository root:
+#   python scripts/score.py --write inference-providers/<id>/entry.yaml         writes score.headline and score.grade
+#   python scripts/completeness.py --write inference-providers/<id>/entry.yaml  writes the per-domain meters
+#   python scripts/validate.py inference-providers/<id>                         must report 0 errors
+#
+# Prose goes in the four sibling files assess.md, implement.md, use.md and support.md.
+# Each section starts with an item marker whose key matches an item key below.
+# Item keys come from checklists/inference-provider.yaml.
+#
+# Provenance vocabularies (both required):
+#   evidence[].source_type         onehill_verified | third_party | publisher   (where a FACT comes from)
+#   documentation item source_type aggregated | onehill_generated | gap        (where a SECTION comes from)
+# An aggregated item cites at least one evidence id in refs.
+# An onehill_generated item states its method and cites an onehill_verified evidence id.
+# A gap item states gap_reason and has no coverage.
+#
+# Enum values written as yes, no or unknown are quoted, because YAML reads bare yes and no as booleans.
+# The scoring anchors are in methodology/provider-scoring-rubric.md.
+# The ownership rules are in methodology/ownership.md.
+
+schema_version: "2.0"
+id: "provider-id"                         # lower case letters, digits and hyphens; matches the folder name
+name: "Provider Name"
+profile: inference
+hq_country: ""                            # country of the headquarters
+summary: ""                               # One independent paragraph: who the provider is, what it serves, and the single most important fact for an adopter.
+models_served: []                         # One string per model or model family, with its status, for example "Model X 70B (production)".
+hardware: ""                              # GPU type or custom silicon. Custom hardware is a lock-in signal.
+
+pricing:
+  model: ""                               # per-token | per-second | per-GPU-hour | subscription | mixed
+  notes: ""                               # Free tier, minimums, batch discounts and how rates are published.
+  example_rates: []                       # One string per example, for example "Model X: $0.10/M in, $0.40/M out".
+
+data_governance:
+  default_retention: ""                   # What is kept by default and for how long, quoting the binding document.
+  trains_on_inputs: unclear               # never | opt_in_only | by_default | unclear
+  zdr_available: unclear                  # yes_default | yes_optional | enterprise_only | no | unclear
+  zdr_scope_caveats: ""                   # Features that keep data even with zero data retention, such as batch or fine-tuning.
+  customer_data_ownership: unclear        # customer_retains | provider_may_use | shared | unclear
+  outputs_used_to_improve_service: unclear  # no | opt_out | yes | unclear
+  third_party_routing_leakage: ""         # Whether closed or third-party models served here fall under other vendors' data terms.
+  subprocessors_disclosed: false          # true when a sub-processor list is published
+  confidentiality: unknown                # mutual | explicit | functional_only | none | disclaimed | adverse | unknown
+  confidentiality_caveats: ""             # The clause number and what it covers.
+
+compliance:
+  soc2: unknown                           # type_ii | type_i | in_progress | none | unknown
+  iso_27001: "unknown"                    # "yes" | "no" | "unknown"
+  iso_27701: "unknown"
+  hipaa_baa: "unknown"
+  gdpr_dpa: "unknown"
+  fedramp: ""                             # Status in words, or empty when not stated.
+  trust_center_url: ""
+
+residency:
+  eu_region_available: "unknown"          # "yes" | "no" | "unknown"
+  regions: []                             # One string per region, with how it is selected.
+  sovereign_option: ""                    # Self-hosted, on-premises or sovereign-cloud options.
+  region_pinning: "unknown"               # "yes" | "no" | "unknown"
+  cloud_act_exposure: true                # true for a US-headquartered or US-jurisdiction provider
+  provider_can_restrict_access: ""        # Whether the provider or its jurisdiction can cut off or restrict your access.
+
+reliability:
+  sla: ""                                 # The SLA commitment and credits, with the date of the page.
+  uptime_notes: ""                        # What the public status page shows.
+  incidents: []                           # One mapping per incident, {date: "YYYY-MM-DD", summary: ""}.
+
+lock_in:
+  openai_compatible_api: false            # true when the API accepts OpenAI-format requests
+  portability_notes: ""                   # What a move to another provider involves.
+
+dedicated_availability: unknown           # self_serve | available | enterprise_only | coming_soon | none | unknown
+dedicated_notes: ""                       # Single-tenant, on-premises or air-gapped options and how they are bought.
+
+trust_considerations: []                  # One plain sentence per caveat an adopter should weigh.
+
+score:
+  rubric_version: "1.2"
+  headline: null                          # scripts/score.py --write
+  grade: null                             # scripts/score.py --write
+  hard_flags: []                          # Flag text that caps the grade, see methodology/provider-scoring-rubric.md.
+  dimensions:                             # Scores run 0 to 5. A score of 5 needs a third_party or onehill_verified evidence ref.
+    data_governance:     {score: 0, rationale: "", evidence_refs: []}
+    compliance:          {score: 0, rationale: "", evidence_refs: []}
+    residency:           {score: 0, rationale: "", evidence_refs: []}
+    security:            {score: 0, rationale: "", evidence_refs: []}
+    reliability:         {score: 0, rationale: "", evidence_refs: []}
+    transparency_lockin: {score: 0, rationale: "", evidence_refs: []}
+    cost:                {score: 0, rationale: "", evidence_refs: []}
+
+# The four documentation domains. Item keys match checklists/inference-provider.yaml and an
+# item marker in the domain's .md file. The completeness and originality meters are written by
+# scripts/completeness.py --write, so leave them null.
+# Every item below is a placeholder. Set source_type and coverage to match what you wrote.
+documentation:
+  assess:
+    completeness: null
+    originality: null
+    items:
+      - key: data-governance
+        title: "Data governance - retention, ZDR & training"
+        doc_type: reference
+        source_type: onehill_generated      # aggregated | onehill_generated | gap. This item is the onehill_generated example.
+        coverage: full                      # full | partial (omit for gap)
+        method: "What OneHill ran or observed, with the date."
+        refs: [ev-verified]                 # must include an onehill_verified evidence id
+        summary: ""                         # One-line abstract for tables and tooltips.
+      - key: data-ownership
+        title: "Data & IP ownership"
+        doc_type: reference
+        source_type: aggregated             # aggregated content cites at least one evidence id in refs
+        coverage: full
+        refs: []
+        summary: ""
+      - key: residency
+        title: "Data residency & jurisdiction"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: compliance
+        title: "Compliance & attestations"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: security
+        title: "Security controls"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: pricing
+        title: "Pricing & cost model"
+        doc_type: reference
+        source_type: aggregated
+        coverage: full
+        refs: []
+        summary: ""
+      - key: reliability
+        title: "Reliability posture"
+        doc_type: reference
+        source_type: gap                    # This item is the gap example. A gap has gap_reason and no coverage.
+        gap_reason: "Why this could not be gathered, stated specifically, for example the SLA page is behind a login."
+  implement:
+    completeness: null
+    originality: null
+    items:
+      - {key: integration,    title: "API integration",                 doc_type: howto,       source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: authentication, title: "Authentication & account setup",  doc_type: howto,       source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: region-config,  title: "Region & ZDR configuration",      doc_type: howto,       source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: rate-limits,    title: "Rate limits, tiers & quotas",     doc_type: reference,   source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: portability,    title: "Portability & exit",              doc_type: explanation, source_type: aggregated, coverage: full, refs: [], summary: ""}
+  use:
+    completeness: null
+    originality: null
+    items:
+      - {key: models-served,  title: "Models served",                   doc_type: reference,   source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: features,       title: "Inference features",              doc_type: reference,   source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: context-limits, title: "Context & token limits",          doc_type: reference,   source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: fine-tuning,    title: "Fine-tuning / custom models",     doc_type: reference,   source_type: aggregated, coverage: full, refs: [], summary: ""}
+  support:
+    completeness: null
+    originality: null
+    items:
+      - {key: status-uptime,       title: "Status page & uptime history",     doc_type: reference, source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: security-disclosure, title: "Security disclosure & trust centre", doc_type: reference, source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: channels,            title: "Support & community channels",      doc_type: reference, source_type: aggregated, coverage: full, refs: [], summary: ""}
+      - {key: deprecation,         title: "Model deprecation policy",          doc_type: reference, source_type: aggregated, coverage: full, refs: [], summary: ""}
+
+# The closing verdict, see methodology/ownership.md. Each level below is the lowest value and a
+# placeholder. Set it after scoring, from the binding documents.
+#   level (overall):  full | substantial | partial | limited | none     (floor-weighted from the four factors)
+#   factor level:     strong | moderate | weak
+ownership:
+  level: none
+  factors:
+    use_modify:   {level: weak, rationale: "Replace with one line grounded in a primary document."}
+    transparency: {level: weak, rationale: "Replace with one line grounded in a primary document."}
+    reliability:  {level: weak, rationale: "Replace with one line grounded in a primary document."}
+    data_control: {level: weak, rationale: "Replace with one line grounded in a primary document."}
+  verdict: "Replace with one to three sentences: what you own, what you do not, and the condition that changes it."
+
+# Evidence list, one example item per source_type. Delete the examples you do not use.
+# doc_type is one of: terms | privacy_policy | dpa | subprocessors | security | sla | model_card |
+# license | technical_report | docs | marketing | third_party
+# Binding documents (terms, privacy_policy, dpa, license) outrank marketing.
+# retrieved is true only when the document text was read.
+evidence:
+  - {id: ev-publisher, claim: "What the provider's own document says, with a section number or short quotation.", source_type: publisher, doc_type: terms, retrieved: true, url: "", date: "2026-11-19"}
+  - {id: ev-third-party, claim: "What an independent audit, report or test says.", source_type: third_party, doc_type: third_party, retrieved: true, url: "", date: "2026-11-19"}
+  # An onehill_verified item carries a method that states what OneHill ran or observed.
+  - {id: ev-verified, claim: "What OneHill observed directly.", source_type: onehill_verified, method: "The exact request, tool or test that produced the observation, with the date.", url: "", date: "2026-11-19"}
+
+changelog:
+  - {date: "2026-11-19", change: "Initial entry."}
+
+last_verified: "2026-11-19"
+freshness_sla: {fast_days: 30, score_days: 90, slow_days: 180}
