@@ -33,7 +33,7 @@ concrete answer that points at a retrieved clause file.
 
 ## Running the checks
 
-    python scripts/validate.py models inference-providers   # must report 0 errors
+    python scripts/validate.py                               # must report 0 errors on every tree
     cd site && npm run build                                 # must complete cleanly
 
 ## The loop

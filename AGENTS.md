@@ -36,7 +36,10 @@ claim into a fact.
 
 ## Before you open a pull request
 
-    python scripts/validate.py models inference-providers   # 0 errors
+    python scripts/validate.py                               # 0 errors
     cd site && npm run build                                 # clean build
+
+Run validate.py with no arguments. CI validates every tree (models, inference-providers and
+hosting-providers), so a check on fewer trees can pass locally and fail on the pull request.
 
 Then update CHANGELOG.md under Unreleased.
