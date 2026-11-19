@@ -22,23 +22,7 @@ publisher:
   accountable_entity: true
   url: https://soofi.info
   security_contact: https://huggingface.co/Soofi-Project
-summary: 'Soofi-S is an open-science project in the OLMo mould whose pretraining report
-  commits it to the Open Source AI Definition (OSAID 1.0), a pledge to release weights,
-  intermediate checkpoints, full per-source data accounting, hyperparameters and training+eval
-  code. That release has not landed (checked 2026-11-19): every repo in the
-  Soofi-Project org is manually gated, the base card says "It is not an open release" and
-  describes a closed beta with selected partners, the licence tag reads closed-beta, no repo
-  carries a LICENSE file, and the GitHub README still says "Open model weights coming soon". It
-  remains an early preview/beta with a custom architecture and incomplete safety hardening. It is the first model from the Soofi
-  consortium ("Sovereign Open Source Foundation Models"), a German public-private consortium
-  coordinated by the KI Bundesverband and funded by the German Federal Ministry for Economic
-  Affairs and Energy (BMWE) under the European IPCEI-CIS programme, with members including
-  Fraunhofer IAIS/IIS, DFKI, TU Darmstadt and the L3S Research Centre (a CAIRNE Gold member).
-  It is a ~30B hybrid Mamba-2/Transformer Mixture-of-Experts model (30B total, ~3B active
-  per token) trained on ~27 trillion tokens of primarily German and English on Deutsche
-  Telekom''s sovereign Industrial AI Cloud in Munich, aimed at industrial and regulated use.
-
-  '
+summary: "Soofi-S is an open-science project in the OLMo mould. Its pretraining report commits it to the Open Source AI Definition (OSAID 1.0): a pledge to release weights, intermediate checkpoints, full per-source data accounting, hyperparameters and training and evaluation code. That release has not landed. Every repo in the Soofi-Project org is manually gated. The base card says \"It is not an open release\" and describes a closed beta with selected partners. The licence tag reads closed-beta, no repo carries a LICENSE file, and the GitHub README says \"Open model weights coming soon\". The model remains an early preview with a custom architecture and incomplete safety hardening. It is the first model from the Soofi consortium (\"Sovereign Open Source Foundation Models\"), a German public-private consortium coordinated by the KI Bundesverband and funded by the German Federal Ministry for Economic Affairs and Energy (BMWE) under the European IPCEI-CIS programme. Members include Fraunhofer IAIS/IIS, DFKI, TU Darmstadt and the L3S Research Centre (a CAIRNE Gold member). It is a ~30B hybrid Mamba-2/Transformer Mixture-of-Experts model (30B total, ~3B active per token) trained on ~27 trillion tokens of primarily German and English on Deutsche Telekom's sovereign Industrial AI Cloud in Munich, aimed at industrial and regulated use."
 variants:
 - name: Soofi-S-Base
   params_total: 30B (30B-A3B)
@@ -78,9 +62,9 @@ openness:
     classification: custom
     commercial_use: allowed_with_conditions
     notable_restrictions:
-    - Every repo in the Soofi-Project org is manually gated; the base card says "It is not an open release" and describes a closed beta with selected partners
-    - No LICENSE file exists in any Soofi-Project model repo or in the Soofi-Pretraining code repo, so no published text grants use, modification or commercial use (the schema has no unknown value; allowed_with_conditions is the closest and means only that no unconditional grant exists)
-    - The committed permissive open release has no date and has not landed as of 2026-11-19
+    - "Every repo in the Soofi-Project org is manually gated; the base card says \"It is not an open release\" and describes a closed beta with selected partners."
+    - "No LICENSE file exists in any Soofi-Project model repo or in the Soofi-Pretraining code repo, so no published text grants use, modification or commercial use. The schema has no unknown value; allowed_with_conditions is the closest and means only that no unconditional grant exists."
+    - "The committed permissive open release has no date and has not been published."
     url: https://huggingface.co/Soofi-Project/Soofi-S-Base
 provenance:
   canonical_source: https://huggingface.co/Soofi-Project
@@ -109,34 +93,14 @@ eu_ai_act:
     article_55_docs_available: n/a
   open_source_exemption:
     license_qualifies: uncertain
-    rationale: 'Soofi is committed to a free/open-source release that would meet OSAID 1.0 -
-      public parameters, architecture and usage information, permissively licensed and
-      not monetised - which would qualify it for the Article 53 open-source exemption from
-      the Annex XI/XII technical-documentation duties. But the exemption cannot yet be relied
-      on: no open licence has been published (base weights manually gated in closed beta;
-      licence tag closed-beta and no LICENSE file in any repo), so there is no confirmed free-and-open
-      licence to point to. The surviving obligations (copyright policy and a public
-      training-content summary) would be unusually easy to meet because Soofi publishes full
-      per-source data accounting; only ~1.3% of Phase 1 tokens (the commercially licensed
-      Genios corpus) are reported in aggregate rather than redistributable. Well under the
-      1e25-FLOPs systemic-risk threshold, so nothing would void the exemption once the open
-      licence actually lands - that release is the gating item for a downstream provider.
-
-      '
+    rationale: "Soofi is committed to a free/open-source release that would meet OSAID 1.0 (public parameters, architecture and usage information, permissive licence, not monetised) and would qualify for the Article 53 open-source exemption from the Annex XI/XII technical-documentation duties. The exemption cannot yet be relied on: no open licence is published (base weights manually gated in closed beta, licence tag closed-beta, no LICENSE file in any repo), so there is no confirmed free-and-open licence to point to. The surviving obligations (copyright policy and a public training-content summary) would be easy to meet because Soofi publishes full per-source data accounting. Only ~1.3% of Phase 1 tokens (the commercially licensed Genios corpus) are reported in aggregate and are not redistributable. Compute is well under the 1e25-FLOPs systemic-risk threshold, so nothing would void the exemption once the open licence lands. That release is the gating item for a downstream provider."
   provider_package:
     technical_documentation: 'yes'
     downstream_information: 'yes'
     copyright_policy: partial
     training_content_summary: 'yes'
     code_of_practice_signatory: false
-  deployer_notes: 'Soofi-S is EU/Germany-domiciled, trained on sovereign German infrastructure,
-    which simplifies data-residency and jurisdiction questions. A fine-tuner placing a
-    derivative on the EU market under its own name may become a provider for that derivative,
-    but the released per-source data accounting and pretraining technical report let a
-    downstream provider assemble a training-content summary and much of the technical
-    documentation from public artifacts rather than reconstructing them.
-
-    '
+  deployer_notes: "Soofi-S is EU/Germany-domiciled and trained on sovereign German infrastructure, which simplifies data-residency and jurisdiction questions. A fine-tuner placing a derivative on the EU market under its own name may become a provider for that derivative. The published per-source data accounting and pretraining technical report let a downstream provider assemble a training-content summary and much of the technical documentation from public artifacts."
   last_assessed: '2026-11-19'
 performance: {}
 behaviour: {}
@@ -144,22 +108,17 @@ safety: {}
 deployment:
   ceiling_tier: T2
   ceiling_conditional: true
-  hardware_notes: 'The MoE activates only ~3B of 30B parameters per token, so decode is
-    cheap, but the full weight set (~30B in bf16) must be resident - plan for multi-GPU
-    or first-party GGUF/3-bit quantization on a single high-VRAM card. The near-constant
-    inference cache keeps long-context (up to 256k) serving affordable.
-
-    '
+  hardware_notes: "The MoE activates only ~3B of 30B parameters per token, so decode is cheap, but the full weight set (~30B in bf16) must be resident. Plan for multi-GPU, or first-party GGUF or 3-bit quantization on a single high-VRAM card. The near-constant inference cache keeps long-context (up to 256k) serving affordable."
   serving_support:
   - vllm
   - llama.cpp
   - ollama
   - hf-transformers
   controls_required:
-  - Treat as an early preview/beta - pilot internally before any customer-facing use
-  - Deploy the Instruct-Preview (post-trained) variant, not the base checkpoint
-  - Add input/output guardrails and your own guard classifier - safety features are documented as incomplete
-  - Load with trust_remote_code=True (custom hybrid Mamba-2/MoE modelling code) and pin the exact revision
+  - "Treat as an early preview/beta and pilot internally before any customer-facing use."
+  - "Deploy the Instruct-Preview (post-trained) variant, not the base checkpoint."
+  - "Add input/output guardrails and your own guard classifier: safety features are documented as incomplete."
+  - "Load with trust_remote_code=True (custom hybrid Mamba-2/MoE modelling code) and pin the exact revision."
 score:
   rubric_version: '1.1'
   headline: 63.2
@@ -168,19 +127,7 @@ score:
   dimensions:
     openness:
       score: 2
-      rationale: 'Weights are not openly available and no licence is in force, so the entry
-        sits below the open-weights anchor (3) at 2, the gated anchor with a key component (the
-        licence) undisclosed. Checked 2026-11-19: every Soofi-Project repo is manually gated, the
-        base card says "It is not an open release" and "currently in a closed beta with already
-        selected partners", the licence tag reads closed-beta, the preview is "for research and
-        development only", and no repo has a LICENSE file. What is real: a pretraining report
-        with full per-source data accounting, a released training codebase (Soofi-Pretraining,
-        itself without a licence file), openly licensed evaluation scores (CC-BY-4.0) and good
-        documentation. The "open-source" wording in the paper title and abstract and the OSAID 1.0
-        pledge are future-tense commitments ("will be released") that four months on have not been
-        delivered. Re-score when weights and a licence are published.
-
-        '
+      rationale: "Weights are not openly available and no licence is in force, so the score is 2, below the open-weights anchor (3): the gated anchor, with a key component (the licence) undisclosed. Every Soofi-Project repo is manually gated. The base card says \"It is not an open release\" and \"currently in a closed beta with already selected partners\". The licence tag reads closed-beta, the preview is \"for research and development only\", and no repo has a LICENSE file. Delivered so far: a pretraining report with full per-source data accounting, a released training codebase (Soofi-Pretraining, itself without a licence file), openly licensed evaluation scores (CC-BY-4.0) and good documentation. The \"open-source\" wording in the paper title and abstract and the OSAID 1.0 pledge are future-tense commitments (\"will be released\") that have not been delivered since the July report. Re-score when weights and a licence are published."
       evidence_refs:
       - ev-arxiv
       - ev-github
@@ -188,77 +135,38 @@ score:
       - ev-site
     provenance:
       score: 4
-      rationale: 'Distributed from the verified Soofi-Project org on Hugging Face in bf16
-        safetensors (plus first-party GGUF/3-bit quants) with checksums, and because the
-        data accounting and training code are public the pipeline is auditable (checklist 6/8
-        as scored in July; not re-derived on 2026-11-19, and the Hub reports no completed security
-        scan for the base repo). The intermediate checkpoint repo (Soofi-S-Base-Megatron) is manually
-        gated like every other repo. Held below 5 by the absence of cryptographic weight signing /
-        SLSA attestation and the closed-beta access phase on the base weights.
-
-        '
+      rationale: "Distributed from the verified Soofi-Project org on Hugging Face in bf16 safetensors (plus first-party GGUF and 3-bit quants) with checksums. The data accounting and training code are public, so the pipeline is auditable (checklist 6/8, a July score that is unverified; the Hub reports no completed security scan for the base repo). The intermediate checkpoint repo (Soofi-S-Base-Megatron) is manually gated like every other repo. Held below 5 by the absence of cryptographic weight signing or SLSA attestation and by the closed-beta access phase on the base weights."
       evidence_refs:
       - ev-hf-base
       - ev-hf-org
     legal:
       score: 2
-      rationale: 'No licence is in force: the tag is closed-beta, no repo has a LICENSE file, the
-        card says "Will be released under a permissive license" and limits the preview to research
-        and development, so no published text grants commercial use, modification or
-        redistribution (checked 2026-11-19). Documentation is strong - per-source data accounting
-        that supports the training-content summary, EU/Germany jurisdiction, well under the
-        systemic-risk compute threshold - which is why the score is 2 and not lower. The binding
-        gap is the licence, and the Article 53 open-source exemption cannot be relied on until a
-        free and open licence is published. Re-score when it is.
-
-        '
+      rationale: "No licence is in force: the tag is closed-beta, no repo has a LICENSE file, and the card says \"Will be released under a permissive license\" and limits the preview to research and development. No published text grants commercial use, modification or redistribution. Documentation is strong (per-source data accounting that supports the training-content summary, EU/Germany jurisdiction, compute well under the systemic-risk threshold), which is why the score is 2 and not lower. The binding gap is the licence. The Article 53 open-source exemption cannot be relied on until a free and open licence is published. Re-score then."
       evidence_refs:
       - ev-hf-base
       - ev-arxiv
       - ev-github
     safety:
       score: 3
-      rationale: 'A post-trained Instruct-Preview variant exists and the L3S Research Centre
-        contributes safety/evaluation frameworks, but the Instruct model card documents several
-        privacy and safety features as still incomplete, this is an early preview, and there is no
-        companion guard model or broad independent red-team battery. Base checkpoints are honestly
-        presented as research/fine-tuning artifacts.
-
-        '
+      rationale: "A post-trained Instruct-Preview variant exists and the L3S Research Centre contributes safety and evaluation frameworks. The Instruct model card documents several privacy and safety features as incomplete, this is an early preview, and there is no companion guard model or broad independent red-team battery. Base checkpoints are presented as research and fine-tuning artifacts."
       evidence_refs:
       - ev-hf-org
       - ev-arxiv
     performance:
       score: 4
-      rationale: 'Independent coverage and the pretraining report agree Soofi-S is the strongest
-        fully-open model on aggregate English and German benchmarks - ahead of OLMo 3 32B, Apertus
-        70B, EuroLLM 22B and Alia 40B - matching dense 14-27B models and winning code aggregates
-        among open base models, at only ~3B active parameters. Strong for its class rather than a
-        frontier-vs-closed claim, and still a preview.
-
-        '
+      rationale: "Independent coverage and the pretraining report agree that Soofi-S is the strongest fully-open model on aggregate English and German benchmarks, ahead of OLMo 3 32B, Apertus 70B, EuroLLM 22B and Alia 40B. It matches dense 14-27B models and wins code aggregates among open base models, at only ~3B active parameters. The claim is strength for its class, not a frontier-vs-closed claim, and the model is still a preview."
       evidence_refs:
       - ev-perf
       - ev-arxiv
     operational:
       score: 4
-      rationale: 'Runs on mainstream stacks - HF transformers (trust_remote_code), vLLM,
-        llama.cpp/llama-server and Ollama - with first-party GGUF and 3-bit quantizations and a
-        near-constant long-context cache. Held short of 5 by the custom hybrid Mamba-2/MoE architecture
-        (custom modelling code, maturing runtime support) and tool-template quirks across runtimes.
-
-        '
+      rationale: "Runs on mainstream stacks (HF transformers with trust_remote_code, vLLM, llama.cpp/llama-server and Ollama) with first-party GGUF and 3-bit quantizations and a near-constant long-context cache. Held short of 5 by the custom hybrid Mamba-2/MoE architecture (custom modelling code, maturing runtime support) and tool-template quirks across runtimes."
       evidence_refs:
       - ev-hf-base
       - ev-hf-org
     governance:
       score: 4
-      rationale: 'Accountable, well-identified publisher: a named government-funded consortium
-        coordinated by the KI Bundesverband with reputable research members, a detailed pretraining
-        technical report and open GitHub repositories. Short of 5 without a formally documented
-        vulnerability-disclosure and deprecation policy, and given the early preview status.
-
-        '
+      rationale: "Accountable, well-identified publisher: a named government-funded consortium coordinated by the KI Bundesverband with reputable research members, a detailed pretraining technical report and open GitHub repositories. Short of 5 because no vulnerability-disclosure or deprecation policy is formally documented and the model is an early preview."
       evidence_refs:
       - ev-cairne
       - ev-press
@@ -268,27 +176,27 @@ signals:
   trainability:
     level: limited
     dimension: openness
-    summary: "Not exercisable by the public today: weights and checkpoints are manually gated in a closed beta and no licence is in force. The released training code (no licence file) and per-source data accounting document the recipe, and the planned OSAID release would make it retrainable."
+    summary: "Not exercisable by the public: weights and checkpoints are manually gated in a closed beta and no licence is in force. The released training code (no licence file) and per-source data accounting document the recipe, and the planned OSAID release would make the model retrainable."
     refs: [ev-github, ev-arxiv, ev-hf-base]
   knowledge_structure:
     level: moderate
     dimension: performance
-    summary: "Capable bilingual German/English backbone with a long context (up to 256k, near-constant cache) but a standard generative MoE LLM - strong retrieval/grounding capacity, no native structured-knowledge features."
+    summary: "Capable bilingual German/English backbone with a long context (up to 256k, near-constant cache). It is a standard generative MoE LLM with strong retrieval and grounding capacity and no native structured-knowledge features."
     refs: [ev-arxiv, ev-perf]
   specialization:
     level: weak
     dimension: openness
-    summary: "Built for fine-tuning in intent (a base checkpoint, documented recipe), but specialisation needs gated weights and no licence is in force, so adaptation and redistribution of derivatives are not granted by any published text."
+    summary: "Built for fine-tuning in intent (a base checkpoint, a documented recipe), but specialisation needs gated weights and no licence is in force, so no published text grants adaptation or redistribution of derivatives."
     refs: [ev-github, ev-hf-base]
   exchangeability:
     level: medium
     dimension: operational
-    summary: "Portable with caveats: the custom hybrid Mamba-2/MoE needs trust_remote_code and maturing runtime support, and tool-call templates differ across runtimes, so it takes more integration care than a plain Llama-class model."
+    summary: "Portable with caveats: the custom hybrid Mamba-2/MoE needs trust_remote_code and has maturing runtime support, and tool-call templates differ across runtimes, so integration takes more care than for a plain Llama-class model."
     refs: [ev-hf-base, ev-hf-org]
   misuse_exposure:
     level: unbenchmarked
     dimension: safety
-    summary: "Not independently benchmarked for misuse/exposure: the Instruct model card lists safety features as incomplete and no broad third-party CBRN/cyber/prompt-injection red-team battery exists for this preview."
+    summary: "Not independently benchmarked for misuse or exposure: the Instruct model card lists safety features as incomplete and no broad third-party CBRN, cyber or prompt-injection red-team battery exists for this preview."
     refs: [ev-hf-org]
 
 # --- Four documentation domains. completeness/originality written by scripts/completeness.py --write.
@@ -304,35 +212,35 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-arxiv, ev-press]
-        summary: "Industrial/regulated German+English use (technical/regulatory docs, code, agentic); deploy the Instruct-Preview variant rather than the base; early preview that needs controls before any safety-critical use."
+        summary: "Industrial and regulated German and English use (technical and regulatory documents, code, agentic work). Deploy the Instruct-Preview variant, not the base. It is an early preview that needs controls before any safety-critical use."
       - key: limitations
         title: "Known limitations, bias & failure modes"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-hf-org, ev-arxiv]
-        summary: "Early preview/beta; safety features documented as incomplete; custom architecture needs trust_remote_code; strongest fully-open model, below the largest closed labs."
+        summary: "Early preview/beta; safety features documented as incomplete; custom architecture needs trust_remote_code; strongest fully-open model but below the largest closed labs."
       - key: openness
         title: "Openness tier & components"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-arxiv, ev-github, ev-osaid]
-        summary: "gated_open - not an open release today: weights manually gated in a closed beta, no licence in force; per-source data accounting and training code are published, and an OSAID 1.0 release is promised without a date."
+        summary: "gated_open, not an open release: weights manually gated in a closed beta, no licence in force. Per-source data accounting and training code are published, and an OSAID 1.0 release is promised without a date."
       - key: license
         title: "License terms & permitted use"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-arxiv, ev-hf-base]
-        summary: "No licence in force: tag closed-beta, no LICENSE file in any repo, the card promises a permissive licence later and limits the preview to research and development."
+        summary: "No licence in force: tag closed-beta, no LICENSE file in any repo; the card promises a permissive licence later and limits the preview to research and development."
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-hf-base, ev-hf-org]
-        summary: "Verified Soofi-Project org, bf16 safetensors + first-party GGUF/FP8/3-bit, checksums, auditable pipeline; no crypto signing/SLSA, no completed Hub security scan; every repo manually gated."
+        summary: "Verified Soofi-Project org; bf16 safetensors plus first-party GGUF, FP8 and 3-bit builds; checksums; auditable pipeline. No cryptographic signing or SLSA attestation and no completed Hub security scan; every repo is manually gated."
       - key: eu-ai-act
         title: "EU AI Act posture"
         doc_type: explanation
@@ -346,12 +254,12 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-perf, ev-arxiv]
-        summary: "Aggregated from the pretraining report + independent coverage: strongest fully-open on English+German aggregates, ahead of OLMo 3/Apertus/EuroLLM/Alia; exact per-task numbers pending on model cards."
+        summary: "Aggregated from the pretraining report and independent coverage: strongest fully-open model on English and German aggregates, ahead of OLMo 3, Apertus, EuroLLM and Alia. Exact per-task numbers are pending on the model cards."
       - key: safety-eval
         title: "Independent safety evaluation"
         doc_type: reference
         source_type: gap
-        gap_reason: "No broad third-party adversarial evaluation (CBRN/cyber/prompt-injection) has been published for this preview. The Instruct model card itself lists safety features as incomplete, so there is no independent safety battery to aggregate."
+        gap_reason: "No broad third-party adversarial evaluation (CBRN, cyber, prompt-injection) is published for this preview. The Instruct model card lists safety features as incomplete, so no independent safety battery exists to aggregate."
   implement:
     completeness: 90.9
     originality: 0.0
@@ -362,28 +270,28 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-hf-base, ev-hf-org]
-        summary: "After the publisher approves your access request: HF from_pretrained with trust_remote_code=True (safetensors), or first-party GGUF via llama.cpp/llama-server/Ollama; pin the exact Soofi-Project revision."
+        summary: "After the publisher approves the access request: HF from_pretrained with trust_remote_code=True (safetensors), or first-party GGUF via llama.cpp, llama-server or Ollama. Pin the exact Soofi-Project revision."
       - key: hardware
         title: "Hardware & VRAM requirements"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-arxiv, ev-hf-org]
-        summary: "~30B weights resident (bf16) but only ~3B active/token; multi-GPU or first-party GGUF/3-bit on a single high-VRAM card; near-constant cache eases long context."
+        summary: "~30B weights resident (bf16) but only ~3B active per token. Use multi-GPU, or first-party GGUF or 3-bit on a single high-VRAM card. The near-constant cache eases long context."
       - key: serving
         title: "Serving stacks"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-hf-org, ev-hf-base]
-        summary: "vLLM, llama.cpp/llama-server (--jinja for native tools), Ollama and transformers; custom hybrid Mamba-2/MoE means runtime support is still maturing - verify your stack's version."
+        summary: "vLLM, llama.cpp/llama-server (--jinja for native tools), Ollama and transformers. The custom hybrid Mamba-2/MoE means runtime support is still maturing, so verify your stack's version."
       - key: safe-deployment
         title: "Safe-deployment controls & Deployment Ceiling"
         doc_type: howto
         source_type: aggregated
         coverage: full
         refs: [ev-hf-org, ev-arxiv]
-        summary: "Deployment Ceiling T2 (conditional) and preview-caveated: Instruct-Preview variant + your own input/output guardrails + guard classifier + pinned revision; pilot internally first."
+        summary: "Deployment Ceiling T2 (conditional), preview-caveated: Instruct-Preview variant, your own input/output guardrails, a guard classifier and a pinned revision; pilot internally first."
       - key: quantization
         title: "Available quantizations"
         doc_type: reference
@@ -397,14 +305,14 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-github, ev-hf-base]
-        summary: "Training code (Soofi-Pretraining, no licence file) and soofi-trainer (MIT) are public and the base is built for fine-tuning, but weights and the intermediate Megatron checkpoint are manually gated and no licence grants adaptation rights today."
+        summary: "Training code (Soofi-Pretraining, no licence file) and soofi-trainer (MIT) are public and the base is built for fine-tuning. The weights and the intermediate Megatron checkpoint are manually gated, and no licence grants adaptation rights."
       - key: integration
         title: "API / OpenAI-compatible integration"
         doc_type: howto
         source_type: aggregated
         coverage: full
         refs: [ev-hf-org]
-        summary: "Serve behind vLLM's or llama-server's OpenAI-compatible endpoint; use --jinja to apply the embedded chat/tool template verbatim for native tool calling."
+        summary: "Serve behind the OpenAI-compatible endpoint of vLLM or llama-server; use --jinja to apply the embedded chat and tool template verbatim for native tool calling."
   use:
     completeness: 72.2
     originality: 0.0
@@ -415,21 +323,21 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-arxiv, ev-perf]
-        summary: "Text-only German+English generation, code and agentic/technical tasks; strongest fully-open model on English+German aggregates, best open code aggregates, at ~3B active params."
+        summary: "Text-only German and English generation, code and agentic/technical tasks. Strongest fully-open model on English and German aggregates and best open code aggregates, at ~3B active parameters."
       - key: context-window
         title: "Context window & long-context behaviour"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-arxiv]
-        summary: "Supports up to 256k tokens with flat decode throughput (near-constant cache) from 4k-256k; effective long-context recall at full length is not independently benchmarked."
+        summary: "Supports up to 256k tokens with flat decode throughput (near-constant cache) from 4k to 256k. Effective long-context recall at full length is not independently benchmarked."
       - key: chat-template
         title: "Prompt format & chat template"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-hf-org]
-        summary: "Instruct-Preview ships an embedded Jinja chat template (identity + tools); apply it (e.g. llama-server --jinja) rather than hand-rolling roles. Base has no chat template."
+        summary: "Instruct-Preview ships an embedded Jinja chat template (identity and tools); apply it (e.g. llama-server --jinja) instead of hand-rolling roles. The base has no chat template."
       - key: languages
         title: "Language coverage"
         doc_type: reference
@@ -443,12 +351,12 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-hf-org]
-        summary: "A native tool-call format is embedded in the Instruct GGUF's Jinja template; run under llama-server --jinja to use it verbatim (Ollama's template omits tools)."
+        summary: "A native tool-call format is embedded in the Instruct GGUF's Jinja template. Run under llama-server --jinja to use it verbatim; Ollama's template omits tools."
       - key: structured-output
         title: "Structured / JSON-constrained output"
         doc_type: reference
         source_type: gap
-        gap_reason: "No published native JSON/schema-constrained output capability is documented for Soofi-S. Constrained decoding is possible at the serving layer (e.g. vLLM/llama.cpp grammars), which is a runtime feature rather than a model-documented behaviour."
+        gap_reason: "No native JSON or schema-constrained output capability is documented for Soofi-S. Constrained decoding is possible at the serving layer (e.g. vLLM or llama.cpp grammars) as a runtime feature."
   support:
     completeness: 50.0
     originality: 0.0
@@ -459,59 +367,59 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-hf-base, ev-hf-org]
-        summary: "Aggregated preview pitfalls (missing trust_remote_code, custom-arch runtime support, tool-template differences across runtimes, revision drift); not an exhaustive catalogue."
+        summary: "Preview pitfalls: missing trust_remote_code, custom-architecture runtime support, tool-template differences across runtimes, and revision drift. The list is not exhaustive."
       - key: release-versioning
         title: "Versions, changelog & cadence"
         doc_type: release_notes
         source_type: aggregated
         coverage: full
         refs: [ev-hf-org, ev-arxiv]
-        summary: "Preview/beta cadence: Base plus Instruct/Isar/Rhine previews and iteration checkpoints (e.g. iter_1056000) tracked as Soofi-Project Hugging Face revisions; pretraining report accompanies the release."
+        summary: "Preview/beta cadence: Base plus Instruct, Isar and Rhine previews and iteration checkpoints (e.g. iter_1056000) are tracked as Soofi-Project Hugging Face revisions. The pretraining report accompanies the release."
       - key: security-disclosure
         title: "Security / vulnerability disclosure"
         doc_type: reference
         source_type: gap
-        gap_reason: "No formal, published vulnerability-disclosure or security policy (e.g. SECURITY.md / advisory process) exists for Soofi; contact is only the Soofi-Project Hugging Face/GitHub org presence, so there is no documented process to aggregate."
+        gap_reason: "No formal vulnerability-disclosure or security policy (e.g. SECURITY.md or an advisory process) exists for Soofi. The only contact is the Soofi-Project Hugging Face and GitHub org presence, so there is no documented process to aggregate."
       - key: channels
         title: "Community & support channels"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-hf-org, ev-github, ev-cairne]
-        summary: "Soofi-Project Hugging Face model/dataset discussions, GitHub issues (Soofi-Pretraining, soofi-trainer, soofi-model-hosting), the soofi.info site and the KI-Bundesverband-coordinated consortium."
+        summary: "Soofi-Project Hugging Face model and dataset discussions, GitHub issues (Soofi-Pretraining, soofi-trainer, soofi-model-hosting), the soofi.info site and the KI-Bundesverband-coordinated consortium."
       - key: deprecation
         title: "Deprecation / end-of-life policy"
         doc_type: reference
         source_type: gap
-        gap_reason: "No published deprecation or end-of-life policy for Soofi-S checkpoints; as an early preview, prior revisions remain downloadable but no formal support-window or sunset commitment is documented."
+        gap_reason: "No deprecation or end-of-life policy is published for Soofi-S checkpoints. As an early preview, prior revisions remain downloadable, but no formal support window or sunset commitment is documented."
       - key: known-issues
         title: "Tracked known issues"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-hf-org, ev-arxiv]
-        summary: "From model-card caveats: closed-beta preview status, manual access gate with no dated open release, incomplete safety/privacy features, tool-template inconsistencies across runtimes, and custom-architecture runtime-support maturity."
+        summary: "From model-card caveats: closed-beta preview status, a manual access gate with no dated open release, incomplete safety and privacy features, tool-template inconsistencies across runtimes, and immature runtime support for the custom architecture."
 
 ownership:
   level: partial
   factors:
     use_modify:
       level: weak
-      rationale: "A hard access gate with no licence in force: every repo is manually gated, the card says it is not an open release and that the preview is for research and development only, and no LICENSE file exists, so use, fine-tuning and commercial use are not granted by any published text. The permissive release is a promise without a date."
+      rationale: "A hard access gate with no licence in force. Every repo is manually gated, the card says it is not an open release and that the preview is for research and development only, and no LICENSE file exists. No published text grants use, fine-tuning or commercial use. The permissive release is a promise without a date."
       # grounded in: ev-hf-base (license, retrieved 2026-11-19) - tag closed-beta, gated manual, card "not an open release", no LICENSE file; ev-github (docs, retrieved) - README "Open model weights coming soon", no LICENSE; ownership.md use_modify weak = hard access gate
     transparency:
       level: moderate
-      rationale: "The report, the per-source data accounting and the training code are public and inspectable, which is more than most weight-only releases, but the weights are not publicly inspectable (manual gate, closed beta) and the training code has no licence file, so this stops at moderate until the weights and licence are released."
+      rationale: "The report, the per-source data accounting and the training code are public and inspectable, which is more than most weight-only releases offer. The weights are not publicly inspectable (manual gate, closed beta) and the training code has no licence file, so transparency stays at moderate until the weights and licence are released."
       # grounded in: ev-arxiv (technical_report, retrieved) - per-source data accounting; ev-github (docs, retrieved) - code released, no LICENSE; ev-hf-base (license, retrieved) - gated; ownership.md transparency moderate = gated_open tier, docs good
     reliability:
       level: moderate
-      rationale: "Pre-release: the weights are available only through manual approval, so runtime dependability is unproven for most adopters and the documented-incomplete safety cannot yet be exercised. The reported ~3B-active-param strength counts as a capability point in the AOI score rather than an ownership factor."
+      rationale: "Pre-release: the weights are available only through manual approval, so runtime dependability is unproven for most adopters and the documented-incomplete safety cannot yet be exercised. The reported ~3B-active-parameter strength counts as a capability point in the AOI score, not as an ownership factor."
       # grounded in: ev-perf (third_party) - strongest-fully-open benchmark framing; ev-arxiv (technical_report, retrieved) - ~27T tokens, per-task claims
     data_control:
       level: moderate
-      rationale: "EU/Germany-domiciled and trained on sovereign German infrastructure, so once self-hosted your data would stay yours - but with weights manually gated and no licence in force, that self-hosting cannot yet be exercised from a settled grant."
+      rationale: "EU/Germany-domiciled and trained on sovereign German infrastructure, so once self-hosted your data would stay yours. With weights manually gated and no licence in force, that self-hosting cannot yet be exercised from a settled grant."
       # grounded in: ev-github (docs, retrieved) - weights "coming soon", not downloadable; ev-hf-base (license, not retrieved) - licence pending
-  verdict: "Today you do not own the use of these weights: they are manually gated in a closed beta, the card says it is not an open release, and no licence is in force, so use, modification and commercial use are not granted by any published text. What exists is exceptional documentation - a pretraining report with full per-source data accounting and a released training codebase - plus a stated OSAID 1.0 commitment with no date. The marketing says open-source; the binding text says closed beta. Treat the openness as promised rather than delivered, and re-assess when weights and a licence are published."
+  verdict: "Today you do not own the use of these weights. They are manually gated in a closed beta, the card says it is not an open release, and no licence is in force, so no published text grants use, modification or commercial use. What exists is thorough documentation: a pretraining report with full per-source data accounting and a released training codebase. A stated OSAID 1.0 commitment has no date. The marketing says open-source; the binding text says closed beta. Treat openness as promised, not delivered, and re-assess when weights and a licence are published."
 
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
 #     (true = the document's substantive text was read; false = known to exist but not read).
@@ -524,63 +432,35 @@ ownership:
 #     1.0 line in the report is a stated future intention, not a delivered release.
 evidence:
 - id: ev-arxiv
-  claim: 'Real arXiv report ("A Sovereign, Open-Source Foundation Model for German and
-    English" / PDF "Soofi S Pretraining Report v1.0"): a ~30B (30B-A3B) hybrid Mamba-2/Transformer
-    MoE trained on ~27T primarily German+English tokens on Deutsche Telekom''s Industrial
-    AI Cloud in Munich, with full per-source data accounting (public identifier + raw/effective
-    token counts; the ~1.3% Genios corpus reported in aggregate). States an OSAID 1.0
-    commitment as a future intention - "we will release weights, intermediate checkpoints,
-    training and evaluation code, and exact per-source data accounting under permissive
-    licenses" - which is not yet delivered.'
+  claim: "The arXiv report (\"A Sovereign, Open-Source Foundation Model for German and English\"; PDF \"Soofi S Pretraining Report v1.0\") describes a ~30B (30B-A3B) hybrid Mamba-2/Transformer MoE. The model was trained on ~27T primarily German and English tokens on Deutsche Telekom's Industrial AI Cloud in Munich. The report gives full per-source data accounting (public identifier plus raw and effective token counts; the ~1.3% Genios corpus reported in aggregate). It states an OSAID 1.0 commitment as a future intention: \"we will release weights, intermediate checkpoints, training and evaluation code, and exact per-source data accounting under permissive licenses\". That commitment is not yet delivered."
   source_type: publisher
   doc_type: technical_report
   retrieved: true
   url: https://arxiv.org/abs/2607.09424
   date: '2026-07-25'
 - id: ev-hf-base
-  claim: 'Soofi-S-Base (Hugging Face, rendered page and Hub API read 2026-11-19): the repo is
-    gated "manual", the licence tag is "closed-beta" (license: other), the card says "This model
-    is a beta preview and a research artifact. It is not an open release", that the checkpoint
-    is "currently in a closed beta with already selected partners", and that "The final model
-    will be released openly under a permissive license, without gated access" with no date. Its
-    License/Terms of Use section says only "Will be released under a permissive license." and
-    "This model is for research and development only (Preview)." No repo in the org lists a
-    LICENSE file, and the raw files return HTTP 401 without approved access. Same disclaimer and
-    tag on the Instruct, Isar and Rhine previews.'
+  claim: "The Soofi-S-Base Hugging Face page and Hub API show the repo gated \"manual\" and the licence tag \"closed-beta\" (license: other). The card says \"This model is a beta preview and a research artifact. It is not an open release\", that the checkpoint is \"currently in a closed beta with already selected partners\", and that \"The final model will be released openly under a permissive license, without gated access\", with no date. No repo in the org lists a LICENSE file, and the raw files return HTTP 401 without approved access. The Instruct, Isar and Rhine previews carry the same disclaimer and tag. The License/Terms of Use section says only \"Will be released under a permissive license.\" and \"This model is for research and development only (Preview).\""
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/Soofi-Project/Soofi-S-Base
   date: '2026-11-19'
 - id: ev-hf-org
-  claim: 'The Soofi-Project Hugging Face org lists 20 model repos (read via the Hub API
-    2026-11-19), all gated "manual": the base, a Megatron-format base checkpoint
-    (Soofi-S-Base-Megatron, created 2026-08-23), the Instruct, Isar and Rhine previews, and
-    first-party GGUF, FP8 and EntQuant 2/3/4-bit builds of each preview. Model cards note safety
-    features as incomplete. Nothing in the org is newer than 2026-08-24, and its one dataset
-    (SOOFI-S-Base-eval-scores, cc-by-4.0) is ungated.'
+  claim: "The Soofi-Project Hugging Face org lists 20 model repos, all gated \"manual\": the base, a Megatron-format base checkpoint (Soofi-S-Base-Megatron, created 2026-08-23), the Instruct, Isar and Rhine previews, and first-party GGUF, FP8 and EntQuant 2/3/4-bit builds of each preview. Model cards note safety features as incomplete. Nothing in the org is newer than 2026-08-24, and its one dataset (SOOFI-S-Base-eval-scores, cc-by-4.0) is ungated."
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/Soofi-Project
   date: '2026-11-19'
 - id: ev-github
-  claim: 'The public soofi-project/Soofi-Pretraining GitHub repo (based on the Nvidia
-    Nemotron 3 Nano architecture) says it holds "the complete codebase used for training Soofi S"
-    (preprocessing, pretraining, midtraining) but has no LICENSE file (HTTP 404 for LICENSE and
-    LICENSE.md, no licence in the GitHub API), and its README still ends "Open model weights
-    coming soon" (re-read 2026-11-19, last push 2026-07-15). Org tooling repos soofi-trainer and
-    soofi-model-hosting are MIT.'
+  claim: "The public soofi-project/Soofi-Pretraining GitHub repo (based on the Nvidia Nemotron 3 Nano architecture; last push 2026-07-15) says it holds \"the complete codebase used for training Soofi S\" (preprocessing, pretraining, midtraining). It has no LICENSE file (HTTP 404 for LICENSE and LICENSE.md, no licence in the GitHub API), and its README ends \"Open model weights coming soon\". The org tooling repos soofi-trainer and soofi-model-hosting are MIT."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://github.com/soofi-project/Soofi-Pretraining
   date: '2026-11-19'
 - id: ev-site
-  claim: 'The project site soofi.info (read 2026-11-19) says "Soofi S befindet sich derzeit in
-    der Beta- und Entwicklungsphase" and "Ein öffentlicher Open-Source-Release ist geplant", with
-    no release date, no licence and no access-request process described. Marketing only; it
-    confirms the open release is still planned, not delivered.'
+  claim: "The project site soofi.info says \"Soofi S befindet sich derzeit in der Beta- und Entwicklungsphase\" and \"Ein öffentlicher Open-Source-Release ist geplant\", with no release date, no licence and no access-request process described. The page is marketing only; it confirms the open release is planned, not delivered."
   source_type: publisher
   doc_type: marketing
   retrieved: true
@@ -605,11 +485,7 @@ evidence:
   url: https://cairne.eu/portfolio-items/soofi-launch-advancing-europes-ai-language-models/
   date: '2026-07-25'
 - id: ev-osaid
-  claim: Independent technology coverage reports Soofi-S as a leading fully-open model
-    that meets the Open Source AI Definition, publishing weights, intermediate checkpoints,
-    training/eval code and a detailed data inventory. This is not independent confirmation of a
-    release, because it repeats the publisher's pledge, and the model card (2026-11-19) says "It is not
-    an open release".
+  claim: "Independent technology coverage reports Soofi-S as a leading fully-open model that meets the Open Source AI Definition, publishing weights, intermediate checkpoints, training and eval code and a detailed data inventory. It repeats the publisher's pledge, so it is not independent confirmation of a release, and the model card says \"It is not an open release\"."
   source_type: third_party
   doc_type: third_party
   retrieved: false

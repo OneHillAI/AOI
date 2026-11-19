@@ -9,25 +9,10 @@ id: runware
 name: Runware
 profile: inference
 hq_country: United Kingdom
-summary: 'An inference platform ("one API for all AI") that serves a very large catalogue through
-  one proprietary API: open-weight and community models run on its own Sonic Inference Engine pods,
-  alongside closed "Partner Models" (GPT, Claude, Gemini, Kling and others) that the Terms describe as
-  licensed to Runware by the model owner. It also sells serverless GPU compute for your own code and
-  containers. Runware markets a US HQ, but the binding entity is Runware Ltd (United Kingdom), under
-  English law with London-seated arbitration. Re-verified 2026-11-19 against Terms last updated
-  2026-09-29: the adverse licence and non-confidentiality clauses found on 2026-08-06 are absent, you
-  own Outputs, Runware takes no licence in them, and Runware will not train on Training Data, Trained
-  Models or Serverless Customer Material. The Terms now say the Services are hosted in the United
-  States, Germany and Romania, which contradicts the help-centre claim that all data sits on EU-based
-  servers. Retention on the managed API is still generic (account lifetime, no numeric window); zero
-  data retention exists only as an enterprise, sales-enabled option for a listed set of models.
-  SOC 2 and ISO 27001 remain unverified footer badges, and the DPA is enterprise-only and unread. For
-  sensitive data, use the open-weight route or self-host the same checkpoints.
-
-  '
+summary: 'An inference platform ("one API for all AI") that serves a very large catalogue through one proprietary API. Open-weight and community models run on its own Sonic Inference Engine pods, alongside closed "Partner Models" (GPT, Claude, Gemini, Kling and others) that the Terms describe as licensed to Runware by the model owner. It also sells serverless GPU compute for your own code and containers. Runware markets a US HQ, but the binding entity is Runware Ltd (United Kingdom), under English law with London-seated arbitration. The Terms (last updated 2026-09-29) give you the Outputs, grant Runware no licence in them, contain no non-confidentiality declaration, and bar Runware from training on Training Data, Trained Models or Serverless Customer Material. They say the Services are hosted in the United States, Germany and Romania, which contradicts the help-centre claim that all data sits on EU-based servers. Retention on the managed API is generic (account lifetime, no numeric window). Zero data retention exists only as an enterprise, sales-enabled option for a listed set of models. SOC 2 and ISO 27001 are unverified footer badges, and the DPA is enterprise-only and unread. For sensitive data, use the open-weight route or self-host the same checkpoints.'
 models_served:
 - Open-weight and community models (image, video, audio, language and 3D) run on Runware's own pods;
-  the registry is reported at 400K+ models, of which 420 have published rates (2026-11-19)
+  the registry is reported at 400K+ models, of which 420 have published rates
 - Open text models such as Kimi K3.1 Pro, DeepSeek-V4.1-Flash, GLM-5.3-Flash, MiniMax M3.1 Flash
 - Closed Partner Models licensed through the model owner (GPT-6.x, Claude Fable/Sonnet/Haiku 5.x,
   Gemini 4, Kling, Seedance and others), served under their own Model Licence and provider terms
@@ -35,62 +20,48 @@ models_served:
 hardware: Custom Runware inference pods (Sonic Inference Engine), US and central Europe
 pricing:
   model: per-request
-  notes: 'Pay-as-you-go per generation, second or 1M tokens for 420 priced models (read 2026-11-19);
-    serverless GPU time billed per second from a prepaid balance with reserved capacity on request; $2
-    free credit for business-email sign-ups; enterprise plans add custom terms.
-
-    '
+  notes: "Pay-as-you-go per generation, second or 1M tokens for 420 priced models; serverless GPU time billed per second from a prepaid balance with reserved capacity on request; $2 free credit for business-email sign-ups; enterprise plans add custom terms."
   example_rates:
   - 'GLM-5.3-Flash (text): $0.15 per 1M input, $0.50 per 1M output'
   - 'Kimi K3.1 Pro (text): $2.00 per 1M input'
   - 'Serverless H100: $0.001097 per second ($3.95 per hour); reserved from $2.45 per GPU-hour'
 data_governance:
-  default_retention: 'Managed API: the Privacy Policy (Sec 6, re-read 2026-11-19) keeps data for as long
-    as necessary and no longer than the account lifetime, with no numeric window, auto-purge or
-    opt-in-storage clause. Terms Sec 2: "Runware does not retain your Outputs on a long-term basis";
-    the docs add that output URLs live for 7 days without ZDR. Training Data and Trained Models are kept
-    "in accordance with your plan and settings" (Sec 3). Serverless Customer Material is deleted within
-    30 days after the account closes (Sec 4).'
+  default_retention: 'Managed API: the Privacy Policy (Sec 6) keeps data for as long as necessary and no longer than the account lifetime, with no numeric window, auto-purge or opt-in-storage clause. Terms Sec 2: "Runware does not retain your Outputs on a long-term basis"; the docs add that output URLs live for 7 days without ZDR. Training Data and Trained Models are kept "in accordance with your plan and settings" (Sec 3). Serverless Customer Material is deleted within 30 days after the account closes (Sec 4).'
   trains_on_inputs: never
   zdr_available: enterprise_only
-  zdr_scope_caveats: 'NEW since 2026-09-21: Runware docs describe zero data retention as an
-    organisation-level option for enterprise accounts, enabled by Runware staff on request, applying
-    only from the moment it is turned on, and covering a listed set of models (Runware-hosted and
-    uploaded models, models from eight providers with a ZDR agreement, and 12 named text models). "Any
-    other model is not covered by ZDR today, even when your organization has it enabled." It is not
-    mentioned in the Terms or Privacy Policy, so it is documentation, not a contractual term. No
-    training: Terms Sec 3 ("Runware will not use your Training Data or Trained Models to train,
-    fine-tune, or develop Runware''s own models or those of any third party") and Sec 4 (same for
-    Serverless Customer Material); the docs add that API data is never used to train, with or without
-    ZDR. The Privacy Policy is silent on training.
-
-    '
+  zdr_scope_caveats: "Runware docs describe zero data retention as an organisation-level option for enterprise
+    accounts. Runware staff enable it on request. It applies only from the moment it is turned on.
+    It covers a listed set of models (Runware-hosted and uploaded models, models from eight
+    providers with a ZDR agreement, and 12 named text models). \"Any other model is not covered by
+    ZDR today, even when your organization has it enabled.\" It is not mentioned in the Terms or
+    Privacy Policy, so it is documentation and not a contractual term. No training: Terms Sec 3
+    (\"Runware will not use your Training Data or Trained Models to train, fine-tune, or develop
+    Runware's own models or those of any third party\") and Sec 4 (same for Serverless Customer
+    Material). The docs add that API data is never used to train, with or without ZDR. The Privacy
+    Policy is silent on training."
   customer_data_ownership: customer_retains
   outputs_used_to_improve_service: "no"
-  third_party_routing_leakage: 'CORRECTED 2026-11-19: the catalogue is no longer open-weight only. The
-    Terms define Partner Models (licensed to Runware by the model owner), and the ZDR docs say that
-    "When a provider runs the model, the provider''s own ZDR terms apply to the copy it handles"
-    (HeyGen keeps request data 24 hours, Ideogram 30 minutes; Google, MiniMax and Topaz Labs keep
-    flagged requests). The status page separates Official from Third-party Models. Prompts sent to
-    closed partner models therefore reach the model provider under that provider''s terms. Open and
-    community models run on Runware pods. The Privacy Policy names only analytics and payment tools,
-    so infrastructure sub-processors are not disclosed.
-
-    '
+  third_party_routing_leakage: "The catalogue is not open-weight only. The Terms define Partner Models (licensed to Runware by
+    the model owner). The ZDR docs say that \"When a provider runs the model, the provider's own ZDR
+    terms apply to the copy it handles\". HeyGen keeps request data 24 hours and Ideogram 30
+    minutes. Google, MiniMax and Topaz Labs keep flagged requests. The status page separates
+    Official from Third-party Models. Prompts sent to closed partner models therefore reach the
+    model provider under that provider's terms. Open and community models run on Runware pods. The
+    Privacy Policy names only analytics and payment tools, so infrastructure sub-processors are not
+    disclosed."
   subprocessors_disclosed: false
   confidentiality: functional_only
-  confidentiality_caveats: 'Re-read 2026-11-19 (Terms last updated 2026-09-29). The current 29-section
-    Terms contain no Submissions or Contributions section, no licence to Runware over inputs or
-    outputs, and no non-confidentiality declaration; the adverse text found on 2026-07-26 and
-    2026-08-06 is not there. Express confidentiality now exists in two places: Sec 2 for privately
-    uploaded models ("We agree to treat all such materials as confidential", applying "whether or not
-    an NDA has been signed") and Sec 4 for Serverless Customer Material ("Runware will treat your
-    Customer Material as confidential, protect it with at least reasonable care"). Prompts and outputs
-    on the managed Models API are not named in either clause, and you own Outputs with no licence
-    taken (Sec 2), so protection there rests on the absence of any licence, not a stated duty of
-    confidence. Coded functional_only for the main product; Serverless alone would read as explicit.
-    Standing caveat: the removal of the old clauses is inferred from the current text, never diffed
-    side by side, because no web archive was readable in either the 2026-09-21 or 2026-11-19 pass.'
+  confidentiality_caveats: "The current 29-section Terms (last updated 2026-09-29) contain no Submissions or Contributions
+    section, no licence to Runware over inputs or outputs, and no non-confidentiality declaration.
+    The July and August 2026 versions of the Terms carried a broad licence and a non-confidentiality declaration. Express confidentiality exists in two places. Sec 2 covers privately uploaded
+    models (\"We agree to treat all such materials as confidential\", applying \"whether or not an
+    NDA has been signed\"). Sec 4 covers Serverless Customer Material (\"Runware will treat your
+    Customer Material as confidential, protect it with at least reasonable care\"). Prompts and
+    outputs on the managed Models API are not named in either clause, and you own Outputs with no
+    licence taken (Sec 2). Protection there rests on the absence of any licence and not on a stated
+    duty of confidence. Coded functional_only for the main product; Serverless alone would read as
+    explicit. No archived copy of the earlier Terms is readable, so the removal of the older clauses
+    is inferred from the current text."
 compliance:
   soc2: unknown
   iso_27001: unknown
@@ -105,34 +76,27 @@ residency:
   - United Kingdom (binding entity, Runware Ltd)
   - Germany and Romania (hosting named in Terms Sec 16)
   - United States (hosting named in Terms Sec 16)
-  sovereign_option: 'Not a sovereign offering. Terms Sec 16 (binding): "the Services are hosted in the
-    United States, Germany and Romania", with no customer-selectable region or contractual pinning. The
-    help centre says all data is "stored on secure, EU-based servers" and the footer says "Data
-    residency EU & US"; the Terms contradict the first, so residency rests on the Terms. The Serverless
-    page shows eu-west and eu-central region choices in a product mock-up, which is not a contract term.
-    US CLOUD Act exposure is not addressed: the binding entity is UK, but hosting is partly US and the
-    site footer names "Runware, Inc.", so US reach is neither established nor excluded.'
+  sovereign_option: "Not a sovereign offering. Terms Sec 16 (binding): \"the Services are hosted in the United
+    States, Germany and Romania\", with no customer-selectable region or contractual pinning. The
+    help centre says all data is \"stored on secure, EU-based servers\" and the footer says \"Data
+    residency EU & US\"; the Terms contradict the first, so residency rests on the Terms. The
+    Serverless page shows eu-west and eu-central region choices in a product mock-up, which is not a
+    contract term. US CLOUD Act exposure is not addressed. The binding entity is UK. Hosting is
+    partly US and the site footer names \"Runware, Inc.\", so US reach is neither established nor
+    excluded."
   region_pinning: unknown
   cloud_act_exposure: false
-  provider_can_restrict_access: 'UK jurisdiction (Runware Ltd), English law, and arbitration seated in
-    London under European Centre of Arbitration rules. Access can be denied at Runware''s sole
-    discretion without notice, except that for paid Services Runware gives at least 30 days'' written
-    notice before ending access unless there is a breach, legal demand or security risk (Sec 17; earlier
-    passes recorded no notice window). Deletion on request by email.'
+  provider_can_restrict_access: "UK jurisdiction (Runware Ltd), English law, and arbitration seated in London under European Centre of Arbitration rules. Access can be denied at Runware's sole discretion without notice, except that for paid Services Runware gives at least 30 days' written notice before ending access unless there is a breach, legal demand or security risk (Sec 17). Deletion on request by email."
 reliability:
   sla: ''
-  uptime_notes: 'A public status page exists (status.runware.ai, incident.io), which earlier passes
-    missed: "fully operational" on 2026-11-19, with Aug to Nov 2026 uptime of 99.93% for Models (Third-party
-    Models 99.98%) and 99.90% for Serverless. There is no SLA in the Terms (Sec 18: "We cannot guarantee
-    the Services will be available at all times"); custom SLAs are advertised for enterprise only. A USD
-    50M Series A (December 2025) indicates scale.'
+  uptime_notes: 'A public status page exists (status.runware.ai, incident.io): "fully operational" on 2026-11-19, with Aug to Nov 2026 uptime of 99.93% for Models (Third-party Models 99.98%) and 99.90% for Serverless. There is no SLA in the Terms (Sec 18: "We cannot guarantee the Services will be available at all times"); custom SLAs are advertised for enterprise only. A USD 50M Series A (December 2025) indicates scale.'
   incidents: []
 lock_in:
   openai_compatible_api: false
   portability_notes: 'The open and community models are open-weight checkpoints that run on other
     providers or self-hosted, so they are portable. The closed Partner Models are not: they are used
     under the owner''s Model Licence and cannot be moved. Runware''s API is a proprietary unified schema
-    (OpenAI compatibility was not found in the docs), so client code is written to Runware''s shape and
+    (OpenAI compatibility is not documented), so client code is written to Runware''s shape and
     must be rewritten to move. Serverless runs your own containers, which keeps that workload portable.
     Self-hosting the same open checkpoints sidesteps the hosted data terms entirely.
 
@@ -145,68 +109,32 @@ dedicated_notes: 'Serverless compute is live, billed per second on a shared pool
 
 '
 trust_considerations:
-- 'Re-verified 2026-11-19 against Terms last updated 2026-09-29: the adverse clauses a 2026-08-06 pass
-  found (broad licence over inputs and outputs, non-confidentiality deeming) are absent. You own
-  Outputs and Runware takes no licence in them. Standing caveat: the removal is inferred from the
-  current text, never diffed side by side, because no web archive was readable.'
-- 'Marketing against binding text: the help centre says all data is on EU-based servers, while Terms
-  Sec 16 says the Services are hosted in the United States, Germany and Romania. The footer shows ISO
-  27001 and SOC 2 badges with no report behind them, and the Terms bar HIPAA-regulated use. Rely on the
-  Terms, not the marketing.'
-- 'Express confidentiality covers only privately uploaded models (Sec 2) and Serverless Customer
-  Material (Sec 4, new). Prompts and outputs on the managed Models API carry no stated duty of
-  confidence, so the code stays functional_only.'
-- 'The catalogue now includes closed Partner Models (GPT, Claude, Gemini, Kling and others). Requests
-  to them go to the model provider under that provider''s own retention terms (the ZDR docs list HeyGen
-  at 24 hours and Ideogram at 30 minutes). The earlier description of Runware as open-weight only, on its
-  own pods, is no longer accurate.'
-- 'Retention: Privacy Policy Sec 6 is still generic. Zero data retention exists but only as an
-  enterprise, sales-enabled option for a listed set of models, documented in the docs and not in the
-  Terms or Privacy Policy.'
-- 'Sub-processors: the Privacy Policy names analytics and payment tools only (Google Analytics,
-  PostHog, Meta Pixel, LinkedIn Insight Tag, Umami, Stripe). No infrastructure sub-processor list and no
-  SCC or EU-US Data Privacy Framework reference was found.'
-- 'SOC 2 and ISO 27001 are claimed badges. trust.runware.ai is a JavaScript-only page this session could
-  not read (retrieved: false). A DPA is available only through the enterprise process (help centre) and
-  was not read.'
-- 'The open and community models keep use, modification and exit in your hands, and self-hosting the
-  same checkpoints avoids the hosted data terms.'
+- "The current Terms (last updated 2026-09-29) contain no broad licence over inputs and outputs and no non-confidentiality deeming. You own Outputs and Runware takes no licence in them. "
+- "Marketing against binding text: the help centre says all data is on EU-based servers, while Terms Sec 16 says the Services are hosted in the United States, Germany and Romania. The footer shows ISO 27001 and SOC 2 badges with no report behind them, and the Terms bar HIPAA-regulated use. Rely on the Terms and not the marketing."
+- "Express confidentiality covers only privately uploaded models (Sec 2) and Serverless Customer Material (Sec 4). Prompts and outputs on the managed Models API carry no stated duty of confidence, so the code stays functional_only."
+- "The catalogue includes closed Partner Models (GPT, Claude, Gemini, Kling and others). Requests to them go to the model provider under that provider's own retention terms (the ZDR docs list HeyGen at 24 hours and Ideogram at 30 minutes). Open and community models run on Runware's own pods."
+- "Retention: Privacy Policy Sec 6 is generic. Zero data retention exists but only as an enterprise, sales-enabled option for a listed set of models, documented in the docs and not in the Terms or Privacy Policy."
+- "Sub-processors: the Privacy Policy names analytics and payment tools only (Google Analytics, PostHog, Meta Pixel, LinkedIn Insight Tag, Umami, Stripe). No infrastructure sub-processor list and no SCC or EU-US Data Privacy Framework reference exist."
+- "SOC 2 and ISO 27001 are claimed badges. trust.runware.ai is a JavaScript-only page that cannot be read (retrieved: false). A DPA is available only through the enterprise process (help centre) and is unread."
+- "The open and community models keep use, modification and exit in your hands, and self-hosting the same checkpoints avoids the hosted data terms."
 score:
   rubric_version: '1.2'
   headline: 54.4
   grade: D
   hard_flags: []
-  # The adverse-confidentiality hard flag stays lifted. The 2026-11-19 re-read of Terms last updated
-  # 2026-09-29 again finds no licence over inputs/outputs and no non-confidentiality declaration
-  # (see data_governance.confidentiality_caveats for the standing inferred-from-absence caveat).
+  # No hard flag: the current Terms carry no licence over inputs/outputs and no non-confidentiality
+  # declaration (see data_governance.confidentiality_caveats).
   dimensions:
     data_governance:
       score: 3
-      rationale: 'Re-read 2026-11-19: Terms (updated 2026-09-29) give no licence over Outputs, state "Runware
-        takes no licence in your Outputs", commit not to train on Training Data, Trained Models or
-        Serverless Customer Material, and add an express confidentiality duty for Serverless and
-        private models. Held at 3, not 4: retention on the managed API is still generic (account
-        lifetime, no numeric window), zero data retention is enterprise-only, sales-enabled and limited
-        to listed models (docs, not a contract term), closed Partner Models send prompts to the model
-        provider under its own terms, and infrastructure sub-processors are not disclosed. This is the
-        anchor-3 pattern (no training, ZDR available with caveats, third-party routing under other terms).
-
-        '
+      rationale: 'The Terms (updated 2026-09-29) give no licence over Outputs, state "Runware takes no licence in your Outputs", commit not to train on Training Data, Trained Models or Serverless Customer Material, and add an express confidentiality duty for Serverless and private models. The score is 3 and not 4. Retention on the managed API is generic (account lifetime, no numeric window). Zero data retention is enterprise-only, sales-enabled and limited to listed models (docs, not a contract term). Closed Partner Models send prompts to the model provider under its own terms, and infrastructure sub-processors are not disclosed. This is the anchor-3 pattern (no training, ZDR available with caveats, third-party routing under other terms).'
       evidence_refs:
       - ev-terms-2026-11
       - ev-privacy-2026-11
       - ev-docs-zdr
     compliance:
       score: 2
-      rationale: 'CHANGED 2026-11-19 from 1: the help centre states a DPA is available through the
-        enterprise agreement process, and the SOC 2 and ISO 27001 footer badges are self-asserted claims,
-        which meets the score-2 anchor (a DPA is available and certifications are self-attested, with no
-        completed independent audit readable). Held at 2: the DPA text was not read and is not public
-        (runware.ai/dpa returns 404), no SOC 2 or ISO report, number, issuer or date is published,
-        trust.runware.ai is JavaScript-only and unreadable here, the Privacy Policy names no SCCs or DPF,
-        and the Terms bar HIPAA-regulated use.
-
-        '
+      rationale: "The help centre states a DPA is available through the enterprise agreement process, and the SOC 2 and ISO 27001 footer badges are self-asserted claims. That meets the score-2 anchor (a DPA is available and certifications are self-attested, with no completed independent audit readable). The score stays at 2. The DPA text is unread and not public (runware.ai/dpa returns 404), no SOC 2 or ISO report, number, issuer or date is published, trust.runware.ai is JavaScript-only and unreadable, the Privacy Policy names no SCCs or DPF, and the Terms bar HIPAA-regulated use."
       evidence_refs:
       - ev-help-status
       - ev-trust-2026-11
@@ -214,61 +142,31 @@ score:
       - ev-terms-2026-11
     residency:
       score: 2
-      rationale: 'Terms Sec 16 (binding, 2026-11-19) say the Services are hosted in the United States,
-        Germany and Romania, so an EU location exists, but there is no customer-selectable region, no
-        contractual pinning and no documented data boundary. The help-centre claim of EU-only storage is
-        contradicted by the Terms. The binding entity is Runware Ltd (UK), and US CLOUD Act reach is not
-        addressed (hosting is partly US). Held at 2: EU region offered for some workloads without
-        pinning guarantees.
-
-        '
+      rationale: "Terms Sec 16 (binding) say the Services are hosted in the United States, Germany and Romania, so an EU location exists, but there is no customer-selectable region, no contractual pinning and no documented data boundary. The Terms contradict the help-centre claim of EU-only storage. The binding entity is Runware Ltd (UK), and US CLOUD Act reach is not addressed (hosting is partly US). The score is 2: EU region offered for some workloads without pinning guarantees."
       evidence_refs:
       - ev-terms-2026-11
       - ev-help-status
     security:
       score: 3
-      rationale: 'A responsible-disclosure programme (not a public bug bounty) with safe harbour and a
-        5-business-day acknowledgement target, the Terms'' Serverless workload-security and scanning
-        clause, and enterprise SSO/SAML and configurable MFA (footer, marketing) support a documented
-        posture. Held at 3 absent a readable attestation report or an independent penetration test.
-
-        '
+      rationale: "A responsible-disclosure programme (not a public bug bounty) with safe harbour and a 5-business-day acknowledgement target, the Terms' Serverless workload-security and scanning clause, and enterprise SSO/SAML and configurable MFA (footer, marketing) support a documented posture. The score is 3 because no readable attestation report or independent penetration test exists."
       evidence_refs:
       - ev-help-status
       - ev-terms-2026-11
     reliability:
       score: 3
-      rationale: 'CHANGED 2026-11-19 from 2: a public status page exists (status.runware.ai, incident.io),
-        showing per-component uptime for Aug to Nov 2026 (API 100%, Models 99.93%, Serverless 99.90%) and
-        a "fully operational" banner. Earlier passes recorded no status page; it is linked from every page
-        footer. Meets the score-3 anchor (public status page, operational record). Held at 3 because there
-        is no SLA in the Terms (Sec 18 disclaims availability), no service credits and no multi-region
-        failover documentation.
-
-        '
+      rationale: 'A public status page exists (status.runware.ai, incident.io), showing per-component uptime for Aug to Nov 2026 (API 100%, Models 99.93%, Serverless 99.90%) and a "fully operational" banner. It is linked from every page footer. That meets the score-3 anchor (public status page, operational record). The score is 3 because there is no SLA in the Terms (Sec 18 disclaims availability), no service credits and no multi-region failover documentation.'
       evidence_refs:
       - ev-help-status
       - ev-terms-2026-11
     transparency_lockin:
       score: 3
-      rationale: 'CHANGED 2026-11-19 from 4: the catalogue is no longer open-weight only. It includes closed
-        Partner Models used under the owner''s licence and forwarded to the model provider, the API is a
-        proprietary schema (OpenAI compatibility not found in the docs), and infrastructure sub-processors
-        are not disclosed. The open and community models stay portable and Serverless runs your own
-        containers, so exit remains workable. Meets the score-3 anchor (open models, portable) but not the
-        score-4 bar of transparent routing and a documented exit path.
-
-        '
+      rationale: "The catalogue is not open-weight only. It includes closed Partner Models used under the owner's licence and forwarded to the model provider, the API is a proprietary schema (OpenAI compatibility is not documented), and infrastructure sub-processors are not disclosed. The open and community models stay portable and Serverless runs your own containers, so exit remains workable. This meets the score-3 anchor (open models, portable) but not the score-4 bar of transparent routing and a documented exit path."
       evidence_refs:
       - ev-pricing-2026-11
       - ev-docs-zdr
     cost:
       score: 4
-      rationale: 'Pay-as-you-go published rates for 420 models plus per-second serverless GPU rates with
-        reserved starting prices, and low cost is a core part of the positioning (read 2026-11-19). Held below
-        5 because no independent cost benchmark was run and community models carry no public price.
-
-        '
+      rationale: "Pay-as-you-go published rates for 420 models plus per-second serverless GPU rates with reserved starting prices, and low cost is a core part of the positioning. The score is below 5 because no independent cost benchmark exists and community models carry no public price."
       evidence_refs:
       - ev-pricing-2026-11
 
@@ -283,14 +181,14 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-terms-2026-11, ev-privacy-2026-11, ev-docs-zdr]
-        summary: "Re-read 2026-11-19 (Terms updated 2026-09-29): no training on Training Data, Trained Models or Serverless Customer Material, and the docs say API data is never used to train. Retention on the managed API is still generic (Privacy Policy Sec 6, account lifetime, no numeric window); output URLs live 7 days. Zero data retention exists only as an enterprise, sales-enabled option for a listed set of models, and closed partner models fall under the model provider's own retention terms."
+        summary: "Terms updated 2026-09-29: no training on Training Data, Trained Models or Serverless Customer Material, and the docs say API data is never used to train. Retention on the managed API is generic (Privacy Policy Sec 6, account lifetime, no numeric window); output URLs live 7 days. Zero data retention exists only as an enterprise, sales-enabled option for a listed set of models, and closed partner models fall under the model provider's own retention terms."
       - key: data-ownership
         title: "Data & IP ownership"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-terms-2026-11]
-        summary: "Per the Terms last updated 2026-09-29 (re-read in full), you own Outputs and Runware takes no licence in them; Trained Models and Serverless Customer Material are also yours. The adverse licence and non-confidentiality clauses of the 2026-08 pass are absent. Express confidentiality covers private models (Sec 2) and Serverless Customer Material (Sec 4), not ordinary Models API prompts. Caveat: the removal is inferred from current-text absence, never diffed, because no web archive was readable."
+        summary: "Per the Terms last updated 2026-09-29, you own Outputs and Runware takes no licence in them; Trained Models and Serverless Customer Material are also yours. The Terms contain no broad licence over inputs and outputs and no non-confidentiality declaration. Express confidentiality covers private models (Sec 2) and Serverless Customer Material (Sec 4), not ordinary Models API prompts. "
       - key: residency
         title: "Data residency & jurisdiction"
         doc_type: reference
@@ -318,7 +216,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-pricing-2026-11]
-        summary: "Pay-as-you-go published rates for 420 models (image, video, audio, text, 3D), per-second serverless GPU rates from L40s to B300 with reserved starting prices, and $2 free credit for business sign-ups; enterprise plans add custom terms. Read 2026-11-19."
+        summary: "Pay-as-you-go published rates for 420 models (image, video, audio, text, 3D), per-second serverless GPU rates from L40s to B300 with reserved starting prices, and $2 free credit for business sign-ups; enterprise plans add custom terms."
       - key: reliability
         title: "Reliability posture"
         doc_type: reference
@@ -336,7 +234,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-pricing-2026-11, ev-docs-zdr]
-        summary: "One unified API addresses the catalogue behind a single schema (the Sonic Inference Engine orchestration layer), plus a Serverless product for your own code and containers. OpenAI compatibility was not found in the docs, so integrate against Runware's own API shape and take endpoint and SDK specifics from the developer docs."
+        summary: "One unified API addresses the catalogue behind a single schema (the Sonic Inference Engine orchestration layer), plus a Serverless product for your own code and containers. OpenAI compatibility is not documented, so integrate against Runware's own API shape and take endpoint and SDK specifics from the developer docs."
       - key: authentication
         title: "Authentication & account setup"
         doc_type: reference
@@ -348,7 +246,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-terms-2026-11, ev-help-status]
-        summary: "Terms Sec 16 name hosting in the United States, Germany and Romania, and the footer advertises 'EU & US' residency, but no contractual region pinning was found and the binding entity is UK. The Serverless page shows eu-west and eu-central region choices in a product mock-up, which is not a contract term. Confirm any pinning guarantee directly before relying on EU residency."
+        summary: "Terms Sec 16 name hosting in the United States, Germany and Romania, and the footer advertises 'EU & US' residency, but no contractual region pinning exists and the binding entity is UK. The Serverless page shows eu-west and eu-central region choices in a product mock-up, which is not a contract term. Confirm any pinning guarantee directly before relying on EU residency."
       - key: portability
         title: "Portability & exit"
         doc_type: explanation
@@ -371,7 +269,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-pricing-2026-11, ev-docs-zdr]
-        summary: "A large mixed catalogue across image, video, audio, language and 3D: open-weight and community models (registry 400K+, 420 with published rates on 2026-11-19) plus closed Partner Models licensed through the model owner (GPT, Claude, Gemini, Kling and others), all behind one API. Per-model terms follow each Model Licence."
+        summary: "A large mixed catalogue across image, video, audio, language and 3D: open-weight and community models (registry 400K+, 420 with published rates) plus closed Partner Models licensed through the model owner (GPT, Claude, Gemini, Kling and others), all behind one API. Per-model terms follow each Model Licence."
       - key: features
         title: "Inference features"
         doc_type: reference
@@ -418,167 +316,103 @@ documentation:
 ownership:
   level: partial
   factors:
-    use_modify:   { level: moderate, rationale: "CHANGED 2026-11-19 from strong: the open and community models are open-weight and portable, and Serverless runs your own containers, but the catalogue now also holds closed Partner Models used under the owner's licence, and the Terms leave each model's commercial-use terms to its Model Licence, which Runware says it does not vet." }
+    use_modify:   { level: moderate, rationale: "The open and community models are open-weight and portable, and Serverless runs your own containers. The catalogue also holds closed Partner Models used under the owner's licence, and the Terms leave each model's commercial-use terms to its Model Licence, which Runware says it does not vet." }
       # grounded in: ev-terms-2026-11 (Sec 2 Model Licences), ev-pricing-2026-11, ev-docs-zdr (partner providers)
-    transparency: { level: moderate, rationale: "The Terms (updated 2026-09-29) and Privacy Policy are published, legible and were re-read in full on 2026-11-19. Held at moderate rather than strong: the DPA is enterprise-only and unread, no infrastructure sub-processor list exists, SOC 2 and ISO 27001 are badges with no report, trust.runware.ai could not be read, and the confidentiality-clause correction rests on inferred current-text absence rather than a verbatim diff." }
+    transparency: { level: moderate, rationale: "The Terms (updated 2026-09-29) and Privacy Policy are published and legible. The level is moderate and not strong. The DPA is enterprise-only and unread, and no infrastructure sub-processor list exists. SOC 2 and ISO 27001 are badges with no report, and trust.runware.ai cannot be read. " }
       # grounded in: ev-terms-2026-11, ev-privacy-2026-11 (retrieved:true); ev-help-status (partial); ev-trust-2026-11 (retrieved:false)
     reliability:  { level: moderate, rationale: "A public status page shows 99.90% to 100% uptime for Aug to Nov 2026, but the Terms disclaim availability (Sec 18), publish no SLA or service credits, and no independent attestation or failover documentation exists." }
       # grounded in: ev-help-status (status page), ev-terms-2026-11 (Sec 18)
-    data_control: { level: moderate, rationale: "The Terms give you ownership of Outputs with no licence taken, commit to no training, and add express confidentiality for private models and Serverless. Held at moderate, not strong: managed-API retention is generic with no numeric window, ZDR is enterprise-only and covers listed models, closed Partner Models send prompts to the model provider, hosting is partly US with no region pinning, and infrastructure sub-processors are undisclosed." }
+    data_control: { level: moderate, rationale: "The Terms give you ownership of Outputs with no licence taken, commit to no training, and add express confidentiality for private models and Serverless. The level is moderate and not strong. Managed-API retention is generic with no numeric window, and ZDR is enterprise-only and covers listed models. Closed Partner Models send prompts to the model provider, hosting is partly US with no region pinning, and infrastructure sub-processors are undisclosed." }
       # grounded in: ev-terms-2026-11, ev-privacy-2026-11, ev-docs-zdr (all retrieved:true)
-  verdict: "You partly own workloads here. The models you choose to run from the open-weight set are yours to move or self-host, and the current binding Terms (updated 2026-09-29) give you the Outputs, take no licence over your inputs or outputs, and commit not to train on your training data or serverless workloads. That is a reversal of the 2026-08 finding, and it rests on current-text absence of the old clauses, not a verbatim diff. What keeps this partial: retention on the managed API is generic, zero retention is an enterprise add-on for listed models, closed partner models pass your prompts to their own providers, the Terms put hosting partly in the United States, and the SOC 2 and ISO 27001 claims have no report. Marketing claims of EU-only storage are contradicted by the Terms. Use the open-weight route for sensitive data, and request the DPA and attestation reports before regulated use."
+  verdict: "You partly own workloads here. The models you choose to run from the open-weight set are yours to move or self-host. The current binding Terms (updated 2026-09-29) give you the Outputs, take no licence over your inputs or outputs, and commit not to train on your training data or serverless workloads. That conclusion rests on the absence of the older adverse clauses in the current text, since no verbatim diff exists. Four things keep the level partial. Retention on the managed API is generic, and zero retention is an enterprise add-on for listed models. Closed partner models pass your prompts to their own providers. The Terms put hosting partly in the United States. The SOC 2 and ISO 27001 claims have no report. Marketing claims of EU-only storage are contradicted by the Terms. Use the open-weight route for sensitive data, and request the DPA and attestation reports before regulated use."
 
 evidence:
 - id: ev-terms
-  claim: 'HISTORICAL, superseded by ev-terms-2026-11 (Runware Terms of Service as read 2026-07-26 and re-read 2026-08-06; these clauses are absent from the current text): the customer owns the
-    Generations (outputs) but grants Runware a worldwide, perpetual, transferable licence over
-    inputs and outputs; the Terms reference "storing training data and models per our pricing
-    schedule"; UK governing law and London arbitration; termination at Runware''s sole discretion;
-    data deleted on request.'
+  claim: 'Replaced by ev-terms-2026-11. The July and August 2026 versions of the Terms let the customer own the Generations (outputs) but granted Runware a worldwide, perpetual, transferable licence over inputs and outputs. It referenced "storing training data and models per our pricing schedule", UK governing law and London arbitration, termination at Runware''s sole discretion, and data deleted on request. The current text does not contain the licence.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://runware.ai/terms
   date: '2026-07-26'
 - id: ev-privacy
-  claim: 'Runware Privacy Policy (Runware Ltd, UK; read 2026-07-26, superseded by ev-privacy-2026-11 which found the same Sec 6 retention text): generic retention ("as long as
-    necessary" / account life) with no auto-purge or opt-in-storage clause; training use not
-    addressed; sub-processors named are only Stripe and Google Analytics; GDPR/UK GDPR referenced
-    without naming SCCs or the EU-US Data Privacy Framework.'
+  claim: 'Replaced by ev-privacy-2026-11, which carries the same Sec 6 retention text. Runware Privacy Policy (Runware Ltd, UK): generic retention ("as long as necessary" / account life) with no auto-purge or opt-in-storage clause. Training use is not addressed. The sub-processors named are only Stripe and Google Analytics. GDPR/UK GDPR is referenced without naming SCCs or the EU-US Data Privacy Framework.'
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://runware.ai/privacy
   date: '2026-07-26'
 - id: ev-trust
-  claim: 'Runware Trust page (read 2026-07-26, partial): "Data residency EU & US" badge with no
-    contractual region-pinning document located; SOC 2 and ISO 27001 shown as badges only with no
-    readable certificate or report; a separate security-disclosure page for vulnerability reporting.
-    US CLOUD Act not addressed. No public DPA located (runware.ai/dpa and /data-processing-agreement
-    both 404).'
+  claim: 'Runware Trust page (partial read): "Data residency EU & US" badge with no contractual region-pinning document. SOC 2 and ISO 27001 are shown as badges only, with no readable certificate or report. A separate security-disclosure page covers vulnerability reporting. US CLOUD Act not addressed. No public DPA (runware.ai/dpa and /data-processing-agreement both 404).'
   source_type: publisher
   doc_type: security
   retrieved: false
   url: https://runware.ai/trust
   date: '2026-07-26'
 - id: ev-pricing
-  claim: 'Runware pricing page (read 2026-07-26): pay-as-you-go usage-based pricing with
-    representative rates; enterprise plans add dedicated capacity and custom terms.'
+  claim: "Runware pricing page: pay-as-you-go usage-based pricing with representative rates; enterprise plans add dedicated capacity and custom terms."
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://runware.ai/pricing
   date: '2026-07-26'
 - id: ev-home
-  claim: 'Runware website ("One API for all AI"): a unified API over a large catalogue of open-weight
-    Hugging Face models run on Runware''s own Sonic Inference Engine; low usage-based pricing;
-    markets a US HQ and states data belongs to the customer (marketing framing not supported by the
-    binding Terms/Privacy read this session).'
+  claim: 'Runware website ("One API for all AI"): a unified API over a large catalogue of open-weight Hugging Face models run on Runware''s own Sonic Inference Engine; low usage-based pricing; markets a US HQ and states data belongs to the customer (marketing framing).'
   source_type: publisher
   doc_type: marketing
   retrieved: false
   url: https://runware.ai/
   date: '2026-07-26'
 - id: ev-series-a
-  claim: 'Independent press (SiliconANGLE and others, Dec 2025): Runware raised a USD 50M Series A
-    (Speedinvest and others) to build "one API for all AI"; markets a San Francisco HQ with
-    operations in London and 10+ countries (the binding legal entity is Runware Ltd, UK); inference
-    pods in the US and central Europe; aims to make the broad Hugging Face open-model catalogue
-    addressable behind one schema.'
+  claim: 'Press coverage (SiliconANGLE and others, Dec 2025): Runware raised a USD 50M Series A (Speedinvest and others) to build "one API for all AI". It markets a San Francisco HQ with operations in London and 10+ countries (the binding legal entity is Runware Ltd, UK). It runs inference pods in the US and central Europe and aims to make the broad Hugging Face open-model catalogue addressable behind one schema.'
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://siliconangle.com/2025/12/11/ai-inference-startup-runware-raises-50m-make-ai-run-faster/
   date: '2026-07-26'
 - id: ev-terms-2026-09
-  claim: 'HISTORICAL, superseded by ev-terms-2026-11. Runware Terms of Service, version independently browser-read 2026-09-21 ( two
-    fetches including a targeted negative search for the prior adverse clauses). That 28-section
-    text contains NO Submissions/Contributions section, NO IP-assignment of user content to Runware,
-    NO "unrestricted use/dissemination without acknowledgment or compensation" clause, and NO
-    non-confidentiality disclaimer. Instead, near-verbatim: Sec 2 - "As between you and Runware, you
-    own your Outputs... Runware asserts no ownership of, and claims no intellectual property rights
-    in, your Outputs"; Sec 2 Private Model Protection - "We agree to treat all such materials as
-    confidential" and "not to disclose, distribute, or otherwise make available these models to any
-    third party without the explicit written consent of the user"; Sec 4 requires the user to protect
-    Runware''s own proprietary information; Sec 3 "Model Training and Fine-Tuning" - "Runware will not
-    use your Training Data or Trained Models to train, fine-tune, or develop Runware''s own models or
-    those of any third party." The only user-granted licence (Sec 2) is name/logo for marketing
-    (benign). LOAD-BEARING CAVEAT: web.archive.org, archive.ph and timetravel.mementoweb were all
-    proxy-blocked this pass, so the August-2026 snapshot could not be read - the removal of the old
-    adverse clauses is inferred from their absence in the current text plus an evident deliberate
-    rewrite (new defined terms, a new Sec 3), not a verbatim side-by-side quote.'
+  claim: 'Replaced by ev-terms-2026-11. The 28-section Terms text of 2026-09-21 contains no Submissions/Contributions section, no IP-assignment of user content to Runware, no "unrestricted use/dissemination without acknowledgment or compensation" clause, and no non-confidentiality disclaimer. Sec 2, near-verbatim: "As between you and Runware, you own your Outputs... Runware asserts no ownership of, and claims no intellectual property rights in, your Outputs". Sec 2 Private Model Protection: "We agree to treat all such materials as confidential" and "not to disclose, distribute, or otherwise make available these models to any third party without the explicit written consent of the user". Sec 4 requires the user to protect Runware''s own proprietary information. Sec 3 "Model Training and Fine-Tuning": "Runware will not use your Training Data or Trained Models to train, fine-tune, or develop Runware''s own models or those of any third party." The only user-granted licence (Sec 2) is name/logo for marketing. No archived copy of the August 2026 Terms is readable, so the removal of the older adverse clauses is inferred from their absence in the current text, which has new defined terms and a new Sec 3.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://runware.ai/terms
   date: '2026-09-21'
 - id: ev-terms-2026-11
-  claim: 'Runware Terms of Service, "Last updated: 29 September 2026", re-read in full 2026-11-19 (server-rendered
-    page, 29 sections). Sec 2: "you own your Outputs ... Runware asserts no ownership of, and claims no
-    intellectual property rights in, your Outputs" and "Runware takes no licence in your Outputs";
-    Partner Models, Open-Source Models and Community Models are defined and each Model Licence governs;
-    private uploaded models are treated as confidential "whether or not an NDA has been signed". Sec 3:
-    "Runware will not use your Training Data or Trained Models to train, fine-tune, or develop Runware''s
-    own models or those of any third party." Sec 4 (Serverless): Customer Material is yours, not used for
-    training, treated as confidential, deleted within 30 days of account closure. Sec 1: Services not
-    tailored to HIPAA or FISMA, "you may not use the Services" if those laws apply. Sec 16: "the Services are
-    hosted in the United States, Germany and Romania". Sec 17: 30 days'' written notice before ending paid
-    access. Sec 18: no availability guarantee. Sec 19 and 20: English law, arbitration seated in London.
-    No Submissions or Contributions licence and no non-confidentiality declaration appear. Caveat: the
-    removal of the 2026-08 clauses is inferred, not diffed (no web archive was readable).'
+  claim: 'Runware Terms of Service, "Last updated: 29 September 2026" (server-rendered page, 29 sections). Sec 2: "you own your Outputs ... Runware asserts no ownership of, and claims no intellectual property rights in, your Outputs" and "Runware takes no licence in your Outputs". Partner Models, Open-Source Models and Community Models are defined and each Model Licence governs. Private uploaded models are treated as confidential "whether or not an NDA has been signed". Sec 3: "Runware will not use your Training Data or Trained Models to train, fine-tune, or develop Runware''s own models or those of any third party". Sec 4 (Serverless): Customer Material is yours, not used for training, treated as confidential, and deleted within 30 days of account closure. Sec 1: Services not tailored to HIPAA or FISMA, "you may not use the Services" if those laws apply. Sec 16: "the Services are hosted in the United States, Germany and Romania". Sec 17: 30 days'' written notice before ending paid access. Sec 18: no availability guarantee. Sec 19 and 20: English law, arbitration seated in London. No Submissions or Contributions licence and no non-confidentiality declaration appear. No archived copy of the earlier Terms is readable, so the removal of the 2026-08 clauses is inferred from their absence.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://runware.ai/terms
   date: '2026-11-19'
 - id: ev-privacy-2026-11
-  claim: 'Runware Privacy Policy re-read 2026-11-19: Sec 6 unchanged (data kept as long as necessary and no longer
-    than the account lifetime, no numeric window or auto-purge, prompts and training not addressed). Third
-    parties named are analytics and payment tools only (Google Analytics, PostHog, Meta Pixel, LinkedIn
-    Insight Tag, Umami, Stripe); no infrastructure sub-processor list, SCC or DPF reference.'
+  claim: "Runware Privacy Policy: Sec 6 keeps data as long as necessary and no longer than the account lifetime, with no numeric window or auto-purge; prompts and training are not addressed. Third parties named are analytics and payment tools only (Google Analytics, PostHog, Meta Pixel, LinkedIn Insight Tag, Umami, Stripe). It has no infrastructure sub-processor list and no SCC or DPF reference."
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://runware.ai/privacy
   date: '2026-11-19'
 - id: ev-docs-zdr
-  claim: 'Runware docs, Zero Data Retention page (2026-11-19): ZDR is an organisation-level option for enterprise
-    accounts, enabled by Runware on request, covering Runware-hosted and uploaded models, models from eight
-    providers with a ZDR agreement and 12 named text models; other models are not covered. Without ZDR,
-    output URLs last 7 days. Provider terms apply when a provider runs the model (HeyGen 24 hours, Ideogram
-    30 minutes). "Runware never uses data sent through the API to train or improve models". Documentation,
-    not a binding contract term.'
+  claim: 'Runware docs, Zero Data Retention page. ZDR is an organisation-level option for enterprise accounts, enabled by Runware on request. It covers Runware-hosted and uploaded models, models from eight providers with a ZDR agreement and 12 named text models; other models are not covered. Without ZDR, output URLs last 7 days. Provider terms apply when a provider runs the model (HeyGen 24 hours, Ideogram 30 minutes). "Runware never uses data sent through the API to train or improve models". This is documentation and not a binding contract term.'
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://runware.ai/docs/models-api/zero-data-retention
   date: '2026-11-19'
 - id: ev-help-status
-  claim: 'Help centre and status page (2026-11-19). DPA: available "as part of our enterprise agreement process for
-    eligible B2B customers"; public DPA URLs return 404. Storage: help article says "All data ... is stored on
-    secure, EU-based servers", contradicted by Terms Sec 16. Status: status.runware.ai (incident.io) shows
-    "fully operational" and Aug to Nov 2026 uptime of Models 99.93% (Third-party Models 99.98%) and Serverless
-    99.90%. Security disclosure page: responsible-disclosure programme, no public bug bounty.'
+  claim: 'Help centre and status page. DPA: available "as part of our enterprise agreement process for eligible B2B customers"; public DPA URLs return 404. Storage: help article says "All data ... is stored on secure, EU-based servers", contradicted by Terms Sec 16. Status: status.runware.ai (incident.io) shows "fully operational" and Aug to Nov 2026 uptime of Models 99.93% (Third-party Models 99.98%) and Serverless 99.90%. Security disclosure page: responsible-disclosure programme, no public bug bounty.'
   source_type: publisher
   doc_type: security
   retrieved: true
   url: https://status.runware.ai/
   date: '2026-11-19'
 - id: ev-trust-2026-11
-  claim: 'runware.ai/trust is now a Trust and Safety abuse-report form with no compliance content. trust.runware.ai
-    returns a JavaScript-only single-page-app shell that this session could not render, so no certificate,
-    report or sub-processor list was read. The footer badges "ISO 27001 Certified", "SOC 2 Certified" and "GDPR
-    Compliant" are marketing with no document behind them.'
+  claim: 'runware.ai/trust is a Trust and Safety abuse-report form with no compliance content. trust.runware.ai returns a JavaScript-only single-page-app shell that cannot be rendered, so no certificate, report or sub-processor list is readable. The footer badges "ISO 27001 Certified", "SOC 2 Certified" and "GDPR Compliant" are marketing with no document behind them.'
   source_type: publisher
   doc_type: security
   retrieved: false
   url: https://trust.runware.ai/
   date: '2026-11-19'
 - id: ev-pricing-2026-11
-  claim: 'Runware pricing page (2026-11-19): pay-as-you-go rate sheet of 420 priced models (206 image, 114 video, 21
-    audio, 66 text, 7 3D) including closed partner models (GPT, Claude, Gemini and others) beside open ones;
-    registry 400K+; serverless GPU billed per second (H100 $0.001097 per second) with reserved starting rates;
-    $2 free credit for business sign-ups.'
+  claim: "Runware pricing page: pay-as-you-go rate sheet of 420 priced models (206 image, 114 video, 21 audio, 66 text, 7 3D), including closed partner models (GPT, Claude, Gemini and others) beside open ones. The registry holds 400K+ models. Serverless GPU is billed per second (H100 $0.001097 per second) with reserved starting rates. Business sign-ups get $2 free credit."
   source_type: publisher
   doc_type: marketing
   retrieved: true

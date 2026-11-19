@@ -1,7 +1,6 @@
 # Use - NVIDIA Nemotron 3 (Super + Nano)
 
-_What can it do and how do we use it? Capabilities, context window, languages and tool use live
-here. Chat template and structured output are recorded as gaps in entry.yaml._
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities
@@ -13,9 +12,7 @@ built for efficiency at long context.
 <!-- item: context-window -->
 ## Context window & long-context behaviour
 
-Both support **up to 1M tokens** (Nano defaults to 256k in the Hugging Face config). OneHill has not
-independently measured effective long-context recall, so treat the maximum as the architectural
-ceiling rather than a verified working depth.
+Both support up to 1M tokens (Nano defaults to 256k in the Hugging Face config). OneHill has not measured effective long-context recall, so the maximum is an architectural ceiling and not a verified working depth.
 
 <!-- item: languages -->
 ## Language coverage

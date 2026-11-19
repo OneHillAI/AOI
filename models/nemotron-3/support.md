@@ -1,7 +1,6 @@
 # Support - NVIDIA Nemotron 3 (Super + Nano)
 
-_How do we keep it running and get help? Troubleshooting, versioning, security disclosure, channels
-and known issues live here. Deprecation policy is recorded as a gap in entry.yaml._
+_Troubleshooting, versions, security disclosure, channels and deprecation._
 
 <!-- item: troubleshooting -->
 ## Common problems & fixes
@@ -9,8 +8,7 @@ and known issues live here. Deprecation policy is recorded as a gap in entry.yam
 Aggregated pitfalls for a hybrid Mamba-Transformer MoE pair: kernel-to-engine version mismatches for
 the Mamba-2 and MoE layers, MoE sharding and multi-GPU memory for Super, NVFP4/FP8
 quantization-engine compatibility, and revision drift on download. Match engine and kernel versions
-to each variant's documented stack, pin the revision, and verify checksums. This is not an exhaustive
-catalogue.
+to each variant's documented stack, pin the revision, and verify checksums. The list is not exhaustive.
 
 <!-- item: release-versioning -->
 ## Versions, changelog & cadence
@@ -23,8 +21,7 @@ anchor, so pin it.
 ## Security / vulnerability disclosure
 
 NVIDIA maintains a general corporate product-security reporting path (`nvidia.com/en-us/security/`).
-A model-specific vulnerability-disclosure policy for Nemotron was not confirmed this pass, so treat
-model-level issue reporting as going through the Hugging Face and GitHub org presence.
+A model-specific vulnerability-disclosure policy for Nemotron is unconfirmed, so model-level issue reporting goes through the Hugging Face and GitHub org presence.
 
 <!-- item: channels -->
 ## Community & support channels
@@ -37,5 +34,4 @@ repository for red-team and safety-tooling questions.
 ## Tracked known issues
 
 From the cards, recipes and licence: the partial-corpus non-reproducibility and the absence of a
-published model-level safety evaluation are the recurring caveats. Track these against your own
-control stack and red-team rather than a published issue tracker.
+published model-level safety evaluation are the recurring caveats. No issue tracker is published, so track them against your own control stack and red-team.

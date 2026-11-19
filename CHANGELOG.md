@@ -53,6 +53,23 @@ Initial public foundation (v0.1).
 
 ### Changed
 
+- Rewrote the reader-facing text of all 39 entries in plain, conclusive prose: the four dossier
+  pages, summaries, rationales, verdicts and every evidence line. Evidence lines state what a source
+  establishes, with no record of how or when it was read. Narration of what was done or changed,
+  AI phrasing, "not X but Y" padding, bold lead-in lists, rhetorical questions and sentences over 42
+  words are removed. Every dossier page now opens with one plain line per page type, and the model
+  templates carry the same lines. No score, rating, ownership level, identifier, link or date changed,
+  and no number, quote or clause reference was lost.
+- Corrected facts found during the review. The DeepSeek R1 Distill Qwen models are released under
+  DeepSeek's MIT licence (LICENSE file and card metadata) over Apache-2.0 Qwen2.5 bases, not under
+  Apache-2.0, and the patent-grant reasoning that rested on Apache-2.0 is removed. The gpt-oss usage
+  policy is two sentences, not one. The Berget region and zero-retention documentation item now
+  matches the DPA (EEA, no data-centre choice for serverless). The Groq retirement history names the
+  Compound model again.
+- Rewrote `models/README.md`, `inference-providers/README.md` and `hosting-providers/README.md` as
+  short pages that point to the site for the ranked list; the hand-written tables were out of date
+  (ten models, six providers, folders that no longer exist). Removed `models/qwen/README.md`, a
+  single-page dossier that duplicated the four domain pages and contradicted the entry.
 - Freshness re-verification of all 33 entries (21 models, 9 inference providers, 3 hosting providers; 2026-11-19), 59 days after the previous sweep and
   past the 30-day fast SLA, each re-read against current primary documents (raw licence files,
   model cards, live Terms, DPAs and provider catalogues) rather than date-bumped. `validate.py`

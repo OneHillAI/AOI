@@ -1,6 +1,6 @@
 # Implement - MiniCPM5-1B
 
-_How do we deploy and run it? Install, hardware, serving, quantisation, fine-tuning, and the safe-deployment controls and Deployment Ceiling (**T1, conditional**)._
+_Installation, hardware, serving, safe-deployment controls, quantisation, fine-tuning and integration._
 
 <!-- item: install -->
 ## Install & run
@@ -18,23 +18,23 @@ For laptops and phones use the official GGUF with llama.cpp (the GGUF card docum
 <!-- item: hardware -->
 ## Hardware & VRAM requirements
 
-The publisher gives file sizes, not device benchmarks (`ev-repo-files`, `ev-github`): BF16 safetensors 2.16 GB; GGUF F16 2.17 GB, Q8_0 1.15 GB, Q4_K_M 0.69 GB (the cookbook rounds this to 657 MB); MLX 4-bit 0.61 GB. The KV cache is small because there are only 2 key-value heads: by arithmetic from config.json (24 layers x 2 heads x 128 head dim x 2 tensors x 2 bytes), 24,576 bytes per token, about 3.2 GB at the full 131,072 tokens in 16-bit. On a small device cap the context; the cookbook's llama-server example uses `-c 8192`. No RAM, speed or battery figures for named phones or boards are published, so measure on your target.
+The publisher gives file sizes, not device benchmarks (`ev-repo-files`, `ev-github`): BF16 safetensors 2.16 GB; GGUF F16 2.17 GB, Q8_0 1.15 GB, Q4_K_M 0.69 GB (the cookbook rounds this to 657 MB); MLX 4-bit 0.61 GB. The KV cache is small because there are only 2 key-value heads. By arithmetic from config.json (24 layers x 2 heads x 128 head dim x 2 tensors x 2 bytes) it is 24,576 bytes per token, about 3.2 GB at the full 131,072 tokens in 16-bit. On a small device cap the context; the cookbook's llama-server example uses `-c 8192`. No RAM, speed or battery figures for named phones or boards are published, so measure on your target.
 
 <!-- item: serving -->
 ## Serving stacks
 
-The model is a standard `LlamaForCausalLM`, so "no custom kernels, no model-code fork" is needed (`ev-card`). The card and repository provide cookbooks for Transformers, vLLM, SGLang (recommended for tool calling), llama.cpp, Ollama, LM Studio, MLX, ArcLight, LiteRT-LM (a `.litertlm` runtime for Android, iOS, desktop and IoT) and vLLM Ascend (`ev-github`). The card also lists FlagOS multi-chip builds for Nvidia, Hygon, Metax, Iluvatar, Zhenwu, Mthreads, Kunlunxin, Ascend and ARM-v9, published under the separate FlagRelease org. The ollama.com library page for minicpm5 returned 404 on 2026-11-19; the cookbook uses a local Modelfile (`ollama create minicpm5-1b -f Modelfile`).
+The model is a standard `LlamaForCausalLM`, and the card says "no custom kernels, no model-code fork" are needed (`ev-card`). The card and repository provide cookbooks for Transformers, vLLM, SGLang (recommended for tool calling), llama.cpp, Ollama, LM Studio, MLX, ArcLight, LiteRT-LM (a `.litertlm` runtime for Android, iOS, desktop and IoT) and vLLM Ascend (`ev-github`). The card also lists FlagOS multi-chip builds for Nvidia, Hygon, Metax, Iluvatar, Zhenwu, Mthreads, Kunlunxin, Ascend and ARM-v9, published under the separate FlagRelease org. The ollama.com library page for minicpm5 does not exist (404); the cookbook uses a local Modelfile (`ollama create minicpm5-1b -f Modelfile`).
 
 <!-- item: safe-deployment -->
 ## Safe-deployment controls & Deployment Ceiling
 
-**Deployment Ceiling: T1 (internal assistant), conditional.** Humans read the output and an acceptable-use policy is yours to write, because the publisher provides none and no safety evaluation (`ev-card`). T2 and above need controls you must build:
+Deployment Ceiling: T1 (internal assistant), conditional. Humans read the output, and the deployer writes the acceptable-use policy, because the publisher provides neither a policy nor a safety evaluation (`ev-card`). T2 and above need controls the deployer must build:
 
-- Use the final MiniCPM5-1B checkpoint, not Base, for any assistant. SFT-only is a research stage.
-- Run your own safety and refusal tests in the languages you serve, and add input and output guardrails or a separate classifier. None is released with the model.
+- Use the final MiniCPM5-1B checkpoint and not Base for any assistant. SFT-only is a research stage.
+- Run safety and refusal tests in the languages served, and add input and output guardrails or a separate classifier. None is released with the model.
 - Treat tool calls as untrusted model output: parse with SGLang's `minicpm5` parser or the repo's tool parser, validate arguments and allow-list actions.
 - Pin the revision and verify the sha256. Avoid unreviewed community conversions, some of which are named "Uncensored".
-- Test long-context behaviour yourself; no long-context result is published for the 1B.
+- Test long-context behaviour, because no long-context result is published for the 1B.
 
 <!-- item: quantization -->
 ## Available quantizations
@@ -44,7 +44,7 @@ Official: GGUF in F16, Q8_0 and Q4_K_M, and an MLX 4-bit conversion (`ev-repo-fi
 <!-- item: fine-tuning -->
 ## Fine-tuning & adaptation
 
-Apache-2.0 allows fine-tuning and redistribution. The Base and SFT-only checkpoints are published alongside the final one. Cookbooks and agent skills cover TRL with PEFT (LoRA and SFT), LLaMA-Factory, ms-swift, unsloth and xtuner; the repository also has finetune scripts including an MLX trainer (`ev-card`, `ev-github`). The desk-pet demo uses LoRA persona switching. The public pretraining datasets let you continue pre-training on the published mix; the SFT dataset needs a Hub login and gate acceptance (`ev-sft-dataset`). RL and OPD are described but their pipelines are not released.
+Apache-2.0 allows fine-tuning and redistribution. The Base and SFT-only checkpoints are published alongside the final one. Cookbooks and agent skills cover TRL with PEFT (LoRA and SFT), LLaMA-Factory, ms-swift, unsloth and xtuner; the repository also has finetune scripts including an MLX trainer (`ev-card`, `ev-github`). The desk-pet demo uses LoRA persona switching. The public pretraining datasets allow continued pre-training on the published mix. The SFT dataset needs a Hub login and gate acceptance (`ev-sft-dataset`). RL and OPD are described but their pipelines are not released.
 
 <!-- item: integration -->
 ## API / OpenAI-compatible integration

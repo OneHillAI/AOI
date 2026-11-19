@@ -1,16 +1,16 @@
 # Use - MiniCPM5-1B
 
-_What can it do and how do we use it?_
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities
 
-Text in, text out (`ev-aa`, `ev-card`). One checkpoint serves a fast assistant mode and a deliberate reasoning mode, switched by `enable_thinking`. The publisher highlights code, maths, instruction following and tool use. Its figures (Thinking mode, unverified): MATH-500 91.60, LCB-v6 33.52, AIME-2026 40.42, IFEval 80.41, MMLU-Pro 48.85, tau2-Bench Telecom 79.53 (`ev-bench`). Non-thinking performance is not published. Treat these as claims until you reproduce them.
+Text in, text out (`ev-aa`, `ev-card`). One checkpoint serves a fast assistant mode and a deliberate reasoning mode, switched by `enable_thinking`. The publisher highlights code, maths, instruction following and tool use. Its figures (Thinking mode, unverified): MATH-500 91.60, LCB-v6 33.52, AIME-2026 40.42, IFEval 80.41, MMLU-Pro 48.85, tau2-Bench Telecom 79.53 (`ev-bench`). Non-thinking performance is not published. Treat these as claims until reproduced.
 
 <!-- item: context-window -->
 ## Context window & long-context behaviour
 
-131,072 tokens in config.json and the GGUF metadata, with rope_theta 5,000,000 and no rope scaling (`ev-repo-files`). The card says "native long-context support" but publishes no long-context result for the 1B (the series radar chart with a long-context axis belongs to the 2B card). For a 1B model, plan to test retrieval and instruction following at your real context lengths, and cap the context on small devices because the KV cache grows to about 3.2 GB at the full window.
+131,072 tokens in config.json and the GGUF metadata, with rope_theta 5,000,000 and no rope scaling (`ev-repo-files`). The card says "native long-context support" but publishes no long-context result for the 1B (the series radar chart with a long-context axis belongs to the 2B card). For a 1B model, test retrieval and instruction following at the real context lengths. Cap the context on small devices, because the KV cache grows to about 3.2 GB at the full window.
 
 <!-- item: chat-template -->
 ## Prompt format & chat template
@@ -20,7 +20,7 @@ The tokenizer ships `chat_template.jinja`, a ChatML-style template (`<|im_start|
 <!-- item: languages -->
 ## Language coverage
 
-English and Chinese. The card metadata lists `en` and `zh`, a Chinese README is provided, and the training datasets are English and Chinese (`ev-card`, `ev-datasets`). No other language is documented or evaluated by the publisher, and the benchmark table has no multilingual row. Community fine-tunes for other languages exist on the Hub but are not evidence of base-model capability. Treat any third language as unverified and test it.
+English and Chinese. The card metadata lists `en` and `zh`, a Chinese README is provided, and the training datasets are English and Chinese (`ev-card`, `ev-datasets`). No other language is documented or evaluated by the publisher, and the benchmark table has no multilingual row. Community fine-tunes for other languages exist on the Hub but are not evidence of base-model capability. Any third language is unverified and needs testing.
 
 <!-- item: tool-use -->
 ## Function / tool calling

@@ -1,7 +1,6 @@
 # Use - GLM-4-9B-Chat (original, glm-4 licence)
 
-_What can it do? Capabilities, context window, chat template, languages, tool use, and
-structured output live here._
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities
@@ -12,9 +11,7 @@ vintage, dated by 2026.
 <!-- item: context-window -->
 ## Context window & long-context behaviour
 
-128K on GLM-4-9B-Chat; an advertised 1M-token context on GLM-4-9B-Chat-1M (memory-intensive in
-practice). OneHill has not independently measured effective long-context recall, so treat the
-figures as declared windows.
+128K on GLM-4-9B-Chat; an advertised 1M-token context on GLM-4-9B-Chat-1M (memory-intensive). OneHill has not measured effective long-context recall, so treat the figures as declared windows.
 
 <!-- item: chat-template -->
 ## Prompt format & chat template

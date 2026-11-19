@@ -1,149 +1,153 @@
 # Implement - Mistral AI (open-weight family)
 
-_How do we deploy and run it? Install, hardware, serving, quantization, fine-tuning, and the
-safe-deployment controls & Deployment Ceiling (**T2, conditional**)._
+_Installation, hardware, serving, safe-deployment controls, quantisation, fine-tuning and integration._
 
 <!-- item: install -->
 ## Install & run
 
-Mistral checkpoints are standard safetensors on the verified `mistralai` org, and Mistral also
-ships an **official** inference library. Always pin an exact revision.
+Mistral checkpoints are standard safetensors on the verified `mistralai` org, and Mistral ships
+an official inference library. Always pin an exact revision.
 
 ```python
-# Hugging Face transformers
+# Hugging Face transformers.
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model_id = "mistralai/Mistral-Small-3.2-24B-Instruct-2506"  # pick the exact variant you assessed
-rev = "<pinned-commit-sha>"                                    # pin the revision, don't float on main
+model_id = "mistralai/Mistral-Small-3.2-24B-Instruct-2506"  # Pick the exact variant to deploy.
+rev = "<pinned-commit-sha>"                                    # Pin the revision; do not float on main.
 tok = AutoTokenizer.from_pretrained(model_id, revision=rev)
 model = AutoModelForCausalLM.from_pretrained(model_id, revision=rev)
 ```
 
 ```bash
-# Official Mistral inference library
+# Official Mistral inference library.
 pip install mistral-inference
 
-# Ollama
+# Ollama.
 ollama run mistral-small
 
-# vLLM (OpenAI-compatible server)
+# vLLM (OpenAI-compatible server).
 vllm serve mistralai/Mistral-Small-3.2-24B-Instruct-2506 --revision <sha>
 
-# llama.cpp (community GGUF)
+# llama.cpp (community GGUF).
 ./llama-cli -m mistral-small-3.2.Q4_K_M.gguf -p "Hello"
 ```
 
-Prefer safetensors; verify per-file checksums after download, and confirm the model's licence.
+Prefer safetensors, verify per-file checksums after download and confirm the model's licence.
 
 <!-- item: hardware -->
 ## Hardware & VRAM requirements
 
-- **Mistral 7B / Nemo 12B** run comfortably on a single modern GPU (a 24 GB card handles them at
-  full or near-full precision).
-- **Mistral Small 3.x (24B)** fits a 24 GB card with modest quantization.
-- **Mixtral 8x7B** benefits from more VRAM despite ~13B active params (all experts must be
-  resident); **Mixtral 8x22B** and **Mistral Large 2 (123B)** need multi-GPU or heavy
-  quantization for latency-sensitive serving.
+Mistral 7B and Nemo 12B run comfortably on a single modern GPU, and a 24 GB card handles them
+at full or near-full precision. Mistral Small 3.x (24B) fits a 24 GB card with modest
+quantization. Mixtral 8x7B needs more VRAM than its ~13B active parameters suggest, because
+all experts must be resident. Mixtral 8x22B and Mistral Large 2 (123B) need multi-GPU or heavy
+quantization for latency-sensitive serving.
 
-Size to the largest checkpoint you intend to serve, and budget extra headroom for the KV cache at
+Size for the largest checkpoint to be served, and budget extra headroom for the KV cache at
 128K context lengths.
 
 <!-- item: serving -->
 ## Serving stacks
 
-Because the checkpoints are plain safetensors with standard architectures, mainstream runtimes
-load them without custom code - and Mistral ships a first-party library:
+The checkpoints are plain safetensors with standard architectures, so mainstream runtimes load
+them without custom code, and Mistral ships a first-party library.
 
 | Stack | Use it for |
 |---|---|
-| **mistral-inference** | Mistral's official reference inference |
-| **vLLM** | High-throughput serving + OpenAI-compatible API |
-| **TGI** | Hugging Face-native production serving |
-| **llama.cpp** | CPU / edge / GGUF quantized inference |
-| **Ollama** | Local single-command runs |
-| **transformers** | Prototyping and fine-tuning |
+| mistral-inference | Mistral's official reference inference |
+| vLLM | High-throughput serving and OpenAI-compatible API |
+| TGI | Hugging Face-native production serving |
+| llama.cpp | CPU, edge and GGUF quantized inference |
+| Ollama | Local single-command runs |
+| transformers | Prototyping and fine-tuning |
 
-This breadth is a large part of why Operational Readiness scores 4; it stops short of 5 only on
-the narrower *official* quantization program.
+This breadth is a large part of why Operational Readiness scores 4. It stops short of 5 only
+on the narrower official quantization programme.
 
 <!-- item: safe-deployment -->
 ## Safe-deployment controls & Deployment Ceiling
 
-Applying the [safe-deployment playbook](../../methodology/safe-deployment-playbook.md), the
-model-specific gate rows are:
+The model-specific gate rows from the
+[safe-deployment playbook](../../methodology/safe-deployment-playbook.md) are below.
 
-- **Supply chain:** pin the exact `mistralai` revision hash and verify checksums; prefer
-  safetensors (already the default - no pickle load).
-- **Model layer:** deploy the **instruct** variant, never the base checkpoint; set conservative
+- Supply chain: pin the exact `mistralai` revision hash and verify checksums. Prefer
+  safetensors, which is already the default (no pickle load).
+- Model layer: deploy the instruct variant, never the base checkpoint, and set conservative
   decoding defaults.
-- **Input/output layers:** add input/output guardrails - the **Mistral Moderation API** (a
-  fine-tuned Ministral 8B classifier) can serve as the companion filter, since Mistral ships no
-  broadly-distributed open guard-weight; add prompt-injection defences and treat retrieved/tool
-  content as untrusted.
-- **Compliance:** confirm the per-model **licence** (Apache vs research-only MRL) before commercial
-  deployment, and archive the copyright/training-content posture in your AI-BOM.
+- Input and output layers: add input/output guardrails. The Mistral Moderation API (a
+  fine-tuned Ministral 8B classifier) can serve as the companion filter, because Mistral ships
+  no broadly distributed open guard-weight. Add prompt-injection defences and treat retrieved
+  and tool content as untrusted.
+- Compliance: confirm the per-model licence (Apache-2.0 or research-only MRL) before
+  commercial deployment, and archive the copyright and training-content posture in the AI-BOM.
 
-**Deployment Ceiling: T2 (customer-facing, human-reviewed) - conditional.** With the instruct
-variant plus input/output guardrails, the Moderation classifier and prompt-injection defences,
-Mistral reaches customer-facing, human-reviewed use. It is held at T2 rather than higher because
-safety tuning is lighter than the largest labs and there is no broad independent red-team. T3+
-(bounded autonomous) additionally needs a deterministic action-policy engine, per-action human
-approval for irreversible operations, and external guard tooling beyond what the release provides.
+Deployment Ceiling: T2 (customer-facing, human-reviewed), conditional. With the instruct
+variant, input/output guardrails, the Moderation classifier and prompt-injection defences,
+Mistral reaches customer-facing, human-reviewed use. It is held at T2 because safety tuning is
+lighter than at the largest labs and no broad independent red-team exists. T3+ (bounded
+autonomous) additionally needs a deterministic action-policy engine, per-action human approval
+for irreversible operations, and external guard tooling beyond what the release provides.
 
 <!-- item: quantization -->
 ## Available quantizations
 
-A broad **community** ecosystem of **GGUF** (llama.cpp/Ollama), **AWQ/GPTQ** and **FP8**
-quantizations circulates (bartowski, unsloth, lmstudio-community and others), and some official
-low-bit releases exist. Coverage is marked *partial* because the **first-party** quantization
-program is narrower than the largest ecosystems and much of the breadth is community-driven -
-verify the source and re-check quality before relying on a third-party quant in production.
+A broad community ecosystem of GGUF (llama.cpp, Ollama), AWQ, GPTQ and FP8 quantizations
+circulates (bartowski, unsloth, lmstudio-community and others), and some official low-bit
+releases exist. Coverage is partial because the first-party quantization programme is narrower
+than the largest ecosystems and much of the breadth is community-driven. Verify the source and
+check quality before relying on a third-party quant in production.
 
 <!-- item: fine-tuning -->
 ## Fine-tuning & adaptation
 
-For the **Apache-2.0** models, standard **SFT/LoRA/QLoRA** via `transformers` / PEFT / TRL /
-Axolotl / Unsloth on the safetensors checkpoints is the practical path, and the specialist
-variants (Codestral, Mathstral, Devstral, Pixtral) demonstrate the family's adaptability. Because
-the **pre-training data and code are not published**, continued pre-training *from scratch* is not
-reproducible - this is fine-tuning of released weights rather than full-pipeline reproduction. Note the
-EU AI Act provider implications of placing a derivative on the market (see Assess), and remember
-that an **MRL** model may not be fine-tuned for commercial deployment without a negotiated licence.
+For the Apache-2.0 models, standard SFT, LoRA and QLoRA via `transformers`, PEFT, TRL, Axolotl
+or Unsloth on the safetensors checkpoints is the practical path. The specialist variants
+(Codestral, Mathstral, Devstral, Pixtral) show the family's adaptability.
+
+Pre-training data and code are not published, so continued pre-training from scratch cannot be
+reproduced. Only the released weights can be fine-tuned. Placing a derivative on the market has
+EU AI Act provider implications (see Assess). An MRL model may not be fine-tuned for commercial
+deployment without a negotiated licence.
 
 <!-- item: integration -->
 ## API / OpenAI-compatible integration
 
-Serve Mistral behind **vLLM's OpenAI-compatible `/v1` server** (or TGI/Ollama endpoints) for a
-drop-in integration with existing OpenAI-client code, or use Mistral's own hosted API (**Mistral Studio**, formerly La Plateforme):
+Serve Mistral behind vLLM's OpenAI-compatible `/v1` server (or TGI or Ollama endpoints) for a
+drop-in integration with existing OpenAI-client code, or use Mistral's hosted API (Mistral
+Studio, formerly La Plateforme).
 
 ```bash
 vllm serve mistralai/Mistral-Small-3.2-24B-Instruct-2506 --revision <sha> --port 8000
-# then point any OpenAI SDK at http://localhost:8000/v1
+# Then point any OpenAI SDK at http://localhost:8000/v1.
 ```
 
-No model-specific client is required for the self-hosted path - the chat-completions surface
+No model-specific client is required for the self-hosted path. The chat-completions surface
 behaves like any other OpenAI-compatible endpoint, so routing, retries and gateways carry over
 unchanged.
 
-**If you use Mistral's hosted API instead of self-hosting, its data terms differ and you should
-read them.** Re-read on 2026-11-19 from Mistral's Privacy Policy (3 Sep 2026), help centre,
-Commercial Terms (25 Sep 2026) and DPA (27 Jul 2026):
+Mistral's hosted API has different data terms from self-hosting. They come from the Privacy
+Policy (3 Sep 2026), the help centre, the Commercial Terms (25 Sep 2026) and the DPA
+(27 Jul 2026).
 
-- **Training depends on the product.** Vibe Free, Pro, **Teams** and Student plans train on your
-  inputs by default unless you opt out; Vibe Enterprise is opted out by default. Mistral Studio
-  Free mode may train, and pay-as-you-go customers can opt out (the page does not state the
-  default). **Labs and Public Preview models may always train**, whatever you opted out of. The
-  Commercial Terms (4.2) allow training only on an opt-in, on feedback, as an Order Form allows,
-  or on Labs and Preview models. DPA clause 2.3 lets Mistral train as controller unless you have
-  opted out.
-- **Retention:** the API keeps input/output for the time needed to generate the output and then
-  **30 rolling days** to monitor abuse (unless ZDR is active); the Agents API keeps them until
-  you terminate your account; Vibe keeps them until you delete the conversation or your account.
-- **Residency:** EEA hosting by default; an explicit **US API endpoint** processes requests in
-  the US, with GDPR Article 46 safeguards (Standard Contractual Clauses) for non-EU
-  sub-processors. The Module 4 SCCs in the DPA apply only to customers outside the EEA.
-- **Zero Data Retention (ZDR)** is available **only on pay-as-you-go, for stateless API
-  endpoints**, is approved by Mistral at its discretion, and does not cover Vibe, agents,
-  conversations, libraries, batch files or Labs and Preview models.
+Training depends on the product. Vibe Free, Pro, Teams and Student plans train on inputs by
+default unless the user opts out, and Vibe Enterprise is opted out by default. Mistral Studio
+Free mode may train, and pay-as-you-go customers can opt out (the default is not stated). Labs
+and Public Preview models may always train, whatever was opted out. The Commercial Terms (4.2)
+allow training only on an opt-in, on feedback, as an Order Form allows, or on Labs and Preview
+models. DPA clause 2.3 lets Mistral train as controller unless the customer has opted out.
 
-Self-hosting the open weights avoids all of the above - the data never leaves your infrastructure.
+Retention: the API keeps input and output for the time needed to generate the output and then
+30 rolling days to monitor abuse (unless ZDR is active). The Agents API keeps them until the
+account is terminated, and Vibe keeps them until the user deletes the conversation or the
+account.
+
+Residency: hosting is in the EEA by default. An explicit US API endpoint processes requests in
+the US, with GDPR Article 46 safeguards (Standard Contractual Clauses) for non-EU
+sub-processors. The Module 4 SCCs in the DPA apply only to customers outside the EEA.
+
+Zero Data Retention (ZDR) is available only on pay-as-you-go, for stateless API endpoints.
+Mistral approves it at its discretion, and it does not cover Vibe, agents, conversations,
+libraries, batch files or Labs and Preview models.
+
+Self-hosting the open weights avoids all of this, because data never leaves the deployer's
+infrastructure.

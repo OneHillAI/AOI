@@ -9,30 +9,24 @@ id: nebius
 name: Nebius (Token Factory)
 profile: inference
 hq_country: Netherlands
-summary: 'Nebius Group N.V. (Amsterdam-headquartered, spun off from Yandex, Nasdaq-listed)
-  runs "Nebius Token Factory" (formerly "Nebius AI Studio"), a managed OpenAI-compatible
-  inference platform serving a broad open-model catalogue over shared/public per-token
-  endpoints and single-tenant dedicated endpoints, alongside a separate raw-GPU-cloud
-  product. Re-read 2026-11-19: the governing contract has moved. The standalone Token Factory
-  Terms of Service now apply only to customers with an active reserve as of 2026-09-15;
-  everyone else is on the Nebius Services Agreement plus the Token Factory Supplemental Terms
-  (effective 2026-10-22). The central finding survives the move and was re-read verbatim: Supplemental
-  Terms 5.1(b) let Nebius "train smaller Models used for Speculative Decoding" on your Input and Output by
-  default, with an opt-out by onboarding form or email (5.4), while the Legal Quick Guide still
-  answers "No" to "Is my data used to train your AI models?" (the word "exclusively" that qualified the
-  legacy sentence is gone). The inference SLA is no longer merely absent: Supplemental Terms 7.4 expressly
-  says no service level commitments, uptime guarantees or credits apply to Token Factory unless agreed in
-  writing. EU regions: the Nebius AI Cloud regions page now lists four public EU region IDs (Finland, Spain,
-  France x2), but Token Factory''s own documents name only two EU data-plane regions (Finland eu-north1,
-  France eu-west1), public endpoints are unpinned ("Global") and showed processing in Finland, the UK and the
-  US on the day read. Compliance is now backed by two independent artefacts read in full: a public Deloitte
-  SOC 3 report that includes AI Studio inference and an ISO/IEC 27001:2022 certificate issued by SII-QCD.
-  Contracting entity depends on where you are incorporated: Nebius B.V. (Dutch law), Nebius Israel Ltd
-  (Israeli law) or Nebius Inc. (Delaware law, JAMS arbitration). The catalogue (133 rows) and per-model
-  prices render in a browser: several models once priced publicly (DeepSeek-V4-Pro, Llama-3.3-70B-Instruct,
-  Kimi-K2-Instruct) are now dedicated-only after deprecation notices.
-
-  '
+summary: 'Nebius Group N.V. (Amsterdam-headquartered, spun off from Yandex, Nasdaq-listed) runs "Nebius Token
+  Factory" (formerly "Nebius AI Studio"), a managed OpenAI-compatible inference platform. It serves a
+  broad open-model catalogue over shared per-token endpoints and single-tenant dedicated endpoints, alongside
+  a separate raw-GPU-cloud product. The standalone Token Factory Terms of Service apply only to customers
+  with an active reserve as of 2026-09-15; everyone else is on the Nebius Services Agreement plus the
+  Token Factory Supplemental Terms (effective 2026-10-22). Supplemental Terms 5.1(b) let Nebius "train
+  smaller Models used for Speculative Decoding" on your Input and Output by default, with an opt-out by
+  onboarding form or email (5.4). The Legal Quick Guide answers "No" to "Is my data used to train your
+  AI models?". Supplemental Terms 7.4 says no service level commitments, uptime guarantees or credits
+  apply to Token Factory unless agreed in writing. Token Factory''s own documents name two EU data-plane
+  regions (Finland eu-north1, France eu-west1). Public endpoints are unpinned ("Global") and showed processing
+  in Finland, the UK and the US. The Nebius AI Cloud regions page lists four public EU region IDs (Finland,
+  Spain, France x2), but that list covers the GPU cloud. Compliance rests on a public Deloitte SOC 3 report
+  that includes AI Studio inference and an ISO/IEC 27001:2022 certificate issued by SII-QCD. The contracting
+  entity depends on where the customer is incorporated: Nebius B.V. (Dutch law), Nebius Israel Ltd (Israeli
+  law) or Nebius Inc. (Delaware law, JAMS arbitration). The catalogue lists 133 models with per-model
+  prices. DeepSeek-V4-Pro, Llama-3.3-70B-Instruct and Kimi-K2-Instruct are dedicated-only after deprecation
+  notices.'
 models_served:
 - DeepSeek V4.1 Flash / V4.1 Flash 1017 / V4-Pro-0813 / V4-Flash-0731, DeepSeek-R1-0528, DeepSeek-V3-0324
 - Kimi-K3, Kimi-K3.1-Pro, Kimi-K2.5 / K2.6 / K2.7-Code
@@ -41,56 +35,47 @@ models_served:
 - gpt-oss-120b / gpt-oss-20b, Muse Spark Open, Reflection Beam 1.0, Inkling-2-Small
 - NVIDIA Nemotron-3-Ultra-550B-A55B, Nemotron 3.5 Super VL, Nemotron-3.5-Lightning
 - Llama 3.1 / 3.2 / 3.3 and Llama-Guard-3-8B, Gemma-2/3/4, Hermes-4, INTELLECT-3, embedding models (bge, e5-mistral, Qwen3-Embedding-8B)
-- 'CORRECTED 2026-11-19 (read in the in-app browser; curl still gets HTTP 403): the catalogue lists 133 rows with
-  context windows, but its platform column shows the same tags on every row, so the per-model page decides
-  whether a public endpoint exists. Public endpoints read: gpt-oss-120b, DeepSeek-V4-Pro-0813, GLM-5.3,
-  MiniMax-M3. "Public endpoint Not available" (dedicated only) on DeepSeek-V4-Pro, Llama-3.3-70B-Instruct and
-  Kimi-K2-Instruct; the first two match Serverless removal notices dated 2026-11-09 and 2026-08-31 (no
-  notice for Kimi-K2-Instruct was found in the four notice pages read). The 2026-09-21 browser note that Llama-3.3-70B-Instruct was publicly priced could not be
-  reproduced. Dedicated endpoints for deprecated models stay available.'
+- The catalogue lists 133 rows with context windows, but its platform column shows the same tags on every
+  row, so the per-model page decides whether a public endpoint exists. Public endpoints exist for gpt-oss-120b,
+  DeepSeek-V4-Pro-0813, GLM-5.3 and MiniMax-M3. DeepSeek-V4-Pro, Llama-3.3-70B-Instruct and Kimi-K2-Instruct
+  show "Public endpoint Not available" (dedicated only). The first two match Serverless removal notices
+  dated 2026-11-09 and 2026-08-31; no notice for Kimi-K2-Instruct appears on the four notice pages. Dedicated
+  endpoints for deprecated models stay available. The catalogue renders in a browser; curl gets HTTP 403.
 hardware: NVIDIA GPU
 pricing:
   model: mixed
-  notes: 'Public/shared endpoints are pure per-token, read on the per-model catalogue pages (rendered in a
-    browser 2026-11-19; the logged-in price list at /organization/prices was not read, and not every catalogue
-    model has a public endpoint). Dedicated endpoints are billed per running replica (pay-as-you-go while
-    replicas are up, adjusting dynamically with autoscaling) and dedicated prices are behind the login - the
-    underlying $/GPU-hour rate itself is not disclosed on the public billing-policy page ("charges may vary
-    depending on your custom contract or work order").
-
-    '
+  notes: Public/shared endpoints are pure per-token, shown on the per-model catalogue pages (rendered in a browser).
+    The logged-in price list at /organization/prices is not public, and not every catalogue model has a
+    public endpoint. Dedicated endpoints are billed per running replica (pay-as-you-go while replicas are
+    up, adjusting dynamically with autoscaling) and dedicated prices are behind the login. The underlying
+    $/GPU-hour rate is not disclosed on the public billing-policy page ("charges may vary depending on your
+    custom contract or work order").
   example_rates:
-  - 'gpt-oss-120b: $0.15/M in, $0.10/M cached, $0.60/M out (public endpoint, read 2026-11-19; processing region
-    shown eu-north1)'
-  - 'DeepSeek-V4-Pro-0813: $1.32/M in, $0.04/M cached, $3.96/M out (public endpoint, read 2026-11-19; processing
-    region shown uk-south1)'
-  - 'GLM-5.3: $1.40/M in, $0.26/M cached, $4.40/M out (public endpoint, read 2026-11-19; processing region shown
-    us-north1)'
-  - 'MiniMax-M3: $0.30/M in, $0.06/M cached, $1.20/M out (public endpoint, read 2026-11-19; processing region shown
-    us-central1)'
-  - 'SUPERSEDED: the September figures DeepSeek-V4-Pro $1.75/$3.50 and Llama-3.3-70B-Instruct $0.13/$0.40 no
-    longer have public endpoints (per-model pages say "Public endpoint Not available"; Serverless removal
-    notices dated 2026-11-09 and 2026-08-31).'
+  - 'gpt-oss-120b: $0.15/M in, $0.10/M cached, $0.60/M out (public endpoint; processing region shown eu-north1)'
+  - 'DeepSeek-V4-Pro-0813: $1.32/M in, $0.04/M cached, $3.96/M out (public endpoint; processing region
+    shown uk-south1)'
+  - 'GLM-5.3: $1.40/M in, $0.26/M cached, $4.40/M out (public endpoint; processing region shown us-north1)'
+  - 'MiniMax-M3: $0.30/M in, $0.06/M cached, $1.20/M out (public endpoint; processing region shown us-central1)'
+  - 'DeepSeek-V4-Pro ($1.75/$3.50) and Llama-3.3-70B-Instruct ($0.13/$0.40) have no public endpoint: the
+    per-model pages say "Public endpoint Not available", following Serverless removal notices dated 2026-11-09
+    and 2026-08-31.'
 data_governance:
-  default_retention: 'By default, Nebius collects and stores Inputs/Outputs for the
-    purposes of providing the Service AND for training its own smaller "Speculative
-    Decoding" models (Token Factory Supplemental Terms Sec 5.1(b) and 5.4, effective
-    2026-10-22; the same clause was Sec 7 of the legacy Token Factory Terms), unless the
-    customer opts out (via onboarding form or emailing support) or enables Zero Data
-    Retention. Nebius also keeps "absolute discretion" to remove, screen or delete Inputs and
-    Outputs without notice (5.3). Retained Speculative Decoding data is stored in Finland (EU)
-    regardless of where real-time processing happens (Legal Quick Guide 5.1). Fine-tuning
-    artifacts are stored exclusively in EU data centres per the Legal Quick Guide.'
+  default_retention: "By default, Nebius collects and stores Inputs/Outputs for the purposes of providing the Service
+    AND for training its own smaller \"Speculative Decoding\" models. The source is Token Factory
+    Supplemental Terms Sec 5.1(b) and 5.4, effective 2026-10-22; the same clause was Sec 7 of the
+    legacy Token Factory Terms. This does not apply if the customer opts out (via onboarding form or
+    emailing support) or enables Zero Data Retention. Nebius also keeps \"absolute discretion\" to
+    remove, screen or delete Inputs and Outputs without notice (5.3). Retained Speculative Decoding
+    data is stored in Finland (EU) regardless of where real-time processing happens (Legal Quick
+    Guide 5.1). Fine-tuning artifacts are stored exclusively in EU data centres per the Legal Quick
+    Guide."
   trains_on_inputs: by_default
   zdr_available: yes_optional
-  zdr_scope_caveats: 'Zero Data Retention is an account-level opt-in ("enable Zero Data
-    Retention in your account settings"), not the default. Enabling it stops storage and
-    stops use for Speculative Decoding, but the Legal Quick Guide itself warns enabling
-    it "may impact the level of service provided (e.g., inference speed)." Dedicated
-    endpoints separately advertise a "zero-retention data flow" as a built-in feature of
-    that tier.
-
-    '
+  zdr_scope_caveats: "Zero Data Retention is an account-level opt-in (\"enable Zero Data Retention in your account
+    settings\"), not the default. Enabling it stops storage and stops use for Speculative Decoding.
+    The Legal Quick Guide itself warns that enabling it \"may impact the level of service provided
+    (e.g., inference speed)\". Dedicated endpoints separately advertise a \"zero-retention data
+    flow\" as a built-in feature of that tier.\n"
   customer_data_ownership: customer_retains
   outputs_used_to_improve_service: opt_out
   third_party_routing_leakage: 'Serves an overwhelmingly open-weight catalogue (Apache
@@ -100,19 +85,19 @@ data_governance:
     '
   subprocessors_disclosed: true
   confidentiality: functional_only
-  confidentiality_caveats: 'The Nebius Services Agreement (effective 2026-10-22) has a general mutual
-    confidentiality clause (Sec 18) over "any information of the disclosing party" that does not name
-    Customer Data or Customer AI Content, and a purpose limitation (Sec 10.1.3) that lets Nebius use
-    Customer Data "solely to perform, or as otherwise set forth in" the Agreement and the Token
-    Factory Supplemental Terms - which include the Speculative Decoding training licence (5.1(b)), a
-    royalty-free, transferable, sub-licensable, worldwide licence to Input and Output. The DPA gives a
-    processor confidentiality duty (2.5) scoped to "Customer Personal Data". Coded functional_only
-    rather than disclaimed because no clause states Customer Content is non-confidential, but this is
-    a close call: the purpose limitation is only as narrow as the Supplemental Terms allow. The Legal
-    Quick Guide (non-binding) says "we do not use your content to train, fine-tune or improve any AI
-    models" and that Speculative Decoding "does not involve training any model", while the binding
-    Supplemental Terms say Nebius may "train smaller Models used for Speculative Decoding"; the
-    contract governs.'
+  confidentiality_caveats: "The Nebius Services Agreement (effective 2026-10-22) has a general mutual confidentiality
+    clause (Sec 18) over \"any information of the disclosing party\". It does not name Customer Data
+    or Customer AI Content. It also has a purpose limitation (Sec 10.1.3) that lets Nebius use
+    Customer Data \"solely to perform, or as otherwise set forth in\" the Agreement and the Token
+    Factory Supplemental Terms. Those terms include the Speculative Decoding training licence
+    (5.1(b)), a royalty-free, transferable, sub-licensable, worldwide licence to Input and Output.
+    The DPA gives a processor confidentiality duty (2.5) scoped to \"Customer Personal Data\". Coded
+    functional_only, not disclaimed, because no clause states Customer Content is non-confidential.
+    This is a close call: the purpose limitation is only as narrow as the Supplemental Terms allow.
+    The Legal Quick Guide (non-binding) says \"we do not use your content to train, fine-tune or
+    improve any AI models\" and that Speculative Decoding \"does not involve training any model\".
+    The binding Supplemental Terms say Nebius may \"train smaller Models used for Speculative
+    Decoding\". The contract governs."
 compliance:
   soc2: type_ii
   iso_27001: 'yes'
@@ -121,31 +106,23 @@ compliance:
   gdpr_dpa: "yes"
   fedramp: ''
   trust_center_url: https://nebius.com/trust-center
-  # STRENGTHENED 2026-11-19: two independent artefacts were read in full. (1) The public SOC 3 report
-  # (Deloitte, period 2025-04-01 to 2025-07-31, report dated 2025-10-19, clean opinion on Security,
-  # Availability and Confidentiality + HIPAA mapping, system description includes AI Studio
-  # inference). (2) The ISO/IEC 27001:2022 certificate no. 1129086 issued by SII-QCD, valid
-  # 2025-08-11 to 2028-08-11. The SOC 2 Type II report itself remains NDA-gated. ISO 27701 and
-  # ISO 42001 rest on trust-centre statements (certificate PDFs not read).
 residency:
   eu_region_available: "yes"
   regions:
   - United States (us-central1 Kansas City and us-north1 Minnesota, public)
-  - 'CHANGED 2026-11-19 (docs.nebius.com/overview/regions, the Nebius AI Cloud region list): public EU regions
-    are now Finland (eu-north1), Madrid, Spain (eu-south1), France (eu-west1) and a second French region
-    (eu-west2) - four region IDs in three countries. In September only Finland and France were
-    public and Spain, eu-west2 and us-north1 were private; now only eu-north2 (Iceland) is listed
-    as private. That list is for the GPU cloud, NOT for Token Factory. Token Factory''s own control and
-    data plane page names three data-plane regions (eu-north1 Finland, eu-west1 France, us-central1), and
-    its sub-processor list gives Nebius B.V. Token Factory processing locations of France, Iceland, Finland
-    and the United Kingdom (Nebius Inc. United States, Nebius Israel Israel, RunPod Iceland, BoostRun and
-    Shadeform United States, Axe Compute Canada). No Token Factory document names Spain or eu-west2, so the
-    count for this service is two EU regions (Finland, France), not four. The status page does list a
-    Token Factory component under every region, including EU-SOUTH1 and EU-WEST2, and three Token Factory
-    locations TF-US1, TF-US2 and TF-CA1, but it lists every product under every region, so it proves
-    nothing about availability. Shared endpoints show Region "Global" and are unpinned (on 2026-11-19 the
-    per-model pages showed current processing regions eu-north1, uk-south1, us-north1 and us-central1);
-    dedicated endpoints are pinned to the region you choose.'
+  - 'The Nebius AI Cloud region list (docs.nebius.com/overview/regions) shows public EU regions Finland
+    (eu-north1), Madrid, Spain (eu-south1), France (eu-west1) and a second French region (eu-west2): four
+    region IDs in three countries. Only eu-north2 (Iceland) is private. That list is for the GPU cloud,
+    not for Token Factory. Token Factory''s own control and data plane page names three data-plane regions
+    (eu-north1 Finland, eu-west1 France, us-central1). Its sub-processor list gives Nebius B.V. Token Factory
+    processing locations of France, Iceland, Finland and the United Kingdom (Nebius Inc. United States,
+    Nebius Israel Israel, RunPod Iceland, BoostRun and Shadeform United States, Axe Compute Canada). No
+    Token Factory document names Spain or eu-west2, so the count for this service is two EU regions (Finland,
+    France), not four. The status page lists a Token Factory component under every region, including EU-SOUTH1
+    and EU-WEST2, and three Token Factory locations TF-US1, TF-US2 and TF-CA1, but it lists every product
+    under every region, so it says nothing about availability. Shared endpoints show Region "Global" and
+    are unpinned (the per-model pages show current processing regions eu-north1, uk-south1, us-north1 and
+    us-central1). Dedicated endpoints are pinned to the region you choose.'
   - Israel (me-west1, public)
   - United Kingdom (uk-south1/uk-south2, public)
   sovereign_option: 'No distinct named "sovereign cloud" SKU was found; the public EU regions
@@ -153,121 +130,108 @@ residency:
     stored only in EU data centres, are the closest primary-source-backed residency option.'
   region_pinning: "yes"
   cloud_act_exposure: true
-  provider_can_restrict_access: 'DPA 6.1 (effective 2026-11-18): for dedicated endpoints Customer
-    Content is processed in the region selected by the customer, subject to limited processing
-    outside it for operation, maintenance, security or support; for public endpoints the location
-    is "specified in the API or displayed in the Token Factory interface", and the Annex says they
-    "are not region-pinned". US-incorporated customers contract with Nebius Inc. (Delaware law, JAMS
-    arbitration in New York) for Token Factory registrations on or after 2026-09-15; other customers
-    contract with Nebius B.V. (Dutch law, Amsterdam courts). The published sub-processor list names
-    Nebius Inc. and four US-based infrastructure providers (RunPod, BoostRun, Shadeform, Axe Compute),
-    which creates plausible US CLOUD Act exposure alongside the Netherlands-domiciled parent - an
-    inference from the list and the contracting-entity clause, not an explicit CLOUD Act statement.'
+  provider_can_restrict_access: "DPA 6.1 (effective 2026-11-18): for dedicated endpoints Customer Content is processed in the
+    region selected by the customer, subject to limited processing outside it for operation,
+    maintenance, security or support. For public endpoints the location is \"specified in the API or
+    displayed in the Token Factory interface\", and the Annex says they \"are not region-pinned\".
+    US-incorporated customers contract with Nebius Inc. (Delaware law, JAMS arbitration in New York)
+    for Token Factory registrations on or after 2026-09-15. Other customers contract with Nebius
+    B.V. (Dutch law, Amsterdam courts). The published sub-processor list names Nebius Inc. and four
+    US-based infrastructure providers (RunPod, BoostRun, Shadeform, Axe Compute). This creates
+    plausible US CLOUD Act exposure alongside the Netherlands-domiciled parent. It is an inference
+    from the list and the contracting-entity clause, with no explicit CLOUD Act statement behind
+    it."
 reliability:
-  sla: 'None on the standard terms. Token Factory Supplemental Terms 7.4 (effective 2026-10-22, read 2026-11-19): "The Service Level Agreement ("SLA") available at https://docs.nebius.com/legal/sla does not apply to the Token Factory Service. Nebius does not provide any service level commitments, uptime guarantees, or associated compensation for the Token Factory Service", with credits excluded "unless agreed otherwise in writing". The dedicated-endpoint docs say self-service dedicated endpoints "do not include a formal SLA unless covered by contract", and the rate-limits page says an Enterprise Tier gives "dedicated capacity plus an SLA", but no Enterprise terms are published. The SLA index (docs.nebius.com/legal/sla-levels, 2026-10-06) lists eight services - Compute Cloud, Disks, Managed Kubernetes, Managed MLflow, Managed PostgreSQL, Object Storage, Shared Filesystem, Virtual Private Cloud - and none is inference. Any 99.9% figure in marketing is not backed by a contract.'
-  uptime_notes: 'A public status page (status.nebius.com, read 2026-11-19) shows All Systems Operational
-    with a Token Factory component in each region and a 90-day uptime bar without a numeric
-    percentage on the main view. Two Token Factory incidents in the last 14 days, both resolved:
-    2026-11-05 some models unavailable in eu-north1, and 2026-11-11 connectivity loss in tf-us2
-    for about 8 minutes (cause under investigation).
-
-    '
+  sla: "None on the standard terms. Token Factory Supplemental Terms 7.4 (effective 2026-10-22): \"The Service Level Agreement (\"SLA\") available at https://docs.nebius.com/legal/sla does not apply to the Token Factory Service. Nebius does not provide any service level commitments, uptime guarantees, or associated compensation for the Token Factory Service\", with credits excluded \"unless agreed otherwise in writing\". The dedicated-endpoint docs say self-service dedicated endpoints \"do not include a formal SLA unless covered by contract\", and the rate-limits page says an Enterprise Tier gives \"dedicated capacity plus an SLA\", but no Enterprise terms are published. The SLA index (docs.nebius.com/legal/sla-levels, 2026-10-06) lists eight services - Compute Cloud, Disks, Managed Kubernetes, Managed MLflow, Managed PostgreSQL, Object Storage, Shared Filesystem, Virtual Private Cloud - and none is inference. Any 99.9% figure in marketing is not backed by a contract."
+  uptime_notes: 'A public status page (status.nebius.com) shows All Systems Operational with a Token Factory component
+    in each region and a 90-day uptime bar without a numeric percentage on the main view. Two Token Factory
+    incidents in the last 14 days, both resolved: 2026-11-05 some models unavailable in eu-north1, and 2026-11-11
+    connectivity loss in tf-us2 for about 8 minutes (cause under investigation).'
   incidents:
   - region: eu-north1
     summary: 'Token Factory: some models unavailable (resolved), 2026-11-05 10:30 to 11:07 UTC.'
   - region: tf-us2
     summary: 'Token Factory connectivity loss, not reachable 07:33 to 07:41 UTC (resolved), 2026-11-11.'
   - region: eu-west1
-    summary: 'Partial metrics unavailability (resolved) - independently browser-confirmed,
-      2026-09-09/17 window.'
+    summary: Partial metrics unavailability (resolved), 2026-09-09/17 window.
   - region: us-central1
-    summary: 'Partial Object Storage 5xx errors (resolved) - independently browser-confirmed,
-      2026-09-09/17 window.'
+    summary: Partial Object Storage 5xx errors (resolved), 2026-09-09/17 window.
   - region: eu-north1
-    summary: 'SkyPilot cluster-creation errors (503) / VM creation issues (resolved) -
-      independently browser-confirmed, 2026-09-09/17 window.'
+    summary: SkyPilot cluster-creation errors (503) / VM creation issues (resolved), 2026-09-09/17 window.
 lock_in:
   openai_compatible_api: true
-  portability_notes: 'A "simple, OpenAI-compatible API" (product page and docs, read
-    directly) over a predominantly open-weight catalogue (Apache 2.0 / MIT / DeepSeek /
-    Llama licences confirmed on the catalogue''s own licence fields) keeps the served
-    checkpoints themselves portable. The DPA commits to deleting or returning Customer
-    Personal Data on termination, at the customer''s choice (DPA Sec 7, effective 2026-11-18).
-    RE-READ 2026-11-19 (catalogue and per-model pages rendered in a browser): most open models have a
-    public per-token endpoint, but several named in the first draft (Kimi-K2-Instruct,
-    Llama-3.3-70B-Instruct) and DeepSeek-V4-Pro now show "Public endpoint Not available" (dedicated only), and
-    Nebius publishes Serverless removal notices (2026-06-22, 08-31, 11-09, 12-24) that say dedicated endpoints
-    for removed models are unaffected and that requests are not rerouted. Exit is therefore easy on the weights
-    (open models) but the serverless catalogue churns every few weeks.
-
-    '
+  portability_notes: A "simple, OpenAI-compatible API" (product page and docs) over a predominantly open-weight catalogue
+    (Apache 2.0 / MIT / DeepSeek / Llama licences on the catalogue's own licence fields) keeps the served
+    checkpoints portable. The DPA commits to deleting or returning Customer Personal Data on termination,
+    at the customer's choice (DPA Sec 7, effective 2026-11-18). Most open models have a public per-token
+    endpoint, but Kimi-K2-Instruct, Llama-3.3-70B-Instruct and DeepSeek-V4-Pro show "Public endpoint Not
+    available" (dedicated only). Nebius publishes Serverless removal notices (2026-06-22, 08-31, 11-09,
+    12-24) that say dedicated endpoints for removed models are unaffected and that requests are not rerouted.
+    Exit is easy on the weights (open models), but the serverless catalogue churns every few weeks.
 dedicated_availability: self_serve
-dedicated_notes: 'Supplemental Terms 2.3 (read 2026-11-19) grant "a limited right to create, configure,
-  and manage Dedicated Endpoints through the Platform", and the dedicated-endpoint docs say "Deployment
-  region is fixed and user-selected" with "Capacity reserved for your organization", so the control
-  plane is self-serve (catalogue pages read 2026-11-19: "Log in to deploy dedicated endpoints ... zero-retention
-  data flow"; deployment and the dedicated price list are behind the login, and regions come from a templates API).
-  Self-service dedicated endpoints run on on-demand capacity that is released on any stop, incident or
-  maintenance and is not reserved, with no formal SLA unless covered by contract.
-  Enterprise custom contracts are also referenced for billing ("charges may vary depending on
-  your custom contract or work order"), and the exact per-GPU-hour rate is not disclosed
-  publicly. No on-prem/air-gapped offering was found.'
+dedicated_notes: Supplemental Terms 2.3 grant "a limited right to create, configure, and manage Dedicated Endpoints
+  through the Platform", and the dedicated-endpoint docs say "Deployment region is fixed and user-selected"
+  with "Capacity reserved for your organization", so the control plane is self-serve. Catalogue pages
+  say "Log in to deploy dedicated endpoints ... zero-retention data flow"; deployment and the dedicated
+  price list are behind the login, and regions come from a templates API. Self-service dedicated endpoints
+  run on on-demand capacity that is released on any stop, incident or maintenance and is not reserved,
+  with no formal SLA unless covered by contract. Enterprise custom contracts are also referenced for billing
+  ("charges may vary depending on your custom contract or work order"), and the exact per-GPU-hour rate
+  is not disclosed publicly. No on-prem/air-gapped offering is documented.
 trust_considerations:
-- 'MOST CONSEQUENTIAL FINDING, RE-CONFIRMED 2026-11-19 in the new governing document: Token Factory
-  Supplemental Terms 5.1(b) (effective 2026-10-22) let Nebius use your Input and Output to "train
-  smaller Models used for Speculative Decoding", on by default, with an opt-out by onboarding form
-  or email to tokenfactory-support@nebius.com (5.4). The Legal Quick Guide still answers "No" to "Is
-  my data used to train your AI models?" and says Speculative Decoding "does not involve training any
-  model". This entry codes trains_on_inputs as by_default on the contract, not the summary, which
-  says of itself that the Terms prevail. The word "exclusively" that qualified the legacy Sec 7
-  sentence ("training smaller Models used exclusively for Speculative Decoding") is gone from 5.1(b).'
-- 'The governing document moved. The standalone Token Factory Terms of Service apply only to
-  customers with an active reserve as of 2026-09-15; from 2026-09-28 everyone else is on the Nebius
-  Services Agreement plus the Supplemental Terms. The contracting entity follows where you are
-  incorporated (Agreement Sec 17): Nebius B.V. with Dutch law and Amsterdam courts (not the US or
-  Israel); Nebius Israel Ltd with Israeli law and Tel Aviv courts (Israel, Token Factory customers with a
-  committed volume registered on or after 2026-09-15); Nebius Inc. with Delaware law and JAMS arbitration
-  in New York (US, Token Factory customers registered on or after 2026-09-15). There are three matching DPAs.'
+- Token Factory Supplemental Terms 5.1(b) (effective 2026-10-22) let Nebius use your Input and Output
+  to "train smaller Models used for Speculative Decoding", on by default, with an opt-out by onboarding
+  form or email to tokenfactory-support@nebius.com (5.4). The Legal Quick Guide answers "No" to "Is my
+  data used to train your AI models?" and says Speculative Decoding "does not involve training any model".
+  This entry codes trains_on_inputs as by_default on the contract, which the Quick Guide says prevails.
+  The legacy Sec 7 sentence read "training smaller Models used exclusively for Speculative Decoding";
+  5.1(b) omits "exclusively".
+- The standalone Token Factory Terms of Service apply only to customers with an active reserve as of
+  2026-09-15; from 2026-09-28 everyone else is on the Nebius Services Agreement plus the Supplemental
+  Terms. The contracting entity follows where you are incorporated (Agreement Sec 17). Nebius B.V. has
+  Dutch law and Amsterdam courts (not the US or Israel). Nebius Israel Ltd has Israeli law and Tel Aviv
+  courts (Israel, Token Factory customers with a committed volume registered on or after 2026-09-15).
+  Nebius Inc. has Delaware law and JAMS arbitration in New York (US, Token Factory customers registered
+  on or after 2026-09-15). There are three matching DPAs.
 - Supplemental Terms 5.3 keeps "absolute discretion, to remove, screen, or delete any Inputs or
   Outputs at any time, for any reason, and without notice" - provider-favourable, and it does not by
   itself make content non-confidential.
-- Zero Data Retention is opt-in (account-level setting), not the default. The Legal Quick Guide
-  warns it may reduce inference speed, and now says enabling it is also how you opt out of
-  Speculative Decoding.
-- 'Compliance is a genuine strength and is now independently evidenced: a public Deloitte SOC 3
-  report (period 2025-04-01 to 2025-07-31, dated 2025-10-19, clean opinion, system description
-  includes AI Studio inference) and an ISO/IEC 27001:2022 certificate from SII-QCD (valid to
-  2028-08-11). The SOC 2 Type II report itself is NDA-gated, the SOC 3 period ended about 16 months
-  ago, and ISO 27701 and ISO 42001 rest on trust-centre statements (certificates not read).'
-- 'EU-REGION COUNT RE-CHECKED 2026-11-19 (a four-region reading does not hold for this service): the Nebius AI Cloud regions page
-  now lists four public EU region IDs in three countries (Finland eu-north1, Spain eu-south1, France eu-west1
-  and eu-west2; only Iceland is private), up from two in September. That is the GPU-cloud list. Token Factory''s
-  own documents name two EU data-plane regions (Finland eu-north1, France eu-west1) plus us-central1, and its
-  sub-processor list gives France, Iceland, Finland and the UK as Nebius B.V. processing locations, so this
-  entry counts two EU regions for the service. Token Factory shared endpoints remain unpinned ("Global",
-  processing location can change without notice, "not intended for production use cases that require a
-  stable, predictable region"; on 2026-11-19 the pages showed eu-north1, uk-south1, us-north1 and us-central1);
-  only dedicated endpoints are contractually pinned (DPA 6.1), subject to limited processing outside the region
-  for operation, maintenance, security or support.'
-- The sub-processor list (effective 2026-09-23) has 23 rows and 20 distinct entities, including
-  Nebius Inc. (US) and four US-based infrastructure providers (RunPod, BoostRun, Shadeform, Axe
-  Compute); Argentum AI is no longer listed. With the US contracting entity this creates plausible
-  CLOUD Act exposure that no primary document addresses explicitly.
+- Zero Data Retention is opt-in (account-level setting), not the default. The Legal Quick Guide warns
+  it may reduce inference speed, and says enabling it is also how you opt out of Speculative Decoding.
+- 'Compliance is a strength: a public Deloitte SOC 3 report (period 2025-04-01 to 2025-07-31, dated 2025-10-19,
+  clean opinion, system description includes AI Studio inference) and an ISO/IEC 27001:2022 certificate
+  from SII-QCD (valid to 2028-08-11). The SOC 2 Type II report is NDA-gated, the SOC 3 period ended about
+  16 months ago, and ISO 27701 and ISO 42001 rest on trust-centre statements (certificates not public).'
+- The Nebius AI Cloud regions page lists four public EU region IDs in three countries (Finland eu-north1,
+  Spain eu-south1, France eu-west1 and eu-west2; only Iceland is private). That is the GPU-cloud list.
+  Token Factory's own documents name two EU data-plane regions (Finland eu-north1, France eu-west1) plus
+  us-central1, and its sub-processor list gives France, Iceland, Finland and the UK as Nebius B.V. processing
+  locations, so this entry counts two EU regions for the service. Token Factory shared endpoints are unpinned
+  ("Global", processing location can change without notice, "not intended for production use cases that
+  require a stable, predictable region"; the pages show eu-north1, uk-south1, us-north1 and us-central1).
+  Only dedicated endpoints are contractually pinned (DPA 6.1), subject to limited processing outside the
+  region for operation, maintenance, security or support.
+- The sub-processor list (effective 2026-09-23) has 23 rows and 20 distinct entities, including Nebius
+  Inc. (US) and four US-based infrastructure providers (RunPod, BoostRun, Shadeform, Axe Compute); Argentum
+  AI is not listed. With the US contracting entity this creates plausible CLOUD Act exposure that no primary
+  document addresses explicitly.
 - 'There is no inference SLA on the standard terms, now by express contract: Supplemental Terms 7.4 says Nebius
   "does not provide any service level commitments, uptime guarantees, or associated compensation for the Token
   Factory Service" (credits excluded "unless agreed otherwise in writing"). The rate-limits page says an
   Enterprise Tier adds "an SLA", but no such terms are published. Two Token Factory incidents occurred in the
   last 14 days (2026-11-05 eu-north1 some models unavailable; 2026-11-11 tf-us2 connectivity loss of about 8
   minutes).'
-- 'Catalogue and prices: tokenfactory.nebius.com returns HTTP 403 to curl but renders in a browser. The 133-row
-  catalogue and per-model public prices were read on 2026-11-19; the logged-in price list and all dedicated-endpoint
-  prices were not. Models that carried public prices in September (DeepSeek-V4-Pro and Llama-3.3-70B-Instruct)
-  are dedicated-only today, as is Kimi-K2-Instruct, and Serverless models are removed on announced dates with no
-  automatic rerouting (2026-06-22, 08-31, 11-09, 12-24).'
-- 'Rate limits: defaults are dynamic and visible only in the console; the docs give an illustrative baseline of 60
-  RPM and 400,000 TPM, a x1.2 scale-up and divide-by-1.5 scale-down per 15-minute window and a hard ceiling of 4x
-  the base allocation, beyond which an Enterprise plan is required. Over-limit requests may still be served at
-  lower priority; busy endpoints return HTTP 529.'
+- 'There is no inference SLA on the standard terms: Supplemental Terms 7.4 says Nebius "does not provide
+  any service level commitments, uptime guarantees, or associated compensation for the Token Factory Service"
+  (credits excluded "unless agreed otherwise in writing"). The rate-limits page says an Enterprise Tier
+  adds "an SLA", but no such terms are published. Two Token Factory incidents occurred in the status page''s
+  14-day window (2026-11-05 eu-north1 some models unavailable; 2026-11-11 tf-us2 connectivity loss of
+  about 8 minutes).'
+- 'Catalogue and prices: tokenfactory.nebius.com returns HTTP 403 to curl but renders in a browser. The
+  133-row catalogue and per-model public prices are visible without login; the logged-in price list and
+  all dedicated-endpoint prices are not. DeepSeek-V4-Pro and Llama-3.3-70B-Instruct carried public prices
+  in September and are dedicated-only, as is Kimi-K2-Instruct. Serverless models are removed on announced
+  dates with no automatic rerouting (2026-06-22, 08-31, 11-09, 12-24).'
 - 'Encryption keys are Nebius-managed and customer-managed keys are not currently offered (DPA Annex 3).'
 score:
   rubric_version: '1.2'
@@ -277,19 +241,16 @@ score:
   dimensions:
     data_governance:
       score: 2
-      rationale: 'The binding Token Factory Supplemental Terms (effective 2026-10-22; previously Sec 7
-        of the legacy Terms) let Nebius use Input and Output by default to "train smaller Models used
-        for Speculative Decoding" under a royalty-free, transferable, sub-licensable, worldwide licence,
-        with an opt-out by onboarding form or email, and "absolute discretion" to delete Inputs and
-        Outputs without notice. The Legal Quick Guide contradicts this in plain English ("No" to "Is my
-        data used to train your AI models?"). Real positives keep this off the floor: customer
-        ownership of Content (3.1), Zero Data Retention as an account-level opt-in that also turns off
-        Speculative Decoding, a disclosed sub-processor list (20 distinct entities, effective
-        2026-09-23, 15 days'' notice) and a purpose limitation (Agreement 10.1.3). But "no training by
-        default" is the anchor-3 threshold this provider does not clear, matching the anchor-2 pattern
-        of retention and training being the default with only a limited opt-out.
-
-        '
+      rationale: Supplemental Terms 5.1(b) and 5.4 (effective 2026-10-22; Sec 7 of the legacy Terms) let Nebius use
+        Input and Output by default to "train smaller Models used for Speculative Decoding" under a royalty-free,
+        transferable, sub-licensable, worldwide licence. The opt-out is by onboarding form or email. Nebius
+        also holds "absolute discretion" to delete Inputs and Outputs without notice. The Legal Quick Guide
+        contradicts the contract in plain English ("No" to "Is my data used to train your AI models?"). Positives
+        keep the score off the floor. They are customer ownership of Content (3.1), Zero Data Retention as an
+        account-level opt-in that also turns off Speculative Decoding, a disclosed sub-processor list (20 distinct
+        entities, effective 2026-09-23, 15 days' notice) and a purpose limitation (Agreement 10.1.3). No training
+        by default is the anchor-3 threshold, and this provider does not clear it. Training and retention by
+        default with only a limited opt-out is the anchor-2 pattern.
       evidence_refs:
       - ev-tfterms
       - ev-tos
@@ -297,19 +258,16 @@ score:
       - ev-subprocessors
     compliance:
       score: 5
-      rationale: 'RE-SCORED 2026-11-19 (4 to 5) on two independent artefacts read in full. (1) A public SOC 3
-        report issued by Deloitte for Nebius BV (Security, Availability, Confidentiality + HIPAA mapping;
-        period 2025-04-01 to 2025-07-31; dated 2025-10-19; clean opinion; system description includes
-        AI Studio inference). (2) ISO/IEC 27001:2022 certificate no. 1129086 from SII-QCD, valid
-        2025-08-11 to 2028-08-11. Plus a published trust centre listing SOC 2 Type II with HIPAA,
-        ISO 27701, 42001, 22301, 27018, 27032, 27799, CSA STAR Level 1, a signed-BAA route for HIPAA, and a
-        GDPR DPA with SCCs. This is the anchor-5 set. Caveats: the SOC 2 Type II report itself is
-        NDA-gated, the SOC 3 audit period ended about 16 months ago (no newer one linked), the ISO
-        certificate scope sentence is generic and does not name Token Factory (the trust-centre and the
-        SOC 3 do), ISO 27701 and 42001 rest on trust-centre statements, and FedRAMP is not offered.
-        Revert to 4 if a refreshed SOC report does not appear.
-
-        '
+      rationale: 'Two independent artefacts support a 5. (1) A public SOC 3 report issued by Deloitte for Nebius BV
+        (Security, Availability, Confidentiality + HIPAA mapping; period 2025-04-01 to 2025-07-31; dated 2025-10-19;
+        clean opinion; system description includes AI Studio inference). (2) ISO/IEC 27001:2022 certificate
+        no. 1129086 from SII-QCD, valid 2025-08-11 to 2028-08-11. The trust centre also lists SOC 2 Type II
+        with HIPAA, ISO 27701, 42001, 22301, 27018, 27032, 27799, CSA STAR Level 1, a signed-BAA route for HIPAA,
+        and a GDPR DPA with SCCs. This is the anchor-5 set. Caveats: the SOC 2 Type II report is NDA-gated.
+        The SOC 3 audit period ended about 16 months ago and no newer report is linked. The ISO scope sentence
+        is generic and does not name Token Factory (the trust centre and the SOC 3 do). ISO 27701 and 42001
+        rest on trust-centre statements. FedRAMP is not offered. A refreshed SOC report is needed to keep the
+        5.'
       evidence_refs:
       - ev-soc3
       - ev-iso27001
@@ -317,20 +275,17 @@ score:
       - ev-dpa
     residency:
       score: 3
-      rationale: 'CHANGED 2026-11-19: the Nebius AI Cloud regions page (docs.nebius.com/overview/regions) now lists four
-        public EU region IDs in three countries (Finland eu-north1, Spain eu-south1, France eu-west1 and
-        eu-west2), with only Iceland (eu-north2) private. That page covers the GPU cloud, not Token Factory:
-        Token Factory''s own control and data plane page names two EU data-plane regions (Finland, France) plus
-        us-central1, and its sub-processor list names France, Iceland, Finland and the UK for Nebius B.V., so
-        two EU regions are documented for this service. The DPA (effective 2026-11-18) pins dedicated
-        Token Factory endpoints to the region the customer selects (subject to limited processing outside it for
-        operation, maintenance, security or support), but public endpoints "are not region-pinned" and run as
-        "Global": on the day read their processing regions were Finland, the UK and two US regions. Held at 3 (EU
-        region for at least some workloads) rather than 4, which needs pinning for the main workloads. US-incorporated
-        customers contract with Nebius Inc., and the sub-processor list carries US entities, so CLOUD Act exposure
-        is plausible and undisclosed in any primary document.
-
-        '
+      rationale: Held at 3 (EU region for at least some workloads); 4 needs pinning for the main workloads. Token Factory's
+        control and data plane page names two EU data-plane regions (Finland, France) plus us-central1, and
+        its sub-processor list names France, Iceland, Finland and the UK for Nebius B.V. The Nebius AI Cloud
+        regions page (docs.nebius.com/overview/regions) lists four public EU region IDs in three countries (Finland
+        eu-north1, Spain eu-south1, France eu-west1 and eu-west2), with only Iceland (eu-north2) private, but
+        it covers the GPU cloud, not Token Factory. The DPA (effective 2026-11-18) pins dedicated Token Factory
+        endpoints to the customer-selected region, subject to limited processing outside it for operation, maintenance,
+        security or support. Public endpoints "are not region-pinned" and run as "Global"; their processing
+        regions are Finland, the UK and two US regions. US-incorporated customers contract with Nebius Inc.,
+        and the sub-processor list carries US entities, so CLOUD Act exposure is plausible. No primary document
+        addresses it.
       evidence_refs:
       - ev-regions
       - ev-tfdocs
@@ -339,48 +294,40 @@ score:
       - ev-quickguide
     security:
       score: 3
-      rationale: 'The trust centre (read 2026-11-19) documents customer workload isolation (VPC,
-        InfiniBand and Kubernetes isolation), TLS in transit, storage encryption by default (with named
-        exceptions), least-privilege access with MFA, vulnerability management with automated and manual
-        scanning and regular security assessments, a structured incident-response plan, and a secure
-        SDLC; DPA Annex 3 repeats the measures. SOC 3 and ISO 27001 give independent assurance over
-        the control environment. Held at 3, not 4: no independent penetration-test attestation or
-        bug-bounty programme was found, the shared-endpoint isolation model is not documented separately
-        from the general statements, and the language names no cipher specifics.
-
-        '
+      rationale: 'The trust centre documents customer workload isolation (VPC, InfiniBand and Kubernetes), TLS in transit,
+        storage encryption by default (with named exceptions), least-privilege access with MFA, vulnerability
+        management and regular security assessments, a structured incident-response plan and a secure SDLC.
+        DPA Annex 3 repeats the measures. SOC 3 and ISO 27001 give independent assurance over the control environment.
+        Held at 3, not 4: no independent penetration-test attestation or bug-bounty programme is published,
+        the shared-endpoint isolation model is not documented beyond the general statements, and no cipher specifics
+        are named.'
       evidence_refs:
       - ev-trustcenter
       - ev-soc3
       - ev-quickguide
     reliability:
       score: 3
-      rationale: 'No inference SLA, and as of 2026-10-22 an express exclusion: Supplemental Terms 7.4
-        says Nebius "does not provide any service level commitments, uptime guarantees, or associated
-        compensation for the Token Factory Service". The SLA index lists eight services and none is
-        inference. What remains is a public status page with a Token Factory component in each region
-        and a documented incident record (two Token Factory incidents in the last 14 days, both
-        resolved). Matches the anchor-3 bar (operational track record, public status page, SLA absent)
-        rather than anchor 4, which requires an actual contractual SLA.
-
-        '
+      rationale: 'Token Factory has no inference SLA, and Supplemental Terms 7.4 (effective 2026-10-22) excludes one:
+        Nebius "does not provide any service level commitments, uptime guarantees, or associated compensation
+        for the Token Factory Service". The SLA index lists eight services and none is inference. A public status
+        page shows a Token Factory component in each region and two resolved Token Factory incidents in its
+        14-day window. This matches the anchor-3 bar (operational track record, public status page, no SLA).
+        Anchor 4 requires a contractual SLA.'
       evidence_refs:
       - ev-tfterms
       - ev-sla
       - ev-status
     transparency_lockin:
       score: 4
-      rationale: 'An OpenAI-compatible API over a predominantly open-weight catalogue keeps served
-        checkpoints portable, and the DPA commits to deleting or returning Customer Personal Data on
-        termination. Sub-processors are disclosed in full (20 distinct entities in 23 rows, with
-        processing locations and transfer mechanisms), per-model context windows are published, and
-        Serverless removals come with dated notices that leave dedicated endpoints in place. Held below 5
-        because the Terms carry an unfavourable training licence and an absolute-discretion deletion right,
-        the governing document moved between September and November, the logged-in price list and dedicated
-        prices were not readable, and the serverless catalogue churns (three models that were priced
-        publicly in September are now dedicated-only, with no standing minimum notice period).
-
-        '
+      rationale: 'An OpenAI-compatible API over a predominantly open-weight catalogue keeps served checkpoints portable,
+        and the DPA commits to deleting or returning Customer Personal Data on termination. Sub-processors are
+        disclosed in full (20 distinct entities in 23 rows, with processing locations and transfer mechanisms),
+        per-model context windows are published, and Serverless removals come with dated notices that leave
+        dedicated endpoints in place. Held below 5 for four reasons. The Terms carry an unfavourable training
+        licence and an absolute-discretion deletion right. The governing document differs between customers
+        with an active reserve and everyone else. The logged-in price list and dedicated prices are not public.
+        The serverless catalogue churns: three models priced publicly in September are dedicated-only, with
+        no standing minimum notice period.'
       evidence_refs:
       - ev-catalogue
       - ev-subprocessors
@@ -388,15 +335,13 @@ score:
       - ev-deprecations
     cost:
       score: 3
-      rationale: 'Per-token pricing is publicly visible on per-model catalogue pages for models with a public endpoint
-        (read 2026-11-19: gpt-oss-120b $0.15/$0.60, DeepSeek-V4-Pro-0813 $1.32/$3.96, GLM-5.3 $1.40/$4.40,
-        MiniMax-M3 $0.30/$1.20, each with a cached-input rate), and the rate-limit rules are documented.
-        Several models are now dedicated-only with prices behind a login, the consolidated price list was not
-        readable, and the dedicated tier''s per-replica or GPU-hour rate is not disclosed publicly, only described
-        as variable "depending on your custom contract or work order", a real transparency gap versus peers that
-        publish dedicated rate cards. Matches anchor 3 (clear public pricing with documented tiers), not 4.
-
-        '
+      rationale: 'Per-token prices are public on per-model catalogue pages for models with a public endpoint: gpt-oss-120b
+        $0.15/$0.60, DeepSeek-V4-Pro-0813 $1.32/$3.96, GLM-5.3 $1.40/$4.40 and MiniMax-M3 $0.30/$1.20, each
+        with a cached-input rate. The rate-limit rules are documented. Several models are dedicated-only with
+        prices behind a login, and the consolidated price list needs a login. The dedicated tier''s per-replica
+        or GPU-hour rate is described only as variable "depending on your custom contract or work order", a
+        transparency gap against peers that publish dedicated rate cards. This matches anchor 3 (clear public
+        pricing with documented tiers), not 4.'
       evidence_refs:
       - ev-catalogue
       - ev-billing
@@ -434,28 +379,28 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-soc3, ev-iso27001, ev-trustcenter, ev-dpa]
-        summary: "A public Deloitte SOC 3 report (period 2025-04-01 to 2025-07-31, clean opinion, includes AI Studio inference) and an ISO/IEC 27001:2022 certificate from SII-QCD (valid to 2028-08-11) were read in full on 2026-11-19; the trust centre also lists SOC 2 Type II with HIPAA (NDA-gated report), ISO 27701, 42001, 22301, 27018, 27032, 27799 and CSA STAR Level 1. A GDPR DPA with SCCs is published; FedRAMP is not offered."
+        summary: "A public Deloitte SOC 3 report (period 2025-04-01 to 2025-07-31, clean opinion, includes AI Studio inference) and an ISO/IEC 27001:2022 certificate from SII-QCD (valid to 2028-08-11) are published. The trust centre also lists SOC 2 Type II with HIPAA (NDA-gated report), ISO 27701, 42001, 22301, 27018, 27032, 27799 and CSA STAR Level 1. A GDPR DPA with SCCs is published; FedRAMP is not offered."
       - key: security
         title: "Security controls"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-trustcenter, ev-soc3, ev-quickguide]
-        summary: "Trust centre (read 2026-11-19) documents VPC, InfiniBand and Kubernetes isolation, TLS in transit, storage encryption by default with named exceptions, least-privilege access with MFA, vulnerability management and regular security assessments, and incident response; DPA Annex 3 repeats the measures. No independent penetration-test attestation or bug-bounty programme was found."
+        summary: "The trust centre documents VPC, InfiniBand and Kubernetes isolation, TLS in transit, storage encryption by default with named exceptions, least-privilege access with MFA, vulnerability management and regular security assessments, and incident response; DPA Annex 3 repeats the measures. No independent penetration-test attestation or bug-bounty programme is published."
       - key: pricing
         title: "Pricing & cost model"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-catalogue, ev-billing, ev-tfdocs]
-        summary: "Per-token prices are shown on per-model catalogue pages for models with a public endpoint (read 2026-11-19: gpt-oss-120b $0.15/$0.60, DeepSeek-V4-Pro-0813 $1.32/$3.96, GLM-5.3 $1.40/$4.40, MiniMax-M3 $0.30/$1.20). DeepSeek-V4-Pro, Llama-3.3-70B-Instruct and Kimi-K2-Instruct are dedicated-only; the logged-in price list and dedicated prices were not read. Dedicated endpoints are billed per running replica and the per-replica or GPU-hour rate is not disclosed publicly."
+        summary: "Per-token prices are shown on per-model catalogue pages for models with a public endpoint (gpt-oss-120b $0.15/$0.60, DeepSeek-V4-Pro-0813 $1.32/$3.96, GLM-5.3 $1.40/$4.40, MiniMax-M3 $0.30/$1.20). DeepSeek-V4-Pro, Llama-3.3-70B-Instruct and Kimi-K2-Instruct are dedicated-only. The logged-in price list and dedicated prices are not public. Dedicated endpoints are billed per running replica, and the per-replica or GPU-hour rate is not disclosed."
       - key: reliability
         title: "Reliability posture"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-tfterms, ev-sla, ev-status]
-        summary: "No inference SLA, and Supplemental Terms 7.4 now expressly excludes one: no service level commitments, uptime guarantees or credits for Token Factory. The SLA index lists eight non-inference services. A public status page shows a Token Factory component per region and two resolved incidents in the last 14 days (2026-11-05, 2026-11-11)."
+        summary: "No inference SLA exists, and Supplemental Terms 7.4 excludes one: no service level commitments, uptime guarantees or credits for Token Factory. The SLA index lists eight non-inference services. A public status page shows a Token Factory component per region and two resolved incidents in its 14-day window (2026-11-05, 2026-11-11)."
   implement:
     completeness: 62.5
     originality: 0.0
@@ -466,12 +411,12 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-tokenfactory]
-        summary: "A 'simple, OpenAI-compatible API' usable with standard OpenAI SDKs (product page and docs, read directly)."
+        summary: "A 'simple, OpenAI-compatible API' usable with standard OpenAI SDKs (product page and docs)."
       - key: authentication
         title: "Authentication & account setup"
         doc_type: reference
         source_type: gap
-        gap_reason: "Public docs confirm API-key-based access via OpenAI-compatible client libraries, but org/project key-scoping granularity was not detailed in the sources read this pass."
+        gap_reason: "Public docs confirm API-key-based access via OpenAI-compatible client libraries. Org/project key-scoping granularity is not documented."
       - key: region-config
         title: "Region & ZDR configuration"
         doc_type: howto
@@ -485,7 +430,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-tfdocs]
-        summary: "The docs describe dynamic limits: an illustrative baseline of 60 RPM and 400,000 TPM, x1.2 scale-up and divide-by-1.5 scale-down per rolling 15-minute window, a hard ceiling of 4x the base allocation beyond which Enterprise is required, HTTP 429 over the limit (with possible low-priority processing flagged by x-ratelimit-over-limit) and HTTP 529 when an endpoint is busy. Actual defaults are visible only in the console, and dedicated endpoints have no rate limits."
+        summary: "The docs describe dynamic limits with an illustrative baseline of 60 RPM and 400,000 TPM. A x1.2 scale-up and divide-by-1.5 scale-down apply per rolling 15-minute window, up to a hard ceiling of 4x the base allocation, beyond which Enterprise is required. Over the limit the API returns HTTP 429 (possible low-priority processing is flagged by x-ratelimit-over-limit), and HTTP 529 when an endpoint is busy. Actual defaults are visible only in the console, and dedicated endpoints have no rate limits."
       - key: portability
         title: "Portability & exit"
         doc_type: explanation
@@ -503,21 +448,21 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-catalogue]
-        summary: "The catalogue lists 133 models (DeepSeek V4.1 Flash and V4-Pro-0813, Kimi K3 and K3.1 Pro, GLM-5.x, MiniMax M3, Qwen3.x, gpt-oss, Nemotron 3.x, Llama 3.x, Gemma 4, Muse Spark Open) with context windows; the platform column shows the same tags on every row, so the per-model page decides whether a public endpoint exists. Public endpoints were read for four models; DeepSeek-V4-Pro, Llama-3.3-70B-Instruct and Kimi-K2-Instruct are dedicated-only."
+        summary: "The catalogue lists 133 models (DeepSeek V4.1 Flash and V4-Pro-0813, Kimi K3 and K3.1 Pro, GLM-5.x, MiniMax M3, Qwen3.x, gpt-oss, Nemotron 3.x, Llama 3.x, Gemma 4, Muse Spark Open) with context windows. Its platform column shows the same tags on every row, so the per-model page decides whether a public endpoint exists. Public endpoints exist for gpt-oss-120b, DeepSeek-V4-Pro-0813, GLM-5.3 and MiniMax-M3. DeepSeek-V4-Pro, Llama-3.3-70B-Instruct and Kimi-K2-Instruct are dedicated-only."
       - key: features
         title: "Inference features"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-tokenfactory]
-        summary: "OpenAI-compatible chat/completions; per-model tool-calling/structured-output support follows each served model and was not individually verified."
+        summary: "OpenAI-compatible chat/completions. Per-model tool-calling and structured-output support follows each served model and is unverified on Nebius endpoints."
       - key: fine-tuning
         title: "Fine-tuning / custom models"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-quickguide]
-        summary: "A fine-tuning feature is referenced (the Legal Quick Guide states fine-tuning artifacts are stored exclusively in EU data centres), but the specific workflow (methods, supported base models) was not read in full this pass."
+        summary: "A fine-tuning feature exists, and the Legal Quick Guide states that fine-tuning artifacts are stored exclusively in EU data centres. Supported methods and base models are not stated."
       - key: context-limits
         title: "Context & token limits"
         doc_type: reference
@@ -535,91 +480,89 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-status]
-        summary: "A public status page (status.nebius.com, read 2026-11-19) shows All Systems Operational, a Token Factory component in each region and two resolved Token Factory incidents in the last 14 days (eu-north1 2026-11-05, tf-us2 2026-11-11)."
+        summary: "A public status page (status.nebius.com) shows All Systems Operational, a Token Factory component in each region and two resolved Token Factory incidents in its 14-day window (eu-north1 2026-11-05, tf-us2 2026-11-11)."
       - key: security-disclosure
         title: "Security disclosure & trust centre"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev-trustcenter, ev-soc3, ev-iso27001]
-        summary: "A published trust centre (nebius.com/trust-center, read 2026-11-19) lists SOC 2 Type II, SOC 3 (public PDF), ISO 27001/27701/42001 and others, CSA STAR Level 1, and a security-team contact. No public bug-bounty programme was found."
+        summary: "A published trust centre (nebius.com/trust-center) lists SOC 2 Type II, SOC 3 (public PDF), ISO 27001/27701/42001 and others, CSA STAR Level 1, and a security-team contact. No public bug-bounty programme is published."
       - key: channels
         title: "Support & community channels"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-tokenfactory]
-        summary: "Product/console documentation (docs.tokenfactory.nebius.com and docs.nebius.com) is the primary support surface; support-tier response commitments were not detailed in the sources read."
+        summary: "Product/console documentation (docs.tokenfactory.nebius.com and docs.nebius.com) is the primary support surface. Support-tier response commitments are not stated."
       - key: deprecation
         title: "Model deprecation policy"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-deprecations]
-        summary: "Nebius publishes per-event Serverless deprecation notices (removals on 2026-06-22, 2026-08-31, 2026-11-09 and an announced 2026-12-24) with a recommended replacement per model; dedicated endpoints for those models are unaffected and requests are not rerouted. No standing policy or minimum notice period was found, and the Legal Quick Guide says only that deprecations 'are announced in advance'."
+        summary: "Nebius publishes per-event Serverless deprecation notices (removals on 2026-06-22, 2026-08-31, 2026-11-09 and an announced 2026-12-24) with a recommended replacement per model. Dedicated endpoints for those models are unaffected and requests are not rerouted. No standing policy or minimum notice period is stated, and the Legal Quick Guide says only that deprecations 'are announced in advance'."
 ownership:
-  # Level unchanged on 2026-11-19: exactly one factor (data_control) is weak, which the ownership rule
-  # ("Exactly one factor weak" -> partial) maps to partial.
   level: partial
   factors:
     use_modify:   { level: strong,   rationale: "An OpenAI-compatible API (the quickstart uses the OpenAI client against api.tokenfactory.nebius.com/v1) over a predominantly open-weight catalogue keeps served checkpoints portable, and the customer retains ownership of Customer Content (Supplemental Terms 3.1) subject to Nebius' 5.1 licence. Dedicated endpoints keep deprecated models available; the serverless catalogue churns on dated notices." }
-    transparency: { level: moderate, rationale: "The Services Agreement, Token Factory Supplemental Terms, DPA, sub-processor list, regions, SLA and docs were read in full on 2026-11-19 and are legible, and the catalogue renders in a browser with per-model prices and context. But the governing document moved between September and November (the legacy Terms now apply only to customers with an active reserve as of 2026-09-15), the non-binding Legal Quick Guide still contradicts the binding training clause, and the logged-in price list and dedicated prices were not readable." }
-    reliability:  { level: moderate, rationale: "No inference SLA exists, and Supplemental Terms 7.4 now states so expressly (no service level commitments, uptime guarantees or credits unless agreed in writing); self-service dedicated endpoints carry no formal SLA and release capacity on any stop or incident. The status page shows a Token Factory component per region and two resolved Token Factory incidents in the last 14 days." }
+    transparency: { level: moderate, rationale: "The Services Agreement, Token Factory Supplemental Terms, DPA, sub-processor list, regions, SLA and docs are public and legible, and the catalogue renders in a browser with per-model prices and context. The legacy Terms apply only to customers with an active reserve as of 2026-09-15; everyone else is under the Supplemental Terms. The non-binding Legal Quick Guide contradicts the binding training clause. The logged-in price list and dedicated prices are not public." }
+    reliability:  { level: moderate, rationale: "No inference SLA exists, and Supplemental Terms 7.4 says so expressly (no service level commitments, uptime guarantees or credits unless agreed in writing). Self-service dedicated endpoints carry no formal SLA and release capacity on any stop or incident. The status page shows a Token Factory component per region and two resolved Token Factory incidents in its 14-day window." }
     data_control: { level: weak,     rationale: "The binding Supplemental Terms (5.1(b), effective 2026-10-22) let Nebius use Input and Output by default to train smaller Speculative Decoding models, with an opt-out by onboarding form or email, and reserve absolute discretion to delete them without notice (5.3). Zero Data Retention exists only as an account-level opt-in. The Legal Quick Guide contradicts this in plain English; the contract governs." }
-  verdict: "You do not fully control your data by default here: the binding Token Factory Supplemental Terms (5.1(b), effective 2026-10-22) say your Inputs and Outputs may be used to train Nebius' smaller Speculative Decoding models unless you opt out, while the Legal Quick Guide still tells readers that content is not used to train any model. Compliance is a real strength, independently evidenced by a public Deloitte SOC 3 report and an SII-QCD ISO 27001 certificate, and two EU data-plane regions (Finland, France) are documented, but public endpoints are unpinned and there is no inference SLA on the standard terms. If you send sensitive data to Nebius Token Factory, enable Zero Data Retention (it also stops Speculative Decoding) and use a dedicated endpoint in an EU region for residency."
+  verdict: "Data control is limited by default. The binding Token Factory Supplemental Terms (5.1(b), effective 2026-10-22) allow Nebius to train its smaller Speculative Decoding models on your Inputs and Outputs unless you opt out. The Legal Quick Guide tells readers that content is not used to train any model. Compliance is a strength, evidenced by a public Deloitte SOC 3 report and an SII-QCD ISO 27001 certificate. Two EU data-plane regions (Finland, France) are documented, but public endpoints are unpinned and the standard terms carry no inference SLA. For sensitive data, enable Zero Data Retention (it also stops Speculative Decoding) and use a dedicated endpoint in an EU region for residency."
 
 evidence:
 - id: ev-tfterms
-  claim: "Nebius Token Factory Supplemental Terms (read 2026-11-19; publication and effective date 2026-10-22), incorporated into the Nebius Services Agreement. Sec 3.1: customer retains ownership of Customer Content including Input and Output. Sec 5.1: Nebius may 'access, use, host, cache, store, copy, modify, and otherwise process Input and Output to (a) provide, maintain, monitor, protect, and support the Services ... or (b) train smaller Models used for Speculative Decoding', under 'royalty free, transferable, sublicensable, and worldwide' licences. Sec 5.3: 'absolute discretion, to remove, screen, or delete any Inputs or Outputs at any time, for any reason, and without notice.' Sec 5.4: opt-out of storage and of Speculative Decoding through the onboarding form or an email to tokenfactory-support@nebius.com. Sec 7.4: 'Nebius does not provide any service level commitments, uptime guarantees, or associated compensation for the Token Factory Service.' Extract: docs/primary-sources/nebius/terms__token-factory-supplemental__2026-11-19.md."
+  claim: "Nebius Token Factory Supplemental Terms (publication and effective date 2026-10-22), incorporated into the Nebius Services Agreement. Sec 3.1: customer retains ownership of Customer Content including Input and Output. Sec 5.1: Nebius may 'access, use, host, cache, store, copy, modify, and otherwise process Input and Output to (a) provide, maintain, monitor, protect, and support the Services ... or (b) train smaller Models used for Speculative Decoding', under 'royalty free, transferable, sublicensable, and worldwide' licences. Sec 5.3: 'absolute discretion, to remove, screen, or delete any Inputs or Outputs at any time, for any reason, and without notice.' Sec 5.4: opt-out of storage and of Speculative Decoding through the onboarding form or an email to tokenfactory-support@nebius.com. Sec 7.4: 'Nebius does not provide any service level commitments, uptime guarantees, or associated compensation for the Token Factory Service.' Extract: docs/primary-sources/nebius/terms__token-factory-supplemental__2026-11-19.md."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://docs.nebius.com/legal/token-factory
   date: '2026-11-19'
 - id: ev-tos
-  claim: "Legacy Nebius Token Factory Terms of Service (read 2026-11-19; publication date 2026-08-20). A banner states they apply exclusively to customers with an active reserve as of 2026-09-15, and that from 2026-09-28 other customers are governed by the Nebius Services Agreement. Sec 7 text is unchanged from the 2026-09-20 read: Nebius 'collects and processes both Input and Output data for the purpose of training smaller Models used exclusively for Speculative Decoding', opt-out by onboarding form or email, and 'absolute discretion' to delete Inputs and Outputs without notice; Sec 10 customer ownership. Superseded for new customers by ev-tfterms, where the word 'exclusively' no longer appears in the training sentence."
+  claim: "Legacy Nebius Token Factory Terms of Service (publication date 2026-08-20). A banner states they apply exclusively to customers with an active reserve as of 2026-09-15 and that from 2026-09-28 other customers are governed by the Nebius Services Agreement. Sec 7: Nebius 'collects and processes both Input and Output data for the purpose of training smaller Models used exclusively for Speculative Decoding', with an opt-out by onboarding form or email and 'absolute discretion' to delete Inputs and Outputs without notice. Sec 10: customer ownership. The Supplemental Terms (ev-tfterms) govern other customers, and their training sentence omits the word 'exclusively'."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://docs.tokenfactory.nebius.com/legal/terms-of-service
   date: '2026-11-19'
 - id: ev-quickguide
-  claim: "Nebius Legal Quick Guide (re-read 2026-11-19; non-binding, states the Terms, DPA and Privacy Policy prevail): FAQ 'Is my data used to train your AI models? No. We do not use your content to train, fine-tune or improve any AI models - ours or third parties'. Unless you enable Zero Data Retention, your inputs and outputs may be stored and used solely for Speculative Decoding, which does not involve training any model.' Contradicts the binding Supplemental Terms 5.1(b). ZDR is org-level, enabled in account settings, and also switches Speculative Decoding off; public endpoints show Region 'Global' with a location that 'can change at any time without prior notice'; retained Speculative Decoding data is stored in Finland (EU); fine-tuning data is stored only in EU data centres. Extract: docs/primary-sources/nebius/docs__legal-quick-guide__2026-11-19.md."
+  claim: "Nebius Legal Quick Guide (non-binding; states that the Terms, DPA and Privacy Policy prevail). FAQ: 'Is my data used to train your AI models? No. We do not use your content to train, fine-tune or improve any AI models - ours or third parties'. Unless you enable Zero Data Retention, your inputs and outputs may be stored and used solely for Speculative Decoding, which does not involve training any model.' This contradicts the binding Supplemental Terms 5.1(b). ZDR is org-level, enabled in account settings, and also switches Speculative Decoding off. Public endpoints show Region 'Global' with a location that 'can change at any time without prior notice'. Retained Speculative Decoding data is stored in Finland (EU), and fine-tuning data is stored only in EU data centres. Extract: docs/primary-sources/nebius/docs__legal-quick-guide__2026-11-19.md."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://docs.tokenfactory.nebius.com/legal/legal-quick-guide
   date: '2026-11-19'
 - id: ev-agreement
-  claim: "Nebius Services Agreement (read 2026-11-19; effective 2026-10-22): incorporates the Token Factory Supplemental Terms; Sec 10.1.3 limits use of Customer Data and Customer AI Content to the Agreement, the Service-Specific Terms, the Order Form, the Documentation and the DPA; Sec 17 contracting entity and law (Nebius B.V., Dutch law, Amsterdam courts for customers outside the US and Israel; Nebius Israel Ltd, Israeli law, Tel Aviv courts for Israel-incorporated Token Factory customers with a committed volume registered on or after 2026-09-15; Nebius Inc., Delaware law, JAMS arbitration in New York for US-incorporated Token Factory customers registered on or after 2026-09-15); Sec 18 mutual confidentiality over 'information of the disclosing party' that does not name Customer Data. Extract: docs/primary-sources/nebius/terms__services-agreement__2026-11-19.md."
+  claim: "Nebius Services Agreement (effective 2026-10-22). It incorporates the Token Factory Supplemental Terms. Sec 10.1.3 limits use of Customer Data and Customer AI Content to the Agreement, the Service-Specific Terms, the Order Form, the Documentation and the DPA. Sec 17 sets the contracting entity and law. Nebius B.V. (Dutch law, Amsterdam courts) applies to customers outside the US and Israel. Nebius Israel Ltd (Israeli law, Tel Aviv courts) applies to Israel-incorporated Token Factory customers with a committed volume registered on or after 2026-09-15. Nebius Inc. (Delaware law, JAMS arbitration in New York) applies to US-incorporated Token Factory customers registered on or after 2026-09-15. Sec 18 is a mutual confidentiality clause over 'information of the disclosing party' that does not name Customer Data. Extract: docs/primary-sources/nebius/terms__services-agreement__2026-11-19.md."
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://docs.nebius.com/legal/agreement
   date: '2026-11-19'
 - id: ev-dpa
-  claim: "Nebius Data Processing Addendum (read 2026-11-19; effective 2026-11-18): processor confidentiality duty scoped to Customer Personal Data (2.5); 15 days' notice of sub-processor changes (4.3); Sec 6.1 for Token Factory public endpoints 'the applicable processing location is specified in the API or displayed in the Token Factory interface', for dedicated endpoints Customer Content is processed in the region selected by the customer, subject to limited processing outside it for operation, maintenance, security or support; Annex 3 'Public endpoints are not region-pinned' and 'Customer-managed keys are not currently offered'; the Inc. (docs.nebius.com/legal/dpa-inc) and Israel (dpa-il) variants carry the same Sec 6.1 location text and 15-day sub-processor notice; SCCs Modules Two and Three, Dutch law, UK Addendum and Swiss provisions; delete or return Customer Personal Data on termination (7). Extract: docs/primary-sources/nebius/dpa__2026-11-19.md."
+  claim: "Nebius Data Processing Addendum (effective 2026-11-18). The processor confidentiality duty is scoped to Customer Personal Data (2.5). Sub-processor changes need 15 days' notice (4.3). Sec 6.1: for Token Factory public endpoints 'the applicable processing location is specified in the API or displayed in the Token Factory interface'. For dedicated endpoints Customer Content is processed in the region selected by the customer, subject to limited processing outside it for operation, maintenance, security or support. Annex 3: 'Public endpoints are not region-pinned' and 'Customer-managed keys are not currently offered'. The Inc. (docs.nebius.com/legal/dpa-inc) and Israel (dpa-il) variants carry the same Sec 6.1 location text and 15-day sub-processor notice. The DPA incorporates SCCs Modules Two and Three, Dutch law, the UK Addendum and Swiss provisions, and requires deletion or return of Customer Personal Data on termination (7). Extract: docs/primary-sources/nebius/dpa__2026-11-19.md."
   source_type: publisher
   doc_type: dpa
   retrieved: true
   url: https://docs.nebius.com/legal/dpa
   date: '2026-11-19'
 - id: ev-subprocessors
-  claim: "Nebius Token Factory sub-processor list (read 2026-11-19; effective 2026-09-23): 23 table rows, 20 distinct entities, in three groups: infrastructure and inference (Nebius Inc. US, Nebius B.V., Nebius Israel Ltd., RunPod Inc., BoostRun LLC, Shadeform Inc., Axe Compute Inc.), service operations and support (ten Nebius Group entities including Nebius Inc. and EdTech Plus Tech d.o.o. Beograd, Serbia) and customer communications and monitoring (Microsoft Sentinel, Sentry, HubSpot, Atlassian Jira, Slack). Argentum AI, listed in September, is gone. Each row gives processing location and transfer mechanism; 15-day advance notice. Extract: docs/primary-sources/nebius/subprocessors__2026-11-19.md."
+  claim: "Nebius Token Factory sub-processor list (effective 2026-09-23): 23 table rows and 20 distinct entities in three groups. Infrastructure and inference: Nebius Inc. US, Nebius B.V., Nebius Israel Ltd., RunPod Inc., BoostRun LLC, Shadeform Inc., Axe Compute Inc. Service operations and support: ten Nebius Group entities including Nebius Inc. and EdTech Plus Tech d.o.o. Beograd, Serbia. Customer communications and monitoring: Microsoft Sentinel, Sentry, HubSpot, Atlassian Jira, Slack. Argentum AI is not listed. Each row gives processing location and transfer mechanism, with 15-day advance notice. Extract: docs/primary-sources/nebius/subprocessors__2026-11-19.md."
   source_type: publisher
   doc_type: subprocessors
   retrieved: true
   url: https://docs.nebius.com/legal/sub-processors_tofa
   date: '2026-11-19'
 - id: ev-trustcenter
-  claim: "Nebius Trust Center (static pages, read 2026-11-19): lists SOC 2 Type II with HIPAA (report under NDA; auditor Deloitte; scope includes AI Cloud, AI Studio (now Token Factory) and Tracto AI), SOC 3 (public), ISO 27001 (certifying agent SII-QCD, scope includes AI Studio), ISO 27701 (stated certified as PII controller and processor, same scope), 42001 (SII), 22301, 27018, 27032, 27799, NIS 2 and DORA alignment, CSA STAR Level 1 (self-assessment); security statements on isolation, MFA, vulnerability management and incident response; signed BAA route for HIPAA at docs.nebius.com/legal/hipaa. Extract: docs/primary-sources/nebius/security__trust-centre-soc3-iso__2026-11-19.md."
+  claim: "Nebius Trust Center (static pages) lists SOC 2 Type II with HIPAA (report under NDA; auditor Deloitte; scope includes AI Cloud, AI Studio (now Token Factory) and Tracto AI), SOC 3 (public). It lists ISO 27001 (certifying agent SII-QCD, scope includes AI Studio), ISO 27701 (stated certified as PII controller and processor, same scope), 42001 (SII), 22301, 27018, 27032 and 27799. It also lists NIS 2 and DORA alignment and CSA STAR Level 1 (self-assessment), and carries security statements on isolation, MFA, vulnerability management and incident response, and a signed BAA route for HIPAA at docs.nebius.com/legal/hipaa. Extract: docs/primary-sources/nebius/security__trust-centre-soc3-iso__2026-11-19.md."
   source_type: publisher
   doc_type: security
   retrieved: true
   url: https://nebius.com/trust-center
   date: '2026-11-19'
 - id: ev-soc3
-  claim: "Public SOC 3 report for Nebius BV, 'Security, Availability and Confidentiality + HIPAA Mapping', period April 01, 2025 to July 31, 2025, independent service auditor's report dated October 19, 2025 (Deloitte, per the trust-centre page and the report footer): 'management's assertion that the controls ... were effective throughout the period ... is fairly stated, in all material respects.' The system description lists AI Studio, an inference-as-a-service platform with API endpoints. Data-centre and colocation providers are carved out as subservice organisations. The PDF was read in full with a local text extractor."
+  claim: "Public SOC 3 report for Nebius BV, 'Security, Availability and Confidentiality + HIPAA Mapping', period April 01, 2025 to July 31, 2025, independent service auditor's report dated October 19, 2025 (Deloitte, per the trust-centre page and the report footer). The opinion reads: 'management's assertion that the controls ... were effective throughout the period ... is fairly stated, in all material respects.' The system description lists AI Studio, an inference-as-a-service platform with API endpoints. Data-centre and colocation providers are carved out as subservice organisations."
   source_type: third_party
   doc_type: third_party
   retrieved: true
@@ -633,56 +576,56 @@ evidence:
   url: https://assets.nebius.com/assets/75a09e82-d39b-4bd4-a064-babf034b8a6b/ISO27001%20CERTIFICATION.pdf
   date: '2026-11-19'
 - id: ev-regions
-  claim: "Nebius AI Cloud regions documentation (re-read 2026-11-19): public regions eu-north1 (Finland), eu-south1 (Madrid, Spain), eu-west1 (France), eu-west2 (France), me-west1 (Israel), us-central1 (Kansas City), us-north1 (Minnesota), uk-south1 and uk-south2 (UK); private: eu-north2 (Iceland), 'available only to the users who already have deployments there'. Changed from 2026-09-20, when Spain, eu-west2 and us-north1 were listed as private. This is the GPU-cloud list: its service matrix does not list Token Factory, and Token Factory's own data-plane page (ev-tfdocs) names only eu-north1, eu-west1 and us-central1."
+  claim: "Nebius AI Cloud regions documentation. Public regions: eu-north1 (Finland), eu-south1 (Madrid, Spain), eu-west1 (France), eu-west2 (France), me-west1 (Israel), us-central1 (Kansas City), us-north1 (Minnesota), uk-south1 and uk-south2 (UK). Private: eu-north2 (Iceland), 'available only to the users who already have deployments there'. This is the GPU-cloud list: its service matrix does not list Token Factory, and Token Factory's own data-plane page (ev-tfdocs) names only eu-north1, eu-west1 and us-central1."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://docs.nebius.com/overview/regions
   date: '2026-11-19'
 - id: ev-sla
-  claim: "Nebius SLA pages (read 2026-11-19): the master SLA (effective 2026-11-02) applies 'only to the specific Services linked in this document'; the sla-levels index (2026-10-06) lists eight services (Compute Cloud, Disks, Managed Kubernetes, Managed MLflow, Managed PostgreSQL, Object Storage, Shared Filesystem, Virtual Private Cloud), none of them inference, Token Factory or AI Studio. Token Factory Supplemental Terms 7.4 then states the SLA 'does not apply to the Token Factory Service' and that no uptime guarantees or credits are available unless agreed otherwise in writing. The dedicated-endpoint capacity page adds that self-service dedicated endpoints 'do not include a formal SLA unless covered by contract'. There is no published inference SLA."
+  claim: "Nebius SLA pages. The master SLA (effective 2026-11-02) applies 'only to the specific Services linked in this document'. The sla-levels index (2026-10-06) lists eight services (Compute Cloud, Disks, Managed Kubernetes, Managed MLflow, Managed PostgreSQL, Object Storage, Shared Filesystem, Virtual Private Cloud), none of them inference, Token Factory or AI Studio. Token Factory Supplemental Terms 7.4 states the SLA 'does not apply to the Token Factory Service' and that no uptime guarantees or credits are available unless agreed otherwise in writing. The dedicated-endpoint capacity page adds that self-service dedicated endpoints 'do not include a formal SLA unless covered by contract'. No inference SLA is published."
   source_type: publisher
   doc_type: sla
   retrieved: true
   url: https://docs.nebius.com/legal/sla-levels
   date: '2026-11-19'
 - id: ev-status
-  claim: "Nebius public status page (status.nebius.com, read 2026-11-19): All Systems Operational; Token Factory component operational in EU-NORTH1, EU-NORTH2, EU-WEST1, EU-WEST2, EU-SOUTH1, UK-SOUTH1, US-NORTH1, US-CENTRAL1, ME-WEST1, TF-US1, TF-US2 and TF-CA1; 90-day uptime bar with no numeric percentage on the main view. Token Factory incidents, both resolved: 2026-11-05 'some models unavailable in eu-north1' and 2026-11-11 'connectivity loss in tf-us2' (07:33 to 07:41 UTC)."
+  claim: "Nebius public status page (status.nebius.com): All Systems Operational. The Token Factory component is operational in EU-NORTH1, EU-NORTH2, EU-WEST1, EU-WEST2, EU-SOUTH1, UK-SOUTH1, US-NORTH1, US-CENTRAL1, ME-WEST1, TF-US1, TF-US2 and TF-CA1. A 90-day uptime bar has no numeric percentage on the main view. Token Factory incidents, both resolved: 2026-11-05 'some models unavailable in eu-north1' and 2026-11-11 'connectivity loss in tf-us2' (07:33 to 07:41 UTC)."
   source_type: publisher
   doc_type: sla
   retrieved: true
   url: https://status.nebius.com/
   date: '2026-11-19'
 - id: ev-catalogue
-  claim: "Nebius Token Factory model catalogue and per-model pages (rendered in the in-app browser 2026-11-19, no login; curl gets HTTP 403 from a Cloudflare challenge): 133 model rows with provider, quantisation, parameters and context; the platform column shows identical tags on every row, so the per-model page decides. Public endpoint prices read: gpt-oss-120b $0.15 in / $0.10 cached / $0.60 out (region eu-north1); DeepSeek-V4-Pro-0813 $1.32 / $0.04 / $3.96 (uk-south1); GLM-5.3 $1.40 / $0.26 / $4.40 (us-north1); MiniMax-M3 $0.30 / $0.06 / $1.20 (us-central1). 'Public endpoint Not available' (dedicated only): DeepSeek-V4-Pro, Llama-3.3-70B-Instruct, Kimi-K2-Instruct. The consolidated price list (/organization/prices) needs a login and was not read; the September prices for DeepSeek-V4-Pro ($1.75/$3.50) and Llama-3.3-70B-Instruct ($0.13/$0.40) are no longer shown. Extract: docs/primary-sources/nebius/docs__catalogue-prices-deprecations__2026-11-19.md."
+  claim: "Nebius Token Factory model catalogue and per-model pages (rendered in a browser without login; curl gets HTTP 403 from a Cloudflare challenge). The catalogue has 133 model rows with provider, quantisation, parameters and context. The platform column shows identical tags on every row, so the per-model page decides. Public endpoint prices: gpt-oss-120b $0.15 in / $0.10 cached / $0.60 out (region eu-north1); DeepSeek-V4-Pro-0813 $1.32 / $0.04 / $3.96 (uk-south1); GLM-5.3 $1.40 / $0.26 / $4.40 (us-north1); MiniMax-M3 $0.30 / $0.06 / $1.20 (us-central1). 'Public endpoint Not available' (dedicated only): DeepSeek-V4-Pro, Llama-3.3-70B-Instruct, Kimi-K2-Instruct. The consolidated price list (/organization/prices) needs a login. Extract: docs/primary-sources/nebius/docs__catalogue-prices-deprecations__2026-11-19.md."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://tokenfactory.nebius.com/models/catalog
   date: '2026-11-19'
 - id: ev-deprecations
-  claim: "Nebius Token Factory Model Deprecations notices (read 2026-11-19): Serverless removals on 2026-06-22, 2026-08-31 (including Llama-3.3-70B-Instruct), 2026-11-09 (including DeepSeek-V4-Pro, replacement DeepSeek-V4-Pro-0813) and an announced 2026-12-24; each says affected Serverless models are no longer available via API or Playground, that dedicated endpoints for these models are unaffected, that 'Token Factory does not automatically reroute requests from deprecated models', and names a recommended replacement. No minimum notice period or standing policy is stated. Extract: docs/primary-sources/nebius/docs__catalogue-prices-deprecations__2026-11-19.md."
+  claim: "Nebius Token Factory Model Deprecations notices. Serverless removals took place on 2026-06-22, 2026-08-31 (including Llama-3.3-70B-Instruct) and 2026-11-09 (including DeepSeek-V4-Pro, replacement DeepSeek-V4-Pro-0813), and one is announced for 2026-12-24. Each notice says affected Serverless models are no longer available via API or Playground, that dedicated endpoints for these models are unaffected, and that 'Token Factory does not automatically reroute requests from deprecated models'. Each names a recommended replacement. No minimum notice period or standing policy is stated. Extract: docs/primary-sources/nebius/docs__catalogue-prices-deprecations__2026-11-19.md."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://docs.tokenfactory.nebius.com/model-deprecations-december-2026.md
   date: '2026-11-19'
 - id: ev-tfdocs
-  claim: "Nebius Token Factory docs (read 2026-11-19): rate limits are dynamic, with an illustrative baseline of 60 RPM and 400,000 TPM, x1.2 scale-up at 80 percent average use and divide-by-1.5 scale-down at 50 percent per rolling 15-minute window, 'a hard ceiling' of 4x the base allocation beyond which an Enterprise plan is required, HTTP 429 over the limit, HTTP 529 when busy, 'Dedicated Endpoints don't have rate limits'; self-service dedicated endpoints 'do not include a formal SLA unless covered by contract' and run on on-demand capacity that is not a long-term reservation; the control plane has one base URL and the data-plane table lists eu-north1, eu-west1 and us-central1; public endpoints show Region 'Global', processing 'can change at any time, without notice'. Extract: docs/primary-sources/nebius/docs__token-factory-limits-capacity-regions__2026-11-19.md."
+  claim: "Nebius Token Factory docs. Rate limits are dynamic, with an illustrative baseline of 60 RPM and 400,000 TPM, x1.2 scale-up at 80 percent average use and divide-by-1.5 scale-down at 50 percent per rolling 15-minute window. 'A hard ceiling' of 4x the base allocation beyond which an Enterprise plan is required. Over the limit the API returns HTTP 429, and HTTP 529 when busy; 'Dedicated Endpoints don't have rate limits'. Self-service dedicated endpoints 'do not include a formal SLA unless covered by contract' and run on on-demand capacity that is not a long-term reservation. The control plane has one base URL and the data-plane table lists eu-north1, eu-west1 and us-central1. Public endpoints show Region 'Global', and processing 'can change at any time, without notice'. Extract: docs/primary-sources/nebius/docs__token-factory-limits-capacity-regions__2026-11-19.md."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://docs.tokenfactory.nebius.com/ai-models-inference/rate-limits.md
   date: '2026-11-19'
 - id: ev-billing
-  claim: "Nebius dedicated-endpoint billing-policy docs (re-read 2026-11-19, unchanged): 'A dedicated endpoint is considered active, accessible, and billable when at least one replica is running'; no charge when zero replicas run; 'Charges may vary depending on your custom contract or work order' - the underlying per-replica/GPU-hour rate itself is not disclosed on this page."
+  claim: "Nebius dedicated-endpoint billing-policy docs: 'A dedicated endpoint is considered active, accessible, and billable when at least one replica is running'; no charge when zero replicas run; 'Charges may vary depending on your custom contract or work order'. The underlying per-replica/GPU-hour rate is not disclosed on this page."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://docs.tokenfactory.nebius.com/ai-models-inference/dedicated-endpoints/billing-policy
   date: '2026-11-19'
 - id: ev-tokenfactory
-  claim: "Nebius Token Factory product page and quickstart (re-read 2026-11-19): serverless inference 'through a familiar API' and dedicated endpoints 'on isolated capacity' with 'regional placement'; the quickstart calls the service with the OpenAI client at base_url https://api.tokenfactory.nebius.com/v1/. The product page showcases MiniMax M3, Kimi K3 and DeepSeek V4 Pro and shows no prices."
+  claim: "Nebius Token Factory product page and quickstart: serverless inference 'through a familiar API' and dedicated endpoints 'on isolated capacity' with 'regional placement'. The quickstart calls the service with the OpenAI client at base_url https://api.tokenfactory.nebius.com/v1/. The product page showcases MiniMax M3, Kimi K3 and DeepSeek V4 Pro and shows no prices."
   source_type: publisher
   doc_type: docs
   retrieved: true

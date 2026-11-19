@@ -1,7 +1,6 @@
 # Use - NVIDIA Nemotron 3 Ultra (550B)
 
-_What can it do and how do we use it? Capabilities, context window, languages and tool use live
-here. Chat template and structured output are recorded as gaps in entry.yaml._
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities
@@ -15,7 +14,7 @@ Multi-Token Prediction, built for efficiency at very long context and large scal
 
 Ultra supports **up to 1M tokens**. OneHill has not independently measured effective long-context
 recall, and the released recipe notes the 1M-context data is not open, so treat the maximum as an
-architectural ceiling rather than a verified working depth.
+architectural ceiling. Working depth is unverified.
 
 <!-- item: languages -->
 ## Language coverage

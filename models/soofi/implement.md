@@ -1,16 +1,14 @@
 # Implement - Soofi (Soofi-S)
 
-_How do we deploy and run it? Install, hardware, serving, quantization, fine-tuning, and the
-safe-deployment controls & Deployment Ceiling (**T2, conditional - and preview-caveated**)._
+_Installation, hardware, serving, safe-deployment controls, quantisation, fine-tuning and integration._
 
 <!-- item: install -->
 ## Install & run
 
 Soofi-S ships as bf16 safetensors on the verified `Soofi-Project` org, plus first-party GGUF
-builds, but **every repo is manually gated**: you must request access and be approved by the
-publisher before any file downloads, and the card describes a closed beta for selected partners
-(checked 2026-11-19). Because it is a **custom hybrid Mamba-2/MoE**, the transformers path needs
-`trust_remote_code=True`. Always pin an exact revision.
+builds, but every repo is manually gated. Request access and wait for publisher approval before
+any file downloads; the card describes a closed beta for selected partners. The custom hybrid
+Mamba-2/MoE needs `trust_remote_code=True` on the transformers path. Pin an exact revision.
 
 ```python
 # Hugging Face transformers
@@ -38,78 +36,77 @@ Prefer safetensors; verify per-file checksums after download.
 <!-- item: hardware -->
 ## Hardware & VRAM requirements
 
-The MoE **activates only ~3B of 30B** parameters per token, so *decode* is cheap, but the **full
-~30B weight set** must be resident. In **bf16** that is roughly 60 GB, so plan for **multi-GPU** or
-a **first-party GGUF / 3-bit** quantization to fit a single high-VRAM card. The standout property
-is long-context economics: the hybrid Mamba-2 design keeps the inference cache **near-constant** as
-context grows, so serving up to **256k** tokens does not blow up VRAM the way a dense
-transformer's KV cache would. Size for the largest variant you intend to serve and budget headroom.
+The MoE activates only ~3B of 30B parameters per token, so decode is cheap, but the full ~30B
+weight set must be resident. In bf16 that is roughly 60 GB, so plan for multi-GPU or a
+first-party GGUF or 3-bit quantization to fit a single high-VRAM card. The hybrid Mamba-2 design
+keeps the inference cache near-constant as context grows, so serving up to 256k tokens does not
+blow up VRAM the way a dense transformer's KV cache would. Size for the largest variant to serve
+and budget headroom.
 
 <!-- item: serving -->
 ## Serving stacks
 
-Because Soofi-S is a **custom architecture**, runtime support is still maturing - check your stack's
-version before committing:
+Runtime support for the custom architecture is still maturing, so check the stack's version
+before committing:
 
 | Stack | Use it for |
 |---|---|
-| **llama.cpp / llama-server** | GGUF inference; `--jinja` applies the embedded chat/tool template verbatim |
-| **vLLM** | High-throughput + OpenAI-compatible API (needs `--trust-remote-code`; confirm hybrid-arch support) |
-| **Ollama** | Local single-command runs (note: its template omits the native tool format) |
-| **transformers** | Prototyping and fine-tuning (`trust_remote_code=True`) |
+| llama.cpp / llama-server | GGUF inference; `--jinja` applies the embedded chat/tool template verbatim |
+| vLLM | High-throughput + OpenAI-compatible API (needs `--trust-remote-code`; confirm hybrid-arch support) |
+| Ollama | Local single-command runs (note: its template omits the native tool format) |
+| transformers | Prototyping and fine-tuning (`trust_remote_code=True`) |
 
-This is why Operational Readiness scores **4** rather than 5: the breadth is there, but the custom
-Mamba-2/MoE and cross-runtime tool-template quirks demand more care than a plain Llama-class model.
+Operational Readiness scores 4. The breadth is there, but the custom Mamba-2/MoE and
+cross-runtime tool-template quirks need more care than a plain Llama-class model.
 
 <!-- item: safe-deployment -->
 ## Safe-deployment controls & Deployment Ceiling
 
-Applying the [safe-deployment playbook](../../methodology/safe-deployment-playbook.md), the
+Apply the [safe-deployment playbook](../../methodology/safe-deployment-playbook.md). The
 model-specific gate rows are:
 
-- **Supply chain:** pin the exact `Soofi-Project` revision hash and verify checksums; prefer
-  safetensors (`trust_remote_code=True` runs vendor modelling code - review it).
-- **Model layer:** deploy the **Instruct-Preview** variant, never the base checkpoint; set
+- Supply chain: pin the exact `Soofi-Project` revision hash and verify checksums; prefer
+  safetensors. `trust_remote_code=True` runs vendor modelling code, so review it.
+- Model layer: deploy the Instruct-Preview variant, never the base checkpoint, and set
   conservative decoding defaults.
-- **Input/output layers:** add input/output guardrails and your **own** guard classifier for any
-  customer-facing path - Soofi-S ships no companion guard model and its safety features are
-  documented as **incomplete**; add prompt-injection defences and treat retrieved/tool content as
-  untrusted.
-- **Compliance:** archive the (readily available) per-source training-content summary and copyright
-  posture in your AI-BOM.
+- Input/output layers: add guardrails and your own guard classifier for any customer-facing path,
+  because Soofi-S ships no companion guard model and its safety features are documented as
+  incomplete. Add prompt-injection defences and treat retrieved and tool content as untrusted.
+- Compliance: archive the per-source training-content summary and copyright posture in your
+  AI-BOM; the source data is readily available.
 
-**Deployment Ceiling: T2 (customer-facing, human-reviewed) - conditional, and preview-caveated.**
-With the Instruct-Preview variant plus input/output guardrails and prompt-injection defences,
-Soofi-S can *in principle* reach customer-facing, human-reviewed use - but because it is an early
-preview with incomplete safety hardening, **pilot it internally first**. Its standout strengths are
-**European sovereignty, auditability and long-context economics**. T3+ (bounded autonomous)
-additionally needs a deterministic action-policy engine, per-action human approval for irreversible
-operations, and external guard tooling beyond what this release provides.
+Deployment Ceiling: T2 (customer-facing, human-reviewed), conditional and preview-caveated. With
+the Instruct-Preview variant, input/output guardrails and prompt-injection defences, Soofi-S can
+in principle reach customer-facing, human-reviewed use. It is an early preview with incomplete
+safety hardening, so pilot it internally first. Its strengths are European sovereignty,
+auditability and long-context economics. T3+ (bounded autonomous) also needs a deterministic
+action-policy engine, per-action human approval for irreversible operations and external guard
+tooling beyond what this release provides.
 
 <!-- item: quantization -->
 ## Available quantizations
 
-The `Soofi-Project` org publishes **first-party GGUF** builds for the preview variants and an
-**EntQuant 3-bit** build, so quantized inference does not depend solely on community efforts. This
-is unusually good coverage for a preview - but re-check quality against the bf16 base for your
-workload before relying on an aggressive (e.g. 3-bit) quant in production.
+The `Soofi-Project` org publishes first-party GGUF builds for the preview variants and an
+EntQuant 3-bit build, so quantized inference does not depend solely on community efforts.
+Coverage is good for a preview. Test quality against the bf16 base for your workload before
+relying on an aggressive (e.g. 3-bit) quant in production.
 
 <!-- item: fine-tuning -->
 ## Fine-tuning & adaptation
 
-Soofi-S is built for fine-tuning, but the rights are not there yet. The **training code** is
-public (`soofi-project/Soofi-Pretraining`, with no licence file; `soofi-trainer`, MIT) and the
-**per-source data accounting** documents the recipe, so the project could in principle be
-reproduced or extended. The weights and the intermediate Megatron checkpoint are manually gated, and
-no licence in force grants adaptation or redistribution of derivatives, so confirm the terms of your
-access approval before fine-tuning. If you have access, standard **SFT/LoRA** via `transformers` /
-TRL on the safetensors checkpoints is the practical path. Note the EU AI Act provider
-implications of placing a derivative on the market (see Assess).
+Soofi-S is built for fine-tuning, but the rights are not there yet. The training code is public
+(`soofi-project/Soofi-Pretraining`, with no licence file; `soofi-trainer`, MIT) and the
+per-source data accounting documents the recipe, so the project could in principle be reproduced
+or extended. The weights and the intermediate Megatron checkpoint are manually gated, and no
+licence in force grants adaptation or redistribution of derivatives. Confirm the terms of your
+access approval before fine-tuning. With access, standard SFT/LoRA via `transformers` / TRL on
+the safetensors checkpoints is the practical path. Placing a derivative on the market carries EU
+AI Act provider implications (see Assess).
 
 <!-- item: integration -->
 ## API / OpenAI-compatible integration
 
-Serve Soofi-S behind **vLLM's** or **llama-server's OpenAI-compatible endpoint** for drop-in
+Serve Soofi-S behind the OpenAI-compatible endpoint of vLLM or llama-server for drop-in
 integration with existing OpenAI-client code:
 
 ```bash
@@ -117,6 +114,6 @@ llama-server -m soofi-s-instruct-preview.Q4_K_M.gguf --jinja --port 8000
 # then point any OpenAI SDK at http://localhost:8000/v1
 ```
 
-Use `--jinja` (llama.cpp) so the model's **embedded chat/tool template** is applied verbatim - that
-is what makes native tool calling work; some runtimes (e.g. Ollama) strip the tool portion, so
-verify the template your endpoint actually applies.
+Use `--jinja` (llama.cpp) so the model's embedded chat/tool template is applied verbatim, which
+is what makes native tool calling work. Some runtimes (e.g. Ollama) strip the tool portion, so
+verify the template your endpoint applies.

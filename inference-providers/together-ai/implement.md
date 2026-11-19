@@ -1,7 +1,6 @@
 # Implement - Together AI
 
-_How do we integrate it? API integration, authentication, region/ZDR configuration, rate limits
-and portability live here._
+_API integration, authentication, region and zero-retention configuration, rate limits and portability._
 
 <!-- item: integration -->
 ## API integration
@@ -18,18 +17,18 @@ A Messages API and a Responses API are also listed.
 
 Authentication uses a **bearer API key** (`TOGETHER_API_KEY`). Organisation admins control three
 privacy toggles (Prompt storage, Passthrough models, Model training) in Organization Settings, and
-the docs list roles and permissions (RBAC) and single sign-on under administration. Key rotation
-and project-scoping detail was not read. An organisation on the Limited tier must add a payment
-method before changing the privacy settings.
+the docs list roles and permissions (RBAC) and single sign-on under administration. No
+key-rotation or project-scoping detail is stated. An organisation on the Limited tier must add a
+payment method before changing the privacy settings.
 
 <!-- item: region-config -->
 ## Region & ZDR configuration
 
 **ZDR is not the default.** An organisation admin turns off Prompt storage in the Privacy section
-of Organization Settings; that also disables passthrough models, and it applies only to later
-requests. For US-only processing send requests to `us-api.together.ai` (1.25x rates, 8 models; a
-model that is not available there fails with 404 `region_unavailable` rather than falling back,
-so do not retry against `api.together.ai`). EU residency is not self-serve: it needs a dedicated
+of Organization Settings. That also disables passthrough models, and it applies only to later
+requests. For US-only processing send requests to `us-api.together.ai` (1.25x rates, 8 models). A
+model that is not available there fails with 404 `region_unavailable` and does not fall back, so
+do not retry against `api.together.ai`. EU residency is not self-serve: it needs a dedicated
 endpoint or VPC deployment arranged with sales.
 
 <!-- item: rate-limits -->
@@ -39,12 +38,12 @@ Serverless is **best-effort**: under high demand you may see 429 or 503, and the
 exponential backoff. Together may apply model-specific limits or access restrictions to models in
 high demand. Purchased limits on legacy Enterprise and Scale contracts stay until the contract
 expires. Committed throughput and a defined SLA come from provisioned throughput through sales.
-The numeric per-tier limits were not read.
+Numeric per-tier limits are not stated.
 
 <!-- item: portability -->
 ## Portability & exit
 
 Together speaks the **OpenAI-compatible API** over **portable open-weight checkpoints**, and
 third-party analysis lists the same models across many providers, so exit is a base-URL change plus
-output re-validation. With ZDR on, no prompt history is kept; files you uploaded for fine-tuning
+output re-validation. With ZDR on, no prompt history is kept. Files you uploaded for fine-tuning
 or batch jobs stay stored until you delete them through the API, CLI or console.

@@ -9,29 +9,7 @@ id: llama-cpp-gguf
 name: llama.cpp / GGUF
 kind: serving_engine
 operator: ggml-org (core maintainers employed by Hugging Face since February 2026) / open-source community
-summary: 'llama.cpp is the community serving engine and GGUF is its single-file container
-  format (weights + tokenizer + metadata + chat template). It is not itself a hub:
-  you obtain weights elsewhere (usually Hugging Face), convert to GGUF with convert_hf_to_gguf.py,
-  quantize with llama-quantize (Q4_K_M, Q5_K_M, Q8_0, etc.), and run with llama-cli
-  / llama-server (the README now also shows a "llama cli" / "llama serve" front end);
-  community quantizers (bartowski, unsloth) redistribute prebuilt GGUFs on HF. The
-  engine is plain MIT (read raw, 2026-11-19), and v1.0.0 shipped on 2026-11-13 with
-  semantic versioning for the C API. The format is a genuine safety plus - GGUF is
-  tensor + metadata with no pickle-style code-execution on load. But the loaders have
-  real, repeatedly found weaknesses: the GGUF chat-template Jinja2 SSTI leading to
-  RCE in llama-cpp-python < 0.2.72 is CVE-2024-34359 (patched 0.2.72); the same bug
-  class hit SGLang as CVE-2026-5760 (fixed 0.5.11); and the llama.cpp GGUF parser
-  keeps producing memory-safety CVEs - heap and integer overflows in gguf_init_from_file
-  and gguf_init_from_reader through 2026, with ZDI publishing two GGUF-parsing bugs
-  as remote code execution on 2026-11-13. Poisoned templates can also plant inference-time
-  backdoors that run on every prompt. Because the engine/format carries no native provenance,
-  malware scanning or signing, your safety comes entirely from where you got the GGUF
-  and your own discipline: pull from the canonical publisher or a reputable quantizer,
-  pin and hash the source revision, keep llama.cpp and llama-cpp-python current, inspect
-  the chat template before serving, and sandbox the loader. The project itself says
-  there is no reliable way to detect a malicious model and recommends sandboxing.
-
-  '
+summary: "llama.cpp is the community serving engine and GGUF is its single-file container format (weights, tokenizer, metadata and chat template). It is not a hub. Weights come from elsewhere (usually Hugging Face), are converted to GGUF with convert_hf_to_gguf.py, quantized with llama-quantize (Q4_K_M, Q5_K_M, Q8_0, etc.) and run with llama-cli or llama-server; the README also shows a \"llama cli\" / \"llama serve\" front end. Community quantizers (bartowski, unsloth) redistribute prebuilt GGUFs on HF. The engine is plain MIT, and v1.0.0 shipped on 2026-11-13 with semantic versioning for the C API. GGUF is tensor plus metadata with no pickle-style code execution on load, which is a safety plus. The loaders have repeatedly had weaknesses. The GGUF chat-template Jinja2 SSTI leading to RCE in llama-cpp-python < 0.2.72 is CVE-2024-34359 (patched 0.2.72). The same bug class hit SGLang as CVE-2026-5760 (fixed 0.5.11). The llama.cpp GGUF parser keeps producing memory-safety CVEs: heap and integer overflows in gguf_init_from_file and gguf_init_from_reader through 2026, with ZDI publishing two GGUF-parsing bugs as remote code execution on 2026-11-13. Poisoned templates can also plant inference-time backdoors that run on every prompt. The engine and format carry no native provenance, malware scanning or signing. Safety therefore depends on the source of the GGUF and the deployer's discipline: pull from the canonical publisher or a reputable quantizer, pin and hash the source revision, and keep llama.cpp and llama-cpp-python current. Inspect the chat template before serving and sandbox the loader. The project says there is no reliable way to detect a malicious model and recommends sandboxing."
 distribution_mechanism: 'Not a hub. Obtain weights (usually from Hugging Face), convert
   to GGUF (convert_hf_to_gguf.py), quantize (llama-quantize), and run with llama-cli
   / llama-server. GGUF is a single-file container (weights + tokenizer + metadata
@@ -56,21 +34,12 @@ provenance:
     '
   checksums: 'yes'
   revision_pinning: 'yes'
-  gating_enforcement: none (inherits whatever gating the source hub enforces)
+  gating_enforcement: none (gating depends on the source hub)
 format_safety:
   safetensors_default: n/a
   pickle_handling: n/a
   trust_remote_code_surface: 'GGUF is tensor + metadata with no pickle-style code-execution
-    on load - a safety plus versus pickle. Concrete residual risks: (1) GGUF chat-template
-    Jinja2 SSTI leading to RCE - CVE-2024-34359 in llama-cpp-python 0.2.30 to 0.2.71,
-    patched in 0.2.72; JFrog states no code execution occurs on >= 0.2.72 or in other
-    GGUF libraries such as ollama; the same class hit SGLang as CVE-2026-5760 (/v1/rerank,
-    fixed in 0.5.11); (2) poisoned-template inference-time backdoors, where malicious
-    instructions in the template layer execute on every prompt; (3) loader memory
-    safety - gguf_init_from_file() historically did not validate n_kv, and 2026 brought
-    further integer and heap overflows in gguf_init_from_reader and the multimodal
-    projector loader, two of which ZDI labelled remote code execution (user interaction
-    required); (4) llama-server, RPC backend and state-restore bugs, which concern
+    on load - a safety plus versus pickle. Concrete residual risks follow. (1) GGUF chat-template Jinja2 SSTI leading to RCE - CVE-2024-34359 in llama-cpp-python 0.2.30 to 0.2.71, patched in 0.2.72. JFrog states no code execution occurs on >= 0.2.72 or in other GGUF libraries such as ollama. The same class hit SGLang as CVE-2026-5760 (/v1/rerank, fixed in 0.5.11). (2) Poisoned-template inference-time backdoors, where malicious instructions in the template layer execute on every prompt. (3) Loader memory safety - gguf_init_from_file() historically did not validate n_kv. 2026 brought further integer and heap overflows in gguf_init_from_reader and the multimodal projector loader. ZDI labelled two of them remote code execution (user interaction required). (4) llama-server, RPC backend and state-restore bugs, which concern
     the server and not the file format.
 
     '
@@ -89,12 +58,7 @@ format_safety:
     (ZDI-26-954 multimodal projector GGUF parsing RCE), advisories published 2026-11-13;
     ZDI states llama.cpp issued an update
   - CVE-2026-52131 - reachable assertion in gguf_reader::read (b5693 and before, DoS)
-license_surfacing: 'The engine is plain MIT ("Copyright (c) 2023-2026 The ggml authors",
-  raw LICENSE read 2026-11-19), which covers the code only. The engine/format surfaces
-  no weights licence itself; whatever licence and gating attach to the weights come
-  from wherever you obtained the GGUF (usually a Hugging Face repo).
-
-  '
+license_surfacing: "The engine is plain MIT (\"Copyright (c) 2023-2026 The ggml authors\"), which covers the code only. The engine and format surface no weights licence. Whatever licence and gating attach to the weights come from wherever the GGUF was obtained (usually a Hugging Face repo)."
 security_track_record:
   incidents:
   - date: '2024-05-10'
@@ -104,11 +68,7 @@ security_track_record:
     severity: critical
     url: https://research.jfrog.com/model-threats/gguf-ssti/
   - date: '2026-04-20'
-    summary: CVE-2026-5760 - the same bug class in SGLang's /v1/rerank endpoint (GGUF
-      tokenizer.chat_template rendered with an unsandboxed Jinja2 environment), fixed
-      in SGLang 0.5.11. Earlier versions of this entry attributed this CVE to llama-cpp-python;
-      that was wrong. CERT/CC records that no response was obtained from the SGLang
-      maintainers during coordination.
+    summary: "CVE-2026-5760 - the same bug class in SGLang's /v1/rerank endpoint (GGUF tokenizer.chat_template rendered with an unsandboxed Jinja2 environment), fixed in SGLang 0.5.11. CERT/CC records that no response was obtained from the SGLang maintainers during coordination."
     severity: critical
     url: https://www.kb.cert.org/vuls/id/915947
   - date: 2024-2026
@@ -127,9 +87,7 @@ security_track_record:
     url: https://www.zerodayinitiative.com/advisories/ZDI-26-975/
   response_notes: 'Fixes land quickly for most reports, and ZDI states the vendor issued
     an update before publication, but the record has two weaknesses. First, the project
-    disabled its private security-disclosure channel on 2026-06-01 (SECURITY.md: submit
-    patches as public PRs, emails ignored), and its GitHub advisory feed has not been
-    updated since 2026-03-26 while NVD lists roughly thirty later llama.cpp and GGUF
+    disabled its private security-disclosure channel on 2026-06-01 (SECURITY.md: submit patches as public PRs, emails ignored). Its GitHub advisory feed has not been updated since 2026-03-26, while NVD lists roughly thirty later llama.cpp and GGUF
     CVEs, so the first-party list is no longer a complete record. Second, one ZDI report
     took about five months from report to publication. Treat community-uploaded GGUFs
     like untrusted third-party software - the format''s data-only design does not
@@ -138,22 +96,11 @@ security_track_record:
     '
 trust_signals_exposed:
 - Fully open-source engine - code is auditable (a real transparency plus)
-- 'Source-hub provenance - GGUF has none of its own; trust is entirely inherited from
-  where you pulled it (note: gameable if the source hub''s signals are gameable)'
+- 'Source-hub provenance - GGUF has none of its own; trust depends entirely on where the
+  file was obtained (gameable if the source hub''s signals are gameable)'
 - Quantizer reputation (bartowski, unsloth, etc.) - informal, community reputation,
   not a verified identity
-self_hosting_notes: 'Prefer GGUFs from the model''s canonical publisher or a reputable
-  quantizer. Pin the exact source revision and verify SHA256. Keep llama.cpp and llama-cpp-python
-  current (llama-cpp-python >= 0.2.72 closes CVE-2024-34359; llama.cpp fixes land per
-  build tag, so track the bNNNN tag or v1.x release, not a date). INSPECT the GGUF
-  chat template / tokenizer config before serving - template injection runs at inference
-  time, on every prompt, not just at load. Sandbox the loader (no network, least privilege):
-  SECURITY.md states there are no reliable methods to detect malicious models and recommends
-  sandboxing, and advises against exposing the RPC backend or llama-server to untrusted
-  networks. If you run SGLang with GGUF models, use >= 0.5.11 (CVE-2026-5760). Check
-  the template against known-malicious signatures where feasible.
-
-  '
+self_hosting_notes: "Prefer GGUFs from the model's canonical publisher or a reputable quantizer. Pin the exact source revision and verify SHA256. Keep llama.cpp and llama-cpp-python current (llama-cpp-python >= 0.2.72 closes CVE-2024-34359; llama.cpp fixes land per build tag, so track the bNNNN tag or v1.x release, not a date). Inspect the GGUF chat template and tokenizer config before serving: template injection runs on every prompt at inference time, beyond the load step. Sandbox the loader (no network, least privilege). SECURITY.md states \"no reliable methods to detect malicious models\", recommends sandboxing, and advises against exposing the RPC backend or llama-server to untrusted networks. If SGLang runs GGUF models, use >= 0.5.11 (CVE-2026-5760). Check the template against known-malicious signatures where feasible."
 ecosystem_lockin: 'Minimal lock-in: llama.cpp is open-source and GGUF is the de facto
   local-inference standard, consumed by Ollama, LM Studio, text-generation-webui and
   many others. The format is maximally portable; conversion tooling is open.
@@ -167,75 +114,37 @@ score:
   dimensions:
     provenance_integrity:
       score: 2
-      rationale: 'As a format/engine, GGUF/llama.cpp carries no native provenance
-        - no verified orgs, no scanning, no signing. Integrity depends entirely on
-        the source hub''s checksums and your own revision-pinning discipline. That
-        sits below the score-3 anchor, which expects verified orgs plus scanning at
-        the distribution layer.
-
-        '
+      rationale: "As a format and engine, GGUF/llama.cpp carries no native provenance: no verified orgs, no scanning, no signing. Integrity depends entirely on the source hub's checksums and the deployer's revision-pinning discipline. That sits below the score-3 anchor, which expects verified orgs plus scanning at the distribution layer."
       evidence_refs:
       - ev1
       - ev2
     format_loader_safety:
       score: 3
-      rationale: 'GGUF''s data-only design (no code-exec on load) is a genuine plus
-        over pickle and earns the middle anchor, but the loaders have a real exploited
-        CVE history - the chat-template SSTI RCE (CVE-2024-34359, llama-cpp-python) and
-        a continuing run of GGUF parser overflows through 2026, two rated RCE by ZDI
-        in November 2026 - so the safety depends on keeping loaders current, pinning
-        versions and inspecting templates rather than being intrinsic. Re-read 2026-11-19:
-        the pattern is unchanged in kind, so the score stays at the middle anchor.
-
-        '
+      rationale: "GGUF's data-only design (no code execution on load) is a plus over pickle and earns the middle anchor. The loaders have an exploited CVE history: the chat-template SSTI RCE (CVE-2024-34359, llama-cpp-python) and a continuing run of GGUF parser overflows through 2026, two rated RCE by ZDI in November 2026. Safety therefore depends on keeping loaders current, pinning versions and inspecting templates, and is not intrinsic."
       evidence_refs:
       - ev2
       - ev4
       - ev5
     license_governance:
       score: 2
-      rationale: 'The engine itself is plain MIT (raw LICENSE read 2026-11-19), but the
-        engine/format surfaces and enforces nothing about the weights; all weights licence
-        clarity and gating are inherited from the source hub. On its own that is minimal
-        governance, below the enforced-gating anchor.
-
-        '
+      rationale: "The engine itself is plain MIT, but the engine and format surface and enforce nothing about the weights. All weights licence clarity and gating come from the source hub. On its own that is minimal governance, below the enforced-gating anchor."
       evidence_refs:
       - ev1
     security_track_record:
       score: 3
-      rationale: 'Real, documented loader vulnerabilities (SSTI RCE, heap overflows)
-        concentrate here and are actively researched; most are fixed within days of a
-        report, but the project disabled private disclosure on 2026-06-01, its advisory
-        feed stopped at 2026-03-26 while NVD lists about thirty later llama.cpp and
-        GGUF CVEs, and one ZDI report took about five months to publish. The middle
-        anchor reflects a format that is safe by design yet demands version and template
-        discipline. Re-read 2026-11-19; no score change.
-
-        '
+      rationale: "Documented loader vulnerabilities (SSTI RCE, heap overflows) concentrate here and are actively researched. Most are fixed within days of a report. The project disabled private disclosure on 2026-06-01. Its advisory feed stopped at 2026-03-26 while NVD lists about thirty later llama.cpp and GGUF CVEs, and one ZDI report took about five months to publish. The middle anchor reflects a format that is safe by design but demands version and template discipline."
       evidence_refs:
       - ev2
       - ev4
     transparency:
       score: 3
-      rationale: 'A clear plus that llama.cpp is fully open-source and independently
-        auditable, and the security research on GGUF is public. Held to the middle
-        anchor because the artifact itself exposes no provenance signal of its own
-        - a downloader must reason about trust entirely from the external source.
-
-        '
+      rationale: "llama.cpp is fully open-source and auditable, and the security research on GGUF is public. The score stays at the middle anchor because the artifact exposes no provenance signal of its own, so a downloader must reason about trust entirely from the external source."
       evidence_refs:
       - ev1
       - ev3
     ecosystem_portability:
       score: 5
-      rationale: 'GGUF is the de facto local-inference standard, consumed across Ollama,
-        LM Studio, text-generation-webui and more; the engine and conversion tooling
-        are open-source and the format is maximally portable. Its ubiquity is independently
-        attested by the security research that treats GGUF as the dominant local model
-        format.
-
-        '
+      rationale: "GGUF is the de facto local-inference standard, consumed across Ollama, LM Studio, text-generation-webui and more. The engine and conversion tooling are open-source and the format is maximally portable. Security research that treats GGUF as the dominant local model format attests to its ubiquity."
       evidence_refs:
       - ev2
       - ev5
@@ -256,35 +165,35 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev1, ev2]
-        summary: "As a format/engine GGUF/llama.cpp carries no native provenance - no verified orgs, no malware scanning, no signing. Integrity rests entirely on the source hub's checksums and your own revision-pinning discipline."
+        summary: "As a format/engine GGUF/llama.cpp carries no native provenance: no verified orgs, no malware scanning, no signing. Integrity rests on the source hub's checksums and the deployer's revision-pinning discipline."
       - key: format-safety
         title: "Format & loader safety"
         doc_type: explanation
         source_type: aggregated
         coverage: full
         refs: [ev2, ev4, ev5]
-        summary: "GGUF is tensor + metadata with no pickle-style code-exec on load (a plus), but loaders have a real CVE history: chat-template Jinja2 SSTI -> RCE (CVE-2024-34359, llama-cpp-python < 0.2.72; the same class hit SGLang as CVE-2026-5760), poisoned-template inference-time backdoors, and a run of GGUF parser overflows through 2026 including two ZDI-rated RCE bugs (November 2026)."
+        summary: "GGUF is tensor + metadata with no pickle-style code execution on load (a plus), but loaders have a CVE history. It includes chat-template Jinja2 SSTI -> RCE (CVE-2024-34359, llama-cpp-python < 0.2.72; the same class hit SGLang as CVE-2026-5760), poisoned-template inference-time backdoors, and a run of GGUF parser overflows through 2026 including two ZDI-rated RCE bugs (November 2026)."
       - key: license-governance
         title: "License surfacing & governance"
         doc_type: explanation
         source_type: aggregated
         coverage: partial
         refs: [ev1]
-        summary: "The engine/format surfaces and enforces no license itself; all license clarity and gating are inherited from wherever you obtained the GGUF (usually a Hugging Face repo)."
+        summary: "The engine/format surfaces and enforces no license itself; all license clarity and gating come from wherever the GGUF was obtained (usually a Hugging Face repo)."
       - key: security-record
         title: "Security track record"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev2, ev4]
-        summary: "Documented loader vulnerabilities concentrate in this ecosystem - CVE-2024-34359 SSTI RCE (patched in llama-cpp-python >= 0.2.72), SGLang CVE-2026-5760, and a continuing GGUF parser overflow class (2024 to November 2026) - actively researched and mostly fixed quickly, but the first-party advisory feed has lapsed."
+        summary: "Documented loader vulnerabilities concentrate in this ecosystem: CVE-2024-34359 SSTI RCE (patched in llama-cpp-python >= 0.2.72), SGLang CVE-2026-5760, and a continuing GGUF parser overflow class (2024 to November 2026). They are actively researched and mostly fixed quickly, but the first-party advisory feed has lapsed."
       - key: transparency
         title: "Transparency & trust signals"
         doc_type: explanation
         source_type: aggregated
         coverage: partial
         refs: [ev1, ev3]
-        summary: "The engine is fully open-source (plain MIT) and independently auditable and GGUF security research is public, but the artifact itself exposes no native provenance signal - trust is reasoned entirely from the external source and informal quantizer reputation."
+        summary: "The engine is fully open-source (plain MIT) and auditable, and GGUF security research is public. The artifact exposes no native provenance signal, so trust is reasoned entirely from the external source and informal quantizer reputation."
   implement:
     completeness: 87.5
     originality: 0.0
@@ -302,14 +211,14 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev1, ev2]
-        summary: "Verify the SHA256 against the source revision, keep llama.cpp and llama-cpp-python current (>= 0.2.72 closes the chat-template SSTI RCE CVE-2024-34359), and inspect the GGUF chat template / tokenizer config before serving since template injection runs on every prompt."
+        summary: "Verify the SHA256 against the source revision, keep llama.cpp and llama-cpp-python current (>= 0.2.72 closes the chat-template SSTI RCE CVE-2024-34359), and inspect the GGUF chat template and tokenizer config before serving, since template injection runs on every prompt."
       - key: pin-revision
         title: "Pin the source revision"
         doc_type: howto
         source_type: aggregated
         coverage: full
         refs: [ev1]
-        summary: "Because provenance is inherited, pin the exact source-hub revision of the GGUF you converted or downloaded so the artifact is reproducible and hashable."
+        summary: "Because provenance is inherited from the source hub, pin the exact revision of the GGUF that was converted or downloaded so the artifact is reproducible and hashable."
       - key: run-serve
         title: "Run & serve locally"
         doc_type: howto
@@ -321,7 +230,7 @@ documentation:
         title: "Disk & VRAM requirements"
         doc_type: reference
         source_type: gap
-        gap_reason: "Concrete disk / VRAM / hardware requirements per model and quantization level are not documented; footprint tracks the chosen quant (Q4_K_M, Q5_K_M, Q8_0, etc.) and target model and should be sized per case."
+        gap_reason: "Concrete disk, VRAM and hardware requirements per model and quantization level are not documented; footprint tracks the chosen quant (Q4_K_M, Q5_K_M, Q8_0, etc.) and target model and must be sized per case."
   use:
     completeness: 60.0
     originality: 0.0
@@ -330,14 +239,14 @@ documentation:
         title: "Catalog scope"
         doc_type: reference
         source_type: gap
-        gap_reason: "llama.cpp / GGUF is a serving engine and format, not a hub - it has no central catalog of its own. GGUF files are produced, converted and redistributed by the community and hosted elsewhere (usually Hugging Face), so there is no first-party catalog to document."
+        gap_reason: "llama.cpp / GGUF is a serving engine and format and not a hub, so it has no central catalog. GGUF files are produced, converted and redistributed by the community and hosted elsewhere (usually Hugging Face); no first-party catalog exists to document."
       - key: formats-supported
         title: "Formats supported"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev1, ev2]
-        summary: "GGUF is the single-file container format (weights + tokenizer + metadata + chat template), format version 3, the de facto local-inference standard, produced via convert_hf_to_gguf.py and quantized with llama-quantize; llama.cpp lists more than 150 architecture variants."
+        summary: "GGUF is the single-file container format (weights + tokenizer + metadata + chat template), format version 3 and the de facto local-inference standard. It is produced via convert_hf_to_gguf.py and quantized with llama-quantize; llama.cpp lists more than 150 architecture variants."
       - key: integration
         title: "Downstream integration"
         doc_type: explanation
@@ -376,23 +285,18 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev2, ev4, ev5]
-        summary: "Known caveats: chat-template SSTI RCE (CVE-2024-34359, llama-cpp-python; SGLang CVE-2026-5760 is a separate flaw), poisoned-template inference-time backdoors that run on every prompt, and recurring GGUF parser overflows (two rated RCE by ZDI in November 2026) - mitigated by keeping loaders current, inspecting templates and sandboxing."
+        summary: "Known caveats: chat-template SSTI RCE (CVE-2024-34359, llama-cpp-python; SGLang CVE-2026-5760 is a separate flaw) and poisoned-template inference-time backdoors that run on every prompt. Recurring GGUF parser overflows (two rated RCE by ZDI in November 2026) add to them. Mitigations are keeping loaders current, inspecting templates and sandboxing."
 
 evidence:
 - id: ev1
-  claim: llama.cpp is the open-source community serving engine; GGUF workflow (convert,
-    quantize, run) and single-file container format. Repository MIT-licensed, not archived,
-    pushed 2026-11-19, v1.0.0 released 2026-11-13.
+  claim: "llama.cpp is the open-source community serving engine, with a GGUF workflow (convert, quantize, run) and a single-file container format. The repository is MIT-licensed and not archived; v1.0.0 was released 2026-11-13."
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://github.com/ggml-org/llama.cpp
   date: '2026-11-19'
 - id: ev2
-  claim: JFrog states the only publicly known GGUF-to-RCE template injection is CVE-2024-34359
-    in llama-cpp-python < 0.2.72, with no code execution on >= 0.2.72 or in other GGUF
-    libraries such as ollama. (Earlier text attributed CVE-2026-5760 to this flaw; that
-    CVE is the SGLang bug.)
+  claim: "JFrog states that the only publicly known GGUF-to-RCE template injection is CVE-2024-34359 in llama-cpp-python < 0.2.72, with no code execution on >= 0.2.72 or in other GGUF libraries such as ollama."
   source_type: third_party
   doc_type: third_party
   retrieved: true

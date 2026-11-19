@@ -1,39 +1,25 @@
 # Support - Qwen (Qwen3 family)
 
-_How do we keep it running and get help? Troubleshooting, release/versioning, community
-channels and known issues live here; security disclosure and deprecation are documented gaps
-below._
+_Troubleshooting, versions, security disclosure, channels and deprecation._
 
 <!-- item: troubleshooting -->
 ## Common problems & fixes
 
-Aggregated pitfalls from the model cards and ecosystem:
+Common pitfalls from the model cards and ecosystem are out-of-memory errors on the large variants (235B MoE, 480B-Coder), chat-template or thinking-mode mismatch, and checksum drift across hubs.
 
-- **OOM on the large variants** (235B MoE, 480B-Coder) - quantize or add GPUs.
-- **Chat-template / thinking-mode mismatch** - apply the tokenizer's chat template and decide
-  on thinking vs non-thinking mode explicitly.
-- **Checksum drift across hubs** - verify Hugging Face and ModelScope weights match and pin
-  the revision.
-
-This is a starting catalogue; it does not cover every case.
+Quantise or add GPUs for the first. Apply the tokenizer's chat template and choose thinking or non-thinking mode explicitly for the second. Verify that Hugging Face and ModelScope weights match and pin the revision for the third. The list is a starting catalogue.
 
 <!-- item: release-versioning -->
 ## Versions, changelog & cadence
 
-Qwen ships on a **rapid generational cadence** (Qwen3 dense, MoE and Coder lines), tracked
-as **immutable revisions** on the verified Qwen org across **Hugging Face and ModelScope**.
-Pin to a specific revision for reproducibility.
+Qwen ships on a rapid generational cadence (Qwen3 dense, MoE and Coder lines), tracked as immutable revisions on the verified Qwen org across Hugging Face and ModelScope. Pin a specific revision for reproducibility.
 
 <!-- item: channels -->
 ## Community & support channels
 
-Support is **community-driven**: Qwen **Hugging Face** and **ModelScope** org discussions,
-plus a broad presence across serving-stack ecosystems (Ollama, vLLM). There is no
-enterprise support desk documented for the open weights.
+Support is community-driven: Qwen Hugging Face and ModelScope org discussions, plus a broad presence across serving-stack ecosystems (Ollama, vLLM). No enterprise support desk is documented for the open weights.
 
 <!-- item: known-issues -->
 ## Tracked known issues
 
-From the model-card and third-party caveats: **China-aligned topic censorship**, **lighter
-safety coverage** than frontier labs, and an **unclosed EU Article 55 gap** on the largest
-(systemic-risk) variants.
+Known issues are China-aligned topic censorship, lighter safety coverage than at frontier labs, and an unclosed EU Article 55 gap on the largest (systemic-risk) variants.

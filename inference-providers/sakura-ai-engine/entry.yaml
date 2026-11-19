@@ -11,18 +11,18 @@ name: Sakura Internet AI Engine
 profile: inference
 hq_country: Japan
 summary: >-
-  A shared, pay-as-you-go inference API run by Sakura Internet Inc. (headquartered in Osaka), serving
-  mostly open-weight models (gpt-oss-120b, Qwen3, Gemma 4, Kimi, GLM, DeepSeek, llm-jp) plus two closed
-  Japanese models, through OpenAI-compatible and Anthropic-compatible APIs. The binding terms were read in
-  full on 2026-11-19. Art. 10 of the AI Engine terms bars Sakura from using inputs, from giving them to
-  third parties including model providers, and bars AI training on them by Sakura or the model provider. It
-  does not promise zero retention. Inputs and outputs may be held, encrypted, for an undefined "certain
-  period" for maintenance and fault handling. Sakura's product pages say "not stored at all" and "ZDR", and
-  say model execution, communication and storage are all in Japan. The terms contain no location clause
-  and no sub-processor list, and the basic terms say referenced web pages are not part of the contract. No
-  DPA was found, AI Engine is outside the SLA, and the security certifications Sakura publishes name Sakura
-  Cloud rather than AI Engine. A dedicated "Private Edition" exists for Japanese corporations only, under
-  separate terms read in full.
+  A shared, pay-as-you-go inference API run by Sakura Internet Inc. (headquartered in Osaka),
+  serving mostly open-weight models (gpt-oss-120b, Qwen3, Gemma 4, Kimi, GLM, DeepSeek, llm-jp)
+  plus two closed Japanese models, through OpenAI-compatible and Anthropic-compatible APIs. Art.
+  10 of the AI Engine terms bars Sakura from using inputs and from giving them to third parties
+  including model providers, and bars AI training on them by Sakura or the model provider. It does
+  not promise zero retention: inputs and outputs may be held, encrypted, for an undefined "certain
+  period" for maintenance and fault handling. Sakura's product pages say "not stored at all" and
+  "ZDR", and say model execution, communication and storage are all in Japan. The terms contain no
+  location clause and no sub-processor list, and the basic terms say referenced web pages are not
+  part of the contract. No DPA is published, AI Engine is outside the SLA, and the security
+  certifications Sakura publishes name Sakura Cloud and not AI Engine. A dedicated "Private
+  Edition" exists for Japanese corporations only, under separate terms.
 models_served:
   - 'gpt-oss-120b (Apache-2.0)'
   - 'llm-jp-3.1-8x13b-instruct4 (Apache-2.0)'
@@ -36,27 +36,28 @@ models_served:
   - 'Phi-4-mini-instruct on CPU (MIT, public preview)'
   - 'Whisper large-v3-turbo (transcription), multilingual-e5-large and Qwen3-Embedding-4B (embeddings), VOICEVOX voices (speech)'
   - 'Closed, by application only: PLaMo 3.0 Prime (Preferred Networks), cotomi v3 (NEC)'
-hardware: 'Not stated on the pages read (Sakura-operated GPU platform in Japan; GPU type not documented)'
+hardware: >-
+  Not stated (Sakura-operated GPU platform in Japan; GPU type not documented)
 pricing:
   model: per-token
   notes: >-
-    Pay-as-you-go in Japanese yen per 10,000 tokens, tax included, read from Sakura's product page. A free
-    foundation-model plan gives a monthly request allowance on selected models. RAG document storage is
-    billed per 100 chunks with no free allowance and keeps billing until every document is deleted. Credit
-    card only unless Sakura approves otherwise (AI Engine terms Art. 6). Private Edition is a flat monthly
-    fee per GPU, quote on request, bank transfer, minimum 2 months (Private Edition terms Art. 5, 7).
+    Pay-as-you-go in Japanese yen per 10,000 tokens, tax included, per Sakura's product page. A
+    free foundation-model plan gives a monthly request allowance on selected models. RAG document
+    storage is billed per 100 chunks with no free allowance and keeps billing until every document
+    is deleted. Credit card only unless Sakura approves otherwise (AI Engine terms Art. 6).
+    Private Edition is a flat monthly fee per GPU, quote on request, bank transfer, minimum 2
+    months (Private Edition terms Art. 5, 7).
   example_rates:
     - 'gpt-oss-120b: 0.15 yen input and 0.75 yen output per 10,000 tokens (3,000 free requests a month)'
     - 'Kimi-K2.7-Code (preview): 0.52 yen input and 5.04 yen output per 10,000 tokens'
     - 'GLM-5.3-Flash and DeepSeek-V4.1-Flash-1017 (preview): 0.4 yen input and 4.0 yen output per 10,000 tokens'
     - 'multilingual-e5-large: 2 yen per 10,000 input tokens; whisper-large-v3-turbo: 0.5 yen per 60 seconds'
 data_governance:
-  default_retention: >-
-    Terms Art. 10(1) (第10条第1項): inputs and outputs are "in principle not stored" (原則として保存されません),
-    but may be stored "for a certain period" (一定期間) in Sakura's facilities for maintenance or fault
-    handling, kept encrypted and deleted after that period. The period is not defined in any document read.
-    Documents uploaded to the RAG feature are kept until the customer deletes them (manual, not in the
-    terms).
+  default_retention: "Terms Art. 10(1) (第10条第1項): inputs and outputs are \"in principle not stored\" (原則として保存されません).
+    They may be stored \"for a certain period\" (一定期間) in Sakura's facilities for maintenance or
+    fault handling, kept encrypted and deleted after that period. The period is not defined in any
+    terms document. Documents uploaded to the RAG feature are kept until the customer deletes them
+    (manual, not in the terms)."
   trains_on_inputs: never
   zdr_available: unclear
   zdr_scope_caveats: >-
@@ -69,10 +70,10 @@ data_governance:
   customer_data_ownership: customer_retains
   outputs_used_to_improve_service: unclear
   third_party_routing_leakage: >-
-    Art. 10(2) says inputs are not given to third parties including model providers. The manual says all
-    served models are hosted by Sakura and that closed-model providers (PFN, NEC) receive no data. The
-    closed-model end-user terms (PLaMo, cotomi) bind the customer, not Sakura, and PLaMo bars entering
-    personal information. No third-party model routing was found.
+    Art. 10(2) says inputs are not given to third parties including model providers. The manual
+    says all served models are hosted by Sakura and that closed-model providers (PFN, NEC) receive
+    no data. The closed-model end-user terms (PLaMo, cotomi) bind the customer and not Sakura, and
+    PLaMo bars entering personal information. No third-party model routing is documented.
   subprocessors_disclosed: false
   confidentiality: explicit
   confidentiality_caveats: >-
@@ -95,14 +96,15 @@ compliance:
     Engine is not in its scope.
   trust_center_url: https://www.sakura.ad.jp/corporate/security/
   scope_notes: >-
-    ISO/IEC 27001 (ICMS-SR0063), ISMS cloud security (ISO/IEC 27017 based, Cloud-SR0063), ISO/IEC 27018
-    (CloudPII-SR0063), ISMAP, PCI DSS (physical requirements 9 and 12 only) and Privacy Mark are held at
-    company level. The registered scopes of the cloud, ISO 27018 and ISMAP certificates name Sakura Cloud
-    (Tokyo and Ishikari regions). AI Engine is named in none of them, though it is sold inside the Sakura
-    Cloud console. SOC 3 (independent auditor, unqualified, 2025-06-01 to 2026-05-31) covers the Ishikari
-    data centre, not AI Engine. A SOC 2 Type 2 report for the Ishikari data centre and a SOC 2 Type 1 report
-    for Sakura Cloud exist and are disclosed on request; neither was read. No DPA, GDPR addendum or
-    sub-processor list was found, so gdpr_dpa is unknown (none located), not a confirmed absence.
+    ISO/IEC 27001 (ICMS-SR0063), ISMS cloud security (ISO/IEC 27017 based, Cloud-SR0063), ISO/IEC
+    27018 (CloudPII-SR0063), ISMAP, PCI DSS (physical requirements 9 and 12 only) and Privacy Mark
+    are held at company level. The registered scopes of the cloud, ISO 27018 and ISMAP
+    certificates name Sakura Cloud (Tokyo and Ishikari regions). AI Engine is named in none of
+    them, though it is sold inside the Sakura Cloud console. SOC 3 (independent auditor,
+    unqualified, 2025-06-01 to 2026-05-31) covers the Ishikari data centre, not AI Engine. A SOC 2
+    Type 2 report for the Ishikari data centre and a SOC 2 Type 1 report for Sakura Cloud exist
+    and are disclosed on request; neither is verified. No DPA, GDPR addendum or sub-processor list
+    has been located, so gdpr_dpa is unknown and not a confirmed absence.
 residency:
   eu_region_available: 'no'
   regions:
@@ -113,28 +115,29 @@ residency:
     (Art. 2(4)). Dedicated scope is the GPU platform only, not VM, storage, API or network unless agreed.
   region_pinning: 'no'
   cloud_act_exposure: false
-  provider_can_restrict_access: >-
-    Sakura is a Japanese company under Japanese law (basic terms Art. 32), Tokyo District Court (Art. 33).
-    It is not subject to the US CLOUD Act as a US company, but its terms import US export control: it may
-    refuse or bar users on the Japanese METI Foreign End User List, the US BIS Denied Persons List or Entity
-    List, or from embargoed countries (AI Engine terms Art. 3, 12). It may end a service on one month's
-    notice, immediately where authorities order it or a technology supplier relationship ends (basic terms
-    Art. 28), end the free plan at its discretion (Art. 2(3)), and withdraw preview models without notice
-    (manual). Applicants must reside in a "designated country" (basic terms Art. 5(3)); the list is not in
-    any document read.
+  provider_can_restrict_access: "Sakura is a Japanese company under Japanese law (basic terms Art. 32), Tokyo District Court
+    (Art. 33). It is not subject to the US CLOUD Act as a US company. Its terms import US export
+    control. Sakura may refuse or bar users on the Japanese METI Foreign End User List, the US BIS
+    Denied Persons List or Entity List, or from embargoed countries (AI Engine terms Art. 3, 12). It
+    may end a service on one month's notice, or immediately where authorities order it or a
+    technology supplier relationship ends (basic terms Art. 28). It may end the free plan at its
+    discretion (Art. 2(3)) and withdraw preview models without notice (manual). Applicants must
+    reside in a \"designated country\" (basic terms Art. 5(3)); the list is not published in any
+    terms document."
 reliability:
-  sla: >-
-    None for AI Engine. The manual states the service is outside quality assurance (SLA). Private Edition
-    terms Art. 11 give best effort unless an SLA is written into the service site, order form or other
-    document. The only remedy found is basic terms Art. 29(3): where a continuously provided service is
-    wholly unusable for 24 hours or more for a reason attributable to Sakura, compensation of actual ordinary
-    damage on request, capped at one thirtieth of one month's basic fee per whole day of outage, or a term
-    extension if under 10,000 yen. How that applies to a usage-billed service is not stated.
+  sla: "None for AI Engine. The manual states the service is outside quality assurance (SLA). Private
+    Edition terms Art. 11 give best effort unless an SLA is written into the service site, order
+    form or other document. The only remedy is basic terms Art. 29(3). It applies where a
+    continuously provided service is wholly unusable for 24 hours or more for a reason attributable
+    to Sakura. The remedy is compensation of actual ordinary damage on request, capped at one
+    thirtieth of one month's basic fee per whole day of outage, or a term extension if under 10,000
+    yen. How that applies to a usage-billed service is not stated."
   uptime_notes: >-
-    The public Sakura Cloud status page (status.cloud.sakura.ad.jp) lists Cloud API per zone, the website and
-    appliances. AI Engine is not a listed component, so no public uptime history for it was found. The
-    general maintenance and incident page was not readable. Per-request time limit is about 5 minutes; HTTP
-    429 is returned under load even on the free plan.
+    The public Sakura Cloud status page (status.cloud.sakura.ad.jp) lists Cloud API per zone, the
+    website and appliances. AI Engine is not a listed component, so no public uptime history for
+    it exists on that page. The general maintenance and incident page renders by script and its
+    content is unverified. Per-request time limit is about 5 minutes; HTTP 429 is returned under
+    load even on the free plan.
   incidents: []
 lock_in:
   openai_compatible_api: true
@@ -147,49 +150,52 @@ lock_in:
     closed models (PLaMo, cotomi) run only on Sakura and bar fine-tuning, distillation and derived models.
 dedicated_availability: available
 dedicated_notes: >-
-    AI Engine Private Edition: managed hosting of the customer's own model on a GPU platform dedicated to the
-    customer, flat monthly fee per GPU on quote, bank transfer. Minimum initial term 2 months or about 1 year
-    chosen at order; the shared AI Engine contract cannot be cancelled while Private Edition continues.
-    Japanese corporations only (Art. 3). Terms published and read in full (in force 2026-11-02). The page
-    says "dedicated environment", but Art. 2(2) limits exclusivity to the GPU platform named in the order.
-    No on-prem or air-gapped option was found.
+  AI Engine Private Edition: managed hosting of the customer's own model on a GPU platform
+  dedicated to the customer, flat monthly fee per GPU on quote, bank transfer. Minimum initial
+  term 2 months or about 1 year chosen at order; the shared AI Engine contract cannot be cancelled
+  while Private Edition continues. Japanese corporations only (Art. 3). Terms are published (in
+  force 2026-11-02). The page says "dedicated environment", but Art. 2(2) limits exclusivity to
+  the GPU platform named in the order. No on-prem or air-gapped option is documented.
 trust_considerations:
   - >-
-    The binding AI Engine terms (Art. 10(2)) bar use of inputs, bar giving them to third parties including
-    model providers, and bar AI training on them by Sakura or the model provider. That is a stronger written
-    commitment than many providers give. It covers inputs only; outputs and uploaded RAG documents are not
-    addressed.
+    The binding AI Engine terms (Art. 10(2)) bar use of inputs, bar giving them to third parties
+    including model providers, and bar AI training on them by Sakura or the model provider. That
+    is a stronger written commitment than many providers give. It covers inputs only; outputs and
+    uploaded RAG documents are not addressed.
   - >-
-    CONTRADICTION: the product page, FAQ and Private Edition page say input and response data are "not
-    stored at all", "not cached" and "ZDR". Art. 10(1) says they may be stored encrypted for an undefined
-    period for maintenance or fault handling. Treat retention as "not stored in principle, undefined
-    exceptions", not as zero retention.
+    Retention contradiction: the product page, FAQ and Private Edition page say input and response
+    data are "not stored at all", "not cached" and "ZDR". Art. 10(1) says they may be stored
+    encrypted for an undefined period for maintenance or fault handling. Treat retention as "not
+    stored in principle, undefined exceptions" and not as zero retention.
   - >-
-    CONTRADICTION: the top page FAQ says model execution, communication and storage are completed entirely
-    in Japan, and the manual says requests are processed in Japanese data centres. None of the three terms
-    documents contains a location clause, and basic terms Art. 2(5) says web pages designated in the terms
-    are not part of the terms. No data centre is named for AI Engine. Japan-only processing is a marketing
-    and documentation claim, not a contractual commitment.
+    Location contradiction: the top page FAQ says model execution, communication and storage are
+    completed entirely in Japan, and the manual says requests are processed in Japanese data
+    centres. None of the three terms documents contains a location clause, and basic terms Art.
+    2(5) says web pages designated in the terms are not part of the terms. No data centre is named
+    for AI Engine. Japan-only processing is a marketing and documentation claim and not a
+    contractual commitment.
   - >-
-    CONTRADICTION (Private Edition): the page says "dedicated environment", "closed-network connection" and
-    stable operation. The terms dedicate only the named GPU platform (Art. 2(2)), exclude closed-network
-    connection unless ordered (Art. 2(4)) and give best effort unless an SLA is written down (Art. 11). The
-    ZDR claim is again narrower in Art. 9(4).
+    Private Edition contradiction: the page says "dedicated environment", "closed-network
+    connection" and stable operation. The terms dedicate only the named GPU platform (Art. 2(2)),
+    exclude closed-network connection unless ordered (Art. 2(4)) and give best effort unless an
+    SLA is written down (Art. 11). The ZDR claim is again narrower in Art. 9(4).
   - >-
-    The security certifications Sakura publishes (ISMS ISO 27001, ISO 27017, ISO 27018, ISMAP, SOC 2 and 3)
-    are real and independently audited, but their registered scopes name Sakura Cloud or the Ishikari data
-    centre. AI Engine is not named in any scope, and the transparency report also excludes it.
+    The security certifications Sakura publishes (ISMS ISO 27001, ISO 27017, ISO 27018, ISMAP, SOC
+    2 and 3) are independently audited, but their registered scopes name Sakura Cloud or the
+    Ishikari data centre. AI Engine is not named in any scope, and the transparency report also
+    excludes it.
   - >-
-    No DPA, sub-processor list, SLA, public status history or rate-limit table was found for AI Engine.
-    Contract, notices and support are in Japanese only; Japanese text governs (basic terms Art. 3).
+    No DPA, sub-processor list, SLA, public status history or rate-limit table is published for AI
+    Engine. Contract, notices and support are in Japanese only; Japanese text governs (basic terms
+    Art. 3).
   - >-
-    Eligibility limits: applicants must reside in a "designated country" (list not found); export-list
-    parties are barred; military use is prohibited except for Japan's defence (AI Engine terms Art. 12(1)(vi));
-    Private Edition is for Japanese-law corporations only.
+    Eligibility limits: applicants must reside in a "designated country" (list not published);
+    export-list parties are barred; military use is prohibited except for Japan's defence (AI
+    Engine terms Art. 12(1)(vi)); Private Edition is for Japanese-law corporations only.
   - >-
-    Most models are in public preview, which Sakura says can change or end without notice and carries no
-    stability guarantee. Only gpt-oss-120b, llm-jp-3.1, Whisper, multilingual-e5-large and VOICEVOX are
-    outside preview.
+    Most models are in public preview, which Sakura says can change or end without notice and
+    carries no stability guarantee. Only gpt-oss-120b, llm-jp-3.1, Whisper, multilingual-e5-large
+    and VOICEVOX are outside preview.
 score:
   rubric_version: '1.2'
   headline: 48.0
@@ -199,11 +205,12 @@ score:
     data_governance:
       score: 3
       rationale: >-
-        Contractual no training and no use or third-party provision of inputs (Art. 10(2)), a documented
-        retention rule (Art. 10(1)), and models hosted by Sakura itself. Held at 3, not 4, because retention
-        is not bounded (the "certain period" is undefined), no sub-processor list is published, and the
-        protection covers inputs only. The "ZDR" and "not stored at all" marketing is not matched by the
-        terms, so no zero-retention credit is given.
+        Contractual no training and no use or third-party provision of inputs (Art. 10(2)), a
+        documented retention rule (Art. 10(1)), and models hosted by Sakura itself. The score is 3
+        and not 4 because retention is not bounded (the "certain period" is undefined), no
+        sub-processor list is published, and the protection covers inputs only. The "ZDR" and "not
+        stored at all" marketing is not matched by the terms, so no zero-retention credit is
+        given.
       evidence_refs:
         - ev-terms-ai
         - ev-terms-pe
@@ -213,11 +220,12 @@ score:
     compliance:
       score: 2
       rationale: >-
-        Sakura holds ISO 27001, ISO 27017, ISO 27018, ISMAP and Privacy Mark at company level, which would
-        meet a score of 3 for the company, but the published scopes of the cloud, ISO 27018 and ISMAP
-        certificates name Sakura Cloud and not AI Engine, no DPA or GDPR addendum was found, and the SOC 2
-        reports are on request and unread. Scored 2 on what could be tied to this service. It would move to 3
-        or 4 if Sakura confirmed AI Engine inside the ISMS scope and published a processing agreement.
+        Sakura holds ISO 27001, ISO 27017, ISO 27018, ISMAP and Privacy Mark at company level,
+        which would meet a score of 3 for the company. The published scopes of the cloud, ISO
+        27018 and ISMAP certificates name Sakura Cloud and not AI Engine, no DPA or GDPR addendum
+        has been identified, and the SOC 2 reports are available on request only. The score is 2
+        on what ties to this service. It would move to 3 or 4 if Sakura confirmed AI Engine inside
+        the ISMS scope and published a processing agreement.
       evidence_refs:
         - ev-sec-certs
         - ev-sec-checksheet
@@ -229,12 +237,12 @@ score:
     residency:
       score: 2
       rationale: >-
-        Processing in Japanese data centres is stated three times in Sakura's own pages and the operator is a
-        Japanese company under Japanese law with no US CLOUD Act exposure. But there is no location clause in
-        any terms document, no data centre is named, there is no region choice, and basic terms Art. 2(5)
-        keeps web statements out of the contract. That is a region claim without a pinning guarantee or a
-        documented data boundary. It would reach 4 if the location statement were written into the terms or a
-        DPA.
+        Processing in Japanese data centres is stated three times in Sakura's own pages, and the
+        operator is a Japanese company under Japanese law with no US CLOUD Act exposure. There is
+        no location clause in any terms document, no data centre is named, there is no region
+        choice, and basic terms Art. 2(5) keeps web statements out of the contract. That is a
+        region claim without a pinning guarantee or a documented data boundary. The score would
+        reach 4 if the location statement were written into the terms or a DPA.
       evidence_refs:
         - ev-terms-ai
         - ev-terms-basic
@@ -244,12 +252,13 @@ score:
     security:
       score: 2
       rationale: >-
-        Temporarily stored inputs and outputs are encrypted (Art. 10(1)), access is by account token, a
-        private path through Sakura Cloud's service endpoint gateway is documented, and the Ishikari data
-        centre has an independent SOC 3 opinion. No tenant-isolation description, penetration-test statement
-        or bug-bounty programme was found for AI Engine, and the cloud isolation policy describes
-        virtualised servers rather than the inference platform. Meets the anchor for stated encryption and
-        access controls without an independent pen-test.
+        Temporarily stored inputs and outputs are encrypted (Art. 10(1)), access is by account
+        token, a private path through Sakura Cloud's service endpoint gateway is documented, and
+        the Ishikari data centre has an independent SOC 3 opinion. No tenant-isolation
+        description, penetration-test statement or bug-bounty programme is documented for AI
+        Engine, and the cloud isolation policy describes virtualised servers and not the inference
+        platform. The score meets the anchor for stated encryption and access controls without an
+        independent pen-test.
       evidence_refs:
         - ev-terms-ai
         - ev-docs-ops
@@ -259,11 +268,11 @@ score:
     reliability:
       score: 2
       rationale: >-
-        Serving in production, but AI Engine is expressly outside the SLA (manual), Private Edition is best
-        effort unless an SLA is written, the Sakura Cloud status page has no AI Engine component, and no
-        incident history was readable. Only the limited outage compensation in basic terms Art. 29(3)
-        applies. Matches the anchor for production service with no status page or published uptime history
-        for it and no SLA.
+        Serving is in production, but AI Engine is expressly outside the SLA (manual), Private
+        Edition is best effort unless an SLA is written, the Sakura Cloud status page has no AI
+        Engine component, and no incident history is published. Only the limited outage
+        compensation in basic terms Art. 29(3) applies. That matches the anchor for production
+        service with no status page, uptime history or SLA.
       evidence_refs:
         - ev-docs-basics
         - ev-terms-pe
@@ -272,11 +281,12 @@ score:
     transparency_lockin:
       score: 3
       rationale: >-
-        OpenAI-compatible and Anthropic-compatible APIs over mostly open models with published licences, a
-        manual that says all models are hosted by Sakura, no minimum term and a self-serve exit, plus a
-        Private Edition dedicated option. Held at 3 because routing and sub-processor statements sit in
-        non-binding documentation, parameter compatibility is partial, most models are previews, the two
-        closed models cannot be taken elsewhere, and Private Edition is open to Japanese corporations only.
+        OpenAI-compatible and Anthropic-compatible APIs over mostly open models with published
+        licences, a manual that says all models are hosted by Sakura, no minimum term and a
+        self-serve exit, plus a Private Edition dedicated option. The score is held at 3 because
+        routing and sub-processor statements sit in non-binding documentation, parameter
+        compatibility is partial, most models are previews, the two closed models cannot be taken
+        elsewhere, and Private Edition is open to Japanese corporations only.
       evidence_refs:
         - ev-docs-chat
         - ev-docs-licences
@@ -287,10 +297,10 @@ score:
     cost:
       score: 3
       rationale: >-
-        Clear public per-token and per-unit prices in yen, tax included, with a free allowance and no
-        minimum term. Not competitiveness-checked against other providers in this pass, Private Edition is
-        quote-only, RAG storage keeps billing until all documents are deleted, and payment is credit card in
-        yen only.
+        Clear public per-token and per-unit prices in yen, tax included, with a free allowance and
+        no minimum term. Prices are not compared with other providers, Private Edition is
+        quote-only, RAG storage keeps billing until all documents are deleted, and payment is
+        credit card in yen only.
       evidence_refs:
         - ev-marketing-ai
         - ev-terms-ai
@@ -306,14 +316,22 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-terms-ai, ev-terms-pe, ev-docs-basics, ev-marketing-ai]
-        summary: "Terms Art. 10 read in full: inputs and outputs not stored in principle, encrypted temporary storage for an undefined period allowed, inputs never used or given to third parties or used for AI training. Marketing says ZDR and 'not stored at all'; the terms do not say that."
+        summary: >-
+          Terms Art. 10: inputs and outputs are not stored in principle, encrypted temporary
+          storage for an undefined period is allowed, and inputs are never used, given to third
+          parties or used for AI training. Marketing says ZDR and 'not stored at all'; the terms
+          do not say that.
       - key: data-ownership
         title: "Data and IP ownership"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-terms-ai, ev-terms-pe, ev-terms-basic, ev-eula-plamo, ev-eula-cotomi]
-        summary: "Outputs are free for the user to use subject to model licences (Art. 10(3)). Private Edition leaves model rights with the user (Art. 8(4)). No express ownership clause for inputs, no confidentiality clause naming customer data, and uploaded RAG documents are not addressed in the terms."
+        summary: >-
+          Outputs are free for the user to use subject to model licences (Art. 10(3)). Private
+          Edition leaves model rights with the user (Art. 8(4)). There is no express ownership
+          clause for inputs and no confidentiality clause naming customer data, and uploaded RAG
+          documents are not addressed in the terms.
       - key: residency
         title: "Data residency and jurisdiction"
         doc_type: reference
@@ -327,14 +345,21 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-sec-certs, ev-sec-checksheet, ev-ismap, ev-soc3, ev-dpa-gap, ev-soc2-request]
-        summary: "Company-level ISO 27001, 27017, 27018, ISMAP, Privacy Mark, SOC 3 (Ishikari data centre). Scopes name Sakura Cloud, not AI Engine. No DPA or sub-processor list found. SOC 2 reports exist on request and were not read."
+        summary: >-
+          Company-level ISO 27001, 27017, 27018, ISMAP, Privacy Mark, SOC 3 (Ishikari data
+          centre). Scopes name Sakura Cloud, not AI Engine. No DPA or sub-processor list
+          identified. SOC 2 reports exist on request and are unverified.
       - key: security
         title: "Security controls"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-terms-ai, ev-docs-ops, ev-sec-cloud-policy, ev-sec-checksheet, ev-soc3]
-        summary: "Encrypted temporary storage of inputs and outputs, account tokens, a private-network path through the Sakura Cloud service endpoint gateway, and service policies for organisation control. No AI Engine isolation, pen-test or bug-bounty description found."
+        summary: >-
+          Encrypted temporary storage of inputs and outputs, account tokens, a private-network
+          path through the Sakura Cloud service endpoint gateway, and service policies for
+          organisation control. No AI Engine isolation, pen-test or bug-bounty description is
+          documented.
       - key: pricing
         title: "Pricing and cost model"
         doc_type: reference
@@ -378,7 +403,10 @@ documentation:
         title: "Rate limits, tiers and quotas"
         doc_type: reference
         source_type: gap
-        gap_reason: "No rate-limit or quota table was found in the manual, API reference or product page. The free plan caps requests per month and the API returns HTTP 429 under load, but the numeric limits are unpublished."
+        gap_reason: >-
+          No rate-limit or quota table is published in the manual, API reference or product page.
+          The free plan caps requests per month and the API returns HTTP 429 under load, but the
+          numeric limits are unpublished.
       - key: portability
         title: "Portability and exit"
         doc_type: explanation
@@ -428,14 +456,21 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-status, ev-notice-policy, ev-docs-basics]
-        summary: "The Sakura Cloud status page does not list AI Engine, and the manual says AI Engine is outside the SLA. The incident notice policy is written for Sakura Cloud. No AI Engine uptime or incident history was found."
+        summary: >-
+          The Sakura Cloud status page does not list AI Engine, and the manual says AI Engine is
+          outside the SLA. The incident notice policy is written for Sakura Cloud. No AI Engine
+          uptime or incident history is published.
       - key: security-disclosure
         title: "Security disclosure and trust centre"
         doc_type: reference
         source_type: aggregated
         coverage: partial
         refs: [ev-sec-certs, ev-sec-cloud-policy, ev-sec-checksheet, ev-soc2-request]
-        summary: "A security page and a check sheet (updated 2026-11-13) list certifications and scopes; a CSIRT (SAKURA.SIRT) exists; SOC 2 reports go to customers on request. No vulnerability-disclosure policy or bug bounty was found, and there is no trust centre portal."
+        summary: >-
+          A security page and a check sheet (updated 2026-11-13) list certifications and scopes; a
+          CSIRT (SAKURA.SIRT) exists; SOC 2 reports go to customers on request. No
+          vulnerability-disclosure policy or bug bounty is published, and there is no trust centre
+          portal.
       - key: channels
         title: "Support and community channels"
         doc_type: reference
@@ -458,31 +493,66 @@ ownership:
       rationale: "Mostly Apache-2.0 and MIT models behind OpenAI and Anthropic compatible APIs, but no fine-tuning on the shared service, two closed models with no-fine-tune and no-distillation terms, a military-use ban (Art. 12(1)(vi)), and a dedicated option for Japanese corporations only (Private Edition Art. 3)."
     transparency:
       level: moderate
-      rationale: "Three binding terms documents are published and were read in full, but they are Japanese only, there is no DPA or sub-processor list, certification scopes do not name AI Engine, and marketing claims (ZDR, Japan-only) are stronger than the terms."
+      rationale: >-
+        Three binding terms documents are published, but they are Japanese only, there is no DPA
+        or sub-processor list, certification scopes do not name AI Engine, and marketing claims
+        (ZDR, Japan-only) are stronger than the terms.
     reliability:
       level: moderate
       rationale: "Production service with a company-level security programme, but no SLA, most models in preview that can end without notice, and no AI Engine status history (manual 01-basics; terms Art. 11 of Private Edition)."
     data_control:
       level: moderate
       rationale: "Art. 10(2) bars use of inputs, third-party provision and AI training on them, but retention is 'in principle not stored' with an undefined encrypted exception, outputs and RAG documents are not covered, and Japan-only processing is not contractual."
-  verdict: "You partly own inference here. Sakura's terms commit in writing not to use your inputs, not to give them to model providers and not to train on them, which is a real baseline, but they do not promise zero retention, do not fix the data location, and come with no SLA or DPA. It would move to substantial if Sakura wrote Japan-only processing and a bounded retention period into the terms, published a processing agreement, and confirmed AI Engine inside its ISMS scope."
+  verdict: >-
+    Inference here is partly owned. Sakura's terms commit in writing not to use inputs, not to
+    give them to model providers and not to train on them, which is a real baseline. They do not
+    promise zero retention, do not fix the data location, and come with no SLA or DPA. Ownership
+    would move to substantial if Sakura wrote Japan-only processing and a bounded retention period
+    into the terms, published a processing agreement, and confirmed AI Engine inside its ISMS
+    scope.
 evidence:
   - id: ev-terms-ai
-    claim: "Sakura AI Engine service terms (さくらの AI Engine サービス約款, in force 2025-09-24), read in full. Art. 10(1): inputs and outputs not stored in principle, but may be kept encrypted for a certain period for maintenance or fault handling and then deleted. Art. 10(2): Sakura does not use inputs or give them to third parties including model providers; inputs are not used for AI training by Sakura or the model provider. Art. 10(3): outputs free to use subject to model licences, no warranty. Art. 9: models sub-licensed, user must follow each model licence. Art. 3 and 12: export-list and sanctions bars, military-use ban. Art. 6: credit card only. Art. 7-8: no minimum term. Art. 13: beta features carry no liability for data loss. No location clause, SLA, DPA or sub-processor list."
+    claim: >-
+      Sakura AI Engine service terms (さくらの AI Engine サービス約款, in force 2025-09-24). Art. 10(1):
+      inputs and outputs are not stored in principle; they may be kept encrypted for a certain
+      period for maintenance or fault handling and then deleted. Art. 10(2): Sakura does not use
+      inputs or give them to third parties including model providers, and inputs are not used for
+      AI training by Sakura or the model provider. Art. 10(3): outputs free to use subject to
+      model licences, no warranty. Art. 9: models sub-licensed, user must follow each model
+      licence. Art. 3 and 12: export-list and sanctions bars, military-use ban. Art. 6: credit
+      card only. Art. 7-8: no minimum term. Art. 13: beta features carry no liability for data
+      loss. The terms contain no location clause, SLA, DPA or sub-processor list.
     source_type: publisher
     doc_type: terms
     retrieved: true
     url: https://www.sakura.ad.jp/corporate/wp-content/themes/sakura-corporate/assets/pdf/yakkan_ai-engine.pdf
     date: '2026-11-19'
   - id: ev-terms-pe
-    claim: "Sakura AI Engine Private Edition service terms (in force 2026-11-02), read in full. Art. 2(2): dedicated GPU platform only, not VM, storage, API or network unless agreed. Art. 2(4): closed-network connection, fine-tuning and RAG build excluded unless ordered. Art. 3: Japanese-law corporations only. Art. 5: 2-month or about 1-year initial term, shared contract cannot be cancelled meanwhile. Art. 9: user model and information used only to provide the service, not given to third parties, not used to train Sakura or third-party models; input and output handled per the AI Engine terms; 'in principle' not handled, with exceptions for fault investigation, user-requested support and legal or other justifiable reason. Art. 11: best effort unless an SLA is written."
+    claim: >-
+      Sakura AI Engine Private Edition service terms (in force 2026-11-02). Art. 2(2): dedicated
+      GPU platform only, not VM, storage, API or network unless agreed. Art. 2(4): closed-network
+      connection, fine-tuning and RAG build excluded unless ordered. Art. 3: Japanese-law
+      corporations only. Art. 5: 2-month or about 1-year initial term, shared contract cannot be
+      cancelled meanwhile. Art. 9: user model and information used only to provide the service,
+      not given to third parties, not used to train Sakura or third-party models. Input and output
+      are handled per the AI Engine terms; 'in principle' not handled, with exceptions for fault
+      investigation, user-requested support and legal or other justifiable reason. Art. 11: best
+      effort unless an SLA is written.
     source_type: publisher
     doc_type: terms
     retrieved: true
     url: https://www.sakura.ad.jp/corporate/wp-content/themes/sakura-corporate/assets/pdf/yakkan_ai-engine-private-edition.pdf
     date: '2026-11-19'
   - id: ev-terms-basic
-    claim: "Sakura basic terms (基本約款, applied 2023-10-02), read in full. Art. 2(5): websites designated in the terms are not part of the terms. Art. 3: Japanese text governs. Art. 5(3): applicant must reside in a designated country. Art. 17(2): Sakura does not involve itself in user data. Art. 24: secrecy of communications under Telecommunications Business Act Art. 4, with disclosure to authorities and, for user violations, to third parties. Art. 28: discontinuation on one month's notice. Art. 29: liability cap of one month's fee for gross negligence, and outage compensation after 24 hours. Art. 32-33: Japanese law, Tokyo District Court, arbitration at Sakura's option."
+    claim: >-
+      Sakura basic terms (基本約款, applied 2023-10-02). Art. 2(5): websites designated in the terms
+      are not part of the terms. Art. 3: Japanese text governs. Art. 5(3): applicant must reside
+      in a designated country. Art. 17(2): Sakura does not involve itself in user data. Art. 24:
+      secrecy of communications under Telecommunications Business Act Art. 4, with disclosure to
+      authorities and, for user violations, to third parties. Art. 28: discontinuation on one
+      month's notice. Art. 29: liability cap of one month's fee for gross negligence, and outage
+      compensation after 24 hours. Art. 32-33: Japanese law, Tokyo District Court, arbitration at
+      Sakura's option.
     source_type: publisher
     doc_type: terms
     retrieved: true
@@ -496,7 +566,13 @@ evidence:
     url: https://www.sakura.ad.jp/corporate/privacy/
     date: '2026-11-19'
   - id: ev-sec-certs
-    claim: "Sakura security page: ISMS ISO/IEC 27001:2022 certificate ICMS-SR0063 (company scope, first registered 2006), ISMS cloud security (ISO/IEC 27017 based) Cloud-SR0063 and ISO/IEC 27018 CloudPII-SR0063, both scoped to Sakura Cloud IaaS, PaaS and SaaS in the Tokyo and Ishikari regions, ISMAP C21-0030-2 (Sakura Cloud), PCI DSS physical requirements 9 and 12, Privacy Mark, SOC 2 Type 2 and SOC 3 for the Ishikari data centre, SOC 2 Type 1 for Sakura Cloud. AI Engine is not named in any scope."
+    claim: >-
+      Sakura security page lists the following. ISMS ISO/IEC 27001:2022 certificate ICMS-SR0063
+      (company scope, first registered 2006). ISMS cloud security (ISO/IEC 27017 based)
+      Cloud-SR0063 and ISO/IEC 27018 CloudPII-SR0063, both scoped to Sakura Cloud IaaS, PaaS and
+      SaaS in the Tokyo and Ishikari regions. ISMAP C21-0030-2 (Sakura Cloud). PCI DSS physical
+      requirements 9 and 12. Privacy Mark. SOC 2 Type 2 and SOC 3 for the Ishikari data centre,
+      and SOC 2 Type 1 for Sakura Cloud. AI Engine is not named in any scope.
     source_type: publisher
     doc_type: security
     retrieved: true
@@ -531,14 +607,21 @@ evidence:
     url: https://www.sakura.ad.jp/corporate/wp-content/themes/sakura-corporate/assets/pdf/SAKURA_internet_SOC3.pdf
     date: '2026-11-19'
   - id: ev-soc2-request
-    claim: "Sakura states a SOC 2 Type 2 report (Ishikari data centre) and a SOC 2 Type 1 report (Sakura Cloud) exist and are disclosed to customers and prospects on request. Documented but unverified: neither report was read."
+    claim: >-
+      Sakura states a SOC 2 Type 2 report (Ishikari data centre) and a SOC 2 Type 1 report (Sakura
+      Cloud) exist and are disclosed to customers and prospects on request. Documented but
+      unverified.
     source_type: third_party
     doc_type: third_party
     retrieved: false
     url: https://www.sakura.ad.jp/corporate/security/
     date: '2026-11-19'
   - id: ev-dpa-gap
-    claim: "No data processing agreement, GDPR addendum, sub-processor list or data-location statement was found on the terms index, the AI Engine product pages or the manual. Documented absence in the pages read, not a confirmed absence; nothing could be scored on a DPA."
+    claim: >-
+      No data processing agreement, GDPR addendum, sub-processor list or data-location statement
+      appears on the terms index, the AI Engine product pages or the manual. The absence is
+      documented for those pages and is not a confirmed absence elsewhere; nothing could be scored
+      on a DPA.
     source_type: publisher
     doc_type: dpa
     retrieved: false
@@ -552,7 +635,13 @@ evidence:
     url: https://www.sakura.ad.jp/corporate/transparency/
     date: '2026-11-19'
   - id: ev-docs-basics
-    claim: "Sakura Cloud manual, AI Engine service basics (updated 2026-11-11): service is outside quality assurance (SLA); all models are hosted by Sakura and chat data is not used to train models; requests are processed in domestic data centres; prompts, audio and responses are not stored; RAG documents are stored until the customer deletes them; the plan cannot be cancelled until all documents and tokens are deleted. Documentation, not part of the terms."
+    claim: >-
+      The Sakura Cloud manual page on AI Engine service basics (updated 2026-11-11) says the
+      service is outside quality assurance (SLA). All models are hosted by Sakura and chat data is
+      not used to train models. Requests are processed in domestic data centres. Prompts, audio
+      and responses are not stored. RAG documents are stored until the customer deletes them. The
+      plan cannot be cancelled until all documents and tokens are deleted. This is documentation
+      and not part of the terms.
     source_type: publisher
     doc_type: docs
     retrieved: true
@@ -566,14 +655,23 @@ evidence:
     url: https://manual.sakura.ad.jp/cloud/ai-engine/chat-models.html
     date: '2026-11-19'
   - id: ev-docs-ops
-    claim: "Sakura Cloud manual, AI Engine operation guide (2026-11-11) and Tips (2026-05-14): RAG API and vector store, transcription limits (30 minutes or 30 MB), speech limits, account tokens, cancellation requires deleting documents, service endpoint gateway for a private route to api.ai.sakura.ad.jp, service policies for organisation control. No rate-limit table."
+    claim: >-
+      The Sakura Cloud manual operation guide (2026-11-11) and Tips (2026-05-14) cover the RAG API
+      and vector store, transcription limits (30 minutes or 30 MB) and speech limits. They also
+      cover account tokens and the cancellation requirement to delete documents. A service
+      endpoint gateway gives a private route to api.ai.sakura.ad.jp, and service policies provide
+      organisation control. There is no rate-limit table.
     source_type: publisher
     doc_type: docs
     retrieved: true
     url: https://manual.sakura.ad.jp/cloud/ai-engine/03-operation-guide.html
     date: '2026-11-19'
   - id: ev-docs-closed
-    claim: "Sakura Cloud manual, closed models (2025-12-02): PLaMo and cotomi need an application the model provider approves (about 7 business days), are outside the free plan, corporate accounts only; inference input is used only for inference and is not sent to the model provider."
+    claim: >-
+      The Sakura Cloud manual closed-models page (2025-12-02) says PLaMo and cotomi need an
+      application that the model provider approves (about 7 business days), are outside the free
+      plan and are for corporate accounts only. Inference input is used only for inference and is
+      not sent to the model provider.
     source_type: publisher
     doc_type: docs
     retrieved: true
@@ -601,7 +699,13 @@ evidence:
     url: https://secure.sakura.ad.jp/ai/terms-of-use/eula_cotomi3.pdf
     date: '2026-11-19'
   - id: ev-marketing-ai
-    claim: "Sakura AI Engine product page: 'input data is not trained on or stored', 'ZDR (Zero Data Retention) compatible', 'model execution and communication all completed in domestic cloud', FAQ 'input data and response content are not stored at all' and 'prompts are not cached'. Also the yen price list, free allowances, API list and the preview-model caveat. Marketing; contradicted in part by terms Art. 10(1) on retention."
+    claim: >-
+      The Sakura AI Engine product page says 'input data is not trained on or stored', 'ZDR (Zero
+      Data Retention) compatible' and 'model execution and communication all completed in domestic
+      cloud'. Its FAQ says 'input data and response content are not stored at all' and 'prompts
+      are not cached'. The page also gives the yen price list, free allowances, API list and the
+      preview-model caveat. It is marketing, and terms Art. 10(1) on retention contradicts it in
+      part.
     source_type: publisher
     doc_type: marketing
     retrieved: true
@@ -622,7 +726,11 @@ evidence:
     url: https://ai.sakura.ad.jp/sakura-ai/ai-engine-private/
     date: '2026-11-19'
   - id: ev-status
-    claim: "Sakura Cloud service status page (status.cloud.sakura.ad.jp): lists Cloud API per zone (Tokyo 1 and 2, Ishikari 1 to 3), websites, DNS, GSLB and load balancer appliances. AI Engine is not a listed component, so no public uptime or incident history for AI Engine was found."
+    claim: >-
+      The Sakura Cloud service status page (status.cloud.sakura.ad.jp) lists Cloud API per zone
+      (Tokyo 1 and 2, Ishikari 1 to 3), websites, DNS, GSLB and load balancer appliances. AI
+      Engine is not a listed component, so the page carries no uptime or incident history for AI
+      Engine.
     source_type: publisher
     doc_type: sla
     retrieved: true

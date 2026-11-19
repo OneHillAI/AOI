@@ -3,8 +3,7 @@
 
 # Support - <Model Family>
 
-_How do we keep it running and get help? Troubleshooting, versions/changelog, security
-disclosure, community channels, deprecation._
+_Troubleshooting, versions, security disclosure, channels and deprecation._
 
 <!-- item: release-versioning -->
 ## Versions & changelog

@@ -1,44 +1,39 @@
 # Use - DeepSeek-V3 (original, DeepSeek License)
 
-_What can it do? Capabilities, context window, chat template, languages, tool use, and
-structured output live here._
+_Capabilities, context window, chat template, languages, tool use and structured output._
 
 <!-- item: capabilities -->
 ## Capabilities & modalities
 
-A text-only model in two variants: **Base** (a raw completion foundation for further
-training) and **Chat** (the general-instruct assistant), with strong coding, maths, and
-analysis at release.
+A text-only model in two variants: Base (a raw completion foundation for further training) and
+Chat (the general-instruct assistant). Coding, maths and analysis were strong at release.
 
 <!-- item: context-window -->
 ## Context window & long-context behaviour
 
-128K-token context per the model card. OneHill has not independently measured effective
-long-context recall, so treat the headline figure as the declared window rather than a
-verified working depth.
+The model card gives a 128K-token context. OneHill has not measured effective long-context
+recall, so treat 128K as the declared window, not a verified working depth.
 
 <!-- item: chat-template -->
 ## Prompt format & chat template
 
-The **Chat** variant ships a chat template - use `apply_chat_template` rather than
-hand-assembling prompts. The **Base** variant is a completion model with no chat template;
-prompt it as raw text.
+The Chat variant ships a chat template; use `apply_chat_template` instead of assembling prompts
+by hand. The Base variant is a completion model with no chat template, so prompt it as raw text.
 
 <!-- item: languages -->
 ## Language coverage
 
-Strong English and Chinese. Per-language depth varies and is not exhaustively documented;
-evaluate for your target languages.
+Strong English and Chinese. Per-language depth varies and is not exhaustively documented, so
+evaluate for the target languages.
 
 <!-- item: tool-use -->
 ## Function / tool calling
 
-The Chat variant supports tool / function calling through the serving stack's schema. Confirm
-support and test it per engine.
+The Chat variant supports tool and function calling through the serving stack's schema.
+Confirm support and test it per engine.
 
 <!-- item: structured-output -->
 ## Structured / JSON-constrained output
 
-No model-documented native JSON/schema-constrained output guarantee. Constrained decoding is
-available at the serving layer (vLLM/SGLang grammars), but that is a runtime feature of the
-server, not a property of the model.
+The model documents no native JSON or schema-constrained output guarantee. Constrained decoding
+is available at the serving layer (vLLM/SGLang grammars), as a runtime feature of the server.

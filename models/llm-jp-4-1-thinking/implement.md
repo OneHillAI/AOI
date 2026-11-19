@@ -1,7 +1,6 @@
 # Implement - LLM-jp-4.1 thinking (8B, 32B-A3B, 33B)
 
-_How do we deploy and run it? Install, hardware, serving, quantization, fine-tuning, and the
-safe-deployment controls & Deployment Ceiling (**T1, conditional**)._
+_Installation, hardware, serving, safe-deployment controls, quantisation, fine-tuning and integration._
 
 <!-- item: install -->
 ## Install & run
@@ -55,7 +54,7 @@ on it. Ollama and TGI support are not documented by the publisher.
 <!-- item: safe-deployment -->
 ## Safe-deployment controls & Deployment Ceiling
 
-**Ceiling: T1 (internal assistant, human reads every output), conditional.** The publisher says
+Ceiling: T1 (internal assistant, human reads every output), conditional. The publisher says
 the models are not intended for direct production use, evidence for safety is one self-run
 benchmark, and no guard model exists, so OneHill does not place customer-facing use (T2) within
 reach without your own evidence.
@@ -75,7 +74,7 @@ To reach T2 you would need, at minimum:
 ## Available quantizations
 
 Official GGUF repositories for all three sizes, created 2026-09-24: BF16 and Q4_K_M files with an
-imatrix (`ev-gguf`). No official AWQ, GPTQ, FP8 or MLX build was found. Community derivatives
+imatrix (`ev-gguf`). No official AWQ, GPTQ, FP8 or MLX build exists. Community derivatives
 were not assessed.
 
 <!-- item: fine-tuning -->
@@ -108,4 +107,4 @@ vllm serve llm-jp/llm-jp-4.1-8b-thinking \
 `llama serve -hf llm-jp/llm-jp-4.1-8b-thinking-gguf:Q4_K_M` gives an OpenAI-compatible endpoint
 that accepts `tools` and `tool_choice`. NII also announced a trial hosted API and chat service
 through the University of Tokyo mdx-MaaS, mainly for researchers (`ev-pcwatch`); it is not a
-production service and its terms were not read.
+production service and its terms are unverified.
