@@ -54,6 +54,10 @@ the Model Materials, with an explicit carve-out where that suit answered one bro
 It is **not OSI-approved** only because v1.1 is not yet on the OSI approved list. This "without
 restriction" grant is what makes Ultra's use-and-modify and data-control factors strong.
 
+Re-read on 2026-11-19 from the raw file: the text is unchanged, with no acceptable-use, guardrail or
+revocation clause. OpenMDW-1.1 was submitted for OSI review in August 2026; no approval was found, so
+it is still recorded as not OSI-approved.
+
 <!-- item: provenance -->
 ## Supply-chain & provenance
 
@@ -91,3 +95,9 @@ curation (Nemotron Content Safety v2, Gretel refusal data, keyword/regex filteri
 Apache-2.0 garak - is genuinely attributable and is what holds the safety dimension at 3 rather than 2;
 the missing model-level evaluation holds it below 4. The guard-classifier scores are NVIDIA
 self-reported.
+
+Re-checked on 2026-11-19: Ultra now has a dedicated technical report (arXiv 2606.15007, June 2026).
+Its safety content is training-side: a safety SFT blend translated into six languages and an "agentic
+safety teacher" trained against indirect prompt injection with an automated red-teaming loop. It
+publishes no benchmark results, jailbreak results or residual-risk disclosure, and the `safety.md`
+subcard likewise gives no scores. So there is still no published model-level safety evaluation.

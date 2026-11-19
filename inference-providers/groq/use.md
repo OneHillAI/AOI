@@ -6,19 +6,18 @@ fine-tuning live here; context limits are a documented gap below._
 <!-- item: models-served -->
 ## Models served
 
-Groq's **supported-models docs** list a **curated open-weight catalogue**, narrower than the
-general-purpose GPU providers:
+Groq's **supported-models docs** (read 2026-11-19) list a **curated, fast-changing catalogue**,
+narrower than the general-purpose GPU providers:
 
-- **Llama 3.1 8B Instant**
-- **Llama 3.3 70B Versatile**
-- **gpt-oss 20B / 120B** (plus gpt-oss-safeguard)
-- **Qwen3**
-- **Gemma**
-- **Mixtral**
-- **DeepSeek R1 Distill Llama 70B**
-- **Whisper** (speech-to-text)
+- **gpt-oss 120B and 20B** (production, self-serve)
+- **Whisper large v3 and v3 turbo** (speech to text, production)
+- **gpt-oss-safeguard 20B**, **Qwen3.8-27B**, **Orpheus TTS** and **Llama Prompt Guard 2** (preview)
+- **Llama 3.1 8B Instant** and **Llama 3.3 70B Versatile**, retired for free and developer tiers
+  on 2026-08-16 and now enterprise-contract only
+- **Muse Spark Open** and **MiniMax M2.7** (preview, contact sales)
 
-The trade is deliberate: fewer models, but each run on LPU hardware for latency. If your workload
+Qwen3-32B, Gemma, Mixtral, the DeepSeek R1 distill and Llama 4 models have been retired. The trade is
+deliberate: fewer models, but each run on LPU hardware for latency. If your workload
 needs full DeepSeek / GLM / Mistral or arbitrary fine-tunes, confirm coverage before committing.
 
 <!-- item: features -->

@@ -48,6 +48,11 @@ published as downloadable artifacts (training was run on the open Megatron-LM co
 `training_data`, `training_code` and `evaluation` are **partial** rather than open. This is
 more open than a plain open-weights release but short of a full open-science reproduction.
 
+That description covers the tracked 2024 releases (EuroLLM-9B and 1.7B). Re-checked on 2026-11-19:
+the later 2512 generation (22B and the refreshed 9B) goes further, with a released web
+pre-training corpus (`EuroWeb-2512`) and released pre-training and evaluation code per its report
+(arXiv 2602.05879). That generation is a separate entity and is not scored in this entry.
+
 <!-- item: license -->
 ## License terms & permitted use
 
@@ -57,6 +62,11 @@ modify, redistribute, and commercialize derivatives, subject only to the standar
 attribution/notice terms. This clean licence is a load-bearing input to the openness (4) and
 legal (4) scores.
 
+Re-read 2026-11-19: no EuroLLM repo carries a standalone LICENSE file, so the licence statement
+is the Hugging Face card (front matter and the line "License: Apache License 2.0."). The 9B repos
+are behind an auto-approved Hugging Face gate that asks you to share your account username and
+email with the publisher; it adds no licence term. The 1.7B repos are not gated.
+
 <!-- item: provenance -->
 ## Supply-chain & provenance
 
@@ -65,7 +75,7 @@ safetensors (no pickle requirement) with per-file checksums. The technical repor
 the pipeline and names the data sources, so provenance is well-described. The checkpoint
 trust checklist scores **5/8**; the missing controls are cryptographic weight signing
 (Sigstore/model-signing), SLSA build attestation, and full-corpus publication for independent
-reconstruction - which is why provenance is a 4 rather than a 5. No incidents or malicious-mirror
+reconstruction - which is why provenance is a 3 rather than a higher score. No incidents or malicious-mirror
 findings are on record for the canonical org. Pin the exact revision and verify checksums on
 download.
 

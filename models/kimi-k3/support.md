@@ -16,7 +16,9 @@ card's documented stack. This is not an exhaustive catalogue.
 
 Kimi K3 ships as a **single checkpoint** on the verified `moonshotai` org (announced around
 2026-07-17, open weights around 2026-07-27). There is no Base/Instruct/Thinking split. The Hugging
-Face revision hash is the changelog anchor; pin it.
+Face revision hash is the changelog anchor; pin it. A post-trained successor, Kimi K3.1 Pro (Hugging Face, 2026-11-02, its own licence
+file), now exists and is out of scope for this entry; Moonshot's hosted platform calls K3 the
+previous-generation flagship.
 
 <!-- item: channels -->
 ## Community & support channels

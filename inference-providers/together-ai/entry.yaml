@@ -9,87 +9,86 @@ id: together-ai
 name: Together AI
 profile: inference
 hq_country: United States
-summary: 'A US-headquartered inference provider serving a broad, fast-moving open-model
-  catalogue (Llama 3.3, DeepSeek V4-generation, Qwen3.5/3.7/3.8, GLM-5.3, Kimi K3, gpt-oss
-  120B, plus image/video/audio models including some wrapped third-party proprietary
-  APIs) over per-token serverless and dedicated GPU endpoints. It no longer serves
-  embedding models on serverless (removed since the prior pass). Its standout governance
-  fact, stated in Together''s own Privacy Policy and Terms of Service, is zero-data-retention
-  by default with training opt-in and off by default, and Terms that leave you owning your
-  inputs and outputs; the biggest caveat is that EU data centres and region pinning are
-  gated to the higher Scale/Enterprise tiers, and it carries standing US CLOUD Act exposure.
-  The no-retention posture is stated in the binding terms but not independently attested.
+summary: 'A US-headquartered inference provider serving a broad, fast-moving open-model catalogue (24 serverless
+  chat models read 2026-11-19, including DeepSeek V4, GLM-5.3, Kimi K3 and K3.1 Pro, Qwen 3.5 to 4, gpt-oss-120B and
+  MiniMax M3.1 Flash, plus image, video and audio models including wrapped third-party APIs) over per-token
+  serverless, provisioned-throughput and dedicated GPU endpoints. The governance picture is weaker than the earlier
+  entry said. Prompt storage is ON by default and the product docs say Together "may use them for product
+  improvements"; zero data retention (ZDR) is an organisation-admin opt-in that also switches off passthrough
+  models; passthrough third-party models are ON by default and send prompts to the upstream provider under its own
+  policy; training is opt-in and off by default. The Terms (Sec 9) expressly disclaim confidentiality, which caps the
+  data-governance score at 3. Residency is thin: a US-only processing endpoint at +25%, no EU serverless endpoint,
+  and EU only through sales-led dedicated or VPC deployments. SOC 2 Type II and ISO 27001:2022 are vendor
+  announcements; the trust centre could not be read. There is a public status page with per-model uptime but no
+  self-serve SLA.
 
   '
 models_served:
-- Llama 3.3 70B (Llama 4 Maverick/Scout appear only as fine-tuning base models, not
-  confirmed servable on serverless - re-check before relying on this)
-- DeepSeek V4 Pro 0813 / DeepSeek V4.1 Flash / DeepSeek V4 Flash 0731 (V3/R1 no longer
-  served)
-- Qwen3.5-397B-A17B / Qwen3.7-Max / Qwen3.6-Plus / Qwen3.8-2.4T-A95B, plus the legacy
-  Qwen3-235B-A22B throughput SKU
-- GLM-5.3 / GLM-5.3-Flash / GLM-5.2 (Z.ai, new since the prior pass)
-- Kimi K3 (Moonshot, new since the prior pass)
-- gpt-oss 120B (gpt-oss 20B not confirmed on the live serverless chat pricing table -
-  re-check)
-- MiniMax M3 / M2.7, Gemma 4 31B, Cogito v2.1 671B (new since the prior pass)
-- Mistral / Mixtral - REMOVED from serverless; Mixtral 8x7B now appears only as a
-  fine-tuning base model
-- 'image/video/audio: FLUX.2, Ideogram 4.0, Qwen Image 2.0, Seedream/Seedance/Seedance
-  2.5, Imagen 4.0, Sora 2, Kling 2.1, plus wrapped third-party proprietary APIs (GPT
-  Image 1.5/2, Gemini "Nano Banana" image variants)'
-- embeddings - NONE offered via serverless; docs.together.ai states this explicitly
-  ("There are currently no embedding models offered via serverless"), same for rerank
-  and moderation - contradicts the prior pass''s "embeddings" line, now corrected
+- 'Serverless chat, 24 models (docs.together.ai/docs/serverless-models, read 2026-11-19): DeepSeek V4 Pro 0813, V4.1 Flash,
+  V4.1 Flash 1017; GLM-5.2, GLM-5.3, GLM-5.3 Flash; Kimi K3, Kimi K3.1 Pro; MiniMax M3.1 Flash; Qwen3.5 9B, Qwen3.6 Plus,
+  Qwen3.7 Max and Plus, Qwen3.8 Flash, Qwen4 Max; gpt-oss-120B; Meta Muse Glimmer 30B and Muse Spark Open 816B A42B;
+  Reflection Beam 1.0 501B A23B; Thinking Machines Inkling 2 Small; NVIDIA Nemotron 3.5 Super VL; Elorian Glimpse 1.0;
+  Ricursive Ripple 65B Preview; Ternary Bonsai 27B (free); Together Tev1 4B Experimental'
+- 'No longer on serverless chat since the 2026-09-20 pass: Llama 3.3 70B, Gemma 4 31B, Cogito v2.1 671B, MiniMax M3 and
+  M2.7, Qwen3.5-397B, Qwen3-235B. Llama 3.3, Llama 4, Gemma 4 and Mixtral remain fine-tuning base models only'
+- 'Vision on serverless: Kimi K3, Kimi K3.1 Pro, Nemotron 3.5 Super VL, Qwen3.5 9B, Qwen4 Max, Inkling 2 Small'
+- 'Image, video and audio: dozens, including wrapped third-party APIs (GPT Image 1.5 and 2, Gemini image variants, Veo 3.1,
+  Cartesia Sonic) and Whisper Large v3, Orpheus, Kokoro and Qwen3 TTS'
+- 'Embeddings, rerank, moderation: NONE on serverless (docs: "There are currently no embedding models offered via
+  serverless"); embeddings and rerank are dedicated-only'
 hardware: NVIDIA GPU
 pricing:
   model: mixed
-  notes: 'Per-token serverless pricing plus dedicated GPU endpoints on Scale/Enterprise
-    tiers. Rates are approximate and move frequently (third-party research); live-checked
-    against together.ai/pricing on 2026-09-20.
+  notes: 'Per-token serverless pricing (cached-input rates published for most models), a 25% premium for the US-only
+    endpoint, provisioned throughput and on-demand dedicated GPU endpoints per GPU hour, GPU clusters and fine-tuning.
+    Read live from together.ai/pricing and the docs catalogue on 2026-11-19; rates change often, and a Qwen4 Max
+    promotion runs to 2026-11-23.
 
     '
   example_rates:
   - 'gpt-oss-120B: $0.15/M in, $0.60/M out (unchanged)'
-  - 'Qwen3-235B-A22B (throughput SKU): $0.20/M in, $0.60/M out (unchanged)'
-  - 'DeepSeek V4 Pro 0813: $1.32/M in, $3.96/M out (supersedes DeepSeek-V3)'
-  - 'DeepSeek V4.1 Flash: $0.30/M in, $1.20/M out'
-  - 'Kimi K3: $3.00/M in, $15.00/M out'
-  - 'GLM-5.3: $1.40/M in, $4.40/M out'
+  - 'DeepSeek V4 Pro 0813: $1.32/M in, $3.96/M out (unchanged)'
+  - 'DeepSeek V4.1 Flash: $0.30/M in, $1.20/M out (unchanged)'
+  - 'Kimi K3: $3.00/M in, $15.00/M out (unchanged); Kimi K3.1 Pro: $2.00/M in, $10.00/M out (new)'
+  - 'GLM-5.3: $1.40/M in, $4.40/M out (unchanged); GLM-5.3 Flash: $0.15/M in, $0.50/M out'
+  - 'MiniMax M3.1 Flash: $0.15/M in, $0.60/M out (replaces MiniMax M3 at $0.30/$1.20)'
+  - 'US-only endpoint (us-api.together.ai): 1.25x the standard rate, e.g. GLM-5.3 $1.75/M in, $5.50/M out'
+  - 'Dedicated HGX H100 on demand: $5.49 per GPU hour; GPU Clusters H100 on demand $3.99 per GPU hour'
 data_governance:
-  default_retention: 'CORRECTED 2026-09-21: an independent Cowork browser session re-read the
-    Privacy Policy verbatim and confirmed retention is NOT zero by default - Sec 2.6: "By
-    choosing ''No'', you are enabling Zero Data Retention (''ZDR'')... the content you submit ...
-    are not stored, retained, or used for model training, product improvements, or any secondary
-    purposes except as needed to provide the Services to you." ZDR is something the customer
-    actively enables, not the standing default; absent it, standard processing applies
-    (temporary caching for performance, and content used per the Terms'' purpose-limited
-    licence). A prior entry stated "none by default," conflating the training-opt-in default
-    (correctly off by default) with the retention default (not zero unless ZDR is turned on).'
+  default_retention: 'Retention is NOT zero by default. Product docs read 2026-11-19: "By default, Together stores the
+    prompts you send and the responses models return, and may use them for product improvements. This data is not
+    shared with third parties, and you can delete it at any time." Prompt storage is a toggle that is ON by default.
+    Privacy Policy Sec 2.7 shows prompts and responses held as playground user history by default. ZDR, the
+    organisation-admin setting that turns prompt storage off, is opt-in (Privacy Policy Sec 2.6, ToS Sec 3, docs: "ZDR is
+    not enabled by default"), applies only to requests after it is enabled, and under ZDR request metadata, account data
+    and uploaded files are still retained.'
   trains_on_inputs: opt_in_only
   zdr_available: yes_optional
-  zdr_scope_caveats: 'CORRECTED 2026-09-21: ZDR is account-level and OPT-IN (Privacy Policy Sec
-    2.6, independently re-read verbatim), not the default. Terms of Service Sec 3 ("Your
-    Content") corroborates: "Under ZDR, your data and outputs are not stored, retained, or used
-    for model training, product improvements, or any other purpose beyond the time required to
-    process the specific request or transaction" - a benefit of enabling ZDR, not the baseline
-    state. The no-training-without-opt-in default (separately) remains correctly coded as
-    opt_in_only. This posture is self-attested in Together''s own binding documents; it has not
-    been independently audited.
+  zdr_scope_caveats: 'ZDR is an organisation-level opt-in, not the default (Privacy Policy Sec 2.6; docs zero-data-retention
+    page, re-read 2026-11-19). Turning prompt storage off also turns off passthrough models, because passthrough needs
+    retained prompts. Under ZDR "Request content may pass through volatile memory and temporary caches" but is not
+    persisted; metadata (token counts, model IDs, timestamps), account data and files uploaded for fine-tuning or batch
+    are retained. ZDR does not reach back to data processed before it was enabled. Training on your data is a separate
+    opt-in, off by default, whether or not ZDR is on. All of this is Together''s self-attestation in its own documents;
+    none of it is independently audited.
 
     '
   customer_data_ownership: customer_retains
-  outputs_used_to_improve_service: 'no'
-  third_party_routing_leakage: 'Serves open-weight models only; no closed third-party
-    model routing, so no other vendor''s data terms attach to routed inference.
+  outputs_used_to_improve_service: opt_out
+  third_party_routing_leakage: 'CORRECTED 2026-11-19: the earlier entry said Together serves open-weight models only with no third-party
+    routing. The docs describe "passthrough" models that forward prompts and responses to an upstream provider, which "handles
+    that data under its own data policy", and the Passthrough models toggle is ON by default. The catalogue includes wrapped
+    proprietary APIs (GPT Image, Gemini image variants, Veo, Cartesia) and the DPA Annex III names OpenAI OpCo, LLC for
+    "Generative AI". Passthrough models are not individually labelled in the pages read. Turning ZDR on switches passthrough off.
+    ToS Sec 2 also makes third-party model terms govern where they conflict.
 
     '
-  subprocessors_disclosed: false
+  subprocessors_disclosed: true
   confidentiality: disclaimed
   confidentiality_caveats: 'ToS Sec 9 expressly disclaims confidentiality: "The parties will have
-    no confidentiality obligations to each other unless otherwise agreed in writing" (read
-    2026-08-06). That is an express waiver, not mere silence - on self-serve terms Together owes you
-    no duty of confidence over your prompts; they are protected only by the narrow content licence
+    no confidentiality obligations to each other unless otherwise agreed in writing" (re-read verbatim 2026-11-19,
+    ToS "Updated May 19, 2026", unchanged since 2026-08-06). That is an express waiver, not mere silence - on self-serve terms
+    Together owes you no duty of confidence over your prompts; they are protected only by the narrow content licence
     and the ZDR use-limitations. For trade-secret material an enterprise MSA with a negotiated
     confidentiality clause (or a standalone NDA) is a prerequisite.'
 compliance:
@@ -99,18 +98,25 @@ compliance:
   hipaa_baa: "yes"
   gdpr_dpa: "yes"
   fedramp: ''
-  trust_center_url: https://www.together.ai/privacy
+  trust_center_url: https://trust.together.ai/
 residency:
   eu_region_available: "yes"
   regions:
-  - United States
-  - European Union (incl. Sweden GPU capacity)
-  sovereign_option: ''
+  - 'United States (serverless; us-api.together.ai guarantees US inference processing for 8 models at 1.25x)'
+  - 'European Union (dedicated endpoints and VPC deployments through sales, per the docs and a one-year-old support article that gates them to Scale and Enterprise tiers)'
+  sovereign_option: 'None self-serve. The only region guarantee on serverless is US-only processing (us-api.together.ai, +25%), and it covers
+    "where your request is processed", not "where data is stored, where logs are written, or how network traffic is routed". Requests
+    to api.together.ai "do not guarantee US processing"; the docs say DeepSeek models are hosted in North America data centres. No EU
+    serverless endpoint is documented. EU residency means a dedicated endpoint or VPC deployment arranged with sales. The earlier
+    entry cited the DPA for "default routing through North America"; that sentence is not in the DPA PDF read on 2026-11-19.'
   region_pinning: "yes"
   cloud_act_exposure: true
 reliability:
-  sla: ''
-  uptime_notes: No specific incidents surfaced in research; no public uptime SLA verified.
+  sla: 'None on serverless: ToS Sec 1 disclaims uptime guarantees and the docs call serverless "best-effort". Provisioned throughput
+    is sold "with a defined service level agreement" through sales; the SLA text is not public.'
+  uptime_notes: 'Public status page at status.together.ai (Better Stack) with per-model 90-day uptime read 2026-11-19: from 99.28% (Kimi K3)
+    to 100%, e.g. gpt-oss-120B 99.66%, GLM-5.3 99.91%, MiniMax M3.1 Flash 99.95%. The feed shows two network-maintenance notices
+    in 2026 and no incident posts since January 2025. The earlier "no status page" note was wrong.'
   incidents: []
 lock_in:
   openai_compatible_api: true
@@ -120,125 +126,145 @@ lock_in:
 
     '
 dedicated_availability: self_serve
-dedicated_notes: 'The fullest deployment ladder of the providers here: shared serverless, dedicated
-  endpoints on reserved hardware, self-serve and reserved bare-metal GPU clusters, and an enterprise
-  platform deployable in your own VPC or on-prem ("your data remains within your firewall"). Caveats:
-  EU-region dedicated endpoints are gated to Scale/Enterprise tiers, and single-tenancy is described
-  in product docs, not warranted in the contract.'
+dedicated_notes: 'The fullest deployment ladder of the providers here: shared serverless, provisioned throughput, dedicated
+  endpoints (single-tenant GPU instances, on-demand per GPU hour on the pricing page, H100 $5.49), self-serve and reserved
+  bare-metal GPU clusters, and private networking or VPC deployments including EU regions through sales. Caveats: EU-region
+  dedicated endpoints go through sales (a one-year-old support article gates them to Scale and Enterprise tiers, which the
+  rate-limit docs now call legacy contracts), and single-tenancy is described in product docs, not warranted in the contract.'
 trust_considerations:
-- ToS Sec 9 EXPRESSLY DISCLAIMS confidentiality ("The parties will have no confidentiality
-  obligations to each other unless otherwise agreed in writing") - a decisive gap for
-  trade-secret material on self-serve terms; an enterprise MSA with a negotiated confidentiality
-  clause, or a standalone NDA, is a prerequisite. Under rubric 1.2 this caps data_governance at 3.
-- Deployment ladder is a genuine strength - serverless, dedicated endpoints, self-serve bare-metal
-  GPU clusters, and VPC/on-prem enterprise deployment. But EU dedicated endpoints are gated to
-  Scale/Enterprise tiers and single-tenancy is in the docs, not warranted in the contract.
-- 'CORRECTED 2026-09-21: ZDR is account-level OPT-IN, not the default - a prior version of this
-  entry said "ZDR-by-default." Confirmed via an independent verbatim re-read of Privacy Policy
-  Sec 2.6 ("By choosing ''No'', you are enabling Zero Data Retention"). No-training-without-opt-in
-  is correctly stated and remains grounded in the binding Privacy Policy and Terms of Service; none
-  of this is independently audited.'
-- EU residency and region pinning are gated to Scale/Enterprise tiers, per the support KB.
-- ISO 27001 is unconfirmed (the DPA aligns risk management to ISO 27005 / NIST 800-37, not
-  27001 certification); HIPAA/BAA support is indicated in the security docs rather than shown
-  as a formal attestation, and the SOC 2 Type II report itself was not obtained - only the vendor
-  announcement (independently re-confirmed 2026-09-21 - published 2025-07-08, auditor not named).
-- US HQ implies standing CLOUD Act exposure even for EU-hosted workloads; the DPA confirms
-  default routing through North America data centres with EU transfers under SCCs.
-- 'NEW FINDING 2026-09-21: the DPA''s Annex III sub-processor list (independently browser-read,
-  9 named entities) includes OpenAI OpCo, LLC (US) - an unusual entry for a peer inference
-  provider''s sub-processor list. This does not itself indicate served-model routing through
-  OpenAI (third_party_routing_leakage remains coded as none for served models), but is worth
-  independent follow-up if OpenAI''s role there matters to your use case.'
+- 'ToS Sec 9 EXPRESSLY DISCLAIMS confidentiality ("The parties will have no confidentiality obligations to
+  each other unless otherwise agreed in writing"), re-read unchanged on 2026-11-19. This is a decisive gap
+  for trade-secret material on self-serve terms; an enterprise MSA with a negotiated confidentiality
+  clause, or a standalone NDA, is a prerequisite. Under rubric 1.2 it caps data_governance at 3.'
+- 'ZDR is an organisation-admin opt-in, not the default. By default Together stores prompts and responses
+  and, per its own docs, "may use them for product improvements". Turn prompt storage off to enable ZDR.
+  Training on your data is a separate opt-in that is off by default.'
+- 'Passthrough third-party models are ON by default: they forward your prompts and responses to the
+  upstream provider, which handles them under its own policy. The earlier entry said Together routed to no
+  third-party models. ZDR switches passthrough off. The DPA Annex III also names OpenAI OpCo, LLC
+  ("Generative AI") as a sub-processor.'
+- 'Residency is thin. The only region guarantee on serverless is US-only processing (+25%), covering
+  processing but not storage or logs; requests to api.together.ai carry no region guarantee; there is no
+  EU serverless endpoint. EU residency means a sales-led dedicated or VPC deployment. The earlier claim of
+  DPA-confirmed default North America routing is not in the DPA PDF.'
+- 'Together''s own docs say models are "hosted at full precision" while its catalogue lists FP4, FP8, NVFP4
+  and MXFP4 quantisation for most models. Treat the full-precision line as marketing.'
+- 'SOC 2 Type II (blog, 2025-07-08) and ISO 27001:2022 from A-LIGN (blog, 2026-06-10) are vendor
+  announcements. Neither the SOC 2 report nor the ISO certificate was read, and the trust centre is a
+  JavaScript-only page that could not be read. HIPAA/BAA is stated in the SOC 2 blog, yet ToS Sec 4 bars
+  sending financial, medical or sensitive personal data under the standard terms.'
+- 'Public status page with per-model 90-day uptime (99.28% to 100%) and no recent incident posts, but no
+  self-serve SLA: ToS Sec 1 disclaims uptime and the docs call serverless best-effort. SLAs come with
+  provisioned throughput through sales.'
+- 'The catalogue turns over quickly: Llama 3.3 70B, Gemma 4 31B, Cogito, MiniMax M3 and M2.7 and Qwen3-235B
+  left serverless chat and Kimi K3.1 Pro, MiniMax M3.1 Flash, Qwen4 Max and several new labs'' models
+  arrived since September 2026. There is no embedding, rerank or moderation model on serverless.'
+- 'US HQ implies standing CLOUD Act exposure, including for any EU-hosted dedicated workload.'
+- 'The DPA Annex III names 9 sub-processors (AWS, Mailgun, Amplitude, Sentry, OpenAI OpCo, Together
+  Software Canada, Hotjar, Intercom, Absorb). The DPA Annex 1 scope is account and employee data (contact
+  and employment information), not inference content, so check what personal data in prompts the DPA is
+  meant to cover.'
 score:
   rubric_version: '1.2'
-  headline: 70.4
-  grade: B
+  headline: 69.6
+  grade: C
   hard_flags: []
   dimensions:
     data_governance:
       score: 3
-      rationale: 'CORRECTED 2026-09-21: ZDR is account-level OPT-IN (Privacy Policy Sec 2.6,
-        independently re-read verbatim), not the default - a prior rationale overstated this as
-        "ZDR by default." Training opt-in-and-off-by-default and customer-retained ownership of
-        Your Content and Output remain correctly grounded in the binding Privacy Policy and Terms
-        of Service. ToS Sec 9 expressly DISCLAIMS confidentiality ("no confidentiality
-        obligations ... unless otherwise agreed in writing"), confirmed unchanged on two
-        independent live fetches - so on standard terms your data is not contractually kept in
-        confidence, and under rubric 1.2 an express confidentiality disclaimer caps data_governance
-        at 3 regardless of the retention correction above. Also held down by the self-attested
-        (unaudited) posture, the undisclosed sub-processor list, and access to Third-Party Models
-        under their own terms.
+      rationale: 'Held at 3 by the confidentiality cap and, on 2026-11-19 reading, also earned there on the merits. ToS Sec 9 expressly
+        DISCLAIMS confidentiality ("no confidentiality obligations ... unless otherwise agreed in writing"), unchanged, so under
+        rubric 1.2 D1 is capped at 3. Underneath the cap the posture is a solid 3, not higher: prompt storage is on by default and
+        the docs say Together "may use them for product improvements" (ev-docs); ZDR is an organisation-admin opt-in that still
+        retains metadata, account data and uploads; passthrough third-party models are on by default and send prompts to the
+        upstream provider under its own policy; training is opt-in and off by default and customers own Content and Output
+        (ev1, ev7). Sub-processors are named only in the DPA Annex III (ev9). All of it is self-attested and unaudited.
 
         '
       evidence_refs:
       - ev1
       - ev7
-      - ev2
+      - ev-docs
+      - ev9
     compliance:
       score: 4
-      rationale: 'SOC 2 Type II is announced via an independent multi-month audit, and a
-        GDPR DPA binds Together to EU Standard Contractual Clauses.
-        HIPAA/BAA is indicated in the security docs via encryption and audit logging. Held
-        below 5 because ISO 27001/27701 is unconfirmed (the DPA aligns to ISO 27005 / NIST
-        800-37, not 27001 certification), the SOC 2 report itself was not obtained (only the
-        vendor announcement), and HIPAA is indicated rather than shown as a formal attestation.
+      rationale: 'SOC 2 Type II (ev3) and ISO 27001:2022 from A-LIGN, an ANAB-accredited body (ev-iso), are both vendor announcements
+        of independent audits; the report and the certificate were not read because the trust centre (ev-trust) is a JavaScript-only
+        page. A GDPR DPA with EU SCCs and the UK Addendum is published (ev9) and HIPAA/BAA is stated in the SOC 2 blog, although ToS
+        Sec 4 bars sending medical or sensitive personal data under standard terms. Meets the score-4 anchor on two named
+        attestations plus a DPA, as announced. Cannot reach 5: no third-party or onehill-verified evidence was read, ISO 27701 is
+        absent, and the attestations themselves are unverified.
 
         '
       evidence_refs:
       - ev3
+      - ev-iso
       - ev9
       - ev2
     residency:
-      score: 4
-      rationale: 'A support KB confirms EU data centres and dedicated
-        endpoints including EU locations, and the DPA confirms EU transfers under SCCs. Held
-        below 5 because EU/dedicated region-pinned endpoints are gated to Scale/Enterprise
-        tiers, the default routing is North America, and US CLOUD Act exposure remains.
+      score: 3
+      rationale: 'LOWERED 4 -> 3 on 2026-11-19. Per the docs (ev-geo) the only serverless region guarantee is US-only processing at
+        us-api.together.ai (+25%, 8 models), which covers processing but "doesn''t cover where data is stored, where logs are
+        written, or how network traffic is routed"; requests to api.together.ai "do not guarantee US processing"; no EU serverless
+        endpoint is documented. EU residency is available for some workloads only through dedicated or VPC deployments arranged with
+        sales (ev-docs, and a support KB that is a year old and gates them to Scale and Enterprise, ev4). That is the score-3 anchor
+        (EU region for at least some workloads). It is not the score-4 anchor: the main serverless workload has no EU option, there
+        is no documented data boundary, and US CLOUD Act exposure remains. The earlier 4 also leaned on a DPA statement of default
+        North America routing that is not in the DPA PDF.
 
         '
       evidence_refs:
+      - ev-geo
+      - ev-docs
       - ev4
-      - ev9
     security:
       score: 4
-      rationale: 'The SOC 2 announcement and security docs describe encryption in transit
-        and at rest, audit logging, MFA/RBAC and regular pen-testing, and the DPA requires
-        encryption of controller data in transit and storage. Held below 5 absent an
-        independently reviewed pen-test report or the SOC 2 report itself.
+      rationale: 'The DPA Annex 2 (ev9) commits to a written security programme, MFA for remote access, encryption in transit and
+        storage, daily internal and external vulnerability scans, annual external penetration tests, 30-day remediation of critical
+        findings and USD 2 million cyber insurance; the docs add a private HackerOne vulnerability programme (ev-docs); the SOC 2 and
+        ISO announcements describe independent audits (ev3, ev-iso). Held below 5 absent an independently read pen-test report, SOC 2
+        report or ISO certificate, and because the HackerOne programme is private and its bounty terms are not public.
 
         '
       evidence_refs:
-      - ev2
-      - ev3
       - ev9
+      - ev-docs
+      - ev3
+      - ev-iso
     reliability:
-      score: 2
-      rationale: 'No incidents surfaced in research, but no public uptime SLA, status page
-        or failover documentation was found or independently verified. Meets
-        the score-2 anchor (serving in production, but no status page or published uptime
-        history); a public status page would reach 3.
+      score: 3
+      rationale: 'RAISED 2 -> 3 on 2026-11-19; the earlier "no status page" finding was wrong (a status page was already captured in the
+        2026-09-20 browser-verified pass). status.together.ai (ev-status) publishes per-model 90-day uptime (99.28% to 100%), a
+        maintenance and incident feed with two network-maintenance notices in 2026 and no incident posts since January 2025. That meets
+        the score-3 anchor (operational track record, public status page, documented incident communication). Short of 4: there is no
+        self-serve SLA (ToS Sec 1 disclaims uptime, docs say serverless is best-effort), the provisioned-throughput SLA is sales-only
+        and unpublished, and some models sit near 99.3% over 90 days.
 
         '
       evidence_refs:
-      - ev2
+      - ev-status
+      - ev7
+      - ev-docs
     transparency_lockin:
       score: 4
-      rationale: 'OpenAI-compatible /v1 API (documented) serving portable
-        open-weight models (Llama, DeepSeek, Qwen, Mistral, gpt-oss), with third-party analysis
-        corroborating the same checkpoints run across many providers - a strong exit path.
-        Dropped from 5 to 4 because the drop-in portability rests on Together''s own developer
-        docs (publisher, not a binding term or independent attestation).
+      rationale: 'OpenAI-compatible /v1 API (ev6, re-read 2026-11-19; embeddings and moderation are not served on serverless) over
+        portable open-weight models (DeepSeek, GLM, Kimi, Qwen, gpt-oss, MiniMax), with third-party analysis (ev8) listing 18 Together
+        models and a deployment ladder from serverless to VPC. Held at 4: portability rests on Together''s own docs, routing is not
+        fully transparent because passthrough models send prompts upstream and are not individually labelled, and the catalogue
+        turns over quickly.
 
         '
       evidence_refs:
       - ev6
       - ev8
+      - ev-docs
     cost:
       score: 4
-      rationale: 'Competitive per-token serverless rates plus dedicated GPU endpoints;
-        Together''s own pricing page lists the model, and independent third-party price
-        analysis corroborates the approximate rates, which move frequently.
+      rationale: 'Pricing is now read live rather than second-hand (ev5, 2026-11-19): per-token serverless rates with cached-input prices
+        for 24 chat models, a published 25% premium for US-only processing, on-demand per-GPU-hour dedicated and cluster rates,
+        fine-tuning and PTU pricing, with promotions dated. Competitive for the class (gpt-oss-120B $0.15/$0.60; DeepSeek V4.1 Flash
+        $0.30/$1.20) and corroborated by Artificial Analysis (ev8). Held at 4: reserved and large-scale capacity is contact-sales,
+        and rates move often.
 
         '
       evidence_refs:
@@ -252,7 +278,7 @@ score:
 #     so there are no onehill_generated items and originality = 0.
 documentation:
   assess:
-    completeness: 88.5
+    completeness: 92.3
     originality: 0.0
     items:
       - key: data-governance
@@ -260,52 +286,52 @@ documentation:
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev1, ev7, ev2]
-        summary: "Per the Privacy Policy and Terms of Service, inputs/outputs are not stored by default (ZDR; temporary perf caching only) and training on data requires explicit org-admin opt-in, off by default. Stated in the binding terms but not independently audited."
+        refs: [ev1, ev7, ev-docs]
+        summary: "Prompt storage is ON by default and Together may use stored prompts for product improvements; ZDR is an organisation-admin opt-in that still retains metadata, account data and uploads; training is a separate opt-in, off by default. Passthrough third-party models are on by default. Self-attested in Together's own documents, not audited."
       - key: data-ownership
         title: "Data & IP ownership"
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev7, ev1]
-        summary: "The Terms of Service state you exclusively own all right, title and interest in Your Content and Output, granting Together only a limited license to operate them to provide the Services; ZDR-by-default means nothing is retained to improve the service. Sub-processors are not publicly disclosed."
+        refs: [ev7, ev1, ev-docs]
+        summary: "ToS Sec 7: you exclusively own Your Content and Output and grant a limited licence to operate them to provide the Services; Together owns Usage Data. ToS Sec 9 disclaims confidentiality. By default stored prompts may be used for product improvements, and passthrough models send prompts to the upstream provider's policy."
       - key: compliance
         title: "Compliance & attestations"
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev3, ev9, ev2]
-        summary: "SOC 2 Type II announced via an independent audit; a GDPR DPA binds Together to EU SCCs; HIPAA/BAA indicated in the security docs via encryption + audit logging. ISO 27001/27701 unconfirmed; the SOC 2 report itself was not obtained."
+        refs: [ev3, ev-iso, ev9]
+        summary: "SOC 2 Type II (blog 2025-07-08) and ISO 27001:2022 from A-LIGN (blog 2026-06-10) are vendor announcements; neither report nor certificate was read and the trust centre could not be read. A GDPR DPA with EU SCCs and UK Addendum is published. HIPAA/BAA is stated, though ToS Sec 4 bars sending medical or sensitive data on standard terms."
       - key: residency
         title: "Data residency & jurisdiction"
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev4, ev9]
-        summary: "US + EU data centres (incl. Sweden GPU capacity) with region pinning per the support KB, and the DPA confirms EU transfers under SCCs; EU/dedicated endpoints are gated to Scale/Enterprise tiers, default routing is North America, and US HQ carries standing CLOUD Act exposure."
+        refs: [ev-geo, ev-docs, ev4]
+        summary: "Serverless offers US-only processing at us-api.together.ai (+25%, 8 models), covering processing but not storage or logs; api.together.ai gives no region guarantee; no EU serverless endpoint. EU residency is via sales-led dedicated or VPC deployments. US HQ carries standing CLOUD Act exposure."
       - key: security
         title: "Security controls"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev2, ev3, ev9]
-        summary: "Security docs and the SOC 2 announcement describe encryption in transit and at rest, audit logging, MFA/RBAC and regular pen-testing, and the DPA requires encryption of controller data; no independent pen-test report or SOC 2 report was obtained."
+        refs: [ev9, ev-docs, ev3]
+        summary: "DPA Annex 2: security programme, MFA, encryption in transit and storage, daily vulnerability scans, annual external pen tests, 30-day remediation, USD 2M cyber insurance. Private HackerOne programme. SOC 2 report, ISO certificate and any pen-test report were not read."
       - key: pricing
         title: "Pricing & cost model"
         doc_type: reference
         source_type: aggregated
         coverage: full
         refs: [ev5, ev8]
-        summary: "Per-token serverless plus dedicated GPU endpoints; example rates (gpt-oss-120B ~$0.15/$0.60, Qwen3-235B ~$0.20/$0.60, DeepSeek-V3 ~$1.25/M) corroborated by third-party price analysis are approximate and move frequently."
+        summary: "Live per-token serverless rates with cached-input prices (e.g. gpt-oss-120B $0.15/$0.60, DeepSeek V4.1 Flash $0.30/$1.20, Kimi K3.1 Pro $2.00/$10.00), +25% for US-only processing, on-demand dedicated GPUs from $5.49 per GPU hour, and dated promotions."
       - key: reliability
         title: "Reliability posture"
         doc_type: reference
         source_type: aggregated
-        coverage: partial
-        refs: [ev2]
-        summary: "No incidents surfaced in research, but no public uptime SLA, status page or failover documentation was found or independently verified."
+        coverage: full
+        refs: [ev-status, ev7, ev-docs]
+        summary: "Public status page with per-model 90-day uptime (99.28% to 100%) and no incident posts since January 2025. No self-serve SLA: ToS Sec 1 disclaims uptime and serverless is best-effort; provisioned throughput carries a sales-only SLA."
   implement:
-    completeness: 62.5
+    completeness: 81.2
     originality: 0.0
     items:
       - key: integration
@@ -314,35 +340,37 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev6]
-        summary: "Together's OpenAI-compatibility docs describe an OpenAI-compatible /v1 REST API at api.together.ai/v1 plus Python/TS SDKs - point an existing OpenAI client at Together's base URL and API key to integrate."
+        summary: "OpenAI-compatible API at api.together.ai/v1 with Python and TypeScript SDKs; model ids are namespaced (openai/gpt-oss-120b), so bare OpenAI model names return 404. Embeddings are dedicated-only and moderation returns 404."
       - key: authentication
         title: "Authentication & account setup"
         doc_type: howto
         source_type: aggregated
         coverage: partial
-        refs: [ev6]
-        summary: "Bearer API keys (TOGETHER_API_KEY) authenticate the OpenAI-compatible client per the docs; fine-grained org/project key scoping and rotation policy were not detailed in the sources reviewed."
+        refs: [ev6, ev-docs]
+        summary: "Bearer API keys (TOGETHER_API_KEY); organisation admins control three privacy toggles (prompt storage, passthrough models, model training); the docs list roles, permissions and SSO under administration. Key rotation and project-scoping detail was not read."
       - key: region-config
         title: "Region & ZDR configuration"
         doc_type: howto
         source_type: aggregated
+        coverage: full
+        refs: [ev-docs, ev-geo, ev4]
+        summary: "ZDR is not the default: an organisation admin turns off Prompt storage in Privacy settings, which also disables passthrough models. For US-only processing send requests to us-api.together.ai (+25%, 8 models; 404 region_unavailable instead of fallback). EU requires a dedicated endpoint or VPC through sales."
+      - key: rate-limits
+        title: "Rate limits, tiers & quotas"
+        doc_type: reference
+        source_type: aggregated
         coverage: partial
-        refs: [ev1, ev4]
-        summary: "ZDR is the default per the Privacy Policy; the support KB shows EU region selection and dedicated region-pinned endpoints are gated to Scale/Enterprise tiers rather than self-serve."
+        refs: [ev-docs]
+        summary: "Serverless is best-effort with 429 and 503 backoff guidance and model-specific limits when demand is high; purchased limits on legacy Enterprise and Scale contracts stay until expiry; committed throughput and an SLA come from provisioned throughput via sales. Numeric per-tier limits were not read."
       - key: portability
         title: "Portability & exit"
         doc_type: explanation
         source_type: aggregated
         coverage: full
         refs: [ev6, ev8]
-        summary: "OpenAI-compatible endpoint over portable open-weight checkpoints; third-party analysis confirms the same models run across many providers and self-hosted, so switching cost is low."
-      - key: rate-limits
-        title: "Rate limits, tiers & quotas"
-        doc_type: reference
-        source_type: gap
-        gap_reason: "Specific per-tier rate limits and throughput quotas were not surfaced in the public sources reviewed; Together documents tiers commercially but exact quotas need confirmation from the account console."
+        summary: "OpenAI-compatible endpoint over portable open-weight checkpoints; third-party analysis lists the same models across providers, so switching cost is low. ZDR removes stored history, and uploaded files stay until you delete them."
   use:
-    completeness: 42.9
+    completeness: 78.6
     originality: 0.0
     items:
       - key: models-served
@@ -350,27 +378,31 @@ documentation:
         doc_type: reference
         source_type: aggregated
         coverage: full
-        refs: [ev5, ev8]
-        summary: "Broad open catalogue: Llama 3.x/4, DeepSeek V3/R1, Qwen3 (incl. 235B), Mistral/Mixtral, gpt-oss 20B/120B, plus embedding and image models - per the pricing page and third-party provider analysis."
+        refs: [ev5, ev-docs, ev8]
+        summary: "24 serverless chat models read live on 2026-11-19, led by DeepSeek V4, GLM-5.3, Kimi K3 and K3.1 Pro, Qwen 3.5 to 4, gpt-oss-120B and MiniMax M3.1 Flash, plus vision, image, video and audio models. Llama 3.3 70B, Gemma 4 31B and Qwen3-235B are no longer on serverless. No embeddings, rerank or moderation."
       - key: features
         title: "Inference features"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev6]
-        summary: "The OpenAI-compatibility docs describe chat/completions with streaming, tool use and structured outputs plus embeddings and image endpoints; per-feature support follows each served model and was not individually re-verified on Together's endpoints."
+        refs: [ev6, ev-docs]
+        summary: "OpenAI-compatible chat, completions, vision, image, text-to-speech and speech-to-text; function calling and structured outputs are marked Yes for nearly every chat model in the catalogue table; a Messages API and Responses API are listed. Embeddings are dedicated-only."
       - key: context-limits
         title: "Context & token limits"
         doc_type: reference
-        source_type: gap
-        gap_reason: "Per-model maximum context and token limits on Together's serverless endpoints were not captured in the sources reviewed; they track each served model's native window and should be confirmed on the model's Together page."
+        source_type: aggregated
+        coverage: full
+        refs: [ev-docs]
+        summary: "The catalogue table publishes context length per model, e.g. gpt-oss-120B 131,072, Qwen3.5 9B 262,144, DeepSeek V4.1 Flash 1,000,000, Kimi K3 1,048,576, GLM-5.3 1,048,575, Muse Glimmer 30B 131,072."
       - key: fine-tuning
         title: "Fine-tuning / custom models"
         doc_type: reference
-        source_type: gap
-        gap_reason: "Together offers a fine-tuning product commercially, but no first-party fine-tuning documentation was captured, so its scope (methods, formats, hosting terms) is not verified here."
+        source_type: aggregated
+        coverage: partial
+        refs: [ev5]
+        summary: "Fine-tuning and post-training are priced on the pricing page (LoRA and full fine-tuning per 1M tokens, from $0.34 for Qwen3.5 0.8B to $100 for GLM-5.1 and 5.2 DPO, minimum charges $4 to $60) over Llama, Qwen, DeepSeek, Gemma, gpt-oss, Kimi and GLM base models. Methods, formats and hosting terms were not read."
   support:
-    completeness: 28.6
+    completeness: 57.1
     originality: 0.0
     items:
       - key: security-disclosure
@@ -378,141 +410,187 @@ documentation:
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev2, ev3]
-        summary: "The security docs and SOC 2 announcement describe the security program and an incident-response plan and act as the trust surface; a dedicated vulnerability-disclosure process (e.g. security.txt / bug-bounty) was not surfaced."
+        refs: [ev-docs, ev-trust]
+        summary: "Vulnerability reports go through a private HackerOne programme (viewing it needs a HackerOne account; security.txt is referenced). The trust centre at trust.together.ai is a JavaScript-only page that could not be read, and /security returns 404."
       - key: channels
         title: "Support & community channels"
         doc_type: reference
         source_type: aggregated
         coverage: partial
-        refs: [ev2]
-        summary: "Product docs plus commercial support on Scale/Enterprise tiers; community-channel breadth (Discord/forum) was not detailed in the sources reviewed."
+        refs: [ev-docs, ev4]
+        summary: "Docs, a support knowledge base and ticket form, a complaints form, a status page and a docs support page; commercial support on contract tiers. Community-channel breadth and response commitments were not read."
       - key: status-uptime
         title: "Status page & uptime history"
         doc_type: reference
-        source_type: gap
-        gap_reason: "No public status page or verified uptime/SLA history was found for Together AI; reliability is asserted but not independently observable."
+        source_type: aggregated
+        coverage: full
+        refs: [ev-status]
+        summary: "status.together.ai (Better Stack) shows per-model 90-day uptime from 99.28% to 100%, email, RSS, JSON, Slack and webhook subscriptions, and a feed with two 2026 maintenance notices and no incident posts since January 2025. No SLA statement."
       - key: deprecation
         title: "Model deprecation policy"
         doc_type: reference
         source_type: gap
-        gap_reason: "No published model-deprecation or end-of-life policy was surfaced; because the catalogue is open-weight, a removed model can generally be self-hosted, but no formal notice window is documented."
+        gap_reason: "No published deprecation or end-of-life policy was read. Observed churn is fast (Llama 3.3 70B, Gemma 4 31B and Qwen3-235B left serverless chat between September and November 2026), but no notice window was found in the pages read."
 
 ownership:
   level: partial
   factors:
-    use_modify:   { level: strong,   rationale: "OpenAI-compatible /v1 API (documented) serving portable open-weight models - the same checkpoints run on other providers or self-hosted, so exit cost is low." }
+    use_modify:   { level: strong,   rationale: "OpenAI-compatible /v1 API (re-read 2026-11-19) serving portable open-weight models - the same checkpoints run on other providers or self-hosted, so exit cost is low." }
     # grounded in: ev6 (docs, OpenAI-compat, retrieved), ev8 (third_party portability)
-    transparency: { level: moderate, rationale: "The retention/no-training/ownership terms are grounded in the binding Privacy Policy and Terms of Service rather than a marketing page, but they are Together's own self-attestation, not independently audited, and no sub-processor list is published." }
-    # grounded in: ev1 (privacy_policy, retrieved), ev7 (terms, retrieved); no third-party attestation of retention
-    reliability:  { level: moderate, rationale: "SOC 2 Type II is announced via an independent audit and the security docs describe encryption and pen-testing, but there is no public uptime SLA, status page or SOC 2 report obtained." }
-    # grounded in: ev3 (SOC 2 announcement), ev2 (security docs); reliability dim 2
-    data_control: { level: moderate, rationale: "The Terms leave you owning Your Content and Output, and ZDR-by-default with training opt-in/off keeps your data yours - but ToS Sec 9 expressly disclaims any confidentiality duty, the no-retention guarantee is self-attested, and the US HQ plus DPA-confirmed North America default routing carry standing CLOUD Act exposure even for EU-hosted workloads." }
-    # grounded in: ev7 (terms ownership, retrieved), ev1 (privacy_policy ZDR, retrieved), ev9 (dpa routing/SCCs, retrieved)
-  verdict: "You own your workloads here in the ways that matter most: the Terms leave you owning your inputs and outputs, ZDR-by-default with no-training keeps them yours, and the open-weight catalogue on an OpenAI-compatible API is a clean portable exit. But overall ownership is partial, not substantial: the no-retention posture is Together's own self-attestation rather than independently audited, and the US HQ with DPA-confirmed North America default routing carries standing CLOUD Act exposure even for EU-hosted workloads, so data-control is moderate rather than strong. Pin the EU region on a paid tier if residency matters, and teams needing an audited no-retention guarantee should contract it in the DPA rather than rely on the default terms."
+    transparency: { level: moderate, rationale: "The Terms, Privacy Policy and DPA are published and were read in full, but the posture is Together's own self-attestation, sub-processors appear only in the DPA Annex III, the trust centre could not be read, and some docs claims are contradicted by Together's own catalogue (full precision versus FP4 and FP8 quantisation)." }
+    # grounded in: ev1 (privacy_policy, retrieved), ev7 (terms, retrieved), ev9 (dpa, retrieved), ev-docs (docs, retrieved); ev-trust retrieved:false
+    reliability:  { level: moderate, rationale: "A public status page shows per-model 90-day uptime of 99.28% to 100% and SOC 2 Type II and ISO 27001:2022 are announced, but the terms disclaim uptime, serverless is best-effort, and the only SLA is sales-only provisioned throughput." }
+    # grounded in: ev-status (publisher, retrieved), ev3 and ev-iso (vendor announcements), ev7 Sec 1; reliability dim 3
+    data_control: { level: moderate, rationale: "You own Your Content and Output and training is opt-in, but prompt storage is on by default and Together may use stored prompts for product improvements, ZDR is an admin opt-in, passthrough models send prompts to third parties by default, ToS Sec 9 disclaims confidentiality, and US HQ carries standing CLOUD Act exposure." }
+    # grounded in: ev7 (terms, retrieved), ev-docs (default storage and passthrough, retrieved), ev1 (privacy_policy ZDR, retrieved), ev9 (dpa, retrieved)
+  verdict: "You own your inputs and outputs under the Terms, training is opt-in, and the open-weight catalogue on an OpenAI-compatible API is a clean portable exit. Ownership is partial, not substantial: by default Together stores your prompts and may use them for product improvements, zero data retention is an admin opt-in, passthrough models send prompts to third parties until you switch them off, the Terms disclaim any duty of confidence, and residency is US-only on serverless with EU limited to sales-led dedicated deployments. Turn prompt storage off for ZDR, negotiate confidentiality and EU terms in an enterprise contract, and do not rely on the default terms for trade secrets or regulated data."
 
 # --- Evidence. Each item carries `doc_type` (which kind of primary document) and `retrieved`
-#     (true = the document's substantive content was obtained via this session's web tools;
-#     false = documented/known but NOT read this session). Together's own site (www.together.ai,
-#     docs.together.ai, support.together.ai) and the DPA PDF all 403''d on direct fetch this
-#     session; their governing clauses were extracted via scoped WebSearch and are marked
-#     retrieved:true accordingly. The pricing page''s live rates and the API reference page were
-#     not read from source and are retrieved:false.
+#     (true = the document's substantive content was read; false = known to exist but NOT read).
+#     As of 2026-11-19 together.ai, docs.together.ai, status.together.ai, support.together.ai and the
+#     DPA PDF are fetched directly (HTTP 200). The trust centre (trust.together.ai) is a JavaScript-only
+#     page and could not be read (ev-trust, retrieved false). The SOC 2 report and ISO certificate were
+#     not obtained; ev3 and ev-iso are vendor announcements.
 evidence:
 - id: ev1
-  claim: 'Privacy Policy: inputs and outputs are not stored by default (zero data retention);
-    under ZDR content is not stored, retained, or used for model training or product
-    improvement except as needed to provide the Services; temporary caching may be used for
-    performance; training on data is opt-in and off by default, controlled by an org-admin
-    Privacy & Security setting.'
+  claim: 'Privacy Policy (updated 2025-12-17, re-read 2026-11-19, unchanged): training on your data requires your explicit opt-in
+    (Sec 1, 2.2); ZDR is something you enable by choosing "No" in the Privacy & Security settings, and then content "is
+    not stored, retained, or used for model training, product improvements, or any secondary purposes except as needed to
+    provide the Services" (Sec 2.6); permitted uses include "To provide, maintain, and improve our Services" (Sec 2.2);
+    inference prompts and responses are held as playground user history with a delete option (Sec 2.7).'
   source_type: publisher
   doc_type: privacy_policy
   retrieved: true
   url: https://www.together.ai/privacy
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev2
-  claim: 'Privacy and security docs: HIPAA-aligned data encryption in transit and at rest,
-    audit logging and business associate agreements; layered security architecture with
-    MFA/RBAC, continuous monitoring and regular vulnerability assessments; ZDR restated.'
+  claim: 'Privacy and security docs (re-read 2026-11-19): see ev-docs for the default-storage, passthrough and ZDR clauses.
+    Earlier text on HIPAA-aligned encryption and MFA/RBAC is no longer on this page.'
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://docs.together.ai/docs/privacy-and-security
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev3
-  claim: 'SOC 2 Type II announcement: achieved via an independent, multi-month audit
-    validating access management, data encryption, incident response and change management;
-    regular penetration testing. Vendor announcement, not the SOC 2 report itself.'
+  claim: 'SOC 2 Type II announcement (re-read 2026-11-19, published 2025-07-08): completed via an independent multi-month audit,
+    auditor not named; HIPAA adherence and business associate agreements stated. Vendor announcement, not the SOC 2 report.'
   source_type: publisher
   doc_type: marketing
   retrieved: true
   url: https://www.together.ai/blog/soc-2-compliance
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev4
-  claim: EU data centres and dedicated model deployment - dedicated endpoints on targeted
-    data centres including EU locations (Sweden GPU capacity) - are available only on Scale
-    and Enterprise tier plans.
+  claim: 'Support knowledge base article, "Last updated 1 year ago" (re-read 2026-11-19): EU data centres exist, and dedicated
+    endpoints on targeted data centres including EU locations are available only on Scale and Enterprise tier plans. The
+    rate-limit docs now call Enterprise and Scale legacy contracts, so the tier names may be stale.'
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://support.together.ai/articles/8079447813-eu-data-centres-and-dedicated-model-deployment
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev5
-  claim: 'Serverless per-token pricing page (live rates not published):
-    gpt-oss-120B ~$0.15/$0.60, Qwen3-235B ~$0.20/$0.60, DeepSeek-V3 ~$1.25/M - approximate
-    and move frequently.'
+  claim: 'Pricing page (read live 2026-11-19): serverless per-token rates with cached-input prices for 24 chat models plus vision,
+    image, video and audio models; on-demand dedicated GPU endpoints (H100 $5.49 per GPU hour); GPU clusters; fine-tuning;
+    provisioned throughput via sales; promotions with end dates. Examples: gpt-oss-120B $0.15/$0.60, DeepSeek V4 Pro 0813
+    $1.32/$3.96, Kimi K3.1 Pro $2.00/$10.00, MiniMax M3.1 Flash $0.15/$0.60.'
   source_type: publisher
   doc_type: marketing
-  retrieved: false
+  retrieved: true
   url: https://www.together.ai/pricing
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev6
-  claim: 'OpenAI-compatibility docs: an OpenAI-compatible /v1 REST API at api.together.ai/v1,
-    used by pointing an existing OpenAI client at Together''s base URL and API key
-    (TOGETHER_API_KEY), with chat/completions, streaming, tool use and structured outputs
-    across the open-weight catalogue.'
+  claim: 'OpenAI-compatibility docs (re-read 2026-11-19): an OpenAI-compatible REST API and SDKs across chat, completions, vision,
+    image generation, text-to-speech and speech-to-text, used by pointing an OpenAI client at Together''s base URL; model ids are
+    namespaced and bare OpenAI model names return 404; embeddings.create is dedicated-only and moderations.create returns 404.'
   source_type: publisher
   doc_type: docs
   retrieved: true
-  url: https://docs.together.ai/docs/inference/openai-compatibility
-  date: '2026-07-25'
+  url: https://docs.together.ai/docs/openai-api-compatibility
+  date: '2026-11-19'
 - id: ev7
-  claim: 'Terms of Service (re-read 2026-08-06): as between you and Company you exclusively own all
-    right, title and interest in Your Content and Output, granting Company only a limited license to
-    operate them to provide the Services; Together does not use your data to train its models without
-    your explicit opt-in and consent; the Company owns Company IP and Usage Data. Sec 9 (verbatim):
-    "The parties will have no confidentiality obligations to each other unless otherwise agreed in
-    writing" - an express confidentiality disclaimer. Sec 2.4 grants access to Third-Party Models,
-    which remain subject to their own terms.'
+  claim: 'Terms of Service (updated 2026-05-19, re-read verbatim 2026-11-19, unchanged): Sec 9 "The parties will have no confidentiality
+    obligations to each other unless otherwise agreed in writing" (express disclaimer); Sec 7 you exclusively own Your Content
+    and Output, limited licence to operate them "solely as necessary to provide the Services"; Sec 3 ZDR is enabled by the
+    customer; Sec 1 "No guarantees are made with respect to the Services'' quality, stability, uptime, or reliability";
+    Sec 4 bars sending financial, medical or sensitive personal data; Sec 2 third-party model terms govern on conflict;
+    California law, liability capped at twelve months of fees.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://www.together.ai/terms-of-service
-  date: '2026-08-06'
+  date: '2026-11-19'
 - id: ev8
-  claim: Independent third-party price/performance analysis of Together AI corroborates the
-    approximate serverless rates and shows the same open-weight models served across many
-    providers (portability).
+  claim: 'Artificial Analysis provider page (re-read 2026-11-19): independent third-party analysis of 18 Together AI models by
+    intelligence, speed and price (Kimi K3.1 Pro ranked first), showing the same open-weight models compared across providers.'
   source_type: third_party
   doc_type: third_party
   retrieved: true
   url: https://artificialanalysis.ai/providers/togetherai
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev9
-  claim: 'Data Processing Addendum: Together (US) Inc. is bound to the EU Commission Standard
-    Contractual Clauses (and UK Addendum) for EU personal-data transfers, maintains a risk
-    management program aligned to ISO 27005 / NIST 800-37, requires encryption of controller
-    data in transit and storage, and defaults to routing through North America data centres.
-    UPDATED 2026-09-21 (independent re-read, unchanged since 2026-07-25): Annex III names 9
-    sub-processors - Amazon Web Services (US), Mailgun Technologies (US), Amplitude (US),
-    Functional Software/Sentry (US), OpenAI OpCo LLC (US), Together Software Inc. (Canada),
-    Hotjar Ltd (Malta), Intercom (US), Absorb Software (Canada/US/UK/EU/Australia). No
-    effective/execution date is visible on the PDF itself.'
+  claim: 'Data Processing Addendum PDF (re-read in full 2026-11-19; no effective date on the PDF): Together (US) Inc.; EU SCCs and
+    UK Addendum; conflict clause prefers the DPA for personal data it covers; 24-hour breach notice (Annex says 48); Annex 2
+    commits to daily vulnerability scans, annual external penetration tests, 30-day remediation, MFA and USD 2M cyber insurance;
+    Annex 1 scope is account and employee data; Annex III names 9 sub-processors - Amazon Web Services (US), Mailgun (US),
+    Amplitude (US), Sentry (US), OpenAI OpCo LLC (US, Generative AI), Together Software Inc. (Canada), Hotjar (Malta), Intercom
+    (US), Absorb Software (Canada, US, UK, EU, Australia). The earlier entry said the DPA "defaults to routing through North
+    America data centres"; that sentence is not in the PDF.'
   source_type: publisher
   doc_type: dpa
   retrieved: true
   url: https://cdn.prod.website-files.com/5ce11396d0cadb55a02cabf7/696024ff5649fb30b125686c_Together%20DPA%20(Website).pdf
-  date: '2026-09-21'
+  date: '2026-11-19'
+- id: ev-docs
+  claim: 'Privacy and security and zero-data-retention docs (read 2026-11-19): "By default, Together stores the prompts you send
+    and the responses models return, and may use them for product improvements"; Prompt storage and Passthrough models are
+    ON by default and Model training is OFF by default; ZDR "is not enabled by default", is an organisation-admin toggle,
+    also turns off passthrough, retains metadata, account data and uploads; passthrough models forward prompts to an upstream
+    provider "under its own data policy"; private HackerOne vulnerability programme; "Models on Together are hosted at full
+    precision" (contradicted by the catalogue''s FP4, FP8, NVFP4 and MXFP4 column); DeepSeek models hosted in North America
+    data centres; VPC and private networking "including in EU regions" on dedicated endpoints; serverless is "best-effort",
+    provisioned throughput carries a "defined service level agreement"; Enterprise and Scale are legacy contracts.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.together.ai/docs/zero-data-retention
+  date: '2026-11-19'
+- id: ev-geo
+  claim: 'Geo-specific inference docs (read 2026-11-19): only a United States endpoint (us-api.together.ai, 1.25x standard rates, 8
+    models) that keeps inference processing in the US; "Requests to api.together.ai do not guarantee US processing"; "The
+    guarantee covers where your request is processed. It doesn''t cover where data is stored, where logs are written, or how
+    network traffic is routed"; no fallback (404 region_unavailable). No EU serverless endpoint is documented.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://docs.together.ai/docs/serverless/geo-specific-inference
+  date: '2026-11-19'
+- id: ev-iso
+  claim: 'ISO 27001:2022 blog (published 2026-06-10, read 2026-11-19): Together AI "has received an ISO 27001:2022 certification from
+    A-LIGN Compliance and Security, Inc., an ANAB-accredited certification body", scoped to the ISMS for the global platform
+    including third-party data centres; the certificate is available on request through the trust centre. Vendor announcement;
+    the certificate was not read.'
+  source_type: publisher
+  doc_type: marketing
+  retrieved: true
+  url: https://www.together.ai/blog/iso-27001-2022-certification
+  date: '2026-11-19'
+- id: ev-status
+  claim: 'Public status page (read 2026-11-19, rendered page, index.json and feed): "All services are online"; per-model 90-day
+    availability from 99.28% (Kimi K3) to 100% (e.g. gpt-oss-120B 99.66%, GLM-5.3 99.91%, MiniMax M3.1 Flash 99.95%); the feed
+    holds two 2026 network-maintenance notices and no incident posts since January 2025; no SLA statement.'
+  source_type: publisher
+  doc_type: sla
+  retrieved: true
+  url: https://status.together.ai/
+  date: '2026-11-19'
+- id: ev-trust
+  claim: 'Trust centre (trust.together.ai): a Vanta single-page app shell of about 7.9 KB with no readable content. Certificates,
+    the SOC 2 report and any sub-processor list could not be read; nothing in this entry is scored on it.'
+  source_type: publisher
+  doc_type: security
+  retrieved: false
+  url: https://trust.together.ai/
+  date: '2026-11-19'
 changelog:
 - date: '2026-07-25'
   change: Initial entry.
@@ -559,7 +637,23 @@ changelog:
     the confidentiality disclaimer) but corrects a real field-level inaccuracy. New finding: the
     DPA''s Annex III sub-processor list names OpenAI OpCo, LLC - flagged in trust_considerations
     for awareness, not scored. Headline unchanged at 70.4/B.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against live sources (59 days past the last pass), reading the ToS, Privacy Policy, DPA PDF, product docs, status page,
+    pricing and catalogue directly. NO CHANGE: ToS (updated 2026-05-19) Sec 9 still expressly disclaims confidentiality, so confidentiality stays
+    disclaimed and D1 stays capped at 3; Privacy Policy (2025-12-17) unchanged; ZDR is confirmed opt-in; training is opt-in and off by default;
+    customers own Content and Output. CHANGED FACTS: (1) default retention is worse than recorded: the docs say prompt storage is ON by default and
+    Together "may use them for product improvements", so outputs_used_to_improve_service is now opt_out (was no); (2) NEW: passthrough third-party
+    models are ON by default and forward prompts to the upstream provider, which contradicts the earlier "no third-party routing" line
+    (third_party_routing_leakage corrected; ZDR switches passthrough off); (3) residency: the docs offer only a US-only processing endpoint (+25%)
+    and no EU serverless endpoint; the earlier "DPA-confirmed default North America routing" sentence is not in the DPA PDF, so residency 4 -> 3;
+    (4) a public status page with per-model 90-day uptime exists (and was already captured in the 2026-09-20 pass), so reliability 2 -> 3;
+    headline 70.4 -> 69.6 and grade B -> C as recomputed by score.py; (5) subprocessors_disclosed true (DPA Annex III, 9 names); (6) NEW ISO 27001:2022
+    blog (2026-06-10, A-LIGN) recorded as an announcement only, iso_27001 left unknown; (7) catalogue rebuilt from the live docs table (24 serverless chat
+    models; Llama 3.3 70B, Gemma 4 31B, Cogito, MiniMax M3 and M2.7, Qwen3-235B no longer served) and prices updated; documentation items rewritten.
+    Marketing versus own catalogue: the docs say models are "hosted at full precision" while the catalogue lists FP4, FP8, NVFP4 and MXFP4.
+    ToS Sec 4 bars sending medical or financial data while the SOC 2 blog advertises HIPAA/BAA. NOT READ: the trust centre (JavaScript-only), the SOC 2
+    report and ISO certificate, the provisioned-throughput SLA text. Ownership stays partial.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

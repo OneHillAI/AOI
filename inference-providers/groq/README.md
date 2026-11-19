@@ -1,7 +1,7 @@
 # Groq - OneHill Inference-Provider Dossier
 
-> **Score: 70.0/100 · Grade B** · HQ: United States · EU residency: yes (Helsinki, very recent) · Trains on inputs: never
-> Last verified: 2026-07-25
+> **Score: 72.4/100 · Grade B** · HQ: United States · EU residency: yes (Finland and London capacity, no pinning clause) · Trains on inputs: never
+> Last verified: 2026-11-19
 >
 > _Right for latency-sensitive workloads on a curated open catalogue; the biggest caveat is that batch and fine-tuning features retain data and default to US storage._
 
@@ -13,35 +13,35 @@
 
 | Dimension | Score | One-line reason |
 |---|---|---|
-| Data Governance & Privacy | 4/5 | Inference not retained; ZDR for all - but batch/fine-tune retain to US |
-| Compliance & Certifications | 4/5 | SOC 2 Type II + GDPR/HIPAA stated; ISO 27001 unconfirmed |
-| Data Residency & Sovereignty | 3/5 | EU data centre exists (Helsinki) but very recent; defaults US |
+| Data Governance & Privacy | 4/5 | Inference not retained by default (30-day abuse logs unless ZDR); batch/fine-tune retain to US |
+| Compliance & Certifications | 4/5 | DPA and BAA read; SOC 2 Type II is a claim (trust centre unreadable); ISO 27001 unconfirmed |
+| Data Residency & Sovereignty | 3/5 | EU capacity exists (Finland, London) but no pinning clause; retained data in US GCP |
 | Security Posture | 4/5 | SOC 2 Type II controls + Data Controls for ZDR |
-| Reliability & SLA | 3/5 | No incidents surfaced; fast-scaling startup, no SLA verified |
+| Reliability & SLA | 3/5 | Public status page, 100% API uptime Aug-Nov 2026; no published SLA |
 | Transparency & Lock-in | 3/5 | OpenAI-compat + open models, but custom LPU + narrower catalogue |
 | Cost & Value | 4/5 | Low per-token rates plus a rate-limited free tier |
 
 ## 1. What it serves & how it's priced
 
-Groq runs open models on its custom LPU hardware, optimised for very low latency. The catalogue is deliberately curated and narrower than GPU providers: Llama 3.1 8B Instant, Llama 3.3 70B Versatile, gpt-oss 20B/120B (plus gpt-oss-safeguard), Qwen3, Gemma, Mixtral, and DeepSeek R1 Distill Llama 70B. Full DeepSeek, GLM, Mistral, and arbitrary fine-tunes are not available - a real coverage limit versus NVIDIA-GPU providers. Pricing is per-token with a rate-limited free tier; example third-party rates: Llama 3.1 8B $0.05/$0.08, Llama 3.3 70B $0.59/$0.79, gpt-oss-120B $0.15/$0.60, DeepSeek R1 Distill Llama 70B $0.75/$0.99.
+Groq runs open models on its custom LPU hardware, optimised for very low latency. The catalogue is deliberately curated, narrow and fast-changing (read 2026-11-19): gpt-oss 120B and 20B and Whisper in production; Qwen3.8-27B, gpt-oss-safeguard, Orpheus TTS and Prompt Guard in preview. Llama 3.1 8B and 3.3 70B were retired for free and developer tiers on 2026-08-16 and are now enterprise-contract only, and the DeepSeek R1 distill, Gemma, Mixtral and Qwen3-32B models are gone. Full DeepSeek, GLM, Mistral, and arbitrary fine-tunes are not available - a real coverage limit versus NVIDIA-GPU providers. Pricing is per-token with a rate-limited free tier, read from the docs models page (groq.com/pricing now redirects to the home page): gpt-oss-120B $0.15/$0.60, gpt-oss-20B $0.075/$0.30, Qwen3.8-27B $0.80/$4.00.
 
 ## 2. Data governance - where your prompts go
 
-Standard inference is not retained by default, and ZDR is available to all customers via Data Controls - a stronger baseline than enterprise-only ZDR. Groq states it does not train on customer data. The important caveats are in the ancillary features: batch processing retains input/output files for 30 days unless deleted, and fine-tuning retains weights and datasets until the customer deletes them, with this retained-feature data stored in US GCP buckets. There is no closed third-party model routing. A formal sub-processor list was not confirmed.
+Standard inference is not retained by default, and ZDR is available to all customers via Data Controls according to the docs (the Services Agreement says "Eligible Customers", a term it never defines) - a stronger baseline than enterprise-only ZDR. The docs also say inputs and outputs may be logged for up to 30 days when Groq troubleshoots errors or investigates abuse, unless ZDR is on. The Services Agreement (last modified 2026-06-22, unchanged) bars Groq from using Inputs or Outputs for training and has a mutual confidentiality clause naming Customer Data. The important caveats are in the ancillary features: batch processing retains input/output files for 30 days unless deleted, and fine-tuning retains weights and datasets until the customer deletes them, with this retained-feature data stored in US GCP buckets. There is no closed third-party model routing. The DPA points to a sub-processor list at trust.groq.com/subprocessors, which is JavaScript-only and could not be read.
 
 ## 3. Compliance & certifications
 
-SOC 2 Type II is confirmed (2025 report). Groq states GDPR and HIPAA compliance, with a DPA published and a dedicated trust centre. ISO 27001/27701 is unconfirmed. This is a solid compliance posture that falls short of the top anchor mainly on the missing ISO attestation.
+The DPA (GDPR, UK and Swiss transfers via deemed-signed SCCs) and a HIPAA BAA (generally available services only) were read on 2026-11-19. SOC 2 Type II is a trust-centre claim from the July read (2025 report); trust.groq.com is now JavaScript-only, so it is not re-confirmed. ISO 27001/27701 is unconfirmed. This is a solid compliance posture that falls short of the top anchor on the missing ISO attestation and the gated SOC 2 report.
 
 ## 4. Residency & sovereignty
 
-Groq launched an EU data centre in Helsinki, Finland (with Equinix), announced July 2025. This satisfies the "EU region available" anchor, but it is very recent and default storage is otherwise US, so EU residency guarantees are not yet mature and region pinning is unconfirmed.
+Groq launched an EU data centre in Helsinki, Finland (with Equinix) in July 2025, and its platform page now lists EU-1 Vantaa (Finland) and EU-2 London. This satisfies the "EU region available" anchor, but retained data is stored in US GCP buckets, the DPA permits US processing, EEA customers contract with Groq UK Limited, and region pinning is unconfirmed.
 
 **CLOUD Act disclosure:** As a US-headquartered provider, Groq is subject to US jurisdiction including the CLOUD Act, even for EU-hosted data. This is disclosed as standing context, not scored as a defect on its own.
 
 ## 5. Reliability & lock-in
 
-No specific incidents surfaced, but Groq is a fast-scaling hardware startup with no public uptime SLA independently verified, holding reliability at 3. On lock-in, the OpenAI-compatible API and open-weight models keep workloads portable at the API level, but the custom LPU hardware and narrower catalogue are genuine coverage/lock-in considerations - you may not find every model you run elsewhere.
+Groq has a public status page (groqstatus.com) showing 100% uptime for the API and production models from August to November 2026, but no SLA is published, so reliability is 3 (raised from 2 on 2026-11-19). On lock-in, the OpenAI-compatible API and open-weight models keep workloads portable at the API level, but the custom LPU hardware and narrower catalogue are genuine coverage/lock-in considerations - you may not find every model you run elsewhere.
 
 ## 6. Choosing this provider - the practical guideline
 
@@ -49,9 +49,9 @@ Groq is a strong fit for latency-critical serving of mainstream open models wher
 
 ## 7. Sources & evidence
 
-See [`data.yaml`](data.yaml): the data-controls documentation and trust centre (publisher), the Helsinki data-centre newsroom post (publisher), and pricing/catalogue observations (third_party, approximate).
+See [`entry.yaml`](entry.yaml) and the clause extracts under `docs/primary-sources/groq/`: the Services Agreement, DPA, BAA and AUP, the data-controls and models documentation, the status page, and the platform page (all publisher). The trust centre could not be read.
 
 ---
 
-_Scored against [provider rubric v1.0](../../methodology/provider-scoring-rubric.md).
-Data: [`data.yaml`](data.yaml)._
+_Scored against [provider rubric v1.2](../../methodology/provider-scoring-rubric.md).
+Data: [`entry.yaml`](entry.yaml)._

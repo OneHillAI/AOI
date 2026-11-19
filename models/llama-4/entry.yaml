@@ -79,9 +79,9 @@ openness:
     - '700M-MAU commercial trigger: "if ... the monthly active users ... is greater than 700 million
       monthly active users in the preceding calendar month, you must request a license from Meta"'
     - 'Naming/attribution - display "Built with Llama" and prefix derivative model names with "Llama";
-      Acceptable Use Policy with six prohibited-use categories; California governing law; download is
+      Acceptable Use Policy with five prohibited-use categories; California governing law; download is
       access-gated (click-through) on Hugging Face'
-    url: https://www.llama.com/llama4/license/
+    url: https://dev.meta.ai/llama/llama4/license/
 provenance:
   canonical_source: https://huggingface.co/meta-llama
   verified_org_on_primary_host: true
@@ -343,33 +343,39 @@ evidence:
     meta-llama/llama-models): the "Additional Commercial Terms" 700M-MAU threshold ("greater than 700
     million monthly active users in the preceding calendar month, you must request a license from
     Meta"), the "Built with Llama" attribution clause, California governing law, and the incorporated AUP
-    carrying the EU multimodal restriction.'
+    carrying the EU multimodal restriction. Re-read 2026-11-19 from the same mirror and the live page
+    (version effective 5 April 2025, unchanged); Section 2 is titled "Additional Commercial Terms" and the
+    licence body itself contains no EU clause.'
   source_type: publisher
   doc_type: license
   retrieved: true
-  url: https://www.llama.com/llama4/license/
-  date: '2026-08-03'
+  url: https://dev.meta.ai/llama/llama4/license/
+  date: '2026-11-19'
 - id: ev-l4-aup
   claim: 'Llama 4 Acceptable Use Policy, read verbatim: "With respect to any multimodal models included
     in Llama 4, the rights granted under Section 1(a) ... are not being granted to you if you are an
     individual domiciled in, or a company with a principal place of business in, the European Union. This
     restriction does not apply to end users of a product or service that incorporates any such multimodal
-    models." Plus six prohibited-use categories and the LlamaUseReport@meta.com reporting path. The 3.1
-    AUP omits the EU clause; 3.2/3.3 carry it (3.3 is text-only, so it is moot there).'
+    models." Plus five prohibited-use categories (numbered 1, 3, 4, 5, 6 in the source file) and the LlamaUseReport@meta.com reporting path. The 3.1
+    AUP omits the EU clause; 3.2/3.3 carry it (3.3 is text-only, so it is moot there). Re-read verbatim
+    2026-11-19 (Meta GitHub mirror and live page): the EU paragraph is unchanged and sits in the AUP, not
+    in the licence.'
   source_type: publisher
   doc_type: terms
   retrieved: true
-  url: https://www.llama.com/llama4/use-policy/
-  date: '2026-08-03'
+  url: https://dev.meta.ai/llama/llama4/use-policy/
+  date: '2026-11-19'
 - id: ev-l4-card
   claim: 'Llama 4 on the verified, access-gated meta-llama HF org: Scout (109B/17B, very long context),
-    Maverick (400B/17B), Behemoth (larger); natively multimodal MoE; safetensors with checksums and a
-    llama4 licence tag; hosted on Bedrock/Vertex/Together/Groq.'
+    Maverick (400B/17B), Behemoth (larger); natively multimodal MoE; safetensors with checksums; hub
+    metadata read 2026-11-19 shows gated: manual, license: other with license_name: llama4, Scout and
+    Maverick Instruct last modified 2025-05-22, and no Behemoth repo or newer repo in the org; hosted on
+    Bedrock/Vertex/Together/Groq.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/meta-llama
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-l4-perf
   claim: On public leaderboards Llama 4 Maverick is competitive among open multimodal models; the family
     adds native multimodality and very long context. Not OneHill-reproduced this session.
@@ -392,7 +398,9 @@ changelog:
   change: Initial entry - split from the aggregate `meta-llama` entry. Llama 4 (Scout/Maverick/Behemoth) is scored apart from the Llama 3.x text line because of a licence + scored divergence that bites - the incorporated AUP denies EU-domiciled individuals/companies any licence to the multimodal models (verbatim), and the large Llama 4 models are systemic-risk (>1e25) - dropping legal to 2 with a hard flag, and making EU-domiciled ownership effectively none. Non-EU ownership is partial. Licence/AUP read verbatim from Meta's canonical mirror; grounded 2026-08-03.
 - date: '2026-09-21'
   change: 'Freshness re-verification. Llama 4 Community License''s 700M-MAU threshold and gating re-confirmed unchanged. One tool-limitation caveat: the licence''s EU-domicile multimodal carve-out in the Additional Terms section was truncated by the fetch tool and could not be re-read verbatim this pass - treated as unchanged pending a manual eyeball, not evidence of a change. No Behemoth GA or newer point release.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification (59 days since the last check). Re-read the Llama 4 Community License and Acceptable Use Policy verbatim from Meta''s GitHub repository and the live dev.meta.ai pages (llama.com now redirects there). Resolved the September open item: the EU-domicile multimodal carve-out is the final paragraph of the AUP, not of the licence, and its text is unchanged; the licence body has no "Additional Terms" section (Section 2 is "Additional Commercial Terms", the 700M-MAU clause, unchanged). Built with Llama, the "Llama" model-name prefix and California law are unchanged. Hub metadata: both Instruct repos still gated manual, last modified 2025-05-22, no Behemoth and no newer repo in the meta-llama org. Corrections to wording only: the licence tag reads license: other with license_name llama4, and the AUP has five prohibited-use items (numbered 1, 3, 4, 5, 6), not six. No score, flag or ownership change. Meta''s newer open weights (Muse Glimmer, Muse Spark Open) are under the Muse name and are not Llama releases; see the refresh report.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

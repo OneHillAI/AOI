@@ -24,3 +24,5 @@ retrieved: true
 [Warranty] provided "AS IS" with no warranties or liability. Contact: license@moonshot.ai.
 
 NOTE: the $20M/12-month Model-as-a-Service separate-agreement gate is new relative to Kimi K2 (whose modified-MIT carried only the branding clause), and is the material change for the legal and ownership assessment.
+
+CORRECTION (added 2026-11-19): the quoted MaaS clause above is a paraphrase, not verbatim. The real wording is in license__kimi-k3__2026-11-19.md ("must enter into a separate agreement with Moonshot AI before using the Software or its derivative works for any commercial purpose"), together with the Model-as-a-Service definition and exemptions.

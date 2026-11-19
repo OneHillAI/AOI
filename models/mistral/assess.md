@@ -25,8 +25,10 @@ Implement domain.
 ## Known limitations, bias & failure modes
 
 - **Licence split is the headline risk.** A team that assumes "Mistral = Apache" can trip over
-  the research-only MRL models (Ministral 8B, Mistral Large, Pixtral Large) and the originally
-  non-production MNPL Codestral. Commercial use of those requires a negotiated licence.
+  the research-only MRL models (Ministral 8B, Mistral Large 2, Pixtral Large) and the
+  non-production MNPL Codestral. Commercial use of those requires a negotiated licence. The split
+  is wider than Apache versus MRL: Mistral's newest large releases (Mistral Large 4, Mistral
+  Medium 3.5, Timestral) use custom licences with their own conditions and are not covered here.
 - **Lighter safety tuning.** Instruct alignment withstands casual jailbreaks, but coverage is
   historically lighter than the largest US labs, and the companion classifier (the Moderation
   API) is a hosted service rather than a broadly-shipped open guard-weight.
@@ -57,9 +59,14 @@ There is no single licence - read the model card:
   Mistral Nemo, Mistral Small 3.x, Magistral/Devstral Small. You may use, modify, redistribute
   and commercialize derivatives subject only to standard attribution/notice terms. Mistral has
   publicly **recommitted to Apache-2.0** for general-purpose models with Mistral Small 3.
-- **Mistral Research Licence (MRL-0.1), research-only:** Ministral 8B, Mistral Large, Pixtral
-  Large. Any commercial deployment requires a **separately negotiated** licence from Mistral.
-- **MNPL (non-production):** originally Codestral.
+  Mistral Large 3 (675B) and Ministral 3 (3B, 8B, 14B) are also Apache-2.0, confirmed on
+  2026-11-19 from the raw model cards (front matter plus the card's License section; there is
+  no separate LICENSE file in those repos).
+- **Mistral Research Licence (MRL-0.1), research-only:** Ministral 8B (2410), Mistral Large 2
+  (2407, 2411), Pixtral Large (2411). Any commercial deployment requires a **separately
+  negotiated** licence from Mistral.
+- **MNPL (non-production):** Codestral-22B-v0.1, still tagged mnpl on Hugging Face on
+  2026-11-19.
 
 This split is a load-bearing input to both the openness (4) and legal (4) scores - the Apache
 core is genuinely clean, but the family is not uniformly open.

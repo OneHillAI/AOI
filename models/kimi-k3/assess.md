@@ -52,7 +52,11 @@ grants use, modification, redistribution and sale, but adds two scale-linked con
 12 months** must **secure a separate agreement** with Moonshot AI before commercial deployment,
 and any product with **more than 100M monthly active users** or **more than $20M USD monthly
 revenue** must **prominently display "Kimi K3"** in its user interface. Internal use and access
-through Moonshot's official products or certified partners are exempt. The Model-as-a-Service
+through Moonshot's official products or certified partners are exempt. The licence defines Model as
+a Service as giving a third party inference or fine-tuning access with meaningful control over
+inputs, parameters or training data, and excludes end-user products with embedded model features
+and mere relaying to models hosted by others. The licence text was re-read on 2026-11-19 and is
+unchanged since release. The Model-as-a-Service
 gate is new relative to Kimi K2 and is the load-bearing input to the legal (2) score.
 
 <!-- item: provenance -->

@@ -15,7 +15,7 @@ they match between Hugging Face and ModelScope.
 <!-- item: hardware -->
 ## Hardware & VRAM requirements
 
-The size ladder is wide: **dense 0.5B-32B** run from a laptop to a single modern GPU, while
+The size ladder is wide: **dense 0.6B-32B** run from a laptop to a single modern GPU, while
 the **235B MoE** and **480B-Coder** need **multi-GPU / serious infrastructure** or
 aggressive quantization for latency-sensitive serving.
 

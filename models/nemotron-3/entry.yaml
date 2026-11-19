@@ -76,6 +76,9 @@ openness:
     - Terminates only on the licensee filing patent or copyright litigation over the Work or an
       output from it; otherwise perpetual and IRREVOCABLE, with no acceptable-use or field-of-use
       restriction and no guardrail clause
+    - 'Section 7 carries a general indemnity sentence (licensee indemnifies NVIDIA against third-party
+      claims arising from its use or distribution); the Nano safety.md subcard links the generic NVIDIA
+      Open Model License instead of this one, but the README and licence tag name this licence'
     url: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
 provenance:
   canonical_source: https://huggingface.co/nvidia
@@ -92,8 +95,8 @@ provenance:
     notable:
     - name: Official BF16 / FP8 / NVFP4 quantizations (nvidia)
       trust: publisher
-      note: NVIDIA publishes official BF16, FP8 and NVFP4 variants for Super and Nano; pin the
-        revision and verify checksums
+      note: NVIDIA publishes official BF16, FP8 and NVFP4 variants for Super and Nano, and a separate
+        MTPv2 head checkpoint for Super; pin the revision and verify checksums
   checkpoint_checklist_score: 4
   scanner_result: {}
   incidents: []
@@ -318,7 +321,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-n3-oml]
-        summary: "NVIDIA Nemotron Open Model License (v. 2025-12-15): Apache-2.0-derived, source-available (non-OSI), perpetual, royalty-free and IRREVOCABLE, commercial use allowed, no acceptable-use or field-of-use restriction; terminates only on the licensee bringing IP litigation over the Work or an output from it, and redistribution must carry the NVIDIA attribution notice."
+        summary: "NVIDIA Nemotron Open Model License (v. 2025-12-15): Apache-2.0-derived, source-available (non-OSI), perpetual, royalty-free and IRREVOCABLE, commercial use allowed, no acceptable-use or field-of-use restriction; terminates only on the licensee bringing IP litigation over the Work or an output from it, and redistribution must carry the NVIDIA attribution notice. Re-read 2026-11-19, unchanged; section 7 adds a general indemnity sentence, and the Nano safety.md subcard links the generic (revocable) NVIDIA Open Model License although the README and licence tag name this one."
       - key: provenance
         title: "Supply-chain & provenance"
         doc_type: reference
@@ -346,7 +349,7 @@ documentation:
         source_type: aggregated
         coverage: partial
         refs: [ev-n3-safety]
-        summary: "No published model-level safety evaluation or independent red-team for Super/Nano; the downloadable companion guard classifier (Nemotron-3-Content-Safety) has its own NVIDIA self-reported benchmark scores, and NeMo Guardrails and garak are Apache-2.0."
+        summary: "No published model-level safety evaluation or independent red-team for Super/Nano; the downloadable companion guard classifier (Nemotron-3-Content-Safety) has its own NVIDIA self-reported benchmark scores, and NeMo Guardrails and garak are Apache-2.0. Re-checked 2026-11-19: the Super and Nano safety.md subcards publish no evaluation scores."
   implement:
     completeness: 95.5
     originality: 0.0
@@ -515,12 +518,14 @@ evidence:
   claim: 'Nemotron 3 Super and Nano model cards on the verified nvidia HF org: Super 120B/12B, Nano
     30B/3.5B active; hybrid Mamba-Transformer LatentMoE + MTP; up to 1M context; ~25T training tokens;
     ungated safetensors with BF16/FP8/NVFP4 variants; both cards state "a family of open models with
-    open weights, training data, and recipes"; licence tag nvidia-nemotron-open-model-license.'
+    open weights, training data, and recipes"; licence tag nvidia-nemotron-open-model-license.
+    Re-read 2026-11-19: unchanged (repos last modified 2026-08-24 and 2026-08-25, README edits only; the
+    Super card now links a separate MTPv2 head checkpoint).'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-n3-oml
   claim: 'NVIDIA Nemotron Open Model License (v. 2025-12-15), read: "perpetual, worldwide,
     non-exclusive, no-charge, royalty-free, irrevocable license to reproduce, prepare Derivative
@@ -528,12 +533,20 @@ evidence:
     or object form." Terminates ONLY if the licensee institutes patent or copyright litigation
     alleging the Work or an output from the Work infringes. NO Trustworthy-AI clause, NO acceptable-use
     restriction, NO guardrail clause. Attribution notice "Licensed by NVIDIA Corporation under the
-    NVIDIA Nemotron Model License". Governing law US / Delaware. NOT OSI. Commercial use allowed.'
+    NVIDIA Nemotron Model License". Governing law US / Delaware. NOT OSI. Commercial use allowed.
+    Re-read in full 2026-11-19 (HTML, Last Modified December 15, 2025): text unchanged, grant still
+    irrevocable, still no acceptable-use, Trustworthy-AI or guardrail clause. Section 7 also carries a
+    general indemnity sentence ("You will indemnify and hold harmless NVIDIA from and against any claim
+    by any third party arising out of or related to your use or distribution of the Works ... or output
+    from the Works"), a liability term and not a use restriction. Residual ambiguity: the Nano repo
+    safety.md links the generic NVIDIA Open Model License (revocable, Guardrail termination) under "Use
+    Case Restrictions", while the Nano README, licence tag and licence_link name the Nemotron OML; the
+    README and tag are treated as governing.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-n3-data
   claim: 'Training data + recipes are PARTIALLY released: post-training datasets
     (Nemotron-Post-Training-v3, e.g. Nemotron-SFT-Safety-v1) are CC-BY-4.0 and confirmed as the
@@ -561,12 +574,17 @@ evidence:
     a contributor list). NVIDIA does ship a downloadable companion guard classifier
     (Nemotron-3-Content-Safety on Gemma-3-4B, 23 categories / 12 languages, NVIDIA self-reported
     scores), the Apache-2.0 NeMo Guardrails toolkit and the Apache-2.0 garak red-team scanner at the
-    family level.'
+    family level. Re-checked 2026-11-19: the Super and Nano safety.md subcards state only that a guard
+    model filtered training data and that content-safety evaluation uses Nemotron Content Safety Dataset
+    V2 and an internal dataset, with no scores, no jailbreak or red-team result and no residual-risk
+    disclosure, so still no published model-level safety evaluation. A newer 4B guard,
+    Nemotron-3.5-Content-Safety (OpenMDW licence, text and image, 12 languages, repo created 2026-05-22),
+    also exists; it is a companion classifier with NVIDIA self-reported scores, not a model evaluation.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/nvidia/Nemotron-3-Content-Safety
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-n3-provenance
   claim: 'Verified nvidia org on Hugging Face; Super and Nano weight repos are ungated safetensors
     with published BF16/FP8/NVFP4 quantization variants; some training DATASETS are gated but the
@@ -599,7 +617,9 @@ changelog:
   change: Initial entry (NVIDIA Nemotron 3 Super + Nano), split out of the former aggregate nemotron entry so each per-licence release is scored on its own. Governed by the NVIDIA Nemotron Open Model License (v. 2025-12-15); the corrected reading records it as Apache-2.0-derived, perpetual, royalty-free and IRREVOCABLE with no acceptable-use / field-of-use restriction and no guardrail clause (the earlier revocable / Trustworthy-AI reading was wrong and belonged to a different, generic NVIDIA licence). open_weights_recipe (tier 4, partial corpus). Safety scored 3, not the old aggregate 4, because there is no published model-level safety evaluation - only post-training data curation plus a downloadable family guard stack. AOI 66.0, grade C, ownership partial.
 - date: '2026-09-21'
   change: 'Freshness re-verification. Licence unchanged and re-confirmed distinct from the generic NVIDIA Open Model License (no Trustworthy-AI/revocable-guardrail clause). Safety strengthened, not weakened: a Nemotron 3.5 Content Safety guard model has been added to the family tooling. Flag (not folded): NVIDIA has shipped Nemotron 3.5 Lightning 30B-A3B (2026-08-11, OpenMDW-1.1) - a licence-divergent new sibling for a future build pass, not a fold into this entry.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against primary sources. Re-read the Nemotron Open Model License (Last Modified December 15, 2025, HTML): text unchanged, grant still perpetual and irrevocable, only litigation-triggered termination, no acceptable-use, Trustworthy-AI or guardrail clause. Newly recorded: the section 7 general indemnity sentence, and that the Nano safety.md subcard links the generic NVIDIA Open Model License (revocable) while the README and licence tag name the Nemotron OML. Super and Nano cards re-read (repos edited 2026-08-24 and 2026-08-25, specs unchanged; Super links a separate MTPv2 head checkpoint); weights still ungated. Safety re-checked: the safety.md subcards publish no evaluation results, so no model-level safety evaluation exists yet and safety stays 3. The Nemotron 3.5 Content Safety guard cited in the September sweep exists but was created 2026-05-22, so it predates that sweep. No score, factor or ownership change (66.0, grade C, partial). New sibling entities are listed in the sweep report, not folded in here.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

@@ -27,3 +27,14 @@ The Llama 3.1 AUP has NO EU/multimodal clause (and its models are text-only); 3.
 ## model_card - meta-llama org
 source_url: huggingface.co/meta-llama | exists: yes | retrieved: true
 Verified, access-gated org; Llama 4 tagged `llama4`; safetensors with checksums; hosted on Bedrock/Vertex/Together/Groq.
+
+## Refresh 2026-11-19
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE (raw) | 2026-11-19 | yes | true | verbatim; effective 5 Apr 2025; Section 2 "Additional Commercial Terms" 700M-MAU; no EU clause in the body; see license__llama-4-community__2026-11-19.md
+terms | github.com/meta-llama/llama-models/blob/main/models/llama4/USE_POLICY.md (raw) | 2026-11-19 | yes | true | verbatim; EU multimodal carve-out is the paragraph before the reporting paths; see terms__llama-4-aup__2026-11-19.md
+license | dev.meta.ai/llama/llama4/license/ (llama.com redirects: llama.com -> developer.meta.com -> dev.meta.ai) | 2026-11-19 | yes | true | live page, via fetch summariser; wording and effective date match
+terms | dev.meta.ai/llama/llama4/use-policy/ | 2026-11-19 | yes | true | live page, via fetch summariser; EU paragraph present; no "Additional Terms" section
+model_card | huggingface.co/api/models/meta-llama/Llama-4-Scout-17B-16E-Instruct, Llama-4-Maverick-17B-128E-Instruct and org listing | 2026-11-19 | yes | true | metadata only (raw card files 401 gated); gated manual; license: other, license_name llama4; see model_card__hf-gating-and-versions__2026-11-19.md
+```
+Correction to the 2026-08-03 notes above: the EU carve-out is in the AUP, not in a licence section titled "Additional Terms" (the licence has only Section 2, "Additional Commercial Terms"), and the AUP has five prohibited-use items, not six.

@@ -1,22 +1,27 @@
 # Support - Together AI
 
-_How do we keep it running and get help? Security disclosure and support channels live
-here; status/uptime and deprecation are documented gaps below._
+_How do we keep it running and get help? Security disclosure, support channels and status live
+here; the deprecation policy is a documented gap below._
 
 <!-- item: security-disclosure -->
 ## Security disclosure & trust centre
 
-Together's **security documentation** and its **SOC 2 Type II announcement** act as the
-trust surface, covering encryption, audit logging, MFA/RBAC and a described
-incident-response plan. A **dedicated vulnerability-disclosure process** - a published
-`security.txt`, advisory feed, or bug-bounty - was not surfaced, so for
-coordinated disclosure plan to go through the documented support/privacy contacts rather than a
-standing security channel.
+Vulnerability reports go through a **private HackerOne programme** (viewing it needs a HackerOne
+account; the docs point to `security.txt`). The trust centre at trust.together.ai is a
+JavaScript-only page that could not be read, `/security` returns 404, and the SOC 2 report and ISO
+certificate are available only on request. Plan to request them from sales.
 
 <!-- item: channels -->
 ## Support & community channels
 
-Support comprises **product documentation** plus **commercial support on the Scale and
-Enterprise tiers**. The breadth of community channels (Discord/forum) and the response
-commitments attached to each paid tier were not detailed in the sources reviewed, so
-confirm the support SLA that comes with your tier during onboarding.
+Support comprises product docs, a support knowledge base with ticket and complaint forms, a docs
+support page and a status page, plus commercial support on contract tiers. Community-channel
+breadth and response commitments per tier were not read, so confirm them during onboarding.
+
+<!-- item: status-uptime -->
+## Status page & uptime history
+
+**status.together.ai (Better Stack) is public** with per-model 90-day uptime from 99.28% to 100%
+on 2026-11-19, subscriptions by email, RSS, JSON, Slack and webhook, and a feed that holds two 2026
+maintenance notices and no incident posts since January 2025. It states no SLA, and several
+popular models sit near 99.3% to 99.7% over 90 days.

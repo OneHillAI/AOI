@@ -25,3 +25,13 @@ source_url: https://arxiv.org/abs/2412.19437 | exists: yes | retrieved: true
 
 ## hosted-service note (not this entry)
 The DeepSeek hosted app/API privacy + PRC-governing-law terms concern the *hosted service*, not the self-hosted open weights this entry scores. Self-hosting the safetensors sidesteps them.
+
+## Refresh 2026-11-19
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://huggingface.co/deepseek-ai/DeepSeek-V3/raw/main/LICENSE-MODEL (same bytes as raw.githubusercontent.com/deepseek-ai/DeepSeek-V3/main/LICENSE-MODEL) | 2026-11-19 | yes | true | DeepSeek License Agreement v1.0 unchanged; Section 7 remote restriction and Section 14 PRC governing law extracted (license__LICENSE-MODEL-sections-7-14__2026-11-19.md)
+license | https://huggingface.co/deepseek-ai/DeepSeek-V3/raw/main/LICENSE-CODE | 2026-11-19 | yes | true | MIT, Copyright (c) 2023 DeepSeek; split from weights still real
+model_card | https://huggingface.co/deepseek-ai/DeepSeek-V3/raw/main/README.md | 2026-11-19 | yes | true | 671B total / 37B active, 128K; section 7 repeats the code/model licence split; ungated (HF API gated=false)
+terms | https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html | 2026-11-19 | yes | true | hosted service only; see terms__hosted-service__2026-11-19.md
+privacy_policy | https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html | 2026-11-19 | yes | true | hosted service only; see terms__hosted-service__2026-11-19.md
+```

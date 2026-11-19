@@ -1,4 +1,4 @@
-# gpt-oss - primary-source clauses (2026-07-25)
+# gpt-oss - primary-source clauses (2026-07-25, re-verified 2026-11-19)
 
 ## _sources.md (index)
 ```
@@ -9,6 +9,11 @@ technical_report | https://arxiv.org/abs/2508.10925 | 2026-07-25 | yes | true | 
 terms | https://github.com/openai/gpt-oss/blob/main/USAGE_POLICY | 2026-07-25 | yes | true | single-paragraph policy (confirmed complete)
 security | https://cdn.openai.com/pdf/419b6906-9da6-406c-a19d-1bb078ac7637/oai_gpt-oss_model_card.pdf | 2026-07-25 | yes | true | malicious-fine-tuning eval + SAG conclusion
 security | https://metr.org/blog/2025-10-23-gpt-oss-methodology-review/ | 2026-07-25 | yes | true | METR third-party methodology review
+license | https://raw.githubusercontent.com/openai/gpt-oss/main/LICENSE | 2026-11-19 | yes | true | unmodified Apache-2.0, template copyright placeholder; see license__gpt-oss-apache-2.0__2026-11-19.md
+terms | https://raw.githubusercontent.com/openai/gpt-oss/main/USAGE_POLICY | 2026-11-19 | yes | true | one paragraph, unchanged; publisher spelling is "maximizing"
+model_card | https://huggingface.co/openai/gpt-oss-120b | 2026-11-19 | yes | true | HF API gated False, apache-2.0, 128K config, MXFP4; also gpt-oss-20b
+model_card | https://huggingface.co/openai/gpt-oss-safeguard-20b | 2026-11-19 | yes | true | Apache-2.0, ungated finetune of gpt-oss; see model_card__gpt-oss-safeguard__2026-11-19.md
+marketing | https://openai.com/index/introducing-gpt-oss/ | 2026-11-19 | yes | false | HTTP 403 to curl and WebFetch; not re-read, not used for any scored fact
 ```
 
 ## license Apache-2.0

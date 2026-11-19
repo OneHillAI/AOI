@@ -41,7 +41,7 @@ Section 1(a) ... are not being granted to you if you are an individual domiciled
 company with a principal place of business in, the European Union" (downstream end users
 exempted). Because Llama 4 **is** multimodal, EU-domiciled entities get no licence. The licence
 also keeps the **700M-MAU** commercial trigger, "Built with Llama" naming/attribution, an AUP
-with six prohibited-use categories, and California governing law. The Llama 3.1 text models do
+with five prohibited-use categories, and California governing law. The Llama 3.1 text models do
 **not** carry the EU carve-out. This is why legal scores 2 and EU-domiciled ownership is
 effectively none.
 

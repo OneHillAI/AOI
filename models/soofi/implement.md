@@ -7,7 +7,9 @@ safe-deployment controls & Deployment Ceiling (**T2, conditional - and preview-c
 ## Install & run
 
 Soofi-S ships as bf16 safetensors on the verified `Soofi-Project` org, plus first-party GGUF
-builds. Because it is a **custom hybrid Mamba-2/MoE**, the transformers path needs
+builds, but **every repo is manually gated**: you must request access and be approved by the
+publisher before any file downloads, and the card describes a closed beta for selected partners
+(checked 2026-11-19). Because it is a **custom hybrid Mamba-2/MoE**, the transformers path needs
 `trust_remote_code=True`. Always pin an exact revision.
 
 ```python
@@ -95,12 +97,13 @@ workload before relying on an aggressive (e.g. 3-bit) quant in production.
 <!-- item: fine-tuning -->
 ## Fine-tuning & adaptation
 
-Soofi-S is strong here because the **training stack is open**: `soofi-project/Soofi-Pretraining`
-and `soofi-trainer` provide the pre-/mid-training code and configs, and the released **intermediate
-checkpoints** plus **per-source data accounting** let you reproduce or extend training rather than
-only fine-tune the final weights. The base is explicitly built for fine-tuning. For most adopters,
-standard **SFT/LoRA** via `transformers` / TRL on the safetensors checkpoints is the practical path;
-teams needing deeper control can use the released trainers directly. Note the EU AI Act provider
+Soofi-S is built for fine-tuning, but the rights are not there yet. The **training code** is
+public (`soofi-project/Soofi-Pretraining`, with no licence file; `soofi-trainer`, MIT) and the
+**per-source data accounting** documents the recipe, so the project could in principle be
+reproduced or extended. The weights and the intermediate Megatron checkpoint are manually gated, and
+no licence in force grants adaptation or redistribution of derivatives, so confirm the terms of your
+access approval before fine-tuning. If you have access, standard **SFT/LoRA** via `transformers` /
+TRL on the safetensors checkpoints is the practical path. Note the EU AI Act provider
 implications of placing a derivative on the market (see Assess).
 
 <!-- item: integration -->

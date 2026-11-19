@@ -8,6 +8,11 @@ model_card | https://huggingface.co/moonshotai/Kimi-K2-Instruct | 2026-07-25 | y
 technical_report | https://arxiv.org/abs/2507.20534 | 2026-07-25 | yes | true | "Kimi K2: Open Agentic Intelligence"
 terms | https://platform.kimi.ai/docs/agreement/modeluse.md | 2026-07-25 | yes | true | Singapore law/SIAC; training opt-out via enterprise agreement. platform.moonshot.ai 302s here
 privacy_policy | https://platform.kimi.ai/docs/agreement/userprivacy | 2026-07-25 | yes | true | Singapore processing; trains on user content by default
+license | https://raw.githubusercontent.com/moonshotai/Kimi-K2/main/LICENSE | 2026-11-19 | yes | true | Re-read: byte-identical to HF Instruct and Base LICENSE; 100M-MAU/$20M clause unchanged; K2.5/K2.6/K2.7-Code/0905/Thinking licences compared (same clause, only the display string and copyright year differ). File: license__kimi-k2__2026-11-19.md
+model_card | https://huggingface.co/moonshotai/Kimi-K2-Instruct | 2026-11-19 | yes | true | Re-read: Modified MIT statement unchanged; front matter new_version -> Kimi-K2-Instruct-0905 (since 2025-09-05). File: model_card__kimi-k2-instruct__2026-11-19.md
+terms | https://platform.kimi.ai/docs/agreement/modeluse.md | 2026-11-19 | yes | true | Re-read: page now dated "Last Updated: July 30th, 2026"; training/opt-out/Singapore/SIAC clauses unchanged in substance. File: terms__hosted-platform__2026-11-19.md
+privacy_policy | https://platform.kimi.ai/docs/agreement/userprivacy | 2026-11-19 | yes | true | Re-read: dated April 30, 2025, unchanged (trains on user content, Singapore servers, open-ended retention). Consumer policy at kimi.ai/user/agreement/userPrivacy is a client-rendered page and was not readable. File: privacy_policy__hosted-platform__2026-11-19.md
+docs | https://platform.kimi.ai/docs/models.md | 2026-11-19 | yes | true | Hosted K2 series: closed to new users from 2026-10-31, retirement planned end of December 2026 (API only, weights unaffected). File: docs__hosted-model-list__2026-11-19.md
 ```
 
 ## license - Modified MIT

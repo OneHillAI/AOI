@@ -70,7 +70,8 @@ openness:
     name: Apache License 2.0
     classification: osi
     commercial_use: allowed
-    notable_restrictions: []
+    notable_restrictions:
+    - The 9B repos (EuroLLM-9B, EuroLLM-9B-Instruct) sit behind an auto-approved Hugging Face contact-sharing gate (username and email shared with the publisher); it adds no licence term, and the 1.7B repos are not gated
     url: https://huggingface.co/utter-project/EuroLLM-9B-Instruct
 provenance:
   canonical_source: https://huggingface.co/utter-project
@@ -485,8 +486,8 @@ ownership:
       # grounded in: ev-apache (license, retrieved), ev-hf-9b-instruct (model_card, retrieved) - clean Apache-2.0 grant across 9B/1.7B/22B-Instruct-2512, unconditional commercial use, no field-of-use limits
     transparency:
       level: moderate
-      rationale: "Open-weights-plus-recipe, but only partial data openness: the technical report documents the tokenizer, architecture, data mixture and training procedure, and the released SFT dataset (EuroBlocks-SFT-2512) plus the EuroFilter artifact make the recipe inspectable - yet the ~4T-token pre-training corpus is described rather than published as one dataset, so this is stronger than weights-only but weaker than a fully-open model (cf. OLMo) and not reproducible from a released corpus."
-      # grounded in: ev-openness (docs, retrieved) - 22B-Instruct-2512 card: EuroBlocks-SFT-2512 released, ~4T pretraining corpus described but not published as one dataset; ev-tech-report (technical_report, retrieved) - recipe documented
+      rationale: "Open-weights-plus-recipe, but only partial data openness: the technical report documents the tokenizer, architecture, data mixture and training procedure, and the released SFT dataset (EuroBlocks-SFT-2512) plus the EuroFilter artifact make the recipe inspectable - yet for the tracked 9B and 1.7B line the ~4T-token pre-training corpus is described rather than published as one dataset, so this is stronger than weights-only but weaker than a fully-open model (cf. OLMo) and not reproducible from a released corpus. (The later 2512 generation released a web pre-training corpus and its training and evaluation code; that is a separate entity and is not scored here.)"
+      # grounded in: ev-tech-report (technical_report, retrieved) - 9B and 1.7B recipe documented, EuroFilter and EuroBlocks-Synthetic released, corpus described not published; ev-openness (docs, retrieved) - corrected 2026-11-19, see changelog
     reliability:
       level: moderate
       rationale: "Runs dependably, but per-language safety coverage is thin and uneven, so you supply the safety layer."
@@ -505,34 +506,39 @@ ownership:
 #     22B-Instruct-2512 card that pins the openness nuance (SFT set released, pretraining corpus not).
 evidence:
 - id: ev-eurollm-site
-  claim: EuroLLM is presented as an open-source European multilingual LLM suite covering
-    all 24 official EU languages plus additional strategic languages, developed by an
-    EU-funded consortium.
+  claim: 'The project site eurollm.io (read 2026-11-19) presents EuroLLM as a fully open
+    source European multilingual LLM suite: a 22B flagship (32K context, Instruct and Base),
+    the 9B (Base, plus Instruct as a demonstration) and the 1.7B for edge devices, with EuroVLM
+    and EuroMoE listed as "Soon". It names no licence, gives no release dates and shows no
+    news after September 2026. Marketing only; the binding licence is the Hugging Face card.'
   source_type: publisher
   doc_type: marketing
-  retrieved: false
+  retrieved: true
   url: https://eurollm.io/
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-hf-9b-instruct
   claim: 'EuroLLM-9B-Instruct model card, read verbatim: hosted on the verified utter-project
     org on Hugging Face in safetensors under Apache-2.0, trained on 4T tokens, instruction-tuned
     on EuroBlocks, a 4k context and a documented chat template (BOS id 1 / EOS id 4); noted
     as not preference-aligned (may hallucinate or produce harmful content); comparable to
-    Gemma-2-9B on EU languages and Mistral-7B on English.'
+    Gemma-2-9B on EU languages and Mistral-7B on English. Re-read 2026-11-19 from the rendered
+    page and Hub API: Apache-2.0, Sequence Length 4,096, and the repo is gated "auto" (the
+    page says "You need to agree to share your Hugging Face information to access this model";
+    username and email are shared). No standalone LICENSE file exists in the repo.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/utter-project/EuroLLM-9B-Instruct
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-1.7b-card
   claim: 'EuroLLM-1.7B-Instruct model card, read verbatim: 1.7B parameters, a 4,096-token
     context, coverage of 35 languages, Apache-2.0, and comparable to Gemma-7B on machine-translation
-    benchmarks.'
+    benchmarks. Re-read raw on 2026-11-19: unchanged, and the repo is not gated.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/utter-project/EuroLLM-1.7B-Instruct
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-tech-report
   claim: 'EuroLLM-9B: Technical Report (arXiv 2506.04079), read verbatim: EuroLLM is trained
     from scratch to cover all 24 official EU languages plus 11 more, and documents the
@@ -545,17 +551,20 @@ evidence:
   url: https://arxiv.org/abs/2506.04079
   date: '2026-07-25'
 - id: ev-openness
-  claim: 'EuroLLM-22B-Instruct-2512 model card, read verbatim: openness is PARTIAL, not
-    fully-open - the SFT dataset EuroBlocks-SFT-2512 IS released (utter-project/EuroBlocks-SFT-2512),
-    but the ~4T-token pretraining corpus (web, parallel, Wikipedia, Arxiv, books, math, code,
-    Apollo) is only described, not published as one downloadable dataset. Position: stronger
-    than weights-only, weaker than a fully-open model (cf. OLMo, which releases its full
-    pretraining data).'
+  claim: 'EuroLLM-22B-Instruct-2512 model card, re-read 2026-11-19: it describes the ~4T-token
+    pretraining mixture (web, parallel, Wikipedia, Arxiv, books, math, code, Apollo) and the
+    EuroBlocks-SFT-2512 post-training set, and calls itself "the best EU-made fully open model"
+    (marketing register). The July 2026 version of this item said the pretraining corpus was
+    "not published as one downloadable dataset" for the 22B generation; that was incomplete,
+    because the 22B report (arXiv 2602.05879, ev-22b-report) releases a web pretraining corpus
+    (utter-project/EuroWeb-2512, created 2026-02-03) and its pretraining and evaluation code.
+    For the tracked 9B and 1.7B line (2024 releases) the corpus is still only described; the
+    released artifacts there are the EuroFilter classifier and EuroBlocks-Synthetic.'
   source_type: publisher
   doc_type: docs
   retrieved: true
   url: https://huggingface.co/utter-project/EuroLLM-22B-Instruct-2512
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-blog
   claim: The EuroLLM team's release blog describes EuroLLM-9B, its EU consortium and EU
     funding (EuroHPC / Horizon Europe), multilingual coverage, Apache-2.0 licensing and
@@ -566,15 +575,18 @@ evidence:
   url: https://huggingface.co/blog/eurollm-team/eurollm-9b
   date: '2026-07-25'
 - id: ev-apache
-  claim: EuroLLM base and Instruct weights - 9B, 1.7B and 22B-Instruct-2512 - are distributed
+  claim: 'EuroLLM base and Instruct weights - 9B, 1.7B and 22B-Instruct-2512 - are distributed
     under OSI-approved Apache-2.0 with unconditional commercial use and no field-of-use limits
     (the licence is not a preference-alignment/safety grant, and the cards warn the models may
-    hallucinate).
+    hallucinate). Re-read 2026-11-19 from the card front matter and card text ("License:
+    Apache License 2.0.") of the 9B, 1.7B and 2512 repos; none of the repos holds a standalone
+    LICENSE file, so the card is the licence statement. The 9B repos are gated auto
+    (contact-sharing click-through, no extra terms); the 1.7B and 2512 repos are not gated.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/utter-project/EuroLLM-9B-Instruct
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-ec-osor
   claim: The European Commission's Open Source Observatory profiles EuroLLM as EU-funded
     pioneering European open-source AI released under an open licence.
@@ -609,6 +621,19 @@ evidence:
   retrieved: false
   url: https://huggingface.co/QuantFactory/EuroLLM-9B-Instruct-GGUF
   date: '2026-07-25'
+- id: ev-22b-report
+  claim: 'EuroLLM-22B: Technical Report (arXiv 2602.05879, submitted 2026-02-05) states
+    "we release our base and instruction-tuned models, our multilingual web pretraining data
+    and updated EuroBlocks instruction datasets, as well as our pre-training and evaluation
+    codebases". The Hub datasets EuroWeb-2512 and EuroBlocks-SFT-2512 and the GitHub repos
+    deep-spin/Megatron-LM-pretrain and deep-spin/eurollm-eval exist; EuroWeb-2512 and
+    EuroBlocks-SFT-2512 declare no licence in their card metadata. About the 2512 generation,
+    not the tracked 9B and 1.7B line.'
+  source_type: publisher
+  doc_type: technical_report
+  retrieved: true
+  url: https://arxiv.org/abs/2602.05879
+  date: '2026-11-19'
 changelog:
 - date: '2026-07-25'
   change: Initial v2 four-domain library entry.
@@ -616,7 +641,9 @@ changelog:
   change: Grounded evidence against primary sources (docs/primary-sources/eurollm) - Apache-2.0 licence (9B/1.7B/22B-Instruct-2512), the EuroLLM-9B technical report, and the 9B/1.7B/22B-Instruct-2512 model cards read verbatim; added doc_type + retrieved to all evidence and a docs item pinning the partial-openness nuance (SFT set released, ~4T pretraining corpus not); ownership factors and verdict grounded to clean Apache-2.0 + partial (not full) data openness.
 - date: '2026-09-21'
   change: 'Freshness re-verification. EuroLLM-9B''s Apache-2.0 licence and gated access re-confirmed unchanged. Flag (not folded): a newer, larger EuroLLM-22B-2512 has shipped - a new sibling for a future build pass; its licence tag (expected Apache-2.0) needs confirming from its own raw repo file before scoring.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against primary sources, no score change. Re-read the licence statement (card front matter and card text; no standalone LICENSE file exists in any EuroLLM repo) and the Hub API for the 9B, 9B-Instruct, 1.7B and 1.7B-Instruct repos: Apache-2.0 is unchanged and uniform across the tracked line. Gating is not uniform and is now recorded: the 9B repos are gated auto (a Hugging Face contact-sharing click-through that adds no licence term), the 1.7B repos are ungated. The 4,096-token context is unchanged on the tracked models. Resolved the September manual-eyeball item: EuroLLM-22B-2512 carries apache-2.0 in its raw card front matter and card text, is not gated, has 32,768 context and 22.6B parameters; it is reported as a new entity, not folded in. Corrected the openness evidence (ev-openness): the July wording that the 22B-generation pretraining corpus was not published was incomplete, because arXiv 2602.05879 and the Hub (utter-project/EuroWeb-2512) release a web pretraining corpus plus pretraining and evaluation code; for the tracked 2024 9B and 1.7B line the corpus is still only described, so the openness, transparency and ownership ratings stand. Newer releases not covered here: EuroLLM-9B-2512 and Instruct-2512 (32k context, ungated), EuroLLM-22B-2512 and Instruct-2512, EuroMoE-2.6B-A0.6B, and the EuroLLM1.5-9B-Base (apache-2.0) and EuroLLM1.5-9B-SFT (preview, no licence declared) repos. No EuroLLM release newer than 2026-11-16 was found.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

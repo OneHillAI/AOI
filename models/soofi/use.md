@@ -8,8 +8,8 @@ languages, and native tool-use; structured output is a current gap._
 
 Soofi-S is a **text-only** language model built for **German and English** generation, code, and
 technical/agentic tasks in industrial and regulated settings. Per the pretraining report and
-independent coverage (`ev-arxiv`, `ev-perf`), it is the **strongest fully-open model on aggregate
-English and German benchmarks** - ahead of OLMo 3 32B, Apertus 70B, EuroLLM 22B and Alia 40B - and
+independent coverage (`ev-arxiv`, `ev-perf`), it is the **strongest "fully open" model on aggregate
+English and German benchmarks** (a benchmark claim; the weights are gated, see Assess) - ahead of OLMo 3 32B, Apertus 70B, EuroLLM 22B and Alia 40B - and
 wins the **code aggregates** in both languages among open base models, all while activating only
 ~3B of 30B parameters per token. Choose Soofi-S when European sovereignty, auditability, German-language
 strength and long-context economics matter; it is a leading *open* model rather than a

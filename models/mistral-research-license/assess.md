@@ -36,9 +36,11 @@ Mistral line's open-weights 3.
 <!-- item: license -->
 ## License terms & what you may do
 
-Two non-commercial licences. The **MRL** (Ministral 8B, Mistral Large, Pixtral Large) grants
+Two non-commercial licences. The **MRL** (Ministral 8B, Mistral Large 2, Pixtral Large) grants
 use "solely for (a) personal, scientific or academic research, and (b) for non-profit and
-non-commercial purposes", excluding revenue activity and SaaS distribution. The **MNPL**
+non-commercial purposes", excluding revenue activity and SaaS distribution (the licence text also
+excludes employee or contractor use in daily tasks and any revenue-intended proof-of-concept; re-read
+2026-11-19, unchanged). The **MNPL**
 (Codestral) permits only "testing, research, Personal, or evaluation purposes in Non-Production
 Environments", with no commercial supply including SaaS/cloud. In both cases **production or
 commercial use requires a separately negotiated commercial licence** from Mistral; outputs are

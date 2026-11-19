@@ -1,42 +1,50 @@
 # Implement - Together AI
 
-_How do we integrate it? API integration, authentication, region/ZDR configuration, and
-portability live here._
+_How do we integrate it? API integration, authentication, region/ZDR configuration, rate limits
+and portability live here._
 
 <!-- item: integration -->
 ## API integration
 
-Together's **OpenAI-compatibility docs** describe an **OpenAI-compatible
-`/v1` REST API** at `api.together.ai/v1` alongside Python and TypeScript SDKs. The practical
-consequence is that an existing OpenAI client integrates by changing the base URL and API key
-- chat/completions, streaming, tool use and structured outputs follow familiar shapes, so
-integration is largely a configuration change rather than a rewrite. One gotcha the docs flag:
-Together model IDs are namespaced (e.g. `openai/gpt-oss-20b`), so bare OpenAI model strings
-return a 404.
+Together's docs describe an **OpenAI-compatible REST API** at `api.together.ai/v1` with Python and
+TypeScript SDKs, covering chat, completions, vision, image generation, text-to-speech and
+speech-to-text. An existing OpenAI client integrates by changing the base URL and API key. Model
+ids are namespaced (`openai/gpt-oss-120b`), so bare OpenAI model names return a 404. **Embeddings
+are dedicated-only and `moderations.create` returns 404**; there is no serverless embedding model.
+A Messages API and a Responses API are also listed.
 
 <!-- item: authentication -->
 ## Authentication & account setup
 
-Per the same docs, authentication uses a **bearer API key** (`TOGETHER_API_KEY`) supplied to
-the OpenAI-compatible client. Fine-grained organisation/project key scoping and rotation
-policy were not detailed in the sources reviewed, so if key-scoping is a control
-requirement, confirm the available granularity in the account console before rollout.
+Authentication uses a **bearer API key** (`TOGETHER_API_KEY`). Organisation admins control three
+privacy toggles (Prompt storage, Passthrough models, Model training) in Organization Settings, and
+the docs list roles and permissions (RBAC) and single sign-on under administration. Key rotation
+and project-scoping detail was not read. An organisation on the Limited tier must add a payment
+method before changing the privacy settings.
 
 <!-- item: region-config -->
 ## Region & ZDR configuration
 
-**Zero data retention is the default** posture per the Privacy Policy, so no toggle is needed
-for the core no-store behaviour. Together's support KB shows that **EU region selection and
-dedicated region-pinned endpoints are gated to the Scale/Enterprise tiers** - they are
-provisioned commercially rather than flipped on in a self-serve settings panel. Plan for a
-sales/onboarding step if EU residency is mandatory.
+**ZDR is not the default.** An organisation admin turns off Prompt storage in the Privacy section
+of Organization Settings; that also disables passthrough models, and it applies only to later
+requests. For US-only processing send requests to `us-api.together.ai` (1.25x rates, 8 models; a
+model that is not available there fails with 404 `region_unavailable` rather than falling back,
+so do not retry against `api.together.ai`). EU residency is not self-serve: it needs a dedicated
+endpoint or VPC deployment arranged with sales.
+
+<!-- item: rate-limits -->
+## Rate limits, tiers & quotas
+
+Serverless is **best-effort**: under high demand you may see 429 or 503, and the docs advise
+exponential backoff. Together may apply model-specific limits or access restrictions to models in
+high demand. Purchased limits on legacy Enterprise and Scale contracts stay until the contract
+expires. Committed throughput and a defined SLA come from provisioned throughput through sales.
+The numeric per-tier limits were not read.
 
 <!-- item: portability -->
 ## Portability & exit
 
-Because Together speaks the **OpenAI-compatible API** (documented) over
-**portable open-weight checkpoints**, the exit path is clean: **independent third-party
-analysis** confirms the same Llama / DeepSeek / Qwen / Mistral / gpt-oss models run across many
-providers and self-hosted stacks. Switching cost comes from re-pointing the base URL and
-re-validating outputs rather than re-engineering - the strongest argument for adopting an
-open-weight inference provider over a closed API.
+Together speaks the **OpenAI-compatible API** over **portable open-weight checkpoints**, and
+third-party analysis lists the same models across many providers, so exit is a base-URL change plus
+output re-validation. With ZDR on, no prompt history is kept; files you uploaded for fine-tuning
+or batch jobs stay stored until you delete them through the API, CLI or console.

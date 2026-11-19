@@ -23,3 +23,10 @@ source_url: https://arxiv.org/abs/2501.12948 | exists: yes | retrieved: true
 
 ## EU note
 The distils are small (8B-70B), below the systemic-risk threshold. The Llama Community Licence is NOT FOSS, so the Article 53 open-source exemption does not apply on the licence axis; no DeepSeek copyright policy / training-content summary is published, and Meta's AUP + 700M-MAU clause bind downstream.
+
+## Refresh 2026-11-19
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B/raw/main/LICENSE + README.md | 2026-11-19 | yes | true | MIT on the DeepSeek repos; base-licence statement in card section 7 unchanged
+license | https://www.llama.com/llama3_1/license/ and https://www.llama.com/llama3_3/license/ | 2026-11-19 | yes | true | base licence terms re-read; see license__base-licences__2026-11-19.md
+```

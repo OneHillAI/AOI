@@ -32,3 +32,15 @@ NO EU/multimodal clause; NO third-party-tools item (differs from 3.2/3.3).
 
 ## model_card license tags
 Llama 4 = `llama4`; 3.3 = `llama3.3`; 3.2 = `llama3.2` (card echoes EU clause); 3.1 = `llama3.1`. CAVEAT: tags via summarizer; governing text is from Meta's GitHub mirror.
+
+## Refresh 2026-11-19
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE and llama3_3/LICENSE (raw) | 2026-11-19 | yes | true | 700M-MAU (Section 2), Built with Llama, Llama name prefix unchanged; no EU clause in the body; see license__llama-3-1-and-3-3__2026-11-19.md
+terms | github.com/meta-llama/llama-models/blob/main/models/llama3_1|3_2|3_3/USE_POLICY.md (raw) | 2026-11-19 | yes | true | 3.1 no EU clause; 3.2 and 3.3 carry it; see terms__llama-3-aups__2026-11-19.md
+license | dev.meta.ai/llama/llama4/license/ (llama.com redirects: llama.com -> developer.meta.com -> dev.meta.ai) | 2026-11-19 | yes | true | live page, via fetch summariser; wording and effective date match the GitHub copy
+terms | dev.meta.ai/llama/llama4/use-policy/ | 2026-11-19 | yes | true | live page, via fetch summariser; EU paragraph present, no "Additional Terms" section
+model_card | huggingface.co/api/models/meta-llama/Llama-3.1-*-Instruct, Llama-3.3-70B-Instruct and org listing | 2026-11-19 | yes | true | metadata only (raw card files 401 gated); gated manual; see model_card__hf-gating-and-versions__2026-11-19.md
+third_party | digital-strategy.ec.europa.eu/en/policies/contents-code-gpai | 2026-11-19 | yes | true | GPAI Code of Practice signatory list updated 7 Oct 2026; Meta not listed (via fetch summariser)
+```
+Correction to the 2026-07-25 notes above: the Llama 4 AUP has five prohibited-use items (numbered 1, 3, 4, 5, 6), not six.

@@ -1,9 +1,9 @@
 # DeepInfra - OneHill Inference-Provider Dossier
 
-> **Score: 56.8/100 · Grade C** · HQ: United States · EU residency: no · Trains on inputs: never
-> Last verified: 2026-09-21
+> **Score: 61.6/100 · Grade C** · HQ: United States · EU residency: no · Trains on inputs: never
+> Last verified: 2026-11-19
 >
-> _A rewritten Terms of Service (effective 2026-08-17, independently re-verified 2026-09-21) added a genuine mutual confidentiality clause and made Zero Data Retention contractual and controlling with a bounded exception - correcting an earlier D grade. The biggest caveats are that zero-retention still covers only its own open models - closed models routed through it fall under those vendors' terms - no EU residency, and compliance (SOC 2/ISO dated status, DPA/SCCs) was not re-examined this pass._
+> _The Terms of Service (last modified 2026-10-15) keep Zero Data Retention contractual and controlling, and now incorporate a DPA by reference that the trust centre says includes the EU SCCs; the earlier finding of no DPA and no SCCs is out of date. The biggest caveats are that zero-retention covers only DeepInfra-hosted models - 94 of 232 public entries are partner models under the partner's terms - all processing is in the US with no EU region, and the DPA PDF and attestation documents could not be opened, so compliance rests on the provider's own trust-centre statements._
 
 **Hard flags:** none
 
@@ -13,45 +13,45 @@
 
 | Dimension | Score | One-line reason |
 |---|---|---|
-| Data Governance & Privacy | 4/5 | Mutual confidentiality (Sec 17) + contractual, bounded ZDR (Sec 7(b)) - scoped to its own open-model serving |
-| Compliance & Certifications | 3/5 | ISO 27001 + SOC 2 Type 1 only (not Type II); HIPAA unattested |
-| Data Residency & Sovereignty | 1/5 | US-only data centres; no EU residency surfaced |
-| Security Posture | 3/5 | ISO 27001 + Type 1 SOC 2; no independent pen-test surfaced |
-| Reliability & SLA | 3/5 | No incidents surfaced; no public SLA verified |
-| Transparency & Lock-in | 4/5 | OpenAI-compat + portable open models; some closed re-sold |
-| Cost & Value | 5/5 | Among the cheapest providers on the market |
+| Data Governance & Privacy | 4/5 | Contractual, controlling ZDR (Sec 7(b)) and mutual confidentiality (Sec 17) - scoped to hosted models, partner models excluded |
+| Compliance & Certifications | 3/5 | DPA incorporated by Sec 5(a); ISO 27001 and SOC 2 Type 1 stated, nothing opened; BAA enterprise-only |
+| Data Residency & Sovereignty | 1/5 | US-only data centres; no EU region and no choice of US region |
+| Security Posture | 3/5 | Trust-centre controls and pen-test report listed but unread; SOC 2 is Type 1 |
+| Reliability & SLA | 3/5 | Public status page with measured 90-day uptime; no uptime SLA |
+| Transparency & Lock-in | 4/5 | OpenAI-compat + portable open models; partner models not portable |
+| Cost & Value | 4/5 | Very low serverless list prices; dedicated GPU-hour rates up 59% to 75% since July |
 
 ## 1. What it serves & how it's priced
 
-DeepInfra is a US-headquartered, low-cost provider on NVIDIA GPUs serving roughly 77-90+ open models: Llama 3.x/4.x, DeepSeek V3/V3.2/V4 variants, Qwen3, Kimi K2, GLM-5, gpt-oss-120B, MiniMax-M2, Nemotron, Gemma, and more. It also re-sells some closed models (Anthropic Claude, Google). Pricing is mixed - pay-as-you-go per-token at the cheapest tier plus dedicated GPUs by the hour. Example third-party rates: Llama 3.1 8B ~$0.02/M, Llama 3.3 70B ~$0.35/M, gpt-oss-120B ~$0.08/M blended; GPU/hr A100 $0.89, H100 $1.79, H200 $2.19, B200 $2.79. Cost is its standout strength, earning the top anchor.
+DeepInfra is a US-headquartered, low-cost provider on NVIDIA GPUs with a public catalogue of 232 entries across modalities (93 text-generation): DeepSeek V4 and V4.1, Kimi K3 and K3.1 Pro, GLM-5.x, Qwen3.5, gpt-oss, Gemma 4, Nemotron 3, Llama 3.x and more. It also lists partner models (Anthropic Claude, Google Gemini and others; 94 of 232 entries are flagged partner). Pricing is mixed: per-token list prices (for example Llama 3.1 8B Turbo $0.02 / $0.04 and gpt-oss-120B $0.037 / $0.17 per million tokens in / out, DeepSeek V4 Flash $0.09 / $0.18) with Priority (1.5x) and Flex (0.8x) tiers, plus dedicated GPUs per GPU-hour (A100 $1.49, H100 $2.90, H200 $3.49, B200 $4.89, B300 $5.89). The dedicated rates are 59% to 75% above the July record, so cost is scored 4 rather than 5.
 
 ## 2. Data governance - where your prompts go
 
-DeepInfra operates a zero-retention policy for inputs and outputs and states it does not train on submitted data; batch requests may store data temporarily, encrypted on disk, then delete it after inference. The critical finding - and the reason this dimension is a 4, not a 5 - is third-party routing leakage: when you use Google or Anthropic models **through** DeepInfra, your data is subject to **that vendor's** storage and training policy. DeepInfra's zero-retention guarantee is scoped to its own open-model serving; third-party model routing follows the downstream vendor's terms. Sub-processors are not disclosed. Treat the zero-retention promise as scoped to open models, and check the downstream vendor's terms whenever you call a closed model.
+Zero Data Retention is contractual and controlling (Terms Sec 7(b), Sec 5(a)), training is barred except as necessary to provide the Services, and Sec 17 is a mutual confidentiality duty with three-year survival (it does not name Customer Data). Exceptions are bounded: support data kept at your written request for up to 30 days after resolution, non-content metadata, legal and abuse records, and data kept for a feature you elect (batch, asynchronous media, integrations, paid cache). The reason this is a 4, not a 5: ZDR "applies to models hosted by Provider", so when you use a partner model (Anthropic, Google and others) your data is governed by **that partner's** terms, which the Terms now say in the binding text; Sec 6(a) lets new sub-processors be added without consent; and nothing independent attests the ZDR. Sub-processors are now disclosed: AWS, Google Cloud Platform and Stripe, all in the United States.
 
 ## 3. Compliance & certifications
 
-DeepInfra has published a SOC 2 Type 1 report (a point-in-time attestation, not the ongoing Type II) and is ISO 27001 certified. HIPAA and GDPR are framed as technical and organisational measures rather than a formal attestation or BAA, so HIPAA/BAA is treated as unconfirmed. The ISO 27001 certification plus GDPR measures meet the mid anchor, but the Type-1-only SOC 2 and unattested HIPAA hold compliance at 3.
+The earlier finding of no DPA and no SCCs is out of date. Terms Sec 5(a) incorporates a DPA by reference, the trust centre lists it (dated 2026-10-05) and its FAQ says it includes the EU SCCs (Modules 1 to 3), the UK IDTA and Swiss terms, with no EU-US Data Privacy Framework certification. The DPA PDF returned HTTP 403 and was not read, so that content is a publisher statement. The trust centre shows SOC 2 and ISO 27001 as "Compliant", GDPR as "In progress" and HIPAA as "Compliant", and lists a SOC 2 Type 1 report with bridge letter, an ISO 27001 certificate and a pen-test report, none opened. The BAA needs an enterprise agreement and covers hosted models only. This meets the score-3 anchor on publisher claims.
 
 ## 4. Residency & sovereignty
 
-DeepInfra runs US-based data centres, and no EU data-residency option was surfaced; region pinning is unconfirmed. This single-region, US-only posture places residency near the floor at 1.
+All inference runs in United States data centres, for both the serverless API and dedicated deployments, with no EU or other non-US region and no choice of US region (trust-centre FAQ). The SCCs are a transfer mechanism, not residency, so residency stays at 1.
 
 **CLOUD Act disclosure:** As a US-headquartered provider, DeepInfra is subject to US jurisdiction including the CLOUD Act. With no EU residency option, all data is under US jurisdiction. This is disclosed as standing context.
 
 ## 5. Reliability & lock-in
 
-No incidents surfaced, but no public uptime SLA or failover documentation was independently verified, holding reliability at 3. Lock-in is low for open models - an OpenAI-compatible API and portable open-weight checkpoints run elsewhere or self-hosted - but the re-sold closed models are not portable and carry different data terms, adding some routing opacity.
+A public status page now exists (status.deepinfra.com) with measured 90-day uptime (API and website 100%, per-model 99.98% to 100%), a maintenance page and scheduled deprecations. There is no uptime SLA or credits; Terms Sec 4(b) offers only a 24-hour hardware replacement for provided servers. Lock-in is low for open models - an OpenAI-compatible API and portable checkpoints - but partner models are not portable and carry different data terms.
 
 ## 6. Choosing this provider - the practical guideline
 
-DeepInfra is a strong choice when cost is the driving constraint and your data is low-to-moderate sensitivity on open models. Do not treat it as EU-resident, and do not assume its zero-retention applies when you route to Claude or Google models - those calls follow the third-party vendor's terms. Avoid PHI absent a signed BAA, and prefer its own open-model endpoints if the zero-retention guarantee matters to you.
+DeepInfra is a strong choice when cost is the driving constraint and your data is low-to-moderate sensitivity on its own hosted open models. Do not treat it as EU-resident, and do not assume its zero-retention applies when you route to a partner model - those calls follow the partner's terms. Ask for the DPA through the trust centre before relying on the SCCs, and sign the BAA on an enterprise agreement before sending PHI.
 
 ## 7. Sources & evidence
 
-See [`data.yaml`](data.yaml): data and data-privacy docs including the third-party routing note (publisher), the compliance trust centre (third_party), and pricing/catalogue (third_party, approximate).
+See [`entry.yaml`](entry.yaml) and [`docs/primary-sources/deepinfra/`](../../docs/primary-sources/deepinfra/): the Terms (publisher), trust centre and FAQ (publisher, attachments unread), data-privacy docs, status page, pricing page and live model listing.
 
 ---
 
-_Scored against [provider rubric v1.0](../../methodology/provider-scoring-rubric.md).
-Data: [`data.yaml`](data.yaml)._
+_Scored against [provider rubric v1.2](../../methodology/provider-scoring-rubric.md).
+Data: [`entry.yaml`](entry.yaml)._

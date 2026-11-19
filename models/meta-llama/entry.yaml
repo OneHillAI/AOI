@@ -76,7 +76,7 @@ openness:
     - Acceptable Use Policy applies
     - '''Built with Llama'' attribution and naming requirements'
     - Multimodal Llama models are not licensed for EU-domiciled entities
-    url: https://www.llama.com/llama4/license/
+    url: https://dev.meta.ai/llama/llama4/license/
 provenance:
   canonical_source: https://huggingface.co/meta-llama
   verified_org_on_primary_host: true
@@ -583,23 +583,37 @@ evidence:
     calendar month, you must request a license from Meta"), the "Built with Llama" attribution
     clause, California governing law, and - in the incorporated AUP - the EU multimodal
     restriction denying the licence to individuals domiciled in, or companies with a principal
-    place of business in, the European Union.'
+    place of business in, the European Union. Re-read 2026-11-19 from Meta''s GitHub mirror and the
+    live page (effective 5 April 2025, unchanged).'
   source_type: publisher
   doc_type: license
   retrieved: true
-  url: https://www.llama.com/llama4/license/
-  date: '2026-07-25'
+  url: https://dev.meta.ai/llama/llama4/license/
+  date: '2026-11-19'
+- id: ev-l3-license
+  claim: 'Llama 3.1 (release date 23 July 2024) and Llama 3.3 (release date 6 December 2024) Community
+    Licences, read verbatim 2026-11-19: Section 2 "Additional Commercial Terms" carries the same
+    700M-MAU threshold ("greater than 700 million monthly active users in the preceding calendar
+    month, you must request a license from Meta"), Section 1.b.i the same "Built with Llama" display and
+    "Llama" model-name prefix, and neither licence body has an EU clause. The Llama 3.1 AUP has no EU
+    clause; the 3.2 and 3.3 AUPs end with the multimodal EU paragraph (moot for text-only 3.3).'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE
+  date: '2026-11-19'
 - id: ev-aup
-  claim: 'Llama 4 Acceptable Use Policy, read verbatim: six prohibited-use categories
+  claim: 'Llama 4 Acceptable Use Policy, read verbatim: five prohibited-use categories
     (illegality/rights infringement; death or bodily harm incl. military/weapons/critical
     infrastructure; deception/fraud/impersonation; failure to disclose known AI dangers;
     generating third-party unlawful tooling), the EU multimodal restriction, and the
-    LlamaUseReport@meta.com reporting path. The 3.1 AUP omits the EU clause; 3.2/3.3 carry it.'
+    LlamaUseReport@meta.com reporting path. The 3.1 AUP omits the EU clause; 3.2/3.3 carry it.
+    Re-read verbatim 2026-11-19, unchanged.'
   source_type: publisher
   doc_type: terms
   retrieved: true
-  url: https://www.llama.com/llama4/use-policy/
-  date: '2026-07-25'
+  url: https://dev.meta.ai/llama/llama4/use-policy/
+  date: '2026-11-19'
 - id: ev2
   claim: Llama family variants, EU multimodal licensing restriction, ecosystem/cloud
     availability, and Meta declining the EU GPAI Code of Practice.
@@ -609,13 +623,16 @@ evidence:
   url: https://en.wikipedia.org/wiki/Llama_(language_model)
   date: '2026-07-25'
 - id: ev3
-  claim: Canonical, verified and gated meta-llama organisation on Hugging Face distributing
-    safetensors with checksums; per-version licence tags (llama4, llama3.3, llama3.2, llama3.1).
+  claim: 'Canonical, verified and gated meta-llama organisation on Hugging Face distributing
+    safetensors with checksums; licence tags license:llama3.3 and license:llama3.1 on the 3.x repos
+    (Llama 4 reads license other with license_name llama4). Hub metadata read 2026-11-19: Llama 3.1
+    8B/70B/405B Instruct and Llama 3.3 70B Instruct all gated manual, last modified between 2024-09-25
+    and 2024-12-21; no Llama repo of any generation created after 2025-04-28.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/meta-llama
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev4
   claim: Llama is competitive-to-leading among open-weight generalist families on
     public leaderboards.
@@ -652,7 +669,9 @@ changelog:
   change: Grounded licence + AUP evidence against primary sources (docs/primary-sources/meta-llama) - 700M-MAU and EU-multimodal clauses read verbatim; evidence retrieved:true, doc_type added.
 - date: '2026-09-21'
   change: 'Freshness re-verification. Llama 3.x Community License 700M-MAU threshold clause re-read verbatim, unchanged. No new Llama 3.x release; Llama 4 remains tracked separately.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification (59 days since the last check). Re-read the Llama 3.1 and 3.3 Community Licences and the 3.1, 3.2 and 3.3 Acceptable Use Policies verbatim from Meta''s GitHub repository: the 700M-MAU clause (Section 2, "Additional Commercial Terms"), the "Built with Llama" display and "Llama" model-name prefix are unchanged; the 3.1 AUP still has no EU clause and the 3.2/3.3 AUPs still carry the multimodal EU paragraph (moot for text-only 3.3). Hub metadata: the four tracked repos are still gated manual, last modified 2024-09-25 to 2024-12-21, and the meta-llama org has no repo created after 2025-04-28, so no new Llama 3.x or other Llama release. Corrections to wording only: Llama 4 licence metadata reads license: other with license_name llama4, and the Llama 4 AUP has five prohibited-use items, not six. Meta''s EU GPAI Code of Practice status re-checked against the Commission signatory list (updated 7 October 2026): Meta is still not a signatory. No score, flag or ownership change. Meta''s newer open weights (Muse Glimmer, Muse Spark Open) are under the Muse name and are not Llama releases; see the refresh report.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

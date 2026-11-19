@@ -22,3 +22,10 @@ source_url: https://arxiv.org/abs/2501.12948 | exists: yes | retrieved: true
 
 ## EU note
 The distils are small (1.5B-32B), well below the systemic-risk threshold. Apache-2.0 is FOSS, so the Article 53 open-source exemption applies to the transparency duties; no DeepSeek copyright policy / training-content summary is published (obligations that survive the exemption).
+
+## Refresh 2026-11-19
+```
+doc_type | source_url | retrieval_date | exists | retrieved | notes
+license | https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B/raw/main/LICENSE + README.md | 2026-11-19 | yes | true | MIT on the DeepSeek repos; base-licence statement in card section 7 unchanged
+license | https://huggingface.co/Qwen/Qwen2.5-32B/raw/main/LICENSE (+ 14B, Math-1.5B, Math-7B) | 2026-11-19 | yes | true | base licence terms re-read; see license__base-licences__2026-11-19.md
+```

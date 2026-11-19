@@ -628,13 +628,16 @@ evidence:
   url: https://arxiv.org/abs/2508.10925
   date: '2026-07-25'
 - id: ev-hf-openai
-  claim: gpt-oss weights are hosted on the verified openai organisation on Hugging Face
-    as safetensors under Apache-2.0 with a 128K context window.
+  claim: 'gpt-oss weights are hosted on the verified openai organisation on Hugging Face
+    as safetensors under Apache-2.0 with a 128K context window. Re-read 2026-11-19 via the
+    Hugging Face API and raw card: gpt-oss-120b and gpt-oss-20b are not gated, carry the
+    apache-2.0 tag, contain LICENSE and USAGE_POLICY files, report max_position_embeddings
+    131072 and MXFP4 quantisation, and the organisation page reports isVerified true.'
   source_type: publisher
   doc_type: model_card
-  retrieved: false
+  retrieved: true
   url: https://huggingface.co/openai/gpt-oss-120b
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-apache
   claim: 'gpt-oss LICENSE, read verbatim: a standard Apache License 2.0 (January 2004)
     boilerplate with the copyright line left as a template placeholder and no bespoke
@@ -648,7 +651,7 @@ evidence:
 - id: ev-usage-policy
   claim: 'gpt-oss USAGE_POLICY, read verbatim and confirmed complete: the entire policy
     is a single sentence - "We aim for our tools to be used safely, responsibly, and
-    democratically, while maximising your control over how you use them. By using OpenAI
+    democratically, while maximizing your control over how you use them. By using OpenAI
     gpt-oss-120b and gpt-oss-20b, you agree to comply with all applicable law." - an
     unusually light acceptable-use policy with no prohibited-use taxonomy or field-of-use limits.'
   source_type: publisher
@@ -708,6 +711,17 @@ evidence:
   retrieved: false
   url: https://github.com/openai/gpt-oss
   date: '2026-07-25'
+- id: ev-safeguard
+  claim: 'gpt-oss-safeguard-20b and gpt-oss-safeguard-120b (created 2025-09-18) are separate
+    OpenAI safety-classification fine-tunes of gpt-oss, read 2026-11-19: not gated, apache-2.0
+    tag, raw LICENSE is unmodified Apache-2.0 and USAGE_POLICY is the same one-paragraph
+    comply-with-law text. Not folded into this entry; they are a separate artefact family
+    for policy-based text classification.'
+  source_type: publisher
+  doc_type: model_card
+  retrieved: true
+  url: https://huggingface.co/openai/gpt-oss-safeguard-20b
+  date: '2026-11-19'
 - id: ev-ollama
   claim: gpt-oss is available in the Ollama model library for local single-command serving.
   source_type: third_party
@@ -722,7 +736,9 @@ changelog:
   change: Grounded evidence against primary sources (docs/primary-sources/gpt-oss) - added doc_type/retrieved to every item; read the Apache-2.0 LICENSE, the one-sentence USAGE_POLICY, the arXiv 2508.10925 model card, the OpenAI safety-report PDF and the METR third-party methodology review verbatim (retrieved:true); grounded ownership factors.
 - date: '2026-09-21'
   change: 'Freshness re-verification. gpt-oss-20b and gpt-oss-120b''s Apache-2.0, ungated status re-confirmed unchanged. Optional note, not folded: OpenAI has published gpt-oss-safeguard variants (complementary safety/guardrail artefacts) that could be added as siblings later; they do not change this entry''s grade.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against primary sources (docs/primary-sources/gpt-oss, license__gpt-oss-apache-2.0__2026-11-19.md). Raw LICENSE re-read: unmodified Apache-2.0. Raw USAGE_POLICY re-read: unchanged one paragraph. Hugging Face API for gpt-oss-120b and gpt-oss-20b: not gated, apache-2.0, unchanged since 2025-08-26; sizes, 128K context and MXFP4 confirmed from config.json and the card. No gpt-oss successor and nothing new on the openai org after 2026-04-17. gpt-oss-safeguard (Apache-2.0, ungated) read and evidenced as ev-safeguard but not folded. Corrected the ev-usage-policy quotation to the verbatim spelling. ev-hf-openai now retrieved. The openai.com announcement page (403) and the lmarena leaderboard (403) could not be re-read; neither is used for a licence, gating or score fact. No score, rating or level change.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

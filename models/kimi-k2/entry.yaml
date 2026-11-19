@@ -445,7 +445,7 @@ documentation:
         source_type: aggregated
         coverage: full
         refs: [ev-kimi-hf, ev-github]
-        summary: "Kimi K2 ships as Base and Instruct checkpoints tracked as immutable Hugging Face revisions on the verified moonshotai org; the revision hash is the changelog anchor."
+        summary: "Kimi K2 ships as Base and Instruct checkpoints tracked as immutable Hugging Face revisions on the verified moonshotai org; the revision hash is the changelog anchor. The Instruct card marks Kimi-K2-Instruct-0905 as the newer version, and later generations (K2.5, K2.6, K2.7-Code, K3) exist but are not covered here."
       - key: security-disclosure
         title: "Security / vulnerability disclosure"
         doc_type: reference
@@ -462,7 +462,7 @@ documentation:
         title: "Deprecation / end-of-life policy"
         doc_type: reference
         source_type: gap
-        gap_reason: "No published deprecation or end-of-life policy for Kimi K2 checkpoints; older Hugging Face revisions remain downloadable but no formal support-window or sunset commitment is documented."
+        gap_reason: "No published deprecation or end-of-life policy for Kimi K2 checkpoints; older Hugging Face revisions remain downloadable but no formal support-window or sunset commitment is documented. The hosted API is different: Moonshot's model list (ev-hosted-eol) closed K2 series models to new users from 2026-10-31 and plans to retire them by the end of December 2026. That notice does not withdraw the weights."
       - key: known-issues
         title: "Tracked known issues"
         doc_type: reference
@@ -504,12 +504,13 @@ evidence:
   claim: 'Kimi-K2-Instruct model card on the verified moonshotai Hugging Face org: block-FP8
     safetensors, 1T total / 32B active parameters, 128K context, Muon optimiser, and the
     statement that "Both the code repository and model weights are released under the Modified
-    MIT License."'
+    MIT License." Re-read 2026-11-19: unchanged; the card front matter now points new_version
+    to moonshotai/Kimi-K2-Instruct-0905 (set 2025-09-05).'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/moonshotai/Kimi-K2-Instruct
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-license
   claim: 'Kimi K2 LICENSE, read verbatim: standard MIT with one added clause - "Our only
     modification part is that, if the Software (or any derivative works thereof) is used for
@@ -521,7 +522,7 @@ evidence:
   doc_type: license
   retrieved: true
   url: https://raw.githubusercontent.com/moonshotai/Kimi-K2/main/LICENSE
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-github
   claim: The moonshotai/Kimi-K2 repository documents the MoE architecture (384 experts,
     8+1 selected), the MuonClip optimiser, block-FP8 weights and deployment on vLLM,
@@ -545,12 +546,13 @@ evidence:
   claim: 'platform.kimi.ai model-use agreement, read: user content is used to improve the
     services, with opt-out available only via an enterprise or separate written agreement;
     governed by Singapore law with disputes resolved by SIAC arbitration in English.
-    platform.moonshot.ai 302-redirects here.'
+    platform.moonshot.ai 302-redirects here. Re-read 2026-11-19: page dated "Last Updated: July
+    30th, 2026", same clauses.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://platform.kimi.ai/docs/agreement/modeluse.md
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-privacy
   claim: 'platform.kimi.ai privacy policy, read: the hosted service trains on user prompts,
     audio, images, videos and files by default; the controller is MOONSHOT AI PTE. LTD with
@@ -559,7 +561,18 @@ evidence:
   doc_type: privacy_policy
   retrieved: true
   url: https://platform.kimi.ai/docs/agreement/userprivacy
-  date: '2026-07-25'
+  date: '2026-11-19'
+- id: ev-hosted-eol
+  claim: 'Hosted Kimi API Platform notice, read 2026-11-19: from 2026-10-31 K2 series models are
+    no longer available to newly registered users (existing users unaffected) and Moonshot plans
+    to retire all K2 series models by the end of December 2026; kimi-k2.5 and the older K2
+    previews are listed as Deprecated, kimi-k2.6 and kimi-k2.7-code as expected late December
+    2026. This covers the hosted API only, not the downloadable weights or their licence.'
+  source_type: publisher
+  doc_type: docs
+  retrieved: true
+  url: https://platform.kimi.ai/docs/models.md
+  date: '2026-11-19'
 - id: ev-perf
   claim: On independent evaluation Kimi K2 is among the strongest open-weight models
     on agentic and coding benchmarks (e.g. SWE-bench Verified ~65.8).
@@ -607,7 +620,9 @@ changelog:
   change: Grounded evidence against primary sources (docs/primary-sources/kimi-k2) - Modified-MIT 100M-MAU/$20M-revenue clause read verbatim; arXiv technical report and HF model card retrieved; added hosted platform.kimi.ai terms + privacy_policy evidence (trains-by-default, Singapore/SIAC); doc_type/retrieved added to every evidence item; ownership factors + verdict tightened around the attribution trigger and the weights-vs-hosted split.
 - date: '2026-09-21'
   change: 'Freshness re-verification. The modified-MIT licence''s branding clause (100M-MAU / $20M-monthly-revenue threshold requiring prominent Kimi K2 display) re-read verbatim, unchanged. Flag (not folded): Moonshot has shipped K2.5, K2.6 and K2.7-Code - distinct newer releases for a future build pass to assess sibling-vs-update.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against primary sources. Modified-MIT LICENSE re-read raw from GitHub and from the Hugging Face Base and Instruct repos: byte-identical, 100M-MAU / $20M-monthly-revenue "display Kimi K2" clause unchanged, repos ungated. Sibling licences read for comparison (K2-Instruct-0905, K2-Thinking, K2.5, K2.6, K2.7-Code): same clause, only the display string and copyright year differ; none diverges. Hosted platform.kimi.ai terms re-read (page now dated July 30th 2026; train-by-default, enterprise-only opt-out, Singapore law and SIAC unchanged) and privacy policy re-read (dated April 30 2025, unchanged). New fact: the hosted API closed K2 series models to new users from 2026-10-31 with retirement planned for the end of December 2026 (ev-hosted-eol); weights and licence unaffected. Instruct card front matter marks Kimi-K2-Instruct-0905 as new_version. No score, factor or level change.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

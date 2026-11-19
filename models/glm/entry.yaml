@@ -26,9 +26,9 @@ publisher:
   security_contact: https://huggingface.co/zai-org
 summary: 'GLM is Zhipu AI''s open-weight family - Zhipu AI is the Beijing company (spun
   out of Tsinghua''s THUDM lab) that ships internationally under the "Z.ai" brand.
-  The current flagship GLM-4.6 is a 355B-total / 32B-active Mixture-of-Experts model
-  with a 200K context window, tuned for coding and agentic use, alongside the earlier
-  GLM-4.5 (355B/32B) and the lighter GLM-4.5-Air (106B/12B) plus dense GLM-4-32B-0414
+  The largest model tracked here is GLM-4.6, a 355B-total / 32B-active Mixture-of-Experts
+  model with a 200K context window, tuned for coding and agentic use, alongside the
+  earlier GLM-4.5 (355B/32B) and the lighter GLM-4.5-Air (106B/12B) plus dense GLM-4-32B-0414
   and GLM-4-9B-0414. The headline advantage over some China peers is a genuine, OSI-approved
   MIT license on the GLM-4.5/4.6 and 0414 series. The two things an adopter must weigh:
   the 355B MoE may approach the EU AI Act 1e25 systemic-risk compute threshold (unconfirmed,
@@ -37,7 +37,9 @@ summary: 'GLM is Zhipu AI''s open-weight family - Zhipu AI is the Beijing compan
   own guards and verify the LICENSE per checkpoint. This entry is the MIT GLM line
   (GLM-4.6/4.5/4.5-Air and the GLM-4-0414 series, including GLM-4-9B-0414); the original
   glm-4-9b-chat, under the custom non-OSI "glm-4" licence, is the separate
-  glm-4-9b-chat-original entry.
+  glm-4-9b-chat-original entry. Zhipu''s newer GLM-5 line (GLM-5 to GLM-5.3-Flash, 2026)
+  and GLM-4.7 are outside this entry; of those, only GLM-5.3 and GLM-5.3-BF16 are not
+  MIT (custom GLM-5.3 License, ev-license-glm53).
 
   '
 variants:
@@ -87,6 +89,9 @@ openness:
     - Per-variant licensing - the GLM-4.5/4.6 and GLM-4-0414 series are MIT, but the
       original glm-4-9b used a custom non-OSI "glm-4" license; verify the LICENSE file
       per checkpoint
+    - 'Outside this entry: GLM-5.3 and GLM-5.3-BF16 carry a custom GLM-5.3 License
+      (security review for Model-as-a-Service operators above 10 billion USD of group
+      revenue). Every checkpoint tracked here is MIT.'
     url: https://huggingface.co/zai-org/GLM-4.6
 provenance:
   canonical_source: https://huggingface.co/zai-org
@@ -568,27 +573,45 @@ evidence:
   url: https://huggingface.co/zai-org
   date: '2026-07-25'
 - id: ev-license-mit
-  claim: 'The GLM-4.5, GLM-4.6 and GLM-4-32B-0414 checkpoints declare the OSI-approved
-    MIT license permitting commercial use - but via HF metadata ("License: mit") and
-    README only; there is NO in-repo LICENSE file (raw/blob LICENSE returns 404). The
-    metadata/README statement was read; the checked-in LICENSE text was not (none exists
-    on these repos). A sibling (GLM-5.2) does ship a real MIT LICENSE file, confirming
-    the family MIT is genuine.'
+  claim: 'Re-read 2026-11-19. GLM-4.5, GLM-4.5-Air and GLM-4.6 declare the OSI-approved
+    MIT license permitting commercial use via HF metadata ("license: mit") and README
+    only; they still have NO in-repo LICENSE file (raw LICENSE returns 404). The
+    GLM-4-32B-0414 and GLM-4-9B-0414 repos now DO ship an in-repo MIT LICENSE file
+    ("Copyright (c) 2025 Zhipu AI", standard MIT text), read in full; the July note that
+    the 0414 line had no LICENSE file is superseded. No tracked checkpoint is gated.
+    The tracked MIT cluster is uniform.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/zai-org/GLM-4.6
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-license-glm52
-  claim: 'GLM-5.2 ships a REAL in-repo MIT LICENSE file, read verbatim: standard MIT
-    text with no custom clauses, "Copyright (c) 2026 Zhipu AI." This resolves the
-    metadata-only gap on the 4.5/4.6/0414 line by confirming the family MIT is a genuine,
-    checked-in MIT licence on at least one current sibling.'
+  claim: 'GLM-5.2 ships a REAL in-repo MIT LICENSE file, re-read verbatim 2026-11-19
+    and unchanged: standard MIT text with no custom clauses, "Copyright (c) 2026 Zhipu
+    AI." GLM-5.1 carries a byte-identical file and GLM-5.3-Flash a standard MIT file
+    ("Copyright (c) 2026 Z.AI Co., Ltd"). Confirms the MIT is a genuine, checked-in
+    licence on current siblings.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/zai-org/GLM-5.2/resolve/main/LICENSE
-  date: '2026-07-25'
+  date: '2026-11-19'
+- id: ev-license-glm53
+  claim: 'Boundary evidence, outside the tracked checkpoints. GLM-5.3 and GLM-5.3-BF16
+    carry a custom "GLM-5.3 License", read in full 2026-11-19. It grants MIT-like rights
+    (use, copy, modify, merge, publish, distribute, sublicense, sell, fine-tune) but
+    adds: if the Licensee or an affiliate operates a Model as a Service business and
+    the aggregate revenue of the Licensee and its affiliates exceeds "10 billion US
+    dollars (or the equivalent in other currencies) in total over any consecutive 12
+    months", the Licensee "must pass Z.AI''s security review before using the Software
+    or its derivative works for any commercial purpose". The threshold is group revenue,
+    not MaaS revenue. GLM-5, 5.1, 5.2 and 5.3-Flash are plain MIT, so the September
+    sweep note that all five carry the custom licence was wrong.'
+  source_type: publisher
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/zai-org/GLM-5.3/raw/main/LICENSE
+  date: '2026-11-19'
 - id: ev-license-split
   claim: 'Licensing is per-variant and the legacy glm-4-9b is NOT plain MIT. The THUDM/glm-4-9b
     LICENSE, read verbatim, is a custom "glm-4" licence: a revocable, royalty-free
@@ -605,12 +628,14 @@ evidence:
   date: '2026-07-25'
 - id: ev-0414
   claim: The GLM-4-0414 family (dense GLM-4-32B-0414 and GLM-4-9B-0414, up to 128K
-    extended context) was open-sourced under the MIT license.
+    extended context) was open-sourced under the MIT license; the LICENSE file in both
+    Hugging Face repos was read on 2026-11-19 (identical standard MIT text, "Copyright
+    (c) 2025 Zhipu AI"). The 128K extended-context figure was not re-read.
   source_type: publisher
-  doc_type: docs
-  retrieved: false
-  url: https://github.com/zai-org/GLM-4
-  date: '2026-07-25'
+  doc_type: license
+  retrieved: true
+  url: https://huggingface.co/zai-org/GLM-4-32B-0414/raw/main/LICENSE
+  date: '2026-11-19'
 - id: ev-github
   claim: Zhipu / Z.ai publishes GLM inference code and technical reports on GitHub
     (zai-org/GLM-4, zai-org/GLM-4.5), but not the training data or training pipeline.
@@ -628,19 +653,20 @@ evidence:
   url: https://modelscope.cn/organisation/ZhipuAI
   date: '2026-07-25'
 - id: ev-zai-terms
-  claim: 'Hosted Z.ai Terms of Service, read verbatim: governed by Singapore law with
-    SIAC arbitration (seat Singapore). Individual/consumer users grant a broad perpetual
-    licence to use User Content to improve the services, but the API/enterprise carve-out
-    states "We will not use End User Content for developing or improving Services, unless
-    you explicitly agree." Singapore jurisdiction - distinct from the PRC-law glm-4-9b
-    weights licence; do not conflate them.'
+  claim: 'Hosted Z.ai Terms of Service (Last Update April 14, 2026), re-read verbatim
+    2026-11-19, substance unchanged: governed by Singapore law with SIAC arbitration
+    (seat Singapore). Individual users authorise use of User Content to develop and
+    improve the services, but the API terms state "We will not use End User Content to
+    develop or improve Services, unless you explicitly agree to such use." Singapore
+    jurisdiction - distinct from the PRC-law glm-4-9b weights licence; do not conflate
+    them.'
   source_type: publisher
   doc_type: terms
   retrieved: true
   url: https://chat.z.ai/legal-agreement/terms-of-service
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-zai-privacy
-  claim: 'Hosted Z.ai Privacy Policy, read verbatim: data is processed in Singapore;
+  claim: 'Hosted Z.ai Privacy Policy (Last Update September 29, 2025), re-read verbatim 2026-11-19, unchanged: data is processed in Singapore;
     API content is "not saved on our servers"; consumer content is used "when we train
     and improve our models." The Singapore processing location is distinct from the
     PRC jurisdiction of the glm-4-9b weights licence.'
@@ -648,7 +674,7 @@ evidence:
   doc_type: privacy_policy
   retrieved: true
   url: https://chat.z.ai/legal-agreement/privacy-policy
-  date: '2026-07-25'
+  date: '2026-11-19'
 - id: ev-perf-coding
   claim: Third-party evaluation places GLM-4.6 among the stronger open models for real-world
     coding, tool use and agentic tasks.
@@ -703,7 +729,20 @@ changelog:
     tightened ownership rationales/verdict with # grounded in comments. No score changes.
 - date: '2026-09-21'
   change: 'Freshness re-verification. The tracked MIT-cluster licence is unchanged. Flag (not folded): Z.ai/Zhipu has shipped a GLM-5 generation (GLM-5/5.1/5.2/5.3/5.3-Flash) under a custom GLM-5.3 License with a Model-as-a-Service security-review gate reported at a $10B threshold - licence-divergent from this MIT entry and warrants a new glm-5 entity/family split in a future build pass, not a fold-in.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against raw primary sources. Re-read the LICENSE
+    files and HF licence tags for the tracked checkpoints: the MIT cluster (GLM-4.5, 4.5-Air,
+    4.6, GLM-4-32B-0414, GLM-4-9B-0414) is still uniformly MIT and ungated; the 0414 repos
+    now ship an in-repo MIT LICENSE (July note superseded), 4.5/4.6 remain metadata and README
+    only. Resolved the September open item from the raw text: the GLM-5.3 License gates
+    Model-as-a-Service operators whose Licensee-plus-affiliates revenue exceeds 10 billion
+    USD over any 12 months behind a Z.AI security review; it applies only to GLM-5.3 and
+    GLM-5.3-BF16 (GLM-5, 5.1, 5.2 and 5.3-Flash are MIT), so the September wording that all
+    five carry it was wrong. Hosted Z.ai Terms (updated 2026-04-14) and Privacy Policy
+    (2025-09-29) re-read, unchanged; one paraphrased quote corrected to the exact wording.
+    Wording fix: GLM-4.6 is no longer called the current flagship (GLM-5.x is newer, outside
+    this entry). No score, rating or ownership change.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

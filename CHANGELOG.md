@@ -37,6 +37,31 @@ Initial public foundation (v0.1).
 
 ### Changed
 
+- Freshness re-verification of all 30 entries (2026-11-19), 59 days after the previous sweep and
+  past the 30-day fast SLA, each re-read against current primary documents (raw licence files,
+  model cards, live Terms, DPAs and provider catalogues) rather than date-bumped. `validate.py`
+  now reports 0 errors on all 30. Eleven entries changed score, grade or ownership level: Soofi
+  73.2 B to 63.2 C (weights still gated and the licence only a promise, so openness and legal fall
+  to 2); Ai2 OLMo 80.8 B to 77.6 B and ownership substantial to partial (the model cards tie use
+  to Ai2's Responsible Use Guidelines, which bar uses outside research, and no document says
+  whether they bind a downloader, so legal 5 to 4 and use_modify strong to moderate); Fireworks AI
+  64.8 C to 71.6 B (its Terms and DPA turned out to be readable, redirecting to text PDFs);
+  Together AI 70.4 B to 69.6 C (prompt storage and third-party passthrough are on by default and
+  the only region guarantee is US processing); Berget 70.4 B to 67.2 C (the DPA binds data to the
+  EEA, not Sweden, and excludes serverless inference from data-centre choice); Baseten 73.6 to
+  76.8 (a customer-selectable EU region); Infercom 76.0 to 78.4 (DPA v1.4 read in full, status
+  page, ISO 27001 certificate); DeepInfra 56.8 to 61.6 (a DPA now exists, public status page,
+  dedicated prices up 59 to 75 percent); Nebius 60.8 to 64.4 (SOC 3 report and ISO 27001
+  certificate read); Groq 70.0 to 72.4 and Runware 50.4 to 54.4 (Terms re-read in full). The
+  other 19 entries are unchanged in score. Corrections to the September sweep: Qwen3.8-2.4T and
+  Qwen3.8-Flash-Next carry custom licences and Qwen-Image-2.1 a non-commercial research licence
+  (September said all Apache-2.0); the GLM-5.3 licence's USD 10 billion threshold is group revenue
+  and applies to GLM-5.3 only; the Llama 4 EU multimodal carve-out sits in the Acceptable Use
+  Policy, not in the licence; OLMo 3 was already in the OLMo entry; Nemotron 3.5 Content Safety is
+  from May, not new. Verbatim-quote errors in the Kimi K3 and GLM-4-9B extracts were corrected.
+  Newly released siblings found and not yet entered: Mistral Large 4 and Timestral, Qwen3.5 to
+  3.8, Kimi K3.1 Pro, the DeepSeek V4 line, GLM-5.x, Nemotron 3.5, EuroLLM-22B-2512, Olmo-Hybrid,
+  OlmoEarth and Meta's Muse models.
 - Registry entries are now scoped to a single release and always grouped under a non-scored `family`
   relation; a family is split into separate entries only when its releases diverge on a scored
   attribute (OpenSpec `model-family-scope`). Renamed the Kimi K2 entry from `kimi` to `kimi-k2`.

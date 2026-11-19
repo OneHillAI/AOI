@@ -7,8 +7,8 @@ here. The AOI score and grade are computed from the dimension anchors in `entry.
 ## Intended & out-of-scope use
 
 GLM is Zhipu AI's open-weight family - Zhipu is the Beijing company (spun out of Tsinghua's
-THUDM lab) that ships internationally under the **Z.ai** brand. The current flagship
-**GLM-4.6** is a **355B-total / 32B-active Mixture-of-Experts** model with a **200K** context
+THUDM lab) that ships internationally under the **Z.ai** brand. The largest model tracked here,
+**GLM-4.6**, is a **355B-total / 32B-active Mixture-of-Experts** model with a **200K** context
 window, tuned for coding and agentic use, alongside **GLM-4.5** (355B/32B), the lighter
 **GLM-4.5-Air** (106B/12B), and the dense **GLM-4-32B-0414** and **GLM-4-9B-0414**.
 
@@ -55,6 +55,13 @@ but the **original `glm-4-9b`** shipped under a **custom, non-OSI "glm-4" licens
 (`ev-license-split`). Do not assume MIT across every GLM checkpoint - read the LICENSE file
 on the exact model you pull. This clean-but-conditional picture is a load-bearing input to
 the legal score (3).
+
+Re-read on 2026-11-19: the tracked cluster is still uniformly MIT and ungated. The 0414 repos
+now ship an in-repo MIT LICENSE file; GLM-4.5 and GLM-4.6 still rely on Hugging Face metadata
+and the README (`ev-license-mit`, `ev-0414`). Outside this entry, Zhipu's newer GLM-5.3 and
+GLM-5.3-BF16 checkpoints carry a custom licence that requires a Z.AI security review from
+Model-as-a-Service operators with more than 10 billion USD of group revenue over 12 months
+(`ev-license-glm53`); GLM-5, 5.1, 5.2 and 5.3-Flash are plain MIT.
 
 <!-- item: provenance -->
 ## Supply-chain & provenance

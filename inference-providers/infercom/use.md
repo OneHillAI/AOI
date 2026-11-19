@@ -1,22 +1,29 @@
 # Use - Infercom
 
 _What can it do and how do we use it? The served model catalogue and inference features live
-here._
+here; fine-tuning is a documented gap below._
 
 <!-- item: models-served -->
 ## Models served
 
-Infercom serves **major open-weight models in native BF16** on **SambaNova RDU dataflow
-hardware**, across **EU/US/JP** regions. Serving in native BF16 (rather than a more aggressive
-quantisation) is a quality signal for fidelity-sensitive workloads. The **exact model roster
-and version list were not fully confirmed** in the public sources reviewed, so
-confirm the current catalogue and per-model availability with the provider before committing.
+**The Inference API roster is small and changes.** Read 2026-11-19: EU-hosted gpt-oss-120b,
+gemma-4-31B-it, E5-Mistral-7B-Instruct (embeddings) and Whisper-Large-v3 (speech-to-text), plus
+one Global-catalog model, MiniMax-M3.1-Flash, processed outside the EU. Llama 3.3 70B (retired
+2026-11-17), DeepSeek V3.1 and V3.2 (2026-11-03) and MiniMax-M2.7 (2026-09-30) have gone since the
+previous pass. A wider list (GLM-5.3, MiniMax-M3, gpt-oss-20b, gemma-3, DeepSeek-V3.2 and others)
+is available only on Dedicated Capacity or on-premises and depends on the platform release.
 
 <!-- item: features -->
 ## Inference features
 
-The endpoints are **OpenAI-compatible chat/completions**, with **native BF16 serving** on
-dataflow hardware. Higher-level behaviours such as **tool/function calling** and **structured
-(JSON) output** depend on the specific served model's own capabilities and were not
-individually re-verified on Infercom's endpoints, so treat per-feature support as
-"inherited from the model, confirm per model."
+The docs list OpenAI-compatible chat/completions, a Responses API, Anthropic-SDK compatibility,
+vision, audio (Whisper) and embeddings. Tool calling and structured output depend on the served
+model and were not individually verified, so treat per-feature support as "inherited from the
+model, confirm per model". The Trust Centre says the models served today use no prompt cache.
+
+<!-- item: context-limits -->
+## Context & token limits
+
+Published context lengths: gpt-oss-120b and Gemma 4 31B 128K, E5-Mistral 4K, MiniMax M3.1 Flash
+1M tokens; the dedicated list shows up to 1M. Maximum output tokens and per-request token limits
+were not captured, so confirm them before sizing long-output workloads.

@@ -17,14 +17,14 @@ transparency, reproducibility, and auditability matter more than topping a bench
 <!-- item: context-window -->
 ## Context window & long-context behaviour
 
-Context length varies by generation and variant, so confirm the exact number on the specific
-model card:
+Context length varies by generation, read from each model's `config.json` on 2026-11-19:
 
-- **OLMo 2** - roughly **4k-8k** tokens.
-- **OLMo 3** - longer, as documented in its technical report (`ev-tech-report`).
+- **OLMo 2** - **4,096** tokens on the 1B, 7B, 13B and 32B checkpoints.
+- **OLMo 3** - **65,536** tokens on the 7B and 32B base and Think checkpoints (`ev-hf-olmo3`); the
+  technical report documents the long-context stage (`ev-tech-report`).
 
-This item is marked *partial*: per-variant limits differ, so treat the published maximums as the
-architectural ceiling rather than a verified quality guarantee at full length.
+This item is marked *partial*: these are the architectural ceilings, not a verified quality
+guarantee at full length.
 
 <!-- item: chat-template -->
 ## Prompt format & chat template

@@ -1,11 +1,11 @@
 # Together AI - OneHill Inference-Provider Dossier
 
-> **Score: 75.2/100 · Grade B** · HQ: United States · EU residency: yes (gated) · Trains on inputs: opt-in only, off by default
-> Last verified: 2026-07-25
+> **Score: 69.6/100 · Grade C** · HQ: United States · EU residency: sales-led dedicated and VPC only · Trains on inputs: opt-in only, off by default
+> Last verified: 2026-11-19 · Ownership: partial
 >
-> _Right for teams wanting a broad open-model catalogue with strong default privacy; the biggest caveat is that EU residency and region pinning are reserved for Scale/Enterprise tiers._
+> _Right for teams that want a broad, fast-moving open-model catalogue on an OpenAI-compatible API; the caveats are default prompt storage, an opt-in ZDR, default-on passthrough models, a disclaimed confidentiality duty and no EU serverless option._
 
-**Hard flags:** none
+**Hard flags:** none (the confidentiality disclaimer caps Data Governance at 3 under rubric 1.2)
 
 ---
 
@@ -13,45 +13,45 @@
 
 | Dimension | Score | One-line reason |
 |---|---|---|
-| Data Governance & Privacy | 4/5 | No retention by default, training opt-in and off - but self-documented |
-| Compliance & Certifications | 4/5 | SOC 2 Type II confirmed; ISO 27001 unconfirmed, HIPAA indicated |
-| Data Residency & Sovereignty | 4/5 | EU data centres (incl. Sweden), but gated to higher tiers |
-| Security Posture | 4/5 | Encryption + audit logging consistent with SOC 2 Type II |
-| Reliability & SLA | 3/5 | No incidents surfaced, but no public SLA verified |
-| Transparency & Lock-in | 5/5 | OpenAI-compatible API + fully portable open models |
-| Cost & Value | 4/5 | Competitive serverless rates plus dedicated GPU endpoints |
+| Data Governance & Privacy | 3/5 | Prompts stored by default, ZDR is opt-in, passthrough on; confidentiality disclaimed |
+| Compliance & Certifications | 4/5 | SOC 2 Type II and ISO 27001:2022 announced (not read); DPA with SCCs |
+| Data Residency & Sovereignty | 3/5 | US-only processing endpoint on serverless; EU only via sales-led dedicated or VPC |
+| Security Posture | 4/5 | DPA commits to annual pen tests and daily scans; private HackerOne programme |
+| Reliability & SLA | 3/5 | Public status page with per-model uptime; no self-serve SLA |
+| Transparency & Lock-in | 4/5 | OpenAI-compatible API over portable open models; passthrough routing unlabelled |
+| Cost & Value | 4/5 | Live per-token rates, cached-input prices and GPU-hour dedicated rates |
 
 ## 1. What it serves & how it's priced
 
-Together AI is a US-headquartered inference provider running on NVIDIA GPUs. It serves one of the broadest open catalogues in the market: Llama 3.x and 4, DeepSeek V3/R1, Qwen3 up to 235B, Mistral/Mixtral, gpt-oss 20B/120B, plus embedding and image models. Pricing is mixed - per-token serverless for on-demand use, and dedicated GPU endpoints on the Scale and Enterprise tiers. Example serverless rates (third-party, approximate and fast-moving) include gpt-oss-120B at roughly $0.15/$0.60 per million in/out tokens, Qwen3-235B near $0.20/$0.60, and DeepSeek-V3 around $1.25/M.
+Together AI is a US-headquartered inference provider on NVIDIA GPUs. The serverless chat catalogue read on 2026-11-19 has 24 models, led by DeepSeek V4, GLM-5.3, Kimi K3 and K3.1 Pro, the Qwen 3.5 to 4 family, gpt-oss-120B and MiniMax M3.1 Flash, plus vision, image, video and audio models. Llama 3.3 70B, Gemma 4 31B and Qwen3-235B are no longer served on serverless, and there are no serverless embedding, rerank or moderation models. Pricing is per token (gpt-oss-120B $0.15/$0.60 per million, DeepSeek V4.1 Flash $0.30/$1.20), with a 25% premium for US-only processing, on-demand dedicated GPUs from $5.49 per GPU hour, and provisioned throughput through sales.
 
 ## 2. Data governance - where your prompts go
 
-Together documents that it does not store inputs or outputs by default, with only temporary caching for performance. Zero-data-retention is described as the default posture, and training on customer data is opt-in and off by default. Because the catalogue is entirely open-weight, there is no closed third-party model routing, so no other vendor's data terms attach to inference. The main caveats: this posture is self-documented on Together's own pages rather than independently attested, and a formal sub-processor list was not confirmed.
+By default Together stores prompts and responses and, per its docs, "may use them for product improvements". Zero data retention is an organisation-admin opt-in that also switches off passthrough models; passthrough models forward your prompts to an upstream provider and are on by default. Training on your data is a separate opt-in, off by default, and you own Your Content and Output. Terms Sec 9 expressly disclaims confidentiality, so on standard terms Together owes no duty of confidence over your prompts. None of this is independently audited.
 
 ## 3. Compliance & certifications
 
-SOC 2 Type II is confirmed via Together's compliance announcement. GDPR/DPA coverage is available through EU residency. HIPAA/BAA support is indicated - encryption, audit logging, and BAA references appear - but this reads as indicated rather than a formal attestation we could verify, so treat it as unconfirmed until a BAA is in hand. ISO 27001 is unconfirmed. Trust materials sit at the privacy page.
+SOC 2 Type II (blog, 2025-07-08) and ISO 27001:2022 from A-LIGN (blog, 2026-06-10) are vendor announcements: the report and certificate were not read, and the trust centre is a JavaScript-only page. A GDPR DPA with EU SCCs and the UK Addendum is published as a PDF. HIPAA and BAAs are stated in the SOC 2 blog, but Terms Sec 4 bars sending medical or financial data on standard terms, so get a signed BAA before sending PHI.
 
 ## 4. Residency & sovereignty
 
-EU data centres are available for both inference and storage, including Sweden GPU capacity, with enterprise region pinning. The material limitation is tiering: EU and dedicated endpoints are restricted to Scale/Enterprise customers, so serverless free/standard users do not get EU residency by default.
+Serverless offers one region guarantee: US-only inference processing at `us-api.together.ai`, which does not cover storage, logs or network routing. Requests to `api.together.ai` carry no region guarantee, and there is no EU serverless endpoint. EU residency needs a dedicated endpoint or VPC deployment through sales (the support article that says so is a year old and names tiers the docs now call legacy).
 
 **CLOUD Act disclosure:** As a US-headquartered provider, Together is subject to US jurisdiction, including the CLOUD Act, even for data hosted in EU regions. This is disclosed as standing context. It is not scored as a defect on its own.
 
 ## 5. Reliability & lock-in
 
-No incidents surfaced in research, but no public uptime SLA was independently verified, holding reliability at 3. Lock-in is minimal: an OpenAI-compatible API serving portable open-weight checkpoints means the same models run on other providers or self-hosted stacks, giving a clean exit path.
+status.together.ai is public and shows per-model 90-day uptime from 99.28% to 100%, with no incident posts since January 2025. There is no self-serve SLA: the Terms disclaim uptime and the docs call serverless best-effort. Lock-in is minimal: an OpenAI-compatible API serving portable open-weight checkpoints means the same models run on other providers or self-hosted stacks.
 
 ## 6. Choosing this provider - the practical guideline
 
-Together suits teams that want breadth of open models with privacy-forward defaults. For regulated or EU-resident data, budget for Scale/Enterprise to obtain EU region pinning, and secure a signed BAA before sending PHI rather than relying on the indicated HIPAA posture. Confirm ZDR toggles and enterprise terms in your contract before production data.
+Together suits teams that want breadth and fast access to new open models. Turn prompt storage off to enable ZDR, and note that this also disables passthrough models. For regulated or EU-resident data, budget for a sales-led dedicated or VPC deployment and negotiate confidentiality, a BAA and an SLA in an enterprise contract rather than relying on the default terms.
 
 ## 7. Sources & evidence
 
-See [`data.yaml`](data.yaml) for the full evidence list: privacy/security documentation (publisher), the SOC 2 Type II announcement and EU data-centre support article (third_party), and pricing (third_party, approximate).
+See [`entry.yaml`](entry.yaml) for the evidence list and [`docs/primary-sources/together-ai/`](../../docs/primary-sources/together-ai/) for the clause extracts read on 2026-11-19: Terms of Service, Privacy Policy, DPA PDF, product docs on retention, ZDR and geo-specific inference, pricing and catalogue, status page and the SOC 2 and ISO announcements. The trust centre could not be read.
 
 ---
 
-_Scored against [provider rubric v1.0](../../methodology/provider-scoring-rubric.md).
-Data: [`data.yaml`](data.yaml)._
+_Scored against [provider rubric v1.2](../../methodology/provider-scoring-rubric.md).
+Data: [`entry.yaml`](entry.yaml)._

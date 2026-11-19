@@ -315,7 +315,7 @@ evidence:
   doc_type: license
   retrieved: true
   url: https://huggingface.co/deepseek-ai/DeepSeek-R1/raw/main/README.md
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsr1-card
   claim: 'DeepSeek-R1 model card on the verified deepseek-ai HF org: 671B total / 37B active MoE, 128K
     context, safetensors; R1-0528 is a later revision "also subject to MIT License"; first-class serving
@@ -324,7 +324,7 @@ evidence:
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/deepseek-ai/DeepSeek-R1
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-dsr1-perf
   claim: On independent public leaderboards DeepSeek-R1 is among the strongest open-weight reasoning
     models (maths, coding, analysis); not OneHill-reproduced this session.
@@ -355,7 +355,9 @@ changelog:
   change: Initial entry - split from the aggregate `deepseek` entry. This is the pure-MIT reasoning line (R1, R1-0528). MIT (commercial + distillation expressly permitted) makes use-and-modify strong and lifts ownership to substantial; shared safety/performance/operational/governance grounding carried from the deepseek family entry. Grounded 2026-08-03 (licence read verbatim from the R1 README).
 - date: '2026-09-21'
   change: 'Freshness re-verification (Cowork browser session). Licence unchanged (MIT, verbatim re-read). No newer R1 point release supersedes this entry. Flag (not folded): DeepSeek has since shipped a materially newer generation - the V4 line (V4.1-Flash, V4-Flash-Vision-Exp, V4-Pro-0813, V4-Flash-0731) and V3.1/V3.2 - as separate new entities for a future build pass, not an update to R1.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Refresh re-verification 2026-11-19, no change. Re-read raw LICENSE for R1 and R1-0528 (MIT, Copyright 2023 DeepSeek), both model cards (671B total / 37B active, 128K, MIT sentence unchanged) and HF API (gated false, safetensors). No newer R1 release in the deepseek-ai org since R1-0528. Hosted-service terms (Terms of Use 2026-03-27, Privacy Policy 2026-02-10, Open Platform Terms effective 2026-04-29) re-read: PRC data storage and PRC governing law unchanged, no bearing on self-hosted weights. Newer DeepSeek families (V3.1, V3.2, V4, V4.1) remain separate untracked entities and are not folded.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90

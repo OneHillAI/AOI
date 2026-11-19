@@ -37,9 +37,11 @@ the commercial path is gated and the grant can be withdrawn.
 
 This is the reason for the split. The weights are governed by the custom non-OSI **"glm-4"
 licence**: the copyright grant is "non-exclusive, worldwide, non-transferable,
-non-sublicensable, **revocable**, royalty-free". Academic research is free, but **"commercial
-users must complete registration"** before any business use. You must display **"Built with
-glm-4"** and derivative model names must **begin with "glm-4"**. Use for military, illegal, or
+non-sublicensable, **revocable**, royalty-free". Academic research is free, but users who want
+commercial use must **complete a registration form**; "Registered users are free to use this
+model for commercial activities". When you distribute or provide the materials you should
+display **"Built with glm-4"**, and models you create or improve with them should have
+**"glm-4"** added to the **beginning of the name** (the licence says "should"). Use for military, illegal, or
 national-security-endangering purposes is forbidden. It is governed by **PRC law**, with
 disputes to Beijing's Haidian District People's Court (contact license@zhipuai.cn). A
 revocable, registration-gated grant with a name-prefix rule is why use-and-modify is **weak**

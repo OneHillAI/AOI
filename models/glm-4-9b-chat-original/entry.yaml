@@ -27,8 +27,9 @@ summary: 'The original GLM-4-9B-Chat (THUDM, mid-2024) - a 9B dense chat model (
   current MIT GLM line because its weights are governed by the custom, non-OSI "glm-4" licence, which is
   materially more restrictive than anything in the MIT cluster (the `glm` entry): the copyright grant is
   "non-exclusive, worldwide, non-transferable, non-sublicensable, REVOCABLE, royalty-free" - free for
-  academic research, but "commercial users must complete registration" before any business use - and it
-  requires displaying "Built with glm-4", prefixing derivative model names with "glm-4", forbids
+  academic research, but users who want commercial use must complete a registration form ("Registered
+  users are free to use this model for commercial activities") - and on distribution or provision it
+  requires displaying "Built with glm-4", prefixing derived AI model names with "glm-4", forbids
   military/illegal/national-security-endangering use, and is governed by PRC law with disputes to
   Beijing''s Haidian District People''s Court. A revocable, registration-gated grant with a name-prefix
   rule takes use-and-modify to weak and ownership to limited - the low end of the GLM family. The model
@@ -65,10 +66,16 @@ openness:
     notable_restrictions:
     - 'Non-OSI custom licence. The grant is REVOCABLE ("non-exclusive, worldwide, non-transferable,
       non-sublicensable, revocable, royalty-free") - the publisher can withdraw it'
-    - 'Commercial use is registration-gated: "Commercial users must complete registration at a specified
-      form to use the model for business purposes" (academic research is free)'
-    - Must display "Built with glm-4"; derivative model names must begin with "glm-4"; no military,
-      illegal, or national-security-endangering use
+    - 'Commercial use is registration-gated: "For users who wish to use the models for commercial
+      purposes, please do so [here] Complete registration. Registered users are free to use this model
+      for commercial activities, but must comply with all terms and conditions of this license."
+      Academic research is free. The registration form (open.bigmodel.cn/mla/form) still resolved on
+      2026-11-19.'
+    - 'On distributing or providing the materials, or products or services using them, the licence says
+      you "should" provide a copy of the agreement and prominently display "Built with glm-4"; if you use
+      the materials to create, train or improve a distributed or available AI model you "should also add
+      ''glm-4'' to the beginning of any such AI model name". No military or illegal purposes and no
+      endangering of national security and unity'
     - Governed by PRC law; disputes to Beijing's Haidian District People's Court; contact
       license@zhipuai.cn
     url: https://huggingface.co/THUDM/glm-4-9b-chat/raw/main/LICENSE
@@ -316,25 +323,33 @@ evidence:
 - id: ev-glm9-license
   claim: 'THUDM/glm-4-9b LICENSE, read: [Sec 2] "a non-exclusive, worldwide, non-transferable,
     non-sublicensable, revocable, royalty-free copyright license"; free for academic research;
-    "Commercial users must complete registration ... to use the model for business purposes"; must
-    display "Built with glm-4" and derivative model names "should include glm-4 at the beginning of the
-    model name". [Sec 3] no use "for any military or illegal purposes" and no endangering national
+    "For users who wish to use the models for commercial purposes, please do so [here] Complete
+    registration. Registered users are free to use this model for commercial activities, but must comply
+    with all terms and conditions of this license."; when distributing or providing the materials you
+    "should" ... "Prominently display ''Built with glm-4''" and, when using them to improve a distributed
+    or available AI model, "add ''glm-4'' to the beginning of any such AI model name". Re-read raw
+    2026-11-19, byte-identical for glm-4-9b and glm-4-9b-chat (sha1 4c48e6c0...); the earlier quote of a
+    "Commercial users must complete registration ... business purposes" sentence did not match the text
+    and is replaced. [Sec 3] no use "for any military or illegal purposes" and no endangering national
     security/unity. [Sec 6] "governed ... in accordance with the laws of People''s Republic of China",
     disputes to "Beijing''s Haidian District People''s Court"; contact license@zhipuai.cn.'
   source_type: publisher
   doc_type: license
   retrieved: true
   url: https://huggingface.co/THUDM/glm-4-9b-chat/raw/main/LICENSE
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-glm9-card
-  claim: 'GLM-4-9B-Chat model card on the verified THUDM HF org: a 9B dense chat model with a 128K
-    context (and a 1M-context GLM-4-9B-Chat-1M variant), safetensors; broad serving (vLLM, transformers,
-    llama.cpp, Ollama) and extensive community quants; a mid-2024 release.'
+  claim: 'GLM-4-9B-Chat model card on the verified THUDM HF org, re-read 2026-11-19: a 9B dense chat model
+    with up to 128K context (and a 1M-context GLM-4-9B-Chat-1M variant), safetensors, licence tag "other /
+    glm-4", not gated, repo live (created 2024-06-04, last modified 2025-03-13, no licence change in the
+    commit history); broad serving and community quants (not re-checked); a mid-2024 release. Transformers-
+    native conversions glm-4-9b-chat-hf, glm-4-9b-chat-1m-hf and glm-4-9b-hf (THUDM and zai-org mirrors)
+    carry the same glm-4 licence tag.'
   source_type: publisher
   doc_type: model_card
   retrieved: true
   url: https://huggingface.co/THUDM/glm-4-9b-chat
-  date: '2026-08-03'
+  date: '2026-11-19'
 - id: ev-glm9-perf
   claim: GLM-4-9B-Chat was a capable small model at its mid-2024 release but is dated by 2026 and
     superseded within its own family by GLM-4-9B-0414 and the 4.5/4.6 line. Not OneHill-reproduced.
@@ -365,7 +380,9 @@ changelog:
   change: Initial entry - split from the aggregate `glm` entry on the licence axis. This is the ORIGINAL GLM-4-9B-Chat / -Chat-1M (THUDM, mid-2024), governed by the custom non-OSI, REVOCABLE, commercial-registration-gated "glm-4" licence; the GLM-4.5/4.6 and GLM-4-0414 series moved to MIT and remain the `glm` entry. The revocable, gated, name-prefixing licence takes use-and-modify to weak and ownership to limited - the divergence that justifies the split. Licence read verbatim from the THUDM LICENSE; grounded 2026-08-03.
 - date: '2026-09-21'
   change: 'Freshness re-verification. The custom glm-4 licence and its commercial-registration clause re-read verbatim, unchanged. The new GLM-5 generation (see the glm entry) does not supersede this distinct legacy glm-4-9b-chat repo, which remains live.'
-last_verified: '2026-09-21'
+- date: '2026-11-19'
+  change: 'Freshness re-verification against raw primary sources. THUDM/glm-4-9b-chat, -chat-1m and glm-4-9b repos are live and ungated, licence tag still "other / glm-4", and the raw LICENSE is unchanged (glm-4-9b and glm-4-9b-chat byte-identical). The commercial-registration clause is intact: users wanting commercial use complete the registration form; the form URL still resolves. Correction, not a change of terms: earlier evidence and the summary put a sentence in quotation marks ("Commercial users must complete registration ... business purposes") that is not in the licence text; replaced with the verbatim wording, and the Built with glm-4 and name-prefix duties are now stated as the licence words them (should, triggered on distribution or provision). No score, rating or ownership change.'
+last_verified: '2026-11-19'
 freshness_sla:
   fast_days: 30
   score_days: 90
